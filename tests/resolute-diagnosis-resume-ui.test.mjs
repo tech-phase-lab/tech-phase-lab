@@ -11,7 +11,7 @@ const compiled=await build({entryPoints:['app/resolute/screen.tsx'],bundle:true,
  name:'diagnosis-component-harness',setup(b){
   b.onLoad({filter:/app\/resolute\/screen\.tsx$/},async args=>({contents:(await readFile(args.path,'utf8'))+'\nexport {DiagnosisForm};',loader:'tsx'}));
   b.onResolve({filter:/^(react|react\/jsx-runtime)$/},args=>({path:args.path,namespace:'harness'}));
-  b.onResolve({filter:/^\.\/(review-context|tool-shell|number-input|question-title|use-unsaved-changes)$/},args=>({path:args.path,namespace:'harness'}));
+  b.onResolve({filter:/^\.\/(review-context|tool-shell|number-input|question-title|use-unsaved-changes|use-desktop|section-heading)$/},args=>({path:args.path,namespace:'harness'}));
   b.onLoad({filter:/.*/,namespace:'harness'},({path})=>({contents:path==='react'?`
    export const useState=(...a)=>globalThis.__diagnosisHarness.useState(...a);
    export const useRef=(...a)=>globalThis.__diagnosisHarness.useRef(...a);
@@ -20,6 +20,8 @@ const compiled=await build({entryPoints:['app/resolute/screen.tsx'],bundle:true,
    :path==='react/jsx-runtime'?`export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment='fragment';`
    :path==='./review-context'?`export const ReviewLink='a';export const usePlanClient=()=>globalThis.__diagnosisHarness.requestPlan;export const useReview=()=>globalThis.__diagnosisHarness.review;`
    :path==='./use-unsaved-changes'?`export const useUnsavedChanges=()=>{};`
+   // The phone layout (the PC layout is chosen by width in the browser, Nov 25).
+   :path==='./use-desktop'?`export const useDesktop=()=>false;`
    :`export default 'mock-component';`}));
  }
 }]});
@@ -27,7 +29,8 @@ const {DiagnosisForm}=await import(`data:text/javascript;base64,${Buffer.from(co
 function memory(){const data=new Map();return {getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};}
 function initial(){const draft=emptyDiagnosisDraft();draft.answers.q01='first';return {session:'test-session',channel:'preview',expiresAt:Date.now()+DIAGNOSIS_SESSION_TTL-1000,draft,baseline:'null',mode:'questions',index:1,locked:false,active:true,locale:'ja'};}
 function nodes(node){return !node||typeof node!=='object'?[]:Array.isArray(node)?node.flatMap(nodes):[node,...nodes(node.props?.children)];}
-function text(node){return typeof node==='string'||typeof node==='number'?String(node):Array.isArray(node)?node.map(text).join(''):node&&typeof node==='object'?text(node.props?.children):'';}
+// Decorative arrows (aria-hidden, Nov 25) are not part of a button's name.
+function text(node){return typeof node==='string'||typeof node==='number'?String(node):Array.isArray(node)?node.map(text).join(''):node&&typeof node==='object'?(node.props?.['aria-hidden']?'':text(node.props?.children)):'';}
 function harness(requestPlan,storage){
  const slots=[];let cursor=0,dirty=true,effects=[],tree;
  const equal=(a,b)=>a&&b&&a.length===b.length&&a.every((v,i)=>Object.is(v,b[i]));

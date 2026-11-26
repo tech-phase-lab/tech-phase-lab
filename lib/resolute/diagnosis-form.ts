@@ -1,25 +1,33 @@
 import { scaledNumberInput } from "./number-input.ts";
 import { QUESTIONS_JA } from "./diagnosis-questions-ja.ts";
+import { SUBSTITUTE_QUESTIONS_JA } from "./diagnosis-questions-substitute-ja.ts";
 import { EN_QUESTIONS, type DiagnosisLocale } from "./diagnosis-copy.ts";
-import { emptyPlanAnswers, parsePlanAnswers, type PlanAnswers, type PlanQuestionId } from "./plan-answers.ts";
+import { emptyPlanAnswers, parsePlanAnswers, substituteShown, type PlanAnswers, type PlanQuestionId } from "./plan-answers.ts";
 import { parsePlan, type PlanInput } from "./plan-data.ts";
 import { diagnose, type DiagnosisInput } from "./diagnosis.ts";
 export type Question = { id: PlanQuestionId; s: string; text: string; note?: string; multi?: boolean;
  free?: "noBuyConditions" | "haltConditions"; field?: string;
  o: { id: string; label: string; val?: number|null; input?: { unit: string; mult: number; step?: number; label?: string } }[] };
-export const questions: Question[] = JSON.parse(JSON.stringify(QUESTIONS_JA));
+// Each substitute sits right after the question it replaces, so the asked questions keep their order and numbers.
+export const questions: Question[] = (JSON.parse(JSON.stringify(QUESTIONS_JA)) as Question[]).flatMap(q => [q,
+ ...SUBSTITUTE_QUESTIONS_JA.filter(x => x.replaces === q.id).map(({ replaces: _replaces, ...x }) => { void _replaces; return JSON.parse(JSON.stringify(x)) as Question; })]);
 export type DiagnosisDraft = { currency: "JPY"|"USD"; answers: PlanAnswers; numbers: Partial<Record<PlanQuestionId,string>>;
  stopLossPct?: number|null; noBuyConditions: string[]; haltConditions: string[]; fx: PlanInput["fx"] };
 export function emptyDiagnosisDraft(): DiagnosisDraft {
  return { currency: "JPY", answers: emptyPlanAnswers(), numbers: {}, noBuyConditions: [], haltConditions: [],
   fx: { thresholdYen: null, usdJpy: null, note: "" } };
 }
+// Exactly one question of each original/substitute pair is shown, so every member answers 30 (owner, Nov 25).
 export function isQuestionVisible(id: PlanQuestionId, a: PlanAnswers) {
- if (id === "q21") return a.q20 === "stock" || a.q20 === "mixed";
- if (id === "q25" || id === "q26") return a.q24 !== null && a.q24 !== "none";
- if (id === "q27") return ["steps2","steps3","steps4"].includes(a.q24 ?? "");
+ if (id === "q21alt" || id === "q25alt" || id === "q26alt" || id === "q27alt") return substituteShown(id, a);
+ if (id === "q21") return !substituteShown("q21alt", a);
+ if (id === "q25" || id === "q26") return !substituteShown("q25alt", a);
+ if (id === "q27") return !substituteShown("q27alt", a);
  return true;
 }
+export const QUESTION_TOTAL = 30;
+/** The number shown for the n-th asked question (Q01–Q30), the same whether the original or its substitute is asked. */
+export const questionNumber = (index: number) => `Q${String(index + 1).padStart(2, "0")}`;
 export function selectAnswer(d: DiagnosisDraft, id: PlanQuestionId, value: string | string[] | null): DiagnosisDraft {
  const answers = { ...d.answers, [id]: value };
  for (const q of questions) if (!isQuestionVisible(q.id, answers)) Object.assign(answers, { [q.id]: null });
@@ -54,7 +62,7 @@ export function numericAnswer(q: Question, d: DiagnosisDraft): number | null {
 }
 export function validateQuestion(q: Question,d: DiagnosisDraft): void {
  if (!isQuestionVisible(q.id,d.answers)) return;
- if (!q.multi && d.answers[q.id] === null) throw new Error("ANSWER_REQUIRED");
+ if (!q.multi && (d.answers[q.id] ?? null) === null) throw new Error("ANSWER_REQUIRED");
  if (q.field) numericAnswer(q,d);
  if (q.free && (d[q.free].length > 10 || d[q.free].some(x => [...x].length > 100 || !x.isWellFormed() || x.includes("\u0000")))) throw new Error("INVALID_TEXT");
 }

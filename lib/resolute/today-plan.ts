@@ -29,7 +29,7 @@ export type TodayInput = {
 };
 
 const INDEX_NAME = { nas100: { ja: "TP大型株100", en: "TP Large Cap 100" }, sox: { ja: "TP半導体40", en: "TP Semiconductor 40" } } as const;
-const BAND = { ja: ["冷えている", "やや冷え", "平常", "やや熱い", "熱い"], en: ["Cool", "Slightly cool", "Normal", "Slightly hot", "Hot"] } as const;
+const BAND = { ja: ["冷えている", "やや冷えている", "平常", "やや熱い", "熱い"], en: ["Cool", "Slightly cool", "Normal", "Slightly hot", "Hot"] } as const;
 const num = (n: number) => String(Math.round(Math.abs(n) * 10) / 10);
 const signed = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${num(n)}%`;
 const both = (ja: string, en: string): Copy => ({ ja, en });

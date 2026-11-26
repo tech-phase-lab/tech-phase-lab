@@ -1,4 +1,5 @@
-import type { Temperature, ThermometerIndex } from './thermometer.ts';
+import { bandOf, type Temperature, type ThermometerIndex } from './thermometer.ts';
+import type { BigDrop, SimilarHistory } from './similar-days.ts';
 
 export type ThermometerSnapshot = {
  asOf: string;
@@ -12,11 +13,15 @@ export type ThermometerSnapshot = {
  /** About three months of each basket's daily level up to asOf (home chart line, Nov 25). Absent on older snapshots. */
  trail?: {nas100: {date: string; close: number}[] | null; sox: {date: string; close: number}[] | null};
  shock?: Record<string, {nas100: ShockReadingView | null; sox: ShockReadingView | null; fear: {date: string; level: number; previousLevel: number} | null}>;
+ /** 今夜のひと息「今日と似た日」(Nov 25): days in the past ten years that moved like asOf, per basket (similar-days.ts). */
+ history?: {nas100: SimilarHistory | null; sox: SimilarHistory | null};
+ /** The past ten years' big falls and the time each took to recover (first open of 今夜のひと息). */
+ drops?: {nas100: BigDrop[] | null; sox: BigDrop[] | null};
 };
 export type DailyMoveReading = {date: string; previousDate: string; changePercent: number};
 export type ShockReadingView = DailyMoveReading & {typicalPercent: number; up: number; down: number; total: number};
 export const temperatureLabels = {
- ja: ['冷えている', 'やや冷え', '平常', 'やや熱い', '熱い'],
+ ja: ['冷えている', 'やや冷えている', '平常', 'やや熱い', '熱い'],
  en: ['Cool', 'Slightly cool', 'Normal', 'Slightly hot', 'Hot'],
 } as const;
 /** Only the selected index may populate its gauge. Missing data never borrows another index. */
@@ -24,7 +29,7 @@ export function gaugeReading(snapshot: ThermometerSnapshot | undefined, index: T
  const reading = snapshot?.[index];
  if (!reading || reading.status !== 'ready' || reading.index !== index || reading.asOf !== snapshot?.asOf ||
      !Number.isFinite(reading.score) || reading.score < 0 || reading.score > 100 ||
-     reading.band !== Math.min(4, Math.floor(reading.score / 20)) ||
+     reading.band !== bandOf(reading.version, reading.score) ||
      !Number.isFinite(reading.drawdownPercent) || !Number.isFinite(reading.deviationPercent)) return null;
  return reading;
 }

@@ -74,7 +74,9 @@ test('the daily read pages back to the window start: the whole 30 hours is cover
  const {selected,reserve,diagnostics}=selectDailyCandidates(feed,now,{moves:fixture.moves});
  assert.equal(diagnostics.coverageComplete,true);assert.equal(diagnostics.reportPages,pages);
  const titles=[...selected,...reserve].map(c=>c.title);
- for(const s of fixture.stories.filter(s=>s.kind==='realistic'))assert.ok(titles.includes(s.title),s.key);
+ // Monday's single-company stories (r2 AMD, r4 Micron, r5 Broadcom) are measured on Monday with no stock move stored: they can never
+ // get stars, so they take no slot (owner, Nov 26). Every other realistic story is read.
+ for(const s of fixture.stories.filter(s=>s.kind==='realistic'&&!['r2','r4','r5'].includes(s.key)))assert.ok(titles.includes(s.title),s.key);
  assert.ok(!titles.includes(fixture.stories.find(s=>s.key==='old').title),'outside the window');
 });
 
@@ -90,7 +92,8 @@ test('ranking: market-wide news first, then single-company news, opinion pieces 
  // Nov 25 (owner): only the move AFTER publication counts, and one move goes to one story. The market-wide story (Nasdaq futures,
  // 06:20 New York, before Monday's open) holds Monday. Nvidia (12:20, during hours) is measured on Tuesday and holds it. Micron
  // (named in its headline: single-company news) is also on Monday, which the market-wide story holds: shown without stars.
- assert.deepEqual(selected.map(c=>c.title),['Nasdaq futures drop as Treasury yields jump on inflation worries','Nvidia shares fall 3% after report of tighter China export curbs','Micron cuts production forecast as memory chip prices weaken']);
+ // Owner, Nov 26: Micron (Monday, no stock move stored) can never get stars and takes no slot; ASML (Tuesday, which Nvidia holds) fills it.
+ assert.deepEqual(selected.map(c=>c.title),['Nasdaq futures drop as Treasury yields jump on inflation worries','Nvidia shares fall 3% after report of tighter China export curbs','ASML shares under pressure after Dutch export update']);
  assert.deepEqual(selected.map(c=>c.starred),[undefined,true,false]);
  assert.deepEqual(diagnostics.scopes,{market:3,semis:1,company:7});
  assert.equal(new Set(selected.map(c=>c.tickers[0]??'market')).size,3);

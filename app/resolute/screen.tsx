@@ -1,18 +1,22 @@
 "use client";
 import { ReviewLink as Link, usePlanClient, useReview } from "./review-context";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import ToolShell from "./tool-shell";
 import { useUnsavedChanges } from "./use-unsaved-changes";
 import { clearDiagnosisSession, readDiagnosisSession, writeDiagnosisSession, DIAGNOSIS_SESSION_TTL } from "@/lib/resolute/diagnosis-session";
 import NumberInput from "./number-input";
 import QuestionTitle from "./question-title";
+import SectionHeading from "./section-heading";
 import styles from "./diagnosis.module.css";
+import pc from "./pc.module.css";
+import { useDesktop } from "./use-desktop";
 import { questions, emptyDiagnosisDraft, isQuestionVisible, selectAnswer, numericLimits, questionCopy,
- validateQuestion, draftToInput, draftToPlan, draftFromPlan, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
+ validateQuestion, draftToInput, draftToPlan, draftFromPlan, questionNumber, QUESTION_TOTAL, type DiagnosisDraft } from "@/lib/resolute/diagnosis-form";
 import { diagnose } from "@/lib/resolute/diagnosis";
 import { localizeDiagnosis, type DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
+import type { PlanQuestionId } from "@/lib/resolute/plan-answers";
 const messages = {
  ja: { title:"あなただけの投資ルールを30問の質問でつくる", intro:"暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。",
  closingFirst:"マイルールを定めれば", closingLast:"暴落も上昇も怖くない",
@@ -43,7 +47,7 @@ const messages = {
 };
 const sections: Record<string,[string,string]> = { A:["生活とお金","Life and money"],B:["下落への耐え方","Handling a drop"],C:["上昇のとき","During a rally"],D:["投資のスタイル","Your approach"],E:["銘柄と集中","How your investments are spread"],F:["買い増しのルール","Extra purchases"],G:["止まるルール","When to pause"],H:["為替","Exchange rates"] };
 export default function DiagnosisScreen({identityReady=true,draftSession}:{identityReady?:boolean;draftSession?:string}) {
- return <ToolShell identityReady={identityReady}>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny} draftSession={draftSession}/>}</ToolShell>;
+ return <ToolShell identityReady={identityReady} pc>{(locale,deny)=><DiagnosisForm locale={locale} deny={deny} draftSession={draftSession}/>}</ToolShell>;
 }
 function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:()=>void;draftSession?:string}) {
  const review=useReview(), channel=review ? "preview" : "live";
@@ -54,6 +58,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
  const [draft,setDraft]=useState<DiagnosisDraft>(emptyDiagnosisDraft), [mode,setMode]=useState<"intro"|"questions"|"result">("intro"),[index,setIndex]=useState(0);
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[saved,setSaved]=useState(false);
  const [message,setMessage]=useState<keyof typeof messages.ja|null>(null),[formError,setFormError]=useState<"answer"|"text"|null>(null),[locked,setLocked]=useState(false);
+ const [swapped,setSwapped]=useState<PlanQuestionId[]>([]);
  const pending=useRef<AbortController|null>(null),mutex=useRef(false), heading=useRef<HTMLHeadingElement>(null), c=messages[locale], en=locale==="en";
  const [savedDraft,setSavedDraft]=useState(()=>JSON.stringify(emptyDiagnosisDraft()));
  const dirty=JSON.stringify(draft)!==savedDraft;
@@ -74,7 +79,7 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
   expiresAt.current=Date.now()+DIAGNOSIS_SESSION_TTL;
   setSnapshot(p);setLocked(false);setSaved(false);
   const nextDraft=p.plan ? draftFromPlan(p.plan) : emptyDiagnosisDraft();
-  setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);
+  setSavedDraft(JSON.stringify(nextDraft));setDraft(nextDraft);setMessage(p.plan?"existing":null);setMode("intro");setIndex(0);setSwapped([]);
  }
  const restore=useCallback((p?:PlanSnapshot) => {
   if(!resume)return;
@@ -123,9 +128,17 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
   }finally{mutex.current=false;if(!controller.signal.aborted)setBusy(false);}
  }
  const visible=questions.filter(q=>isQuestionVisible(q.id,draft.answers)), q=visible[Math.min(index,visible.length-1)];
+ // A changed answer that swaps a question for its substitute asks only the swapped-in question again; every other
+ // answer is kept (owner, Nov 25). Once those are answered and nothing else is missing, the result opens.
+ const pendingSwap=swapped.filter(id=>id!==q.id), swapTarget=visible.findIndex((x,k)=>k>index&&pendingSwap.includes(x.id));
+ let complete=false;
+ if(swapped.includes(q.id)&&swapTarget<0)try{draftToPlan(draft);complete=true;}catch{/* Something is still unanswered. */}
+ const finishing=index===visible.length-1||complete;
  function next() {
   try{validateQuestion(q,draft);setFormError(null);
-   if(index===visible.length-1){draftToPlan(draft);setMode("result");}else setIndex(i=>i+1);
+   setSwapped(pendingSwap);
+   if(swapTarget>=0)setIndex(swapTarget);
+   else if(finishing){draftToPlan(draft);setMode("result");}else setIndex(i=>i+1);
   }catch(e){setFormError(e instanceof Error && e.message==="INVALID_TEXT"?"text":"answer");}
  }
  const draftNotice=dirty && draftSession ? <div>
@@ -134,64 +147,112 @@ function DiagnosisForm({locale,deny,draftSession}:{locale:DiagnosisLocale;deny:(
    : en?"Unfinished answers are kept in this tab for up to 12 hours so you can resume after reloading. They are not saved to the server.":"途中の回答はこのタブ内で最大12時間だけ一時保存し、再読み込み後も再開できます。サーバーには保存していません。"}</p>
   <button type="button" className={styles.secondary} disabled={loading||busy} onClick={discard}>{en?"Discard unfinished answers":"途中の回答を破棄する"}</button>
  </div> : null;
- const bodyMessage=<>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
-  {message?<p role="status" className={message==="saved" || message==="existing"?styles.status:styles.error}>{c[message]}</p>:null}</>;
+ // 「保存済みのルールがあります…」 belongs to the start screen only, not the result being read (owner, Nov 25).
+ const messageView=(shown:typeof message)=><>{loading?<p role="status" className={styles.status}>{c.loading}</p>:null}
+  {shown?<p role="status" className={shown==="saved" || shown==="existing"?styles.status:styles.error}>{c[shown]}</p>:null}</>;
+ const bodyMessage=messageView(message);
+ // Owner, Nov 25 (resolute-mobile-all-1125 03〜05, resolute-pc-1125 04_ルール診断_PC): the same content on the phone and on PC.
+ // The phone stacks gold-framed panels; at 1024px and wider the PC frame lays them side by side with the tops and bottoms lined up.
+ const desktop=useDesktop();
  const reloadButton=<button type="button" className={styles.secondary} disabled={loading||busy} onClick={()=>void reload()}>{c.reload}</button>;
- if(mode==="intro") return <section className={`${styles.card} ${styles.introCard}`}>
-  <span className={styles.eyebrow}>RULE DIAGNOSIS</span>
-  <h1 className={styles.introTitle}>{en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる</span></>}</h1>
-  <p className={styles.introDescription}>{en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>}</p>
-  <fieldset className={styles.currencyChoice} aria-label={en?"Currency":"通貨"}>{(["JPY","USD"] as const).map(currency=><button type="button" key={currency} aria-pressed={draft.currency===currency} disabled={!!snapshot?.plan||loading} onClick={()=>{if(currency===draft.currency)return;if(Object.values(draft.answers).some(v=>v!==null)&&!window.confirm(en?"Changing currency clears your answers. Start again?":"通貨を変えると回答を消して最初から入力します。変更しますか？"))return;setDraft({...emptyDiagnosisDraft(),currency});}}>{currency==="JPY"?en?"Japanese yen · JPY":"日本円 · JPY":en?"US dollars · USD":"ドル · USD"}</button>)}</fieldset>
-
-  {bodyMessage}{draftNotice}
-  <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{snapshot?.plan?c.redo:c.start}</button>
+ const arrow=(text:string,side:"before"|"after")=>side==="before"?<><span aria-hidden="true">← </span>{text}</>:<>{text}<span aria-hidden="true"> →</span></>;
+ // The shared heading (SectionHeading). Only the start screen's is the page title; the question and the type are the h1 elsewhere.
+ const head=(eyebrow:string,title:string,lead?:ReactNode)=>desktop
+  ? <p className={pc.eyebrow}><b>{eyebrow}</b>{title}</p>
+  : <SectionHeading label={eyebrow} title={title} description={lead} level={lead?1:2} className={styles.diagHead}/>;
+ const quizName=en?"Rules quiz":"投資ルール診断";
+ const introTitle=en ? <><span>Build your own investing</span><span>rules in 30 questions.</span></> : <><span>あなただけの投資ルールを</span><span>30問の質問でつくる</span></>;
+ const introDescription=en ? <>Build clearer rules with each answer.<br/>Takes about five minutes.</> : <>答えるほどルールは鮮明になります。<br/>※所要時間 約5分</>;
+ // The three steps of the quiz (owner's mockups 03 and 04_ルール診断_PC).
+ const flow:[string,string][]=en?[["Answer 30 questions","Just tap · about 5 minutes"],["See your approach","Your strengths in the market and where you tend to waver"],["Get your investing rules","Carry them as a book and a wallpaper"]]
+  :[["30問に答える","ボタンを押すだけ・約5分"],["あなたのタイプがわかる","相場での強みと迷いやすい場面"],["あなたの投資ルールができる","一冊と壁紙にして持ち歩けます"]];
+ const flowList=<ol className={styles.diagFlow}>{flow.map(([title,sub],i)=><li key={title}><i>{i+1}</i><span><b>{title}</b><small>{sub}</small></span></li>)}</ol>;
+ const currencyChoice=<fieldset className={styles.currencyChoice} aria-label={en?"Currency":"通貨"}>{(["JPY","USD"] as const).map(currency=><button type="button" key={currency} aria-pressed={draft.currency===currency} disabled={!!snapshot?.plan||loading} onClick={()=>{if(currency===draft.currency)return;if(Object.values(draft.answers).some(v=>v!==null)&&!window.confirm(en?"Changing currency clears your answers. Start again?":"通貨を変えると回答を消して最初から入力します。変更しますか？"))return;setDraft({...emptyDiagnosisDraft(),currency});}}>{currency==="JPY"?en?"Japanese yen · JPY":"日本円 · JPY":en?"US dollars · USD":"ドル · USD"}</button>)}</fieldset>;
+ const introActions=<>{bodyMessage}{draftNotice}
+  <button type="button" className={styles.primary} disabled={loading||locked} onClick={()=>{setMode("questions");setSaved(false);}}>{arrow(snapshot?.plan?c.redo:c.start,"after")}</button>
   {snapshot?.plan?<Link className={styles.primary} href="/resolute/notebook" prefetch={false}>{en?"Open my rulebook":"マイルールを開く"}</Link>:null}
   {snapshot?.plan?<Link className={styles.secondary} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
-  {message?reloadButton:null}
- </section>;
+  {message?reloadButton:null}</>;
+ if(mode==="intro"&&desktop) return <div className={pc.content}>{head("RULE DIAGNOSIS",quizName)}
+  <section className={`${styles.card} ${styles.panel} ${pc.diagIntro}`}>
+   <div className={pc.diagIntroText}><span className={styles.eyebrow}>RULE DIAGNOSIS</span><h1 className={pc.diagTitle}>{introTitle}</h1><p className={pc.diagLead}>{introDescription}</p>
+    {currencyChoice}<div className={pc.diagIntroActions}>{introActions}</div></div>
+   <div className={pc.diagIntroSide}>{flowList}</div>
+  </section>
+ </div>;
+ if(mode==="intro") return <div className={`${styles.section} ${styles.diag}`}>
+  {head("RULE DIAGNOSIS",quizName,introTitle)}
+  <section className={`${styles.card} ${styles.panel}`}>{flowList}</section>
+  <section className={`${styles.card} ${styles.panel} ${styles.diagStart}`}><span className={styles.headLabel}>{en?"Currency":"通貨"}</span>{currencyChoice}{introActions}</section>
+ </div>;
  if(mode==="questions") {
   const text=questionCopy(q,locale,draft.currency), answer=draft.answers[q.id], option=q.o.find(o=>o.id===answer),limits=numericLimits(q,draft.answers,draft.currency);
-  return <div className={styles.section}>
-   <div className={styles.progress}><div className={styles.meta}><span>{sections[q.s][en?1:0]}</span><span>{index+1} / {visible.length}</span></div><progress value={index+1} max={visible.length} aria-label={en?"Progress":"進み具合"}/></div>
-
-   <section className={styles.card} aria-labelledby="question-heading">
-    <span className={styles.eyebrow}>{q.id.toUpperCase()}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
+  // PC: the answers in three columns, or two when a label is long, so no label is squeezed. The phone keeps one column.
+  const optionsClass=desktop?`${styles.options} ${pc.diagOptions} ${text.options.some(o=>[...o.label].length>(en?24:12))?pc.diagOptionsWide:""}`:styles.options;
+  const progress=<><div className={styles.diagMeta}><span>{sections[q.s][en?1:0]}</span><span className={styles.diagCount}><b>{index+1}</b>/ {QUESTION_TOTAL}</span></div>
+   <progress className={styles.diagProgress} value={index+1} max={QUESTION_TOTAL} aria-label={en?"Progress":"進み具合"}/></>;
+  const card=<section className={`${styles.card} ${styles.panel} ${desktop?pc.diagCard:""}`} aria-labelledby="question-heading">
+    {desktop?null:progress}
+    <span className={styles.eyebrow}>{questionNumber(index)}</span><h1 id="question-heading" aria-label={text.text} ref={heading} tabIndex={-1} className={styles.questionTitle}><QuestionTitle id={q.id} text={text.text} locale={locale}/></h1>
     {text.note?<p className={styles.muted}>{text.note}</p>:null}
-    <div className={styles.options}>{text.options.map(o=><button key={o.id} type="button" className={styles.option}
+    <div className={optionsClass}>{text.options.map(o=><button key={o.id} type="button" className={`${styles.option} ${styles.diagOption}`} data-multi={q.multi?"":undefined}
      aria-pressed={Array.isArray(answer)?(answer as string[]).includes(o.id):answer===o.id}
-     onClick={()=>{setFormError(null);setSaved(false);setDraft(d=>{
-      const selected = d.answers[q.id];
+     onClick={()=>{setFormError(null);setSaved(false);
+      const selected = draft.answers[q.id];
       const current: string[] = Array.isArray(selected) ? selected : [];
-      const next = current.includes(o.id) ? current.filter(x=>x!==o.id) : [...current,o.id];
-      return selectAnswer(d,q.id,q.multi ? next.length ? next : null : o.id);
-     });}}>{o.label}</button>)}</div>
+      const picked = current.includes(o.id) ? current.filter(x=>x!==o.id) : [...current,o.id];
+      const changed = selectAnswer(draft,q.id,q.multi ? picked.length ? picked : null : o.id);
+      const shown = questions.filter(x=>isQuestionVisible(x.id,changed.answers)&&!isQuestionVisible(x.id,draft.answers)).map(x=>x.id);
+      setSwapped(list=>[...list.filter(id=>isQuestionVisible(id,changed.answers)),...shown]);
+      setDraft(changed);
+     }}><i aria-hidden="true"/>{o.label}</button>)}</div>
     {option?.input?<label className={styles.field} htmlFor={`number-${q.id}`}>{en?"Enter a number":"数字を入力"} ({limits.money?draft.currency==="USD"?"USD":en?"JPY":"円":q.id==="q30"?en?"yen":"円":q.id==="q04"||q.id==="q05"?en?"months":"か月":"%"})
      <NumberInput id={`number-${q.id}`} decimal={!limits.money||draft.currency==="USD"} min={limits.min} max={limits.max} step={limits.step} value={draft.numbers[q.id]??""}
       aria-describedby={`range-${q.id}`} onValueChange={value=>{setFormError(null);setDraft(d=>({...d,numbers:{...d.numbers,[q.id]:value}}));}}/>
      <span id={`range-${q.id}`} className={styles.muted}>{limits.min.toLocaleString()}–{limits.max.toLocaleString()}{q.id==="q25"?(en?" (keeps every step below 100%)":"（すべての段階が100%未満になる範囲）"):""}</span>
     </label>:null}
     {q.free?<label className={styles.field}>{c.free}<textarea value={draft[q.free].join("\n")} onChange={e=>{const field=q.free!;setDraft(d=>({...d,[field]:e.target.value.split("\n")}));}} aria-describedby="privacy-note"/><span id="privacy-note" className={styles.muted}>{c.private}</span></label>:null}
-    {draftNotice}
+    {desktop?null:draftNotice}
     {formError?<p className={styles.error} role="alert">{c[formError]}</p>:null}
-    <div className={`${styles.nav} ${styles.questionNav}`}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{c.back}</button>
-     <button type="button" className={styles.primary} onClick={next}>{index===visible.length-1?c.result:c.next}</button></div>
-   </section>
+    <div className={`${styles.diagNav} ${desktop?pc.diagNav:""}`}><button type="button" className={styles.secondary} onClick={()=>{setFormError(null);if(index===0)setMode("intro");else setIndex(i=>i-1);}}>{arrow(c.back,"before")}</button>
+     <button type="button" className={styles.primary} onClick={next}>{arrow(finishing?c.result:c.next,"after")}</button></div>
+   </section>;
+  if(desktop) return <div className={pc.content}>{head("RULE DIAGNOSIS",quizName)}
+   <div className={pc.diagQuestion}>
+    <div className={`${styles.card} ${styles.panel} ${pc.diagProgress}`}>{progress}
+     {draftNotice?<div className={pc.diagProgressFoot}>{draftNotice}</div>:null}</div>
+    {card}
+   </div>
   </div>;
+  return <div className={`${styles.section} ${styles.diag}`}>{head("RULE DIAGNOSIS",quizName)}{card}</div>;
  }
  const input=draftToInput(draft),result=localizeDiagnosis(diagnose(input),input,locale);
- return <div className={styles.section}>
-  <section className={`${styles.card} ${styles.hero}`}><span className={styles.eyebrow}>{en?"YOUR APPROACH":"あなたのタイプ"}</span>
-   <h1 className={styles.type} ref={heading} tabIndex={-1}>{result.typeName}</h1><hr className={`${styles.divider} ${styles.typeDivider}`}/><p className={styles.typeDetail}>{result.typeDetail}</p></section>
-  <section className={styles.card}><h2>{c.rules}</h2><dl className={styles.ruleCards}>{result.rows.map(row=><div className={styles.ruleCard} key={row.item}><dt>{row.item}</dt><dd>{row.rule}</dd><dd className={styles.muted}>{row.meaning}</dd></div>)}</dl></section>
-  <section className={styles.card}><h2>{c.advice}</h2><ol className={styles.advice}>{result.advice.map(a=><li key={a.id}>{a.text}</li>)}</ol></section>
-  <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p>
-  <section className={styles.card}><p className={styles.muted}>{result.disclaimer}</p>
-   {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
-   {bodyMessage}{draftNotice}<button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
-   {saved?<Link className={styles.secondary} href="/resolute/wall" prefetch={false}>{locale==="en"?"Make your rules wallpaper":"ルールのお守りを作る"}</Link>:null}
-   {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
-   <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>
-   {!snapshot||locked?reloadButton:null}<p className={styles.muted}>{c.check}</p>
-  </section>
+ const hero=<section className={`${styles.card} ${styles.panel} ${styles.hero}`}><span className={styles.eyebrow}>{en?"YOUR APPROACH":"あなたのタイプ"}</span>
+   <h1 className={styles.type} ref={heading} tabIndex={-1}>{result.typeName}</h1><hr className={`${styles.divider} ${styles.typeDivider}`}/><p className={styles.typeDetail}>{result.typeDetail}</p></section>;
+ // The three amounts. The phone shows the figures only (owner's mockup 05); PC has room for their explanations too.
+ const amounts=<section className={`${styles.card} ${styles.panel} ${styles.diagAmountsPanel}`}><dl className={desktop?pc.diagAmounts:styles.diagAmounts}>{result.rows.slice(0,3).map(row=><div key={row.item}><dt>{row.item}</dt><dd>{row.rule}</dd>{desktop?<dd>{row.meaning}</dd>:null}</div>)}</dl></section>;
+ const rules=<section className={desktop?pc.rules:`${styles.card} ${styles.panel}`}><h2 className={desktop?pc.sectionTitle:styles.headLabel}>{c.rules}</h2>
+  <dl className={desktop?pc.diagRuleGrid:styles.diagRules}>{result.rows.slice(3).map(row=><div className={desktop?pc.diagRule:undefined} key={row.item}><dt>{row.item}</dt><div><dd>{row.rule}</dd><dd>{row.meaning}</dd></div></div>)}</dl></section>;
+ const advice=<section className={`${styles.card} ${styles.panel}`}><h2>{c.advice}</h2><ol className={styles.advice}>{result.advice.map(a=><li key={a.id}>{a.text}</li>)}</ol>
+  <p className={styles.closing}><span>{c.closingFirst}</span><span>{c.closingLast}</span></p></section>;
+ // 「保存済みのルールがあります…」 belongs to the start screen only, not to the result being read (owner, Nov 25).
+ const actions=<>{messageView(message==="existing"?null:message)}{draftNotice}
+  <button type="button" className={styles.primary} disabled={busy||loading||locked||!snapshot||saved} onClick={()=>void save()}>{busy?c.saving:c.save}</button>
+  {saved?<Link className={styles.secondary} href="/resolute/wall" prefetch={false}>{locale==="en"?"Make your rules wallpaper":"ルールのお守りを作る"}</Link>:null}
+  {saved?<Link className={`${styles.primary} ${styles.continueButton}`} href="/resolute/simulation" prefetch={false}>{c.simulation}</Link>:null}
+  <button type="button" className={styles.secondary} disabled={busy||loading} onClick={()=>{setMode("questions");setSaved(false);setMessage(null);}}>{c.edit}</button>
+  {!snapshot||locked?reloadButton:null}
+  <p className={styles.muted}>{result.disclaimer}</p>
+  {!result.buyLines.length&&draft.answers.q24!=="none"?<p className={styles.muted}>{c.later}</p>:null}
+  <p className={styles.muted}>{c.check}</p></>;
+ // PC: the type beside the three amounts, the other rules two to a row, then the advice beside saving.
+ if(desktop) return <div className={pc.content}>{head("RULE DIAGNOSIS",quizName)}
+  <div className={pc.diagTop}>{hero}{amounts}</div>
+  {rules}
+  <div className={pc.diagBottom}>{advice}<section className={`${styles.card} ${styles.panel} ${pc.diagSave}`}>{actions}</section></div>
+ </div>;
+ return <div className={`${styles.section} ${styles.diag}`}>{head("RESULT",en?"Your approach":"あなたのタイプ")}
+  {hero}{amounts}{rules}{advice}
+  <div className={styles.diagActions}>{actions}</div>
  </div>;
 }

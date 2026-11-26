@@ -3,8 +3,8 @@ import { namedCompanies, industryOf } from './risk-companies.ts';
 /** Shock Gauge story scope (owner, Nov 25): which index a story is measured on, decided from its headline by fixed rules.
  * market  → TP大型株100 (market-wide: indexes, rates, macro data, tariffs, broad tech moves)
  * semis   → TP半導体40 (the semiconductor / AI-chip sector as a whole, export controls)
- * company → one company's news: measured on that company's stock AND its industry basket (risk-companies.ts), and starred
- *           only when both moved strongly (risk.ts companyQualifies). A headline that names one company is company news
+ * company → one company's news: measured on that company's stock AND its industry basket (risk-companies.ts); its stars
+ *           are the higher of the two rows (risk.ts marketStars). A headline that names one company is company news
  *           even when it mentions export controls or chip exports (Nov 25: 「SK hynixを巡る調査」 had been read as the sector).
  * The scope is a hint for which index to read and how to rank; the stars always come from measured moves.
  * Pure functions, plain regular expressions only: the same headline always gets the same scope. */

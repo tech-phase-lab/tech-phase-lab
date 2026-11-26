@@ -59,8 +59,8 @@ test('both indices are measured on that close only, the stronger sets the stars;
  assert.equal(applyMarketReaction(article,{'2026-10-12':{sox:{changePercent:-9}}}).stars,null); // a move without its typical move and breadth is not measured
  const filled=applyMarketReaction(article,{'2026-10-12':{sox:mv(-3.24,1.08,34,40),nas100:mv(-1.6,0.8,70,100),fear:{level:30,previousLevel:27}}});
  assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',reading:{from:'2026-10-09',sox:{changePercent:-3.2,multiple:3,same:34,total:40},nas100:{changePercent:-1.6,multiple:2,same:70,total:100},fearChange:11}});
- assert.equal(filled.stars,4); // TP半導体40 ★4, TP大型株100 ★3: the stronger
- assert.equal(parseRiskArticle(filled).stars,4);
+ assert.equal(filled.stars,3); // the owner's table: TP半導体40 −3.2% ★3, TP大型株100 −1.6% ★2: the stronger; fear +11% adds nothing
+ assert.equal(parseRiskArticle(filled).stars,3);
  assert.equal(applyMarketReaction(filled,{'2026-10-12':{sox:mv(8,0.5)}}),filled); // never re-scored
 });
 
@@ -206,7 +206,8 @@ test('wording: names, note under the stars, waiting text and the disclaimer are 
  const owner=read('../app/resolute/news/owner/screen.tsx');assert.ok(owner.includes('<h1>衝撃度チェッカーの管理</h1>'));assert.ok(!/action:'(?:stars|setStars|rate)'/.test(owner));assert.ok(owner.includes('手で変える操作はありません'));
  // The home card keeps the name on one line (compact: 「SHOCK GAUGE」 moves above when the row is narrow).
  assert.ok(read('../app/resolute/home/screen.tsx').includes('<ShockGaugeTitle locale={locale} compact/>'));
- assert.ok(read('../app/resolute/tonight/screen.tsx').includes('<ShockGaugeTitle locale={locale}/>'));
+ // 今夜のひと息 no longer lists the news (owner, Nov 25: TODAY'S NEWS removed).
+ assert.ok(!read('../app/resolute/tonight/screen.tsx').includes('ShockGaugeTitle'));
  assert.ok(read('../app/resolute/tool-shell.tsx').includes('["/resolute/news","衝撃度チェッカー","Shock Gauge",'));
  for(const file of ['home/screen.tsx','news/screen.tsx','news/owner/screen.tsx','news/page.tsx','review/screen.tsx','tonight/screen.tsx','tool-shell.tsx','checkout/live-screen.tsx','lp/landing.tsx','lp/landing-en.tsx'])
   assert.ok(!/危険度|News Risk|news risk|Risk Checker|Risk level/.test(read('../app/resolute/'+file)),file);

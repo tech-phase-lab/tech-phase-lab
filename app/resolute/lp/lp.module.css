@@ -204,3 +204,102 @@
 .tpBack:active { opacity:.25; }
 :global(html[data-overlay-bar="1"]) .tpBack { top:calc(env(safe-area-inset-top, 0px) + 58px); }
 :global(html[data-overlay-bar="app"]) .tpBack { top:calc(env(safe-area-inset-top, 0px) + 14px); }
+
+/* ---- PC (owner, Nov 25, 01_LP_PC): 1024px and wider. Same words as the phone; only the arrangement changes.
+   The wrappers below (heroText … bookCard) are `display:contents` on the phone, so the phone page is unchanged. ---- */
+.pcBar { display:none; }
+.featureGrid, .visualPair, .bookCard { display:contents; }
+@media (min-width:1024px) {
+ .root { word-break:auto-phrase; }
+ .pcBar { position:fixed; z-index:20; top:0; left:0; right:0; display:flex; align-items:center; gap:28px; height:64px; padding:0 max(32px, calc((100vw - 1200px) / 2)); background:rgba(7,11,20,.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid rgba(216,179,106,.14); }
+ .pcLogo { display:inline-flex; align-items:center; gap:10px; text-decoration:none; }
+ .pcLogo svg { width:20px; height:20px; fill:none; stroke:var(--gold); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+ .pcLogo span { font-family:var(--serif); font-size:16px; letter-spacing:.34em; color:var(--gold2); }
+ .pcLinks { margin-left:auto; display:flex; gap:28px; }
+ .pcLinks a { color:#cfd6df; font-size:13px; text-decoration:none; white-space:nowrap; }
+ .pcLinks a:hover { color:var(--gold2); }
+ .pcLang { display:inline-flex; padding:3px; border:1px solid var(--line); border-radius:999px; }
+ .pcLang a { min-width:36px; padding:2px 8px; border-radius:999px; font-size:12px; text-align:center; color:var(--sub); text-decoration:none; }
+ .pcLang a[aria-current="page"] { background:#1e2a3e; color:var(--gold2); }
+ .pcBuy { display:inline-grid; place-items:center; height:38px; padding:0 22px; border-radius:999px; background:linear-gradient(135deg,#fbeab8 0%,#e3c274 42%,#b8913f 100%); color:#1d1608; font-size:13px; font-weight:800; letter-spacing:.04em; text-decoration:none; white-space:nowrap; }
+ .tpBack { top:72px; }
+ .lp { max-width:1200px; padding:64px 48px 72px; }
+ .sec { padding:88px 0 24px; gap:24px; scroll-margin-top:64px; }
+ .hero { scroll-margin-top:64px; }
+ .h2 { font-size:34px; }
+ .h2 br { display:none; }
+ .body { font-size:15px; }
+
+ /* 1 Hero: the words, price and button on the left, the phone on the right. */
+ .hero { display:grid; grid-template-columns:minmax(0,1fr) 340px; column-gap:64px; align-items:start; justify-items:start; text-align:left; padding:72px 0 64px; }
+ .hero > * { grid-column:1; }
+ .hero > .phone { grid-column:2; grid-row:1 / span 7; align-self:center; justify-self:center; margin:0; width:280px; }
+ .mark { flex-direction:row; gap:10px; }
+ .mark .anchor { width:20px; height:20px; }
+ .wordmark { font-size:14px; }
+ .kana { margin-top:2px; padding-left:0; }
+ .catch { font-size:48px; line-height:1.45; }
+ .catch br:first-of-type { display:none; }
+ .catchSecond { margin-left:.5em; }
+ .lead { text-align:left; font-size:15px; }
+ .price { align-items:flex-start; }
+ .amount { justify-content:flex-start; }
+ .buy { width:400px; max-width:100%; align-items:stretch; }
+ .buy .cta { max-width:none; }
+ .guest { text-align:center; }
+
+ /* 2 Two nights: the two cards side by side, the same height. */
+ .nights { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; column-gap:28px; }
+ .nights > :not(.night) { grid-column:1 / -1; }
+ .night { padding:28px 30px; }
+ .closing { font-size:24px; margin-top:24px; }
+ .closing br:first-of-type { display:none; }
+
+ /* 3 What is RESOLUTE: the text on the left, the four steps on the right. */
+ .what { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:56px; align-items:start; }
+ .what > .eyebrow, .what > .h2 { grid-column:1 / -1; }
+ .what > .body, .what > .pull { grid-column:1; }
+ .what > .steps { grid-column:2; grid-row:3 / span 2; }
+ .steps li { grid-template-columns:40px 100px 1fr; padding:16px 20px; }
+ .steps p { font-size:13.5px; }
+
+ /* 4 Features: per group, the screen sample beside the cards; the cards of a row share one height. */
+ .group { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:20px; align-items:stretch; margin-top:40px; }
+ .group > .groupNo { grid-column:1 / -1; }
+ .featureGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+ .featureGrid > :last-child:nth-child(odd) { grid-column:1 / -1; }
+ .feature { padding:20px 22px; }
+ .feature b { font-size:17px; margin-bottom:6px; }
+ .sample { padding:18px; }
+ .wallRow { grid-template-columns:140px 1fr; align-content:center; }
+ .bookCard { display:flex; flex-direction:column; gap:12px; justify-content:space-between; padding:18px 18px 0; border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--panel),var(--bg2)); }
+ .bookCard .feature { border:0; background:none; padding:0 4px 18px; }
+ .groupWide { grid-template-columns:minmax(0,1fr); }
+ .visualPair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+ .visualPair > .thermo { justify-content:center; }
+ .groupWide .featureGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .groupWide .featureGrid > :last-child:nth-child(odd) { grid-column:auto; }
+
+ /* 5 Purchase: the words on the left, the price and the button on the right. */
+ .final { display:grid; grid-template-columns:minmax(0,1fr) 400px; column-gap:64px; align-items:center; justify-items:start; text-align:left; padding:88px 64px 72px; margin-top:64px; border:1px solid rgba(216,179,106,.18); border-radius:24px; background:radial-gradient(600px 260px at 30% 0,rgba(216,179,106,.08),transparent 70%); }
+ .final > .anchor { grid-column:1; grid-row:1; }
+ .final > .h2 { grid-column:1; grid-row:2 / span 2; align-self:start; text-align:left; }
+ .final > .h2 br { display:inline; }
+ .en .catchSecond { margin-left:0; }
+ .final > .price { grid-column:2; grid-row:1 / span 2; }
+ .final > .buy { grid-column:2; grid-row:3; }
+
+ /* 6 Message: Rizel on the left, the message on the right. */
+ .message { display:grid; grid-template-columns:240px minmax(0,1fr); column-gap:56px; align-items:start; }
+ .message > .eyebrow { grid-column:1; grid-row:1; }
+ .message > .author { grid-column:1; grid-row:2 / span 6; flex-direction:column; text-align:center; }
+ .message > .author img { width:150px; height:150px; }
+ .message > .author div { align-items:center; }
+ .message > :not(.eyebrow):not(.author) { grid-column:2; }
+ .message > .bigGold { text-align:left; }
+
+ /* 7 FAQ in two columns; each pair of questions shares a height. */
+ .faq { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 20px; align-items:stretch; }
+ .faqSec > .buy { align-self:center; width:340px; }
+ .foot { margin-top:56px; }
+}
