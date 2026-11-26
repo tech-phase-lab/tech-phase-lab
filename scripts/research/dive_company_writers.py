@@ -852,4 +852,161 @@ def sndk(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk}
+
+# ---- Vertiv (VRT): the previous quarter's figures come from the previous quarter's own release ------------------------------------
+
+def need_prior(prior, *names):
+    missing = [n for n in names if n not in (prior or {})]
+    if missing:
+        raise ValueError('missing:prior ' + ','.join(missing))
+
+
+def vrt(f, url, before_previous, report=None, events=None, previous=None, prior=None):
+    need(f, 'revenue', 'amer', 'apac', 'emea', 'amerMargin', 'apacMargin', 'emeaMargin', 'margin', 'sales', 'eps', 'cash', 'deferred', 'cashBalance', 'debt',
+         'guidanceRevenue', 'guidanceMargin', 'guidanceEps')
+    need_prior(prior, 'revenue', 'amer', 'apac', 'emea', 'amerMargin', 'apacMargin', 'emeaMargin', 'margin', 'eps', 'cash')
+    ev = Evidence(url)
+    rev, prev_rev = f['revenue'], prior['revenue']
+    r0, r2 = rev.values
+    r1 = prev_rev.values[0]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    ev.add('numbers.revenue.previous', prev_rev)
+    eps, peps = f['eps'], prior['eps']
+    e0, e1 = Decimal(eps.values[3]), Decimal(peps.values[3])
+    ev.add('numbers.adjustedEPS', eps)
+    g = f['guidanceRevenue']
+    low, high = range_guidance(ev, g)
+    segs = []
+    for i, (key, ja, en) in enumerate((('amer', '米州', 'Americas'), ('apac', 'アジア太平洋', 'Asia Pacific'), ('emea', '欧州・中東・アフリカ', 'EMEA'))):
+        cur, old, m, pm = f[key], prior[key], f[key + 'Margin'], prior[key + 'Margin']
+        ev.add(f'numbers.segments[{i}].revenue', cur)
+        ev.add(f'numbers.segments[{i}].previous', old)
+        ev.add(f'numbers.segments[{i}].operatingMargin', m)
+        ev.add(f'numbers.segments[{i}].previousOperatingMargin', pm)
+        segs.append({'key': key, 'nameJa': ja, 'nameEn': en, 'revenue': float(cur.values[0]), 'previous': float(old.values[0]),
+                     'operatingMargin': float(m.values[0]), 'previousOperatingMargin': float(pm.values[0])})
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(e0), 'epsEstimate': None,
+               'grossMargin': None, 'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': None}, 'segments': segs}
+    sales, mg, pmg, orders = f['sales'], f['margin'], prior['margin'], f.get('orders')
+    tiles = [tile('売上高', 'Net sales', money_tile(ev, 0, rev, 0, None), f'前年同期比 +{sales.values[2]}%(既存事業 +{sales.values[3]}%)', f'+{sales.values[2]}% YoY (+{sales.values[3]}% organic)'),
+             text_tile('調整後営業利益率', 'Adjusted operating margin', pc(mg.values[0]), pc(mg.values[0]), f'前年同期 {pc(mg.values[1])}、前期 {pc(pmg.values[0])}',
+                       f'Year ago {pc(mg.values[1])}; prior quarter {pc(pmg.values[0])}')]
+    ev.add('tiles[0].note', sales)
+    ev.add('tiles[1].value', mg)
+    ev.add('tiles[1].note', mg)
+    ev.add('tiles[1].note', pmg)
+    if orders:
+        tiles.append(text_tile('既存事業の受注の伸び', 'Organic orders growth', f'{orders.values[0]}%超', f'over {orders.values[0]}%', '前年同期比', 'Year over year'))
+        ev.add('tiles[2].value', orders)
+    else:
+        tiles.append(text_tile('調整後EPS', 'Adjusted diluted EPS', ps(e0)['ja'], ps(e0)['en'], f'前年同期比 +{eps.values[2]}%', f'+{eps.values[2]}% YoY'))
+        ev.add('tiles[2].value', eps)
+        ev.add('tiles[2].note', eps)
+    lead_i = max(range(3), key=lambda i: segs[i]['revenue'] - segs[i]['previous'])
+    lead = segs[lead_i]
+    ld = Decimal(str(lead['revenue'])) - Decimal(str(lead['previous']))
+    d = r0 - r1
+    reg = f.get('regions')
+    if reg:
+        ev.add('summary.cards.growth.sections[2]', reg)
+    lchg = change(Decimal(str(lead['revenue'])), Decimal(str(lead['previous'])))
+    growth = card(f'{lead["nameJa"]}の売上が前期比 {sign(lchg, 0)}', f'{lead["nameEn"]} sales {sign(lchg, 0)} QoQ', [
+        chip(tone(ld), f'{lead["nameJa"]} 前期比 {sign(lchg)}', f'{lead["nameEn"]} {sign(lchg)} QoQ'),
+        chip(tone(Decimal(str(lead['operatingMargin'])) - Decimal(str(lead['previousOperatingMargin']))), f'{lead["nameJa"]}の利益率 {pc(lead["previousOperatingMargin"])} → {pc(lead["operatingMargin"])}',
+             f'{lead["nameEn"]} margin {pc(lead["previousOperatingMargin"])} → {pc(lead["operatingMargin"])}')], [
+        sec('happened', f'{lead["nameJa"]}の売上は{usd(Decimal(str(lead["previous"])))["ja"]}から{usd(Decimal(str(lead["revenue"])))["ja"]}へ、{usd(abs(ld))["ja"]}{rose(ld, True)}ました。調整後営業利益率は{pc(lead["previousOperatingMargin"])}から{pc(lead["operatingMargin"])}になりました。',
+            f'{lead["nameEn"]} sales {rose(ld)} {usd(abs(ld))["en"]} from {usd(Decimal(str(lead["previous"])))["en"]} to {usd(Decimal(str(lead["revenue"])))["en"]}. Its adjusted operating margin went from {pc(lead["previousOperatingMargin"])} to {pc(lead["operatingMargin"])}.'),
+        sec('good', (f'会社全体の売上は前期から{usd(d)["ja"]}増え、そのうち約{q(ld / d * 100, 0)}%が{lead["nameJa"]}の増加分です。' if d > 0 and ld > 0 else f'会社全体の売上は前期から{usd(abs(d))["ja"]}{rose(d, True)}ました。')
+            + 'データセンター向けの電源・冷却装置の需要が、売上と利益率の両方を押し上げています。',
+            (f'Total sales rose {usd(d)["en"]} from the previous quarter, and about {q(ld / d * 100, 0)}% of that came from {lead["nameEn"]}.' if d > 0 and ld > 0 else f'Total sales {rose(d)} {usd(abs(d))["en"]} from the previous quarter.')
+            + ' Demand for data-center power and cooling gear lifted both sales and margin.'),
+        sec('watch', (f'伸びは{lead["nameJa"]}に集中しています。前年同期比で、米州は+{reg.values[0]}%、アジア太平洋は+{reg.values[2]}%、欧州・中東・アフリカは+{reg.values[4]}%でした。' if reg else
+                      f'伸びは{lead["nameJa"]}に集中しています。'),
+            (f'Growth is concentrated in {lead["nameEn"]}. Year over year, the Americas grew {reg.values[0]}%, APAC {reg.values[2]}% and EMEA {reg.values[4]}%.' if reg else
+             f'Growth is concentrated in {lead["nameEn"]}.'))], lead['key'])
+    all_up = all(x['operatingMargin'] > x['previousOperatingMargin'] for x in segs)
+    driver = f.get('driver')
+    if driver:
+        ev.add('summary.cards.change.sections[1]', driver)
+    ev.add('summary.cards.change.chips[2]', peps)
+    ev.add('summary.cards.change.sections[2]', sales)
+    trend_ja = trend_en = ''
+    if before_previous:
+        trend_ja = f'売上は2四半期前の{usd(before_previous)["ja"]}、前期の{usd(r1)["ja"]}、今期の{usd(r0)["ja"]}と推移しています。'
+        trend_en = f'Sales went from {usd(before_previous)["en"]} two quarters ago to {usd(r1)["en"]} last quarter and {usd(r0)["en"]} now.'
+    changes = card(f'売上は前期比 {sign(qoq)}' + ('、3地域すべてで利益率が上昇' if all_up else ''), f'Sales {sign(qoq)} QoQ' + ('; margins up in all three regions' if all_up else ''), [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Sales {sign(qoq)} QoQ'),
+        chip(tone(mg.values[0] - pmg.values[0]), f'調整後営業利益率 {pc(pmg.values[0])} → {pc(mg.values[0])}', f'Adj. operating margin {pc(pmg.values[0])} → {pc(mg.values[0])}'),
+        chip(tone(e0 - e1), f'調整後EPS {ps(e1)["ja"]} → {ps(e0)["ja"]}', f'Adj. EPS {ps(e1)["en"]} → {ps(e0)["en"]}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後営業利益率は{pc(pmg.values[0])}から{pc(mg.values[0])}、調整後EPSは{ps(e1)["ja"]}から{ps(e0)["ja"]}になりました。',
+            f'Net sales {rose(d)} {usd(abs(d))["en"]} from {usd(r1)["en"]} to {usd(r0)["en"]}. Adjusted operating margin went from {pc(pmg.values[0])} to {pc(mg.values[0])}, and adjusted EPS from {ps(e1)["en"]} to {ps(e0)["en"]}.'),
+        sec('good', ('調整後営業利益率は、前期と比べて3地域すべてで上がりました。' if all_up else '地域ごとの調整後営業利益率は、上がったところと下がったところがあります。') + ('会社は、売上増による固定費の吸収と生産性の改善を理由に挙げています。' if driver else ''),
+            ('Adjusted operating margins rose in all three regions from the previous quarter.' if all_up else 'Regional adjusted operating margins moved in different directions.') + (' The company cited operating leverage on higher sales and better manufacturing productivity.' if driver else '')),
+        sec('watch', f'前年同期比+{sales.values[2]}%のうち、約{sales.values[4]}ポイントは買収による上乗せで、既存事業の伸びは+{sales.values[3]}%です。',
+            f'About {sales.values[4]} points of the {sales.values[2]}% year-over-year growth came from acquisitions; organic growth was {sales.values[3]}%.'),
+        sec('view', trend_ja + '強い受注が売上に表れ始めています。' if trend_ja else '強い受注が売上に表れ始めています。', (trend_en + ' Strong orders are now showing up in revenue.') if trend_en else 'Strong orders are now showing up in revenue.')])
+    cash, pcash, dr, cb, debt = f['cash'], prior['cash'], f['deferred'], f['cashBalance'], f['debt']
+    ocf, fcf = Decimal(cash.values[0]), Decimal(cash.values[1])
+    pocf, pfcf = Decimal(pcash.values[0]), Decimal(pcash.values[1])
+    deal = next((e for e in (events or []) if 'completed' in e['figures']), None)
+    ev.add('summary.cards.caution.sections[0]', cash)
+    ev.add('summary.cards.caution.sections[0]', pcash)
+    ev.add('summary.cards.caution.sections[1]', dr)
+    ev.add('summary.cards.caution.sections[2]', cb)
+    ev.add('summary.cards.caution.sections[2]', debt)
+    chips = [chip(tone(fcf - pfcf), f'調整後FCF {usd(pfcf)["ja"]} → {usd(fcf)["ja"]}', f'Adj. free cash flow {usd(pfcf)["en"]} → {usd(fcf)["en"]}'),
+             chip('gold', f'繰延収益 {usd(dr.values[1])["ja"]} → {usd(dr.values[0])["ja"]}', f'Deferred revenue {usd(dr.values[1])["en"]} → {usd(dr.values[0])["en"]}')]
+    deal_ja = deal_en = ''
+    if deal:
+        cp = deal['figures']['completed'].values
+        up_m = Decimal(cp[3]) * (1000 if cp[4] == 'billion' else 1)
+        cont = deal['figures'].get('contingent')
+        cont_m = Decimal(cont.values[0]) * (1000 if cont.values[1] == 'billion' else 1) if cont else None
+        for fig in deal['figures'].values():
+            ev.add('summary.cards.caution.sections[2]', fig)
+        chips.append(chip('gold', f'{cp[2]}買収 {usd(up_m)["ja"]}' + (f'+最大{usd(cont_m)["ja"]}' if cont else ''), f'{cp[2]} deal {usd(up_m)["en"]}' + (f' + up to {usd(cont_m)["en"]}' if cont else '')))
+        deal_ja = f'{deal["date"]}、{cp[0]}({cp[2]})の買収を約{usd(up_m)["ja"]}の現金で完了しました。' + (f'目標を達成すれば、さらに最大{usd(cont_m)["ja"]}を支払います。' if cont else '')
+        deal_en = f'On {deal["dateEn"]} the company closed the purchase of {cp[0]} ({cp[2]}) for about {usd(up_m)["en"]} in cash' + (f', plus up to {usd(cont_m)["en"]} more if targets are met. ' if cont else '. ')
+    else:
+        chips.append(chip('gold', f'長期借入 {usd(debt.values[0])["ja"]}', f'Long-term debt {usd(debt.values[0])["en"]}'))
+    caution = card('現金を生む勢いが鈍り、買収で支出も増える' if deal else '現金を生む勢いが鈍った', 'Cash generation slowed, and an acquisition adds spending' if deal else 'Cash generation slowed', chips, [
+        sec('happened', f'営業キャッシュフローは{usd(ocf)["ja"]}、調整後フリーキャッシュフローは{usd(fcf)["ja"]}で、前期の{usd(pocf)["ja"]}と{usd(pfcf)["ja"]}から{"減りました" if fcf < pfcf else "増えました"}。',
+            f'Operating cash flow was {usd(ocf)["en"]} and adjusted free cash flow {usd(fcf)["en"]}, {"down" if fcf < pfcf else "up"} from {usd(pocf)["en"]} and {usd(pfcf)["en"]} last quarter.'),
+        sec('means', f'顧客から前もって受け取った繰延収益は、前年度末の{usd(dr.values[1])["ja"]}から{usd(dr.values[0])["ja"]}になりました。将来の売上の裏付けですが、まだ納めていない約束でもあります。',
+            f'Deferred revenue, cash received from customers in advance, went from {usd(dr.values[1])["en"]} at the prior year-end to {usd(dr.values[0])["en"]}. It supports future sales, but it is also a promise not yet delivered.'),
+        sec('watch', deal_ja + f'期末の現金は{usd(cb.values[0])["ja"]}、長期借入は{usd(debt.values[0])["ja"]}でした。',
+            deal_en + f'At quarter end it had {usd(cb.values[0])["en"]} of cash and {usd(debt.values[0])["en"]} of long-term debt.'),
+        sec('view', '受注と前受けは強い一方、設備投資や買収で現金も多く使います。売上と合わせて、利益がどれだけ現金になるかを追います。',
+            'Orders and advances are strong, but capacity spending and acquisitions also use more cash. Track how much profit turns into cash, alongside sales.')])
+    gm_, ge, yr, raise_ = f['guidanceMargin'], f['guidanceEps'], f.get('yearRevenue'), f.get('raise')
+    ev.add('summary.cards.next.sections[0]', gm_)
+    ev.add('summary.cards.next.chips[2]', ge)
+    if yr:
+        ev.add('summary.cards.next.sections[1]', yr)
+    nxt = card(f'次期の売上見通し {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Next quarter sales outlook: {usd(low)["en"]}–{usd(high)["en"]}', [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Sales {usd(low)["en"]}–{usd(high)["en"]}'),
+        chip('gold', f'調整後営業利益率 {gm_.raws[0]}〜{gm_.raws[1]}%', f'Adj. operating margin {gm_.raws[0]}–{gm_.raws[1]}%'),
+        chip('gold', f'調整後EPS {ps(ge.values[0])["ja"]}〜{ps(ge.values[1])["ja"]}', f'Adj. EPS {ps(ge.values[0])["en"]}–{ge.raws[1]}')], [
+        sec('happened', f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}、調整後営業利益率を{gm_.raws[0]}〜{gm_.raws[1]}%と見込んでいます。今回の売上と比べると、下限で{sign(change(low, r0))}、上限で{sign(change(high, r0))}です。',
+            f'The company expects next-quarter sales of {usd(low)["en"]}–{usd(high)["en"]} with an adjusted operating margin of {gm_.raws[0]}–{gm_.raws[1]}%, {sign(change(low, r0))} to {sign(change(high, r0))} versus this quarter.'),
+        sec('means', (f'前期比の伸びは今回の{sign(qoq)}から大きく鈍る見込みです。' if change(high, r0) < qoq / 2 else f'前期比の伸びは今回の{sign(qoq)}と比べられます。')
+            + (f'通年の売上見通しは{usd(yr.values[0])["ja"]}〜{usd(yr.values[1])["ja"]}です。' if yr else ''),
+            (f'Sequential growth is set to slow sharply from {sign(qoq)}.' if change(high, r0) < qoq / 2 else f'Sequential growth compares with {sign(qoq)} this quarter.')
+            + (f' The full-year sales outlook is {usd(yr.values[0])["en"]}–{usd(yr.values[1])["en"]}.' if yr else '')),
+        sec('view', '次の決算で、売上が見通しの幅のどこに入るか、受注がいつ売上になるか' + ('、買収がどう費用に表れるか' if deal else '') + 'を確かめます。',
+            'Next time, check where sales land in the range and when orders turn into revenue' + (', and how the acquisition shows up in costs.' if deal else '.'))])
+    if raise_:
+        ev.add('summary.conclusion[1]', raise_)
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq)}、前年同期比+{sales.values[2]}%でした。{lead["nameJa"]}が伸びを主導し、売上の約{q(Decimal(str(lead["revenue"])) / r0 * 100, 0)}%を占めます。調整後営業利益率は{pc(mg.values[0])}です。',
+          f'Net sales were {usd(r0)["en"]}, {sign(qoq)} from the previous quarter and {sales.values[2]}% from a year earlier. {lead["nameEn"]} led and made up about {q(Decimal(str(lead["revenue"])) / r0 * 100, 0)}% of sales. Adjusted operating margin was {pc(mg.values[0])}.'),
+        c((f'既存事業の受注は前年同期の2倍を超え、' if orders and int(orders.values[0]) >= 100 else '') + (f'会社は通年の売上見通しを{usd(Decimal(raise_.values[0]))["ja"]}引き上げました。' if raise_ else '会社は通年の見通しを示しています。')
+          + (f'ただ、次期の見通しの下限は今回の売上とほぼ同じで、前期比の伸びは鈍る見込みです。' if abs(change(low, r0)) < 1 else ''),
+          ('Organic orders more than doubled year over year, and ' if orders and int(orders.values[0]) >= 100 else '') + (f'the company raised its full-year sales outlook by {usd(Decimal(raise_.values[0]))["en"]}.' if raise_ else 'the company gave a full-year outlook.')
+          + (" But the low end of next quarter's outlook is about this quarter's sales, so sequential growth is set to slow." if abs(change(low, r0)) < 1 else ''))]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt}

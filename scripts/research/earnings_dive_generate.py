@@ -430,7 +430,13 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
         day = event['accepted'].astimezone(timezone.utc)
         events.append({'figures': found, 'url': event['url'], 'date': f'{day.month}月{day.day}日', 'dateEn': f'{day.strftime("%B")} {day.day}'})
         extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form 8-K, Exhibit 99.1 ({day.date().isoformat()})", 'location': 'Press release'})
-    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous)
+    extra = {}
+    if ticker in dive_figures.PRIOR:  # the previous quarter's release: figures this release prints without that quarter
+        prior = release.get('prior') or {}
+        extra['prior'] = dive_figures.read(ticker, prior.get('text') or '')
+        for fig in extra['prior'].values():
+            fig.url = prior.get('url')
+    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous, **extra)
     history = [dict(h) for h in old[1:]] + [{'label': f"Q{previous['periodQuarter']}", 'end': previous['periodEnd'],
                                              'value': previous['numbers']['revenue']['current']}]
     evidence = list(written['evidence'])
@@ -636,7 +642,7 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
         return 'passed'
     note = note if note is not None else stored_analysis(db, ticker, release['accepted'])
     texts = {release['url']: check_dives.normalize(release['text'])}
-    for other in [release.get('report')] + list(release.get('events') or []) + list(release.get('exhibits') or []):  # 10-Q, other 8-Ks, other exhibits
+    for other in [release.get('report'), release.get('prior')] + list(release.get('events') or []) + list(release.get('exhibits') or []):  # 10-Q, the previous release, other 8-Ks, other exhibits
         if other and other.get('url') and other.get('text'):
             texts[other['url']] = check_dives.normalize(other['text'])
     for e in (previous or {}).get('evidence') or []:  # the previous file's quoted passages, for the figures it carries forward

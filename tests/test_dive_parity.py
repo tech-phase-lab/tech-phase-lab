@@ -37,6 +37,10 @@ FILINGS = {
     'ALAB': {},
     'LITE': {},
     'SNDK': {},
+    # the deal 8-K's press exhibit (EX-99.1, what the patrol reads) instead of its cover page; the Q2 release for the previous quarter
+    'VRT': {'events': [('https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/exhibit991vrt-q42026102720.htm', 'VRT-8k-2026-10-27-ex991',
+                        datetime(2026, 10, 27, 20, 15, tzinfo=timezone.utc))],
+            'prior': ('https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm', 'VRT-release-q2-2026')},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -46,6 +50,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'PLTR': {'summary.cards.change.chips[1]': 'the hand-made file compared the adjusted operating margin with the previous quarter (62% both); the previous '
                                               'file keeps no adjusted operating margin, so the chip compares it with the GAAP margin of the same release'},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
+    'VRT': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
@@ -90,10 +95,12 @@ def generated(ticker, filings=True):
         release['report'] = {'url': extra['report'][0], 'text': filing_text(extra['report'][1]), 'form': '10-Q'}
     release['events'] = [{'url': u, 'text': filing_text(n), 'accepted': at} for u, n, at in extra.get('events', [])]
     release['exhibits'] = [{'url': u, 'text': filing_text(n)} for u, n in extra.get('exhibits', [])]
+    if 'prior' in FILINGS.get(ticker, {}):  # the previous quarter's release (public before this release, so in both stages)
+        release['prior'] = {'url': FILINGS[ticker]['prior'][0], 'text': filing_text(FILINGS[ticker]['prior'][1])}
     previous = previous_file(dive)
     fixture = check_dives.read_fixture(ROOT / f'tests/fixtures/dives/{ticker}-source.txt')
     texts = {url: check_dives.normalize(text)}
-    for other in [release.get('report')] + release['events'] + release['exhibits']:
+    for other in [release.get('report'), release.get('prior')] + release['events'] + release['exhibits']:
         if other:
             texts[other['url']] = check_dives.normalize(other['text'])
     for e in previous['evidence']:
@@ -122,6 +129,9 @@ class DepthParity(unittest.TestCase):
                 for path in ('revenue.current', 'revenue.previous', 'revenue.yearAgo', 'grossMargin.current', 'grossMargin.previous',
                              'guidance.low', 'guidance.high', 'guidance.grossMarginPercent'):
                     a, b = path.split('.')
+                    if hand['numbers'][a] is None:   # no gross margin or guidance at all (Vertiv reports none)
+                        self.assertIsNone(auto['numbers'][a], f'{ticker} {a}')
+                        continue
                     if hand['numbers'][a][b] is None:
                         self.assertIsNone(auto['numbers'][a][b], f'{ticker} {path}')
                         continue

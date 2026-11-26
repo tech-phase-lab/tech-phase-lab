@@ -393,7 +393,50 @@ def sandisk(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk}
+def guidance_block(t, heading, end):
+    """The guidance table that follows `heading` (a regex: "Fourth Quarter 2026 Guidance"), up to `end`; '' unless the heading is there once."""
+    found = list(re.finditer(heading, t))
+    if len(found) != 1:
+        return ''
+    rest = t[found[0].start():]
+    stop = rest.find(end, 1)
+    return rest[:stop if stop > 0 else len(rest)]
+
+
+def vertiv(t):
+    ops, bs = 'STATEMENTS OF EARNINGS', 'CONDENSED CONSOLIDATED BALANCE SHEETS'
+    seg = between(t, 'Regional Segment Results', 'Adjusted operating profit (loss)')
+    margins = between(t, 'Adjusted operating margins', '(1)Segment net sales')
+    quarter = guidance_block(t, r'(?:First|Second|Third|Fourth) Quarter 20\d\d Guidance Net sales', 'Full Year')
+    year = guidance_block(t, r'Full Year 20\d\d Guidance Net sales', '(1)')
+    regions = {}
+    for key, label in (('amer', 'AMER'), ('apac', 'APAC'), ('emea', 'EMEA')):
+        # this quarter, a year earlier, change, change %, organic change %, then nine months the same
+        regions[key] = row(seg, label, 2, None, None, width=10)
+        regions[key + 'Margin'] = row(margins, label, 2, None, None, unit='percent', width=6)
+    return {
+        'revenue': row(t, 'Net sales', 2, ops, 'Costs and expenses', width=4),     # three months this year and last, then nine months
+        **regions,
+        'margin': row(margins, 'Vertiv', 2, None, None, unit='percent', width=6),
+        'sales': sentence(t, r'reported \w+ quarter net sales of \$([\d,]+) million, an increase of \$([\d,]+) million, or (\d+)%, compared to \w+ quarter 20\d\d, '
+                             r'reflecting (\d+)% organic sales growth and approximately (\d+)% contribution from acquisitions', (1, 2, 3, 4, 5), unit='text'),
+        'regions': sentence(t, r'Americas up (\d+)% \((\d+)% organic\), APAC up (\d+)% \((\d+)% organic\), and EMEA up (\d+)% \((\d+)% organic\)', (1, 2, 3, 4, 5, 6), unit='text'),
+        'orders': sentence(t, r'Our more than (\d+)% organic orders growth year over year', (1,), unit='text'),
+        'raise': sentence(t, r'raise full year net sales guidance by \$([\d,]+) million', (1,), unit='text'),
+        'eps': sentence(t, r'Diluted EPS grew (-?\d+)% to \$([\d.]+) and adjusted diluted EPS ?(?:\(1\))? grew (-?\d+)% to \$([\d.]+)', (1, 2, 3, 4), unit='text'),
+        'driver': sentence(t, r'driven by (operational leverage on higher sales and by manufacturing productivity)', (1,), unit='text'),
+        'cash': sentence(t, r'Operating cash flow of \$([\d,]+) million and adjusted free cash flow ?(?:\(1\))? of \$([\d,]+) million', (1, 2), unit='text'),
+        'deferred': row(t, 'Deferred revenue', 2, bs, 'Accrued expenses'),
+        'cashBalance': row(t, 'Cash and cash equivalents', 2, bs, 'Short-term investments'),
+        'debt': row(t, 'Long-term debt, net', 2, bs, 'Long-term lease liabilities'),
+        'guidanceRevenue': sentence(quarter, r'Net sales \$([\d,]+)M - \$([\d,]+)M', (1, 2)),
+        'guidanceMargin': sentence(quarter, r'Adjusted operating margin ?\(2\) ([\d.]+)% - ([\d.]+)%', (1, 2), unit='percent'),
+        'guidanceEps': sentence(quarter, r'Adjusted diluted EPS ?\(1\) \$([\d.]+) - \$([\d.]+)', (1, 2), unit='per-share'),
+        'yearRevenue': sentence(year, r'Net sales \$([\d,]+)M - \$([\d,]+)M', (1, 2)),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -565,10 +608,18 @@ def deal(text):
         'close': sentence(flat, r'expected to close in the (first|second) half of calendar year (20\d\d)', (1, 2), unit='text'),
         'accretive': sentence(flat, r'expected to be accretive to ([A-Z][A-Za-z]+) non-GAAP earnings per share in year one', (1,), unit='text'),
         'allStock': sentence(flat, r'in an (all-stock) transaction', (1,), unit='text'),
+        'completed': sentence(flat, r'has completed its acquisition of ([A-Z][^,]{1,80}?), (?:Inc\.|Corp\.|LLC)?,? ?which operates as ([A-Z][A-Za-z ]+?) \(.(\w+).\) for approximately \$([\d.]+) (billion|million) in upfront cash',
+                              (1, 2, 3, 4, 5), unit='text'),
+        'contingent': sentence(flat, r'additional contingent consideration of up to \$([\d.]+) (billion|million)', (1, 2), unit='text'),
         'preliminary': sentence(flat, r'reported preliminary revenue for the (first|second|third|fourth) quarter of fiscal (20\d\d) consistent with previously provided guidance, '
                                       r'maintaining the midpoint of its prior guidance while narrowing the expected range to plus or minus (\d+)%', (1, 2, 3), unit='text'),
     }
     return {k: v for k, v in out.items() if v is not None}
+
+
+# companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
+# reads both, so a figure of the previous quarter is quoted from that quarter's own release
+PRIOR = {'VRT'}
 
 
 def read(ticker, text):

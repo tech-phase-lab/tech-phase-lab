@@ -459,7 +459,20 @@ def prefetch_filings(results, filings_by_ticker, env=None):
                 except Exception:  # noqa: BLE001
                     exhibits = []
                 out[ticker] = out[ticker] + (exhibits,)
+            if ticker in dive_figures.PRIOR:  # the previous quarter's release, for the figures this release prints without that quarter
+                out[ticker] = out[ticker] + (None,) * (3 - len(out[ticker])) + (prior_release(dives.previous_dive(ticker)),)
     return out
+
+
+def prior_release(previous):
+    """{'url', 'text'} of the release the previous dive was built from (its first source, on sec.gov), or None."""
+    url = (((previous or {}).get('sources') or [{}])[0]).get('url') or ''
+    if not url.startswith('https://www.sec.gov/'):
+        return None
+    try:
+        return {'url': url, 'text': ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split())}
+    except Exception:  # noqa: BLE001 - the dive then holds (a figure is missing) and is tried again at the next patrol
+        return None
 
 
 def draft_dives(db, results, now, env=None, extras=None):
@@ -478,8 +491,10 @@ def draft_dives(db, results, now, env=None, extras=None):
         try:
             if extras and ticker in extras:
                 release['report'], release['events'] = extras[ticker][:2]
-                if len(extras[ticker]) > 2:
+                if len(extras[ticker]) > 2 and extras[ticker][2] is not None:
                     release['exhibits'] = extras[ticker][2]
+                if len(extras[ticker]) > 3 and extras[ticker][3]:
+                    release['prior'] = extras[ticker][3]
             state = dives.generate(db, ticker, release, now)
         except Exception as exc:  # noqa: BLE001 - one company's failure never stops the others
             state = 'error-' + type(exc).__name__
