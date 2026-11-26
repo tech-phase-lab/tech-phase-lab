@@ -6,7 +6,7 @@ import Book from "./book";
 import OpenAtTop from "./open-at-top";
 import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
-import { Anchor, Feature, stars } from "./parts";
+import { Anchor, Feature, PcBar, stars } from "./parts";
 import s from "./lp.module.css";
 import Disclaimer from "../disclaimer";
 import BuyButton from "./buy-button";
@@ -22,8 +22,8 @@ function Price({ price }: { price: ResolutePrice }) {
   <p className={s.amount}><del>$69</del><b>$59</b></p>
  </div>;
 }
-function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }) {
- return <div className={s.buy}>
+function Buy({ price, small = false, id }: { price: ResolutePrice; small?: boolean; id?: string }) {
+ return <div className={s.buy} id={id}>
   <BuyButton language="en" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>Get RESOLUTE</BuyButton>
   <p className={s.guest}>No account needed to buy</p>
  </div>;
@@ -35,12 +35,13 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
   <OpenAtTop />
   <TechPhaseBack en={true} />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
+  <PcBar en={true} embedded={embedded} />
   <main className={s.lp}>
    {/* 1 Hero */}
-   <section className={s.hero}>
+   <section className={s.hero} id="top">
     <div className={s.mark}><Anchor className={s.anchor} /><span className={s.wordmark}>RESOLUTE</span></div>
     <p className={s.kana}>BY RIZEL</p>
-    <h1 className={s.catch}>When markets crash,<br />when markets soar,<br /><em>stick to your rules.</em></h1>
+    <h1 className={s.catch}>When markets crash,{" "}<br /><span className={s.catchSecond}>when markets soar,</span><br /><em>stick to your rules.</em></h1>
     <p className={s.lead}>A kit that keeps your rules on your phone, ready for the days the market goes wild.</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>
      <p className={s.miniBrand}>RESOLUTE</p>
@@ -49,22 +50,22 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
      <div className={s.miniTiles}><span>Your Rulebook</span><span>Rules Wallpaper</span></div>
     </div></div>
     <Price price={price} />
-    <Buy price={price} />
+    <Buy price={price} id="buy" />
    </section>
 
    {/* 2 TWO NIGHTS */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.nights}`} id="nights">
     <p className={s.eyebrow}>TWO NIGHTS</p>
-    <h2 className={s.h2}>Two kinds of nights<br />can cloud your judgment.</h2>
+    <h2 className={s.h2}>Two kinds of nights{" "}<br />can cloud your judgment.</h2>
     <article className={`${s.night} ${s.crash}`}><p className={s.tag}>CRASH</p><h3>When markets crash</h3><p>Your portfolio is in the red, and you can&apos;t sleep. Every scroll through social media makes the fear louder. Before you know it, it&apos;s morning and you&apos;re still deciding whether to sell.</p></article>
     <article className={`${s.night} ${s.surge}`}><p className={s.tag}>SURGE</p><h3>When markets soar</h3><p>A stock keeps climbing and you wish you&apos;d bought more. You feel like buying more just because the price keeps rising. The limit you set quietly slips your mind.</p></article>
-    <p className={s.closing}>On either night,<br />what throws you off<br /><em>is how you feel in the moment.</em></p>
+    <p className={s.closing}>On either night,{" "}<br />what throws you off<br /><em>is how you feel in the moment.</em></p>
    </section>
 
    {/* 3 WHAT IS RESOLUTE */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.what}`}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
-    <h2 className={s.h2}>Stay level-headed<br />whatever the market does.</h2>
+    <h2 className={s.h2}>Stay level-headed{" "}<br />whatever the market does.</h2>
     <p className={s.body}>RESOLUTE is a kit for keeping your head when the market gets wild. Build your own rules with a 30-question quiz, then keep them where you&apos;ll see them every day. When a stock’s closing price reaches one of your alert levels, a phone notification prompts you to pause and revisit your rules.</p>
     <p className={s.pull}>When markets crash,<br />let your rules guide you.</p>
     <ol className={s.steps}>
@@ -76,9 +77,9 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    </section>
 
    {/* 4 FEATURES */}
-   <section className={s.sec}>
+   <section className={s.sec} id="features">
     <p className={s.eyebrow}>FEATURES</p>
-    <h2 className={s.h2}><span className={s.big}>10</span> features<br />in one kit.</h2>
+    <h2 className={s.h2}><span className={s.big}>10</span> features{" "}<br />in one kit.</h2>
 
     <div className={s.group}>
      <p className={s.groupNo}>01 <b>Decide</b></p>
@@ -87,8 +88,10 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
       <p className={s.qText}>A stock you own is down 20% in a month. What do you do?</p>
       <ul className={s.choices}><li>Do nothing</li><li className={s.picked}>Buy more, but only if it fits my plan</li><li>Sell some and wait</li></ul>
      </div>
-     <Feature title="Rules Quiz" text="Tap your way through 30 questions to build a set of investing rules based on your answers." />
-     <Feature title="Portfolio Simulator" text="See how your portfolio could move in a drop or a rally, before it happens." />
+     <div className={s.featureGrid}>
+      <Feature title="Rules Quiz" text="Tap your way through 30 questions to build a set of investing rules based on your answers." />
+      <Feature title="Portfolio Simulator" text="See how your portfolio could move in a drop or a rally, before it happens." />
+     </div>
     </div>
 
     <div className={s.group}>
@@ -97,19 +100,27 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
       <div className={s.lock} aria-hidden="true"><p className={s.lockDate}>Thu, Jan 15</p><p className={s.clock}>9:41</p><p className={s.lockBrand}>RESOLUTE</p><dl><dt>Decline I can tolerate</dt><dd>−30%</dd><dt>Max per stock</dt><dd>10%</dd></dl><p className={s.lockRule}>No action until −10%</p></div>
       <div className={s.wallNote}><p>Every time you wake your phone, your rules are right there.</p><small>3 styles. Customize the size and colors.<br />Use your own photo too</small></div>
      </div>
-     <Feature title="Rules Wallpaper" text="Turn your rules into a lock screen wallpaper and take them everywhere." />
-     <Book locale="en" />
-     <p className={s.bookNote}>Your quiz answers become a book of your own</p>
-     <Feature title="Your Rulebook" text="Every rule from your quiz, gathered in one book. Reread it on the days you waver." />
+     <div className={s.featureGrid}>
+      <Feature title="Rules Wallpaper" text="Turn your rules into a lock screen wallpaper and take them everywhere." />
+      <div className={s.bookCard}>
+       <Book locale="en" />
+       <p className={s.bookNote}>Your quiz answers become a book of your own</p>
+       <Feature title="Your Rulebook" text="Every rule from your quiz, gathered in one book. Reread it on the days you waver." />
+      </div>
+     </div>
     </div>
 
-    <div className={s.group}>
+    <div className={`${s.group} ${s.groupWide}`}>
      <p className={s.groupNo}>03 <b>Alert</b></p>
+     <div className={s.visualPair}>
      <AlertSample locale="en" />
      <div className={s.thermo} aria-hidden="true"><p className={s.thermoLab}>Market Gauge</p><p className={s.thermoWord}>Warm</p><p className={s.thermoIdx}>TP Large Cap 100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>Cold</span><span>Hot</span></p></div>
+     </div>
+     <div className={s.featureGrid}>
      <Feature title="Closing-price Alerts" text="When a stock’s closing price reaches a downside or upside level you’ve set, you get a phone notification at your chosen delivery time (U.S. Eastern Time). No need to watch the market all day." />
      <Feature title="Morning Note" text="One short notification the morning after an alert, to read with a rested mind." />
      <Feature title="Market Gauge" text="Shows how cool or hot the market is on a five-point scale. Helps you put market moves in perspective." />
+     </div>
     </div>
 
     <div className={s.group}>
@@ -122,9 +133,11 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
       </ul>
       <div className={s.video}><span className={s.play} /><div><b>A Moment to Breathe</b><small>From RIZEL</small></div><em>1:40</em></div>
      </div>
+     <div className={s.featureGrid}>
      <Feature title="When the Market Tumbles" text={'A short video from RIZEL and the "won\'t do" list you made, on one screen. A reminder that you don\'t have to decide tonight.'} />
      <Feature title="Shock Gauge" text="Picks the day’s notable news and rates it 1–5 stars from the actual index moves and the article’s content. No major news, no update." />
      <Feature title="RIZEL's Take" text="A one-line take from RIZEL on each story." />
+     </div>
     </div>
    </section>
 
@@ -137,7 +150,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    </section>
 
    {/* 6 MESSAGE */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.message}`} id="message">
     <p className={s.eyebrow}>MESSAGE</p>
     <div className={s.author}>
      {/* eslint-disable-next-line @next/next/no-img-element -- the photo is swapped for the owner's own file later */}
@@ -152,7 +165,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    </section>
 
    {/* 7 FAQ */}
-   <section className={s.sec}>
+   <section className={`${s.sec} ${s.faqSec}`} id="faq">
     <p className={s.eyebrow}>FAQ</p>
     <h2 className={s.h2}>Common questions</h2>
     <div className={s.faq}>

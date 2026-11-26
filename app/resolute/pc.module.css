@@ -172,6 +172,49 @@
 .todoActions a:first-child { background: linear-gradient(90deg, var(--gold2), #c9a04f); color: #2a1d06; }
 .todoActions a:last-child { border: 1px solid #ffffff26; color: var(--ink); font-weight: 400; }
 
+/* ① Rule diagnosis (owner, Nov 25: 04_ルール診断_PC — start, question, result). Same words as the phone; the panels' gold
+   frame comes from the shared .panel in diagnosis.module.css. */
+.diagIntro { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: stretch; gap: 0; padding: 0; text-align: left; }
+.diagIntroText, .diagIntroSide { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-width: 0; padding: 56px 52px; }
+.diagIntroSide { border-left: 1px solid #ffffff14; }
+.diagIntroSide li { padding: 16px 18px; border: 1px solid #ffffff1a; border-radius: 14px; background: #ffffff04; }
+.diagIntroSide li + li { margin-top: 12px; border-top: 1px solid #ffffff1a; }
+.diagIntroText fieldset { justify-content: flex-start; margin: 0; display: flex; gap: 10px; }
+.diagIntroText fieldset button { min-width: 140px; }
+.diagIntroActions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.diagIntroActions > button, .diagIntroActions > a { min-width: 220px; }
+.diagTitle { margin: 0; font-family: var(--font-resolute-serif), serif; font-size: 34px; font-weight: 500; line-height: 1.6; letter-spacing: .04em; color: var(--ink); }
+.diagTitle span { display: block; }
+.diagLead { color: var(--sub); font-size: 15px; line-height: 1.9; }
+.diagQuestion { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.diagProgress { gap: 14px; padding: 28px 24px; }
+.diagProgressFoot { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+.diagCard.diagCard.diagCard { padding: 36px 40px; gap: 22px; }
+.diagOptions { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.diagOptionsWide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.diagNav { margin-top: auto; padding-top: 22px; border-top: 1px solid #ffffff14; display: flex; justify-content: space-between; }
+.diagNav > .primary { min-width: 180px; }
+.diagTop { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: stretch; }
+.diagTop > section { padding: 36px 40px; justify-content: center; }
+.diagAmounts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; text-align: left; }
+.diagAmounts > div { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 0 20px; }
+.diagAmounts > div:first-child { padding-left: 0; }
+.diagAmounts > div + div { border-left: 1px solid #ffffff14; }
+.diagAmounts dt { font-size: 12px; color: var(--gold); }
+.diagAmounts dd { margin: 0; font-family: var(--font-resolute-serif), serif; font-size: 30px; line-height: 1.35; color: var(--gold2); overflow-wrap: anywhere; }
+.diagAmounts dd + dd { font-family: inherit; font-size: 13px; line-height: 1.8; color: var(--sub); }
+.diagRuleGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; margin: 0; }
+.diagRuleGrid > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.diagRule { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 16px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(180deg, #131d2b, #0f1724); min-width: 0; }
+.diagRule dt { font-size: 12px; color: var(--gold); }
+.diagRule dd { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.7; color: var(--ink); }
+.diagRule dd + dd { margin-top: 4px; font-size: 13px; font-weight: 400; color: var(--sub); }
+.diagBottom { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
+.diagBottom > section { padding: 30px 32px; }
+.diagSave { justify-content: center; text-align: center; }
+.diagSave > a, .diagSave > button { align-self: stretch; }
+
+
 /* ④ 翌朝のひとこと (owner, Nov 25, 01_翌朝のひとこと_温度計_PC 1): 「受け取り方」 on the left, GOOD MORNING on the right, the same height. */
 .morningPair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
 .switchText { display: flex; flex-direction: column; gap: 2px; }
