@@ -42,6 +42,7 @@ FILINGS = {
                         datetime(2026, 10, 27, 20, 15, tzinfo=timezone.utc))],
             'prior': ('https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm', 'VRT-release-q2-2026')},
     'GEV': {'prior': ('https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm', 'GEV-release-q2-2026')},
+    'BE': {},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -50,7 +51,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'AMD': {}, 'ANET': {},
     'PLTR': {},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
-    'VRT': {}, 'GEV': {},
+    'VRT': {}, 'GEV': {}, 'BE': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'

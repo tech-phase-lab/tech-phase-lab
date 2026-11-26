@@ -476,7 +476,44 @@ def vernova(t):
     return out
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova}
+def bloom(t):
+    gaap = between(t, 'Summary of GAAP Financial Information', 'Summary of Non-GAAP Financial Information')
+    non = between(t, 'Summary of Non-GAAP Financial Information', 'A detailed reconciliation')[:-2]   # the footnote mark "1." is not a cell
+    ops = between(t, 'Condensed Consolidated Statements of Operations', 'Condensed Consolidated Statement of Cash Flows')
+    cf = between(t, 'Condensed Consolidated Statement of Cash Flows', 'Reconciliation of GAAP to Non-GAAP')
+    bs = between(t, 'Condensed Consolidated Balance Sheets', 'Condensed Consolidated Statements of Operations')
+    guide = between(t, 'is increasing its financial guidance', 'Investor Conference Call')
+    k = dict(thousands=True)
+    return {   # this quarter, the previous quarter, a year earlier (in thousands)
+        'revenue': row(between(gaap, 'EPS data', 'Cost of Revenue'), 'Revenue', 3, None, None, **k),
+        'opIncome': row(gaap, 'Operating Income', 3, None, None, **k),
+        'opMarginGaap': row(gaap, 'Operating Margin', 3, None, None, unit='percent'),
+        'netIncome': row(gaap, 'Net Profit (Loss) to Common Stockholders', 3, None, None, **k),
+        'epsGaap': row(gaap, 'GAAP EPS, Diluted', 3, None, None, unit='per-share'),
+        'gm': row(non, 'Gross Margin', 3, None, None, unit='percent'),
+        'opIncomeNonGaap': row(non, 'Operating Income', 3, None, None, **k),
+        'opMargin': row(non, 'Operating Margin', 3, None, None, unit='percent'),
+        'eps': row(non, 'Non-GAAP EPS, Diluted', 3, None, None, unit='per-share'),
+        'product': row(between(ops, 'Revenue:', 'Installation'), 'Product', 3, None, None, **k),
+        'service': row(between(ops, 'Installation', 'Electricity'), 'Service', 3, None, None, **k),
+        'productCost': row(between(ops, 'Cost of revenue:', 'Installation'), 'Product', 3, None, None, **k),
+        'cfo': row(cf, 'Net cash (used in) provided by operating activities', 3, None, None, **k),
+        'capex': row(cf, 'Purchase of property, plant and equipment', 3, None, None, **k),
+        'contractAssets': row(between(bs, 'Current assets:', 'Total current assets'), 'Contract assets', 2, None, None, **k),
+        'receivables': sentence(bs, r'Accounts receivable, less allowance for credit losses of [^;]{0,120}?respectively\d? ([\d,]+) ([\d,]+)', (1, 2), unit='text'),
+        'considerationCurrent': row(between(bs, 'Current assets:', 'Total current assets'), 'Customer consideration asset', 2, None, None, **k),
+        'considerationLong': row(between(bs, 'Total current assets', 'Total assets'), 'Customer consideration asset', 2, None, None, **k),
+        'cash': row(between(bs, 'Current assets:', 'Restricted cash'), ('Cash and cash equivalents1', 'Cash and cash equivalents'), 2, None, None, **k),
+        'recourseDebt': row(bs, 'Recourse debt', 2, None, None, **k),
+        'raises': sentence(t, r'raise our 20\d\d outlook for the (first|second|third|fourth) time this year', (1,), unit='text'),
+        'guidanceRevenue': sentence(guide, r'Revenue: \$([\d.]+)B - \$([\d.]+)B', (1, 2), multipliers=[1000, 1000]),
+        'guidanceGm': sentence(guide, r'Non-GAAP Gross Margin: ~([\d.]+)%', (1,), unit='percent'),
+        'guidanceOpIncome': sentence(guide, r'Non-GAAP Operating Income: \$([\d,]+)M - \$([\d,]+)M', (1, 2)),
+        'guidanceEps': sentence(guide, r'Non-GAAP EPS: \$([\d.]+) - \$([\d.]+)', (1, 2), unit='per-share'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------

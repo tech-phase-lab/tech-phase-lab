@@ -1167,4 +1167,144 @@ def gev(f, url, before_previous, report=None, events=None, previous=None, prior=
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev}
+
+# ---- quarters of the fiscal year so far, from the previous file's history (for a full-year outlook) --------------------------------
+
+def year_to_date(r0, r1, previous, quarter):
+    """This quarter's revenue plus the earlier quarters of the same fiscal year: the previous quarter, then the previous file's history
+    bars, newest first, labelled Q(quarter-2) down to Q1. None when a bar is missing or out of order."""
+    values = [Decimal(r0), Decimal(r1)][:quarter]
+    bars = list(reversed((previous or {}).get('history') or []))
+    for n, bar in zip(range(quarter - 2, 0, -1), bars):
+        if bar.get('label') != f'Q{n}':
+            return None
+        values.append(Decimal(str(bar['value'])))
+    return sum(values) if len(values) == quarter else None
+
+
+def last_dip(previous):
+    """The latest quarter whose revenue fell from the quarter before, in the previous file's history and its own quarter:
+    (label, before, after) or None."""
+    bars = list((previous or {}).get('history') or [])
+    if previous and previous.get('numbers'):
+        bars.append({'label': f"Q{previous['periodQuarter']}", 'value': previous['numbers']['revenue']['current']})
+    for a, b in reversed(list(zip(bars, bars[1:]))):
+        if b['value'] < a['value']:
+            return b['label'], Decimal(str(a['value'])), Decimal(str(b['value']))
+    return None
+
+
+# ---- Bloom Energy (BE) ----------------------------------------------------------------------------------------------------------------
+
+def be(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'opIncome', 'netIncome', 'epsGaap', 'gm', 'opMargin', 'eps', 'product', 'service', 'productCost', 'cfo', 'capex',
+         'contractAssets', 'receivables', 'cash', 'recourseDebt', 'guidanceRevenue', 'guidanceGm', 'guidanceOpIncome', 'guidanceEps')
+    ev = Evidence(url)
+    rev, gm, om, eps, epsg = f['revenue'], f['gm'], f['opMargin'], f['eps'], f['epsGaap']
+    r0, r1, r2 = rev.values
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.adjustedEPS', eps)
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    numbers = {'revenue': revenue_numbers(ev, rev), 'adjustedEPS': float(eps.values[0]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm.values[0]), 'previous': float(gm.values[1])}, 'guidance': None, 'segments': None}
+    cfo = f['cfo']
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前年同期比 {sign(yoy)}', f'YoY {sign(yoy)}'),
+             text_tile('調整後(non-GAAP)営業利益率', 'Non-GAAP operating margin', pc(om.values[0]), pc(om.values[0]),
+                       f'前期 {pc(om.values[1])}、前年同期 {pc(om.values[2])}', f'Prior quarter {pc(om.values[1])}, year ago {pc(om.values[2])}'),
+             tile('営業キャッシュフロー', 'Operating cash flow', money_tile(ev, 2, cfo, 0, None),
+                  f'前期 {"+" if cfo.values[1] >= 0 else ""}{usd(cfo.values[1])["ja"]}', f'Prior quarter {"+" if cfo.values[1] >= 0 else ""}{usd(cfo.values[1])["en"]}')]
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 0, 2), rnd=1)
+    ev.add('tiles[1].value', om)
+    ev.add('tiles[1].note', om)
+    ev.add('tiles[2].note', cfo, calc=amount_calc(cfo, 1, 'M')[0], rnd=1)
+    pr, sv, pc_ = f['product'], f['service'], f['productCost']
+    p0, p1, p2 = pr.values
+    pm0, pm1 = q((p0 - pc_.values[0]) / p0 * 100), q((p1 - pc_.values[1]) / p1 * 100)
+    ev.add('summary.cards.growth.sections[1]', pc_)
+    dip = last_dip(previous)
+    growth = card(f'製品の売上は前年同期の約{q(p0 / p2, 1)}倍', f'Product revenue about {q(p0 / p2, 1)} times a year ago', [
+        chip(tone(p0 - p2), f'製品の売上 前年同期比 {sign(change(p0, p2))}', f'Product revenue {sign(change(p0, p2))} YoY'),
+        chip(tone(p0 - p1), f'製品の売上 {usd(p1)["ja"]} → {usd(p0)["ja"]}', f'Product revenue {usd(p1)["en"]} → {usd(p0)["en"]}')], [
+        sec('happened', f'製品の売上は{usd(p0)["ja"]}で、前年同期の{usd(p2)["ja"]}から{sign(change(p0, p2))}、前期の{usd(p1)["ja"]}から{sign(change(p0, p1), 0)}でした。製品は売上全体の約{q(p0 / r0 * 100, 0)}%です。',
+            f'Product revenue was {usd(p0)["en"]}, {sign(change(p0, p2))} from {usd(p2)["en"]} a year ago and {sign(change(p0, p1), 0)} from {usd(p1)["en"]} last quarter. Products are about {q(p0 / r0 * 100, 0)}% of total revenue.'),
+        sec('good', f'製品の売上から製品の原価を引いた利益率は約{pc(pm0)}で、前期の約{pc(pm1)}から{"上がりました" if pm0 > pm1 else "下がりました" if pm0 < pm1 else "変わりません"}。',
+            f'Product revenue minus product cost gives a margin of about {pc(pm0)}, versus about {pc(pm1)} last quarter.'),
+        sec('watch', '売上は四半期ごとに振れることがあります。' + (f'{dip[0]}には前の四半期の{usd(dip[1])["ja"]}から{usd(dip[2])["ja"]}に減りました。' if dip else ''),
+            'Revenue can swing from quarter to quarter.' + (f' In {dip[0]} it fell from {usd(dip[1])["en"]} to {usd(dip[2])["en"]}.' if dip else '')),
+        sec('view', f'サービスの売上は{usd(sv.values[0])["ja"]}で、前期の{usd(sv.values[1])["ja"]}とほぼ同じです。製品の伸びが後からサービスの伸びにつながるかを見ていきます。' if abs(change(sv.values[0], sv.values[1])) < 5 else
+            f'サービスの売上は{usd(sv.values[0])["ja"]}で、前期は{usd(sv.values[1])["ja"]}でした。製品の伸びが後からサービスの伸びにつながるかを見ていきます。',
+            f'Service revenue was {usd(sv.values[0])["en"]}' + (', about the same as ' if abs(change(sv.values[0], sv.values[1])) < 5 else ', versus ') + f'{usd(sv.values[1])["en"]} last quarter. Whether product growth later feeds service growth is worth watching.')])
+    d = r0 - r1
+    ggm = f['guidanceGm']
+    ni, oi = f['netIncome'], f['opIncome']
+    flat = abs(gm.values[0] - gm.values[1]) < 1
+    ev.add('summary.cards.change.sections[1]', ni)
+    ev.add('summary.cards.change.sections[1]', epsg)
+    ev.add('summary.cards.change.sections[2]', ggm)
+    changes = card(f'売上は前期比 {sign(qoq)}、調整後粗利益率は' + ('ほぼ横ばい' if flat else '上昇' if gm.values[0] > gm.values[1] else '低下'),
+                   f'Revenue {sign(qoq)} QoQ, adjusted gross margin ' + ('about flat' if flat else 'higher' if gm.values[0] > gm.values[1] else 'lower'), [
+        chip('gold' if flat else tone(gm.values[0] - gm.values[1]), f'調整後粗利益率 {pc(gm.values[1])} → {pc(gm.values[0])}', f'Adj. gross margin {pc(gm.values[1])} → {pc(gm.values[0])}'),
+        chip(tone(om.values[0] - om.values[1]), f'調整後営業利益率 {pc(om.values[1])} → {pc(om.values[0])}', f'Adj. operating margin {pc(om.values[1])} → {pc(om.values[0])}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後粗利益率は{pc(gm.values[1])}から{pc(gm.values[0])}、調整後営業利益率は{pc(om.values[1])}から{pc(om.values[0])}になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Adjusted gross margin went from {pc(gm.values[1])} to {pc(gm.values[0])}, and the adjusted operating margin from {pc(om.values[1])} to {pc(om.values[0])}.'),
+        sec('good', f'GAAPの純利益は{usd(ni.values[0])["ja"]}で、前年同期は{usd(ni.values[2])["ja"]}でした。GAAPのEPSは{ps(epsg.values[0])["ja"]}、調整後EPSは{ps(eps.values[0])["ja"]}です。',
+            f'GAAP net income was {usd(ni.values[0])["en"]}, versus {usd(ni.values[2])["en"]} a year ago. GAAP EPS was {ps(epsg.values[0])["en"]} and non-GAAP EPS {ps(eps.values[0])["en"]}.'),
+        sec('watch', ('粗利益率はほとんど動いておらず、利益の伸びの多くは売上の増加によるものです。' if flat else '粗利益率の動きが利益を左右しています。') + f'会社の通年の調整後粗利益率の見通しも約{ggm.raws[0]}%です。',
+            ('The gross margin barely moved, so most of the profit gain came from higher sales.' if flat else 'Gross margin moves are shaping profit.') + f" The company's full-year non-GAAP gross margin outlook is about {ggm.raws[0]}%."),
+        sec('means', f'粗利益率が約{ggm.raws[0]}%のままなら、利益はおおむね売上に合わせて伸びることになります。', f'If the gross margin stays near {ggm.raws[0]}%, profit will grow roughly in line with sales.')])
+    ca, rc, cash, debt, capex = f['contractAssets'], f['receivables'], f['cash'], f['recourseDebt'], f['capex']
+    cons = [f[k] for k in ('considerationCurrent', 'considerationLong') if k in f]
+    cons_total = sum(x.values[0] for x in cons) if cons else None
+    for k in ('cfo', 'capex'):
+        ev.add('summary.cards.caution.sections[0]', f[k])
+    ev.add('summary.cards.caution.sections[1]', ca)
+    ev.add('summary.cards.caution.sections[1]', rc)
+    for x in cons:
+        ev.add('summary.cards.caution.sections[1]', x)
+    ev.add('summary.cards.caution.sections[3]', cash)
+    ev.add('summary.cards.caution.sections[3]', debt)
+    rc0, rc1 = Decimal(rc.values[0]) / 1000, Decimal(rc.values[1]) / 1000
+    neg = cfo.values[0] < 0
+    caution = card('利益は出ているが、営業キャッシュフローはマイナス' if neg else '利益に比べて現金の入りが少ない', 'Profitable, but operating cash flow was negative' if neg else 'Cash lags profit', [
+        chip(tone(cfo.values[0]), f'営業キャッシュフロー {usd(cfo.values[0])["ja"]}', f'Operating cash flow {usd(cfo.values[0])["en"]}'),
+        chip(tone(ca.values[1] - ca.values[0]), f'契約資産 {usd(ca.values[1])["ja"]} → {usd(ca.values[0])["ja"]}', f'Contract assets {usd(ca.values[1])["en"]} → {usd(ca.values[0])["en"]}'),
+        chip('gold', f'設備投資 {usd(-capex.values[0])["ja"]}', f'Capex {usd(-capex.values[0])["en"]}')], [
+        sec('happened', f'営業キャッシュフローは{usd(cfo.values[0])["ja"]}で、前期の{usd(cfo.values[1])["ja"]}から{"悪化" if cfo.values[0] < cfo.values[1] else "改善"}しました。設備投資は前期の{usd(-capex.values[1])["ja"]}から{usd(-capex.values[0])["ja"]}になりました。',
+            f'Operating cash flow was {usd(cfo.values[0])["en"]}, versus {usd(cfo.values[1])["en"]} last quarter. Capital spending went from {usd(-capex.values[1])["en"]} to {usd(-capex.values[0])["en"]}.'),
+        sec('watch', f'契約資産(売上には計上したがまだ請求できないもの)は前年度末の{usd(ca.values[1])["ja"]}から{usd(ca.values[0])["ja"]}に、売掛金は{usd(rc1)["ja"]}から{usd(rc0)["ja"]}に増えました。'
+            + (f'新しい「顧客への対価の資産」も合計{usd(cons_total)["ja"]}あります。' if cons_total else ''),
+            f'Contract assets (revenue booked but not yet billable) went from {usd(ca.values[1])["en"]} at the prior year-end to {usd(ca.values[0])["en"]}. Receivables went from {usd(rc1)["en"]} to {usd(rc0)["en"]}'
+            + (f', and a new "customer consideration asset" totals {usd(cons_total)["en"]}.' if cons_total else '.')),
+        sec('means', '利益が計上されてから現金になるまでに時間がかかっています。これが続くと、成長に必要な資金を借入や株式で賄う割合が増えるかもしれません。',
+            'Profit is reaching the bank later than it is reported. If that persists, more of the growth may need to be funded with debt or stock.'),
+        sec('view', f'現金は{usd(cash.values[0])["ja"]}あり、すぐに資金が足りなくなる状況ではありません。返済義務のある借入は{usd(debt.values[0])["ja"]}です。次の決算で、契約資産が現金に変わり、営業キャッシュフローがプラスに戻るかを確かめます。',
+            f'Cash of {usd(cash.values[0])["en"]} means there is no near-term shortage (recourse debt is {usd(debt.values[0])["en"]}). The next report will show whether contract assets convert to cash and operating cash flow turns positive.')])
+    g, go, ge, raises = f['guidanceRevenue'], f['guidanceOpIncome'], f['guidanceEps'], f.get('raises')
+    ev.add('summary.cards.next.sections[0]', g)
+    ev.add('summary.cards.next.sections[0]', go)
+    if raises:
+        ev.add('summary.cards.next.sections[0]', raises)
+    nth = {'first': ('1', 'first'), 'second': ('2', 'second'), 'third': ('3', 'third'), 'fourth': ('4', 'fourth')}.get(raises.values[0]) if raises else None
+    ytd = year_to_date(r0, r1, previous, int(previous['periodQuarter']) % 4 + 1) if previous else None
+    nxt = card(f'通年の見通しを今年{nth[0]}回目の引き上げ' if nth else '通年の見通しを引き上げ', f'Full-year outlook raised for the {nth[1]} time this year' if nth else 'Full-year outlook raised', [
+        chip('gold', f'通年の売上 {usd(g.values[0])["ja"]}〜{usd(g.values[1])["ja"]}', f'Full-year revenue ${g.raws[0]}–{g.raws[1]}B'),
+        chip('gold', f'調整後粗利益率 約{ggm.raws[0]}%', f'Non-GAAP gross margin ~{ggm.raws[0]}%'),
+        chip('gold', f'調整後EPS {ps(ge.values[0])["ja"]}〜{ps(ge.values[1])["ja"]}', f'Non-GAAP EPS {ps(ge.values[0])["en"]}–{ge.raws[1]}')], [
+        sec('happened', f'会社は通年の見通しを、売上{usd(g.values[0])["ja"]}〜{usd(g.values[1])["ja"]}、調整後営業利益{usd(go.values[0])["ja"]}〜{usd(go.values[1])["ja"]}に引き上げました。'
+            + (f'CFOによると、今年{nth[0]}回目の引き上げです。' if nth else '') + '四半期の見通しは出していません。',
+            f'The company raised its full-year outlook to revenue of ${g.raws[0]}–{g.raws[1]}B and non-GAAP operating income of ${go.raws[0]}M–{go.raws[1]}M'
+            + (f', the {nth[1]} raise this year according to the CFO.' if nth else '.') + ' It gives no quarterly outlook.'),
+        sec('means', (f'年初からの売上は約{usd(ytd)["ja"]}なので、見通しから逆算すると第4四半期の売上は約{usd(g.values[0] - ytd)["ja"]}〜{usd(g.values[1] - ytd)["ja"]}になります。' if ytd else '通年の見通しから、残りの四半期の売上の水準がわかります。'),
+            (f'Year-to-date revenue was about {usd(ytd)["en"]}, so the outlook implies fourth-quarter revenue of roughly {usd(g.values[0] - ytd)["en"]}–{usd(g.values[1] - ytd)["en"]}.' if ytd else 'The full-year outlook implies the level of the remaining quarter.')),
+        sec('view', '見通しは会社の計画で、実績ではありません。第4四半期の売上をこの幅と比べ、キャッシュフローの回復と合わせて確かめます。',
+            "The outlook is the company's plan, not a result. Watch Q4 revenue against this range together with the cash flow recovery.")])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前年同期の約{q(r0 / r2, 1)}倍、前期比{sign(qoq, 0)}でした。燃料電池システムの製品売上({usd(p0)["ja"]})が伸びをけん引しました。',
+          f'Revenue was {usd(r0)["en"]}, about {q(r0 / r2, 1)} times a year ago and {sign(qoq, 0)} from the previous quarter. Product sales of fuel-cell systems ({usd(p0)["en"]}) drove the growth.'),
+        c(f'利益は大きく改善し、GAAPの営業利益は{usd(oi.values[0])["ja"]}、調整後営業利益率は{pc(om.values[0])}でした。', f'Profit improved sharply: GAAP operating income was {usd(oi.values[0])["en"]} and the non-GAAP operating margin was {pc(om.values[0])}.'),
+        c(f'ただし営業キャッシュフローは{usd(cfo.values[0])["ja"]}でした。' + ('利益はまだ現金になっていません。' if neg else ''), f'Operating cash flow, however, was {usd(cfo.values[0])["en"]}.' + (' The profit has not yet turned into cash.' if neg else ''))]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be}
