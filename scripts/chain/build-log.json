@@ -2,10 +2,10 @@
  "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806): a map is published only with five or more companies whose relationship is quoted from an official filing or document. Statuses: ready, below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than five verified companies; reason recorded), not_attempted.",
  "updated": "2026-11-26",
  "counts": {
-  "ready": 1037,
+  "ready": 1040,
   "below_five": 9,
   "skipped": 7,
-  "not_attempted": 324
+  "not_attempted": 321
  },
  "tickers": {
   "A": {
@@ -6164,9 +6164,47 @@
    "in_universe": true
   },
   "PNC": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "OLN",
+     "name": "Olin",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/74303/000007430326000027/oln-20251231.htm",
+     "label": "Olin 10-K (FY2025)"
+    },
+    {
+     "id": "HLIO",
+     "name": "Helios Technologies",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1024795/000119312526087747/hlio-20260103.htm",
+     "label": "Helios Technologies 10-K (FY2025)"
+    },
+    {
+     "id": "ROAD",
+     "name": "Construction Partners",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1718227/000162828026075744/road-20260930.htm",
+     "label": "Construction Partners 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "MSA",
+     "name": "MSA Safety",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/66570/000006657026000005/ex10xamendno2to2ndamende.htm",
+     "label": "MSA Safety agreement filed with its 10-K (FY2025)"
+    },
+    {
+     "id": "SAH",
+     "name": "Sonic Automotive (EchoPark)",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1043509/000162828026010570/sah-20251231.htm",
+     "label": "Sonic Automotive 10-K (FY2025)"
+    }
+   ]
   },
   "PNFP": {
    "companies": 5,
@@ -7840,9 +7878,47 @@
    "in_universe": true
   },
   "USB": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "PII",
+     "name": "Polaris",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/931015/000162828026008033/pii-20251231.htm",
+     "label": "Polaris 10-K (FY2025)"
+    },
+    {
+     "id": "GGG",
+     "name": "Graco",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288826000081/ggg-20251226.htm",
+     "label": "Graco 10-K (FY2025)"
+    },
+    {
+     "id": "TJX",
+     "name": "The TJX Companies",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/109198/000010919826000008/tjx-20260131.htm",
+     "label": "TJX 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "GMED",
+     "name": "Globus Medical",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1237831/000162828026011209/gmed-20251231.htm",
+     "label": "Globus Medical 10-K (FY2025)"
+    },
+    {
+     "id": "NDLS",
+     "name": "Noodles & Company",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1275158/000127515826000021/ndls-20251230.htm",
+     "label": "Noodles & Company 10-K (FY2025)"
+    }
+   ]
   },
   "USFD": {
    "companies": 8,
@@ -8543,9 +8619,47 @@
    "in_universe": true
   },
   "ZION": {
-   "status": "not_attempted",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found"
+   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
+   "companies": 5,
+   "added_2026_11_26": [
+    {
+     "id": "SYY",
+     "name": "Sysco",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/96021/000009602125000099/exhibit103sysco2025amendme.htm",
+     "label": "Sysco credit amendment filed with its 10-K (FY ended Jun 2025)"
+    },
+    {
+     "id": "LION",
+     "name": "Lionsgate Studios",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/2052959/000205295926000049/exhibit1027amendmentno5.htm",
+     "label": "Lionsgate Studios credit amendment filed with its 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "NRP",
+     "name": "Natural Resource Partners",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1171486/000143774926006147/nrp20251231_10k.htm",
+     "label": "Natural Resource Partners 10-K (FY2025)"
+    },
+    {
+     "id": "VREX",
+     "name": "Varex Imaging",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1681622/000168162225000108/var-20251003.htm",
+     "label": "Varex Imaging 10-K (FY ended Sep 2025)"
+    },
+    {
+     "id": "PACS",
+     "name": "PACS Group",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/2001184/000200118425000068/exhibit1013-truist_pacsxfi.htm",
+     "label": "PACS Group credit amendment filed with its 10-K (FY2024)"
+    }
+   ]
   },
   "ZM": {
    "companies": 12,

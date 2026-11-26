@@ -797,6 +797,7 @@ import c_plus from "../../data/chain/PLUS.json" with { type: "json" };
 import c_plxs from "../../data/chain/PLXS.json" with { type: "json" };
 import c_pm from "../../data/chain/PM.json" with { type: "json" };
 import c_pmt from "../../data/chain/PMT.json" with { type: "json" };
+import c_pnc from "../../data/chain/PNC.json" with { type: "json" };
 import c_pnfp from "../../data/chain/PNFP.json" with { type: "json" };
 import c_pnr from "../../data/chain/PNR.json" with { type: "json" };
 import c_pnw from "../../data/chain/PNW.json" with { type: "json" };
@@ -1043,6 +1044,7 @@ import c_unp from "../../data/chain/UNP.json" with { type: "json" };
 import c_ups from "../../data/chain/UPS.json" with { type: "json" };
 import c_upwk from "../../data/chain/UPWK.json" with { type: "json" };
 import c_uri from "../../data/chain/URI.json" with { type: "json" };
+import c_usb from "../../data/chain/USB.json" with { type: "json" };
 import c_usfd from "../../data/chain/USFD.json" with { type: "json" };
 import c_uthr from "../../data/chain/UTHR.json" with { type: "json" };
 import c_uti from "../../data/chain/UTI.json" with { type: "json" };
@@ -1140,6 +1142,7 @@ import c_zbh from "../../data/chain/ZBH.json" with { type: "json" };
 import c_zbra from "../../data/chain/ZBRA.json" with { type: "json" };
 import c_zd from "../../data/chain/ZD.json" with { type: "json" };
 import c_zeta from "../../data/chain/ZETA.json" with { type: "json" };
+import c_zion from "../../data/chain/ZION.json" with { type: "json" };
 import c_zm from "../../data/chain/ZM.json" with { type: "json" };
 import c_zs from "../../data/chain/ZS.json" with { type: "json" };
 import c_zto from "../../data/chain/ZTO.json" with { type: "json" };
@@ -1948,6 +1951,7 @@ const available: Record<string, ChainMapData> = {
   PLXS: c_plxs as ChainMapData,
   PM: c_pm as ChainMapData,
   PMT: c_pmt as ChainMapData,
+  PNC: c_pnc as ChainMapData,
   PNFP: c_pnfp as ChainMapData,
   PNR: c_pnr as ChainMapData,
   PNW: c_pnw as ChainMapData,
@@ -2194,6 +2198,7 @@ const available: Record<string, ChainMapData> = {
   UPS: c_ups as ChainMapData,
   UPWK: c_upwk as ChainMapData,
   URI: c_uri as ChainMapData,
+  USB: c_usb as ChainMapData,
   USFD: c_usfd as ChainMapData,
   UTHR: c_uthr as ChainMapData,
   UTI: c_uti as ChainMapData,
@@ -2291,6 +2296,7 @@ const available: Record<string, ChainMapData> = {
   ZBRA: c_zbra as ChainMapData,
   ZD: c_zd as ChainMapData,
   ZETA: c_zeta as ChainMapData,
+  ZION: c_zion as ChainMapData,
   ZM: c_zm as ChainMapData,
   ZS: c_zs as ChainMapData,
   ZTO: c_zto as ChainMapData,
