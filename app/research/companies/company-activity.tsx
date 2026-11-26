@@ -55,10 +55,10 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const [checkedAt, setCheckedAt] = useState<string | null>(sample?.checkedAt ?? null);
   const ja = lang === "ja";
   const [open, setOpen] = useState(false);
-  // NEW marks and the blinking dot/badge follow two rules: an item that appeared
+  // New-row dots (no NEW label, owner 11/26) and the blinking dot/badge follow two rules: an item that appeared
   // after the page opened, or one published within the hour and found promptly
   // (owner, Oct 14: MU showed many fresh items but nothing blinked). Opening
-  // clears the blink and badge; closing clears the NEW marks.
+  // clears the blink and badge; closing clears the new-row dots.
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [dismissed, setDismissed] = useState<ReadonlySet<string>>(new Set());
   const [acknowledged, setAcknowledged] = useState<ReadonlySet<string>>(new Set());
@@ -136,7 +136,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const status = hasFresh ? (ja ? "新着あり" : "New") : failed ? (ja ? "再接続中" : "Reconnecting") : paused ? (ja ? "一時停止" : "Paused") : data ? (ja ? "自動更新" : "Auto-updating") : (ja ? "接続中" : "Connecting");
   const toggle = () => {
     if (!open) { setAcknowledged(new Set(marked)); if (live) markSeen(ticker); }                          // opening: blink and badge go
-    else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: NEW marks go
+    else { setDismissed(previous => new Set([...previous, ...marked])); setUnread(new Set()); } // closing: the new-row dots go
     setOpen(!open);
   };
   // A time the source never stated is never shown as a publication time.
@@ -145,7 +145,7 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
   const item = (row: Row) => <article key={row.id} className={`${styles.item} ${marked.has(row.id) ? styles.unread : ""}`}>
     <span className={styles.when}>{timeCell(row, lang)}</span><span className={styles.node} aria-hidden="true"/>
     <div className={styles.entry}>
-      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{marked.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
+      <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span></div>
       {row.wire
         ? <><p className={styles.headline} lang={lang}>{full ? <a href={row.wire.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a> : row.title}</p><p className={styles.src}>{wireLabel(row.wire)}</p></>
         : <NewsStory lang={lang} label={row.label ?? ""} title={row.title} body={row.body} publication={detected(row, ja)}/>}

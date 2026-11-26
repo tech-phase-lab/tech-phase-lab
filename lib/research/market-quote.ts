@@ -168,8 +168,10 @@ export function extendedIsCurrent(extended: { asOf: string; session: "pre" | "po
   return marketPhase(new Date(now)) === extended.session && easternDay.format(at) === easternDay.format(now);
 }
 
-export type MarketFacts = { eps: number | null; marketCap: number | null; dividendYield: number | null; nextEarnings: string | null };
-export type StatFacts = Omit<MarketFacts, "nextEarnings">;
+/** `nextEarningsKnown`: the date was looked up (the site's calendar, or a provider answer read now or kept from earlier). With no date that
+ * means the company has not announced one yet (未発表 / TBA); without it the date could not be read and the card shows "—" (owner, 11/26). */
+export type MarketFacts = { eps: number | null; marketCap: number | null; dividendYield: number | null; nextEarnings: string | null; nextEarningsKnown?: boolean };
+export type StatFacts = Omit<MarketFacts, "nextEarnings" | "nextEarningsKnown">;
 /** True when the statistics carry at least one figure the card shows; an answer without any is never stored as a valid one (QA, Nov 25). */
 export const hasStatFacts = (value: StatFacts | null | undefined): value is StatFacts => !!value && (value.eps !== null || value.marketCap !== null || value.dividendYield !== null);
 export function parseStatistics(raw: unknown, ticker: string): StatFacts | null {
@@ -209,6 +211,9 @@ export const dateJa = (iso: string | null, lang: "ja" | "en" = "ja") => {
   if (!m) return "—";
   return lang === "ja" ? `${Number(m[1])}月${Number(m[2])}日` : new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 };
+/** 次回決算: the date when announced, 未発表 / TBA when the lookup found none, "—" when it could not be read. */
+export const nextEarningsText = (facts: Pick<MarketFacts, "nextEarnings" | "nextEarningsKnown"> | null | undefined, lang: "ja" | "en" = "ja") =>
+  facts?.nextEarnings ? dateJa(facts.nextEarnings, lang) : facts?.nextEarningsKnown ? (lang === "ja" ? "未発表" : "TBA") : "—";
 /** Where the price sits in its 52-week range, 0–100. */
 export function rangePosition(price: number, low: number | null, high: number | null): number | null {
   if (low === null || high === null || !(high > low)) return null;

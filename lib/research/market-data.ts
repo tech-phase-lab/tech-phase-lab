@@ -231,7 +231,8 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { c
   const value = stats && hasStatFacts(stats.value) ? stats.value : null;
   // A stored date that has passed is not "next" any more.
   const provider = earnings?.value && earnings.value >= today ? earnings.value : null;
-  return { eps: value?.eps ?? null, marketCap: value?.marketCap ?? null, dividendYield: value?.dividendYield ?? null, nextEarnings: own ?? provider, complete: value !== null };
+  return { eps: value?.eps ?? null, marketCap: value?.marketCap ?? null, dividendYield: value?.dividendYield ?? null, nextEarnings: own ?? provider,
+    nextEarningsKnown: own !== null || earnings !== null, complete: value !== null };
 }
 
 /** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the

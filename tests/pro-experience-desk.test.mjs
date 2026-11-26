@@ -86,8 +86,8 @@ test("desk sample: ひとりごと first; the banner comes down after 1 s with t
     assert.equal(banner.getAttribute("data-state"), "in");
     assert.match(banner.textContent, /リゼルのひとりごと.*新しいひとりごとが届きました/);
     assert.deepEqual(noteIds(ui), ["sample-note-n1", "sample-note-n2", "sample-note-n3"], "N1 on top, at the same moment");
-    assert.equal(ui.all(".newTag").length, 1, "one NEW");
-    assert.ok(ui.q('[data-note="sample-note-n1"] .newTag'), "NEW only on N1");
+    assert.equal(ui.all(".newTag").length, 0, "no NEW tag (owner, 11/26)");
+    assert.equal(ui.all("[data-fresh]").length, 1, "only N1 is marked fresh");
     assert.ok(ui.q('[data-note="sample-note-n1"]').hasAttribute("data-fresh"), "N1 comes in with the entrance animation");
     const dates = ui.all("[data-note] time").map(time => time.textContent);
     assert.deepEqual(dates, ["2035/03/12 08:52", "2035/03/11 22:15", "2035/03/10 06:32"]);
@@ -98,7 +98,8 @@ test("desk sample: ひとりごと first; the banner comes down after 1 s with t
     assert.equal(ui.q(".banner").getAttribute("data-state"), "out", "goes up after 3 s");
     await ui.tick(400);
     assert.equal(ui.q(".banner"), null);
-    assert.ok(ui.q('[data-note="sample-note-n1"] .newTag'), "NEW stays (the sample's time is fixed)");
+    assert.ok(ui.q('[data-note="sample-note-n1"]').hasAttribute("data-fresh"), "N1 stays fresh (the sample's time is fixed)");
+    assert.doesNotMatch(ui.q('[data-note="sample-note-n1"]').textContent, /NEW/);
   } finally { await ui.unmount(); }
 });
 

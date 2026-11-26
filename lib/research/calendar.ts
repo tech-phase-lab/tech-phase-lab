@@ -350,6 +350,20 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Schedules-Second-Quarter-Fiscal-Year-2027-Financial-Results-Conference-Call/default.aspx",
     note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
   },
+  // Official date notices read on 2026-11-26 (owner, 11/26: the stock cards showed "—" for 次回決算 although these dates were announced;
+  // the provider's earnings list carries no future dates, so the reviewed calendar is where an announced date comes from).
+  {
+    id: "avgo-fq4-2026-call", afterClose: true, ticker: "AVGO", kind: "earnings" as const, title: { ja: "Broadcom 決算説明会（2026年度Q4）", en: "Broadcom fiscal Q4 2026 earnings call" },
+    startsAt: "2026-12-09T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Broadcom IR (press release)",
+    sourceUrl: "https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announce-fourth-quarter-and-fiscal-year-2026",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "mu-fq1-2027-call", ticker: "MU", kind: "earnings" as const, title: { ja: "MU 決算説明会（2027年度Q1）", en: "MU fiscal Q1 2027 earnings call" },
+    startsAt: "2026-12-17T14:30:00-07:00", sourceTimezone: "America/Denver", sourceName: "Micron IR",
+    sourceUrl: "https://investors.micron.com/news/press-release/2026/Micron-Technology-to-Report-Fiscal-First-Quarter-Results-on-December-17-2026/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
   {
     id: "fomc-2026-10-28", kind: "economic" as const, title: { ja: "FOMC 声明発表（会合最終日）", en: "FOMC statement (final day of meeting)" },
     startsAt: "2026-10-28T14:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "Federal Reserve",

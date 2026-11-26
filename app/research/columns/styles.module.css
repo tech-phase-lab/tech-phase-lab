@@ -60,14 +60,12 @@
 .article.note .noteBubble::before{display:none}
 .article.note .meta{display:flex;align-items:center;gap:10px;margin:0 0 12px;font:13px ui-monospace,"SF Mono",monospace;letter-spacing:.06em;color:#a99876}
 .article.note .text{font-size:17px;line-height:1.9}
-.newTag{display:inline-block;padding:2px 11px;border-radius:999px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 12px ui-monospace,monospace;letter-spacing:.1em}
 .article.note.editing{padding-left:0}
 @media(max-width:700px){.article.note{padding-left:58px}.article.note .noteAvatar{width:44px;height:44px}.article.note:not(.editing)::before{left:21px;top:54px}.article.note .noteBubble{padding:16px 14px 14px}}
 .article.note .zone{font-size:11px;margin-left:-6px;color:#7d7766}
-/* Nov 16 (owner): date, time and JST stay on one line; when the row is too narrow, NEW moves under them. The pencil and trash stay at the right. */
+/* Nov 16 (owner): date, time and JST stay on one line. The pencil and trash stay at the right. No NEW tag (owner, 11/26). */
 .article.note .noteBubble>div:first-child{align-items:flex-start}
 .article.note .meta{flex:1 1 auto;min-width:0;min-height:32px;flex-wrap:wrap;align-content:center;column-gap:10px;row-gap:6px}
 .stamp{white-space:nowrap}
-.article.note .newTag{flex:none;white-space:nowrap}
 .article aside.postLock{margin-top:12px;padding-top:10px;font-size:18px;line-height:1;color:#b7ae9e}
 .listLock{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:18px 0 4px;font-size:13px;color:#c9d6d2}.listLock a{color:#a4dfcf}
