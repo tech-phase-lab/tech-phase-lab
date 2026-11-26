@@ -217,7 +217,9 @@ export type SlotStore = {
 /** name: the kind of data; slotMs: how long a copy counts as fresh; staleMs: how old a copy may be when nothing fresher can be had. */
 /** `durable`: the copies are also kept by a DurableStore (the monitor, lib/research/twelve-copies.ts) and read back from it when the
  * cross-instance store has lost them (production, Nov 26: Vercel's runtime cache lost costly copies within hours). */
-export type ReadSpec = { name: string; slotMs: number; staleMs: number; durable?: boolean };
+/** `swr` (speed, Nov 26): when this slot has no copy yet but an earlier one exists, the reader answers with the earlier copy at once and
+ * reads the new slot in the background (the same single read the request would have waited for: no extra provider call). */
+export type ReadSpec = { name: string; slotMs: number; staleMs: number; durable?: boolean; swr?: boolean };
 /** A store that keeps the newest copy per name and key for weeks (a miss or a failure is null; never throws to the reader). */
 export type DurableStore = {
   get(name: string, key: string): Promise<Entry<unknown> | null>;
@@ -232,7 +234,8 @@ const DAILY_MS = 86_400_000;
 function offset(text: string, slotMs: number) { let h = 0x811c9dc5; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h % slotMs; }
 const MEMORY_LIMIT = 20_000;
 
-export function createReader(store: SlotStore, now: () => number = Date.now, durable: DurableStore | null = null) {
+/** `background`: keeps a refresh started for a stale answer running after the answer is sent (the serverless platform's waitUntil). */
+export function createReader(store: SlotStore, now: () => number = Date.now, durable: DurableStore | null = null, background: (work: Promise<unknown>) => void = () => {}) {
   const memory = new Map<string, Entry<unknown>>();
   const inflight = new Map<string, Promise<Entry<unknown> | null>>();
   const id = (spec: ReadSpec, key: string) => `${spec.name}|${key}`;
@@ -296,12 +299,20 @@ export function createReader(store: SlotStore, now: () => number = Date.now, dur
       const f = await fresh<T>(spec, key);
       if (f) return { ...f, fresh: true };
       if (fetch || inflight.has(id(spec, key))) {
-        const got = await startFetch<T>(spec, key, async () => {
+        const run = () => startFetch<T>(spec, key, async () => {
           if (!fetch) return null;
+          // Another instance may have read this slot meanwhile (a background refresh starts a moment after the miss).
+          const filled = await fresh<T>(spec, key);
+          if (filled) return filled;
           const entry = { value: await fetch(), at: now() };
           await save(spec, key, entry);
           return entry;
         });
+        if (spec.swr) {
+          const earlier = await stale<T>(spec, key);
+          if (earlier) { background(run()); return { ...earlier, fresh: false }; }
+        }
+        const got = await run();
         if (got) return { ...got, fresh: true };
       }
       const s = await stale<T>(spec, key);
@@ -315,10 +326,15 @@ export function createReader(store: SlotStore, now: () => number = Date.now, dur
       const wanted = [...new Set(keys)];
       const hits = await Promise.all(wanted.map(k => fresh<T | null>(spec, k)));
       const missing = wanted.filter((k, i) => { if (hits[i]) { out[k] = { ...hits[i]!, fresh: true }; return false; } return true; });
-      const waiting = missing.filter(k => inflight.has(id(spec, k)));
+      // swr: a key with an earlier copy is answered with it at once; its read (already running, or started below) continues in the background.
+      const earlier = spec.swr ? await Promise.all(missing.map(k => stale<T | null>(spec, k))) : [];
+      const answered = new Set<string>();
+      if (spec.swr) missing.forEach((k, i) => { const e = earlier[i]; if (e) { out[k] = { ...e, fresh: false }; answered.add(k); } });
+      const waiting = missing.filter(k => inflight.has(id(spec, k)) && !answered.has(k));
       const age = (k: string) => memory.get(id(spec, k))?.at ?? -Infinity;
       const toFetch = fetchMany ? missing.filter(k => !inflight.has(id(spec, k))).sort((a, b) => age(a) - age(b)).slice(0, Math.max(0, maxFetch)) : [];
       const jobs: Promise<unknown>[] = waiting.map(k => inflight.get(id(spec, k))!.then(e => { if (e) out[k] = { ...e as Entry<T | null>, fresh: true }; }));
+      const later: Promise<unknown>[] = [];
       for (let i = 0; i < toFetch.length; i += chunk) {
         const group = toFetch.slice(i, i + chunk);
         const batch = (async () => {
@@ -328,11 +344,15 @@ export function createReader(store: SlotStore, now: () => number = Date.now, dur
           return at;
         })();
         batch.catch(() => undefined);
-        for (const k of group) jobs.push(startFetch<T | null>(spec, k, async () => {
-          const at = await batch;
-          return memory.get(id(spec, k)) as Entry<T | null> ?? { value: null, at };
-        }).then(e => { if (e) out[k] = { ...e, fresh: true }; }));
+        for (const k of group) {
+          const job = startFetch<T | null>(spec, k, async () => {
+            const at = await batch;
+            return memory.get(id(spec, k)) as Entry<T | null> ?? { value: null, at };
+          });
+          if (answered.has(k)) later.push(job); else jobs.push(job.then(e => { if (e) out[k] = { ...e, fresh: true }; }));
+        }
       }
+      if (later.length) background(Promise.all(later));
       await Promise.all(jobs);
       await Promise.all(wanted.filter(k => !out[k]).map(async k => { const s = await stale<T | null>(spec, k); if (s) out[k] = { ...s, fresh: false }; }));
       return out;

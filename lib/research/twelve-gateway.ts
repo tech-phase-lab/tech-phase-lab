@@ -1,4 +1,5 @@
 import "server-only";
+import { after } from "next/server";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { unstable_cache } from "next/cache";
 import { EMERGENCY_BURST, EMERGENCY_PER_MINUTE, createGovernor, createLeaseGovernor, createReader, creditCost, type Entry, type SlotStore, type Tier } from "./twelve-budget.ts";
@@ -104,4 +105,7 @@ const dataCache: SlotStore = {
   async put(name, key, slot, entry) { await handing.run({ entry }, () => storeFor(name)(key, slot)); },
 };
 // Specs marked `durable` are also kept by the monitor (lib/research/twelve-copies.ts): the runtime cache loses copies within hours.
-export const sharedReader = createReader(dataCache, Date.now, durableCopies);
+/** A refresh started for a stale answer (specs marked `swr`) keeps running after the response is sent (`after`, the platform's waitUntil);
+ * outside a request (the minute job, tests) it simply runs on. */
+const keepRunning = (work: Promise<unknown>) => { try { after(() => work.catch(() => undefined)); } catch { void work.catch(() => undefined); } };
+export const sharedReader = createReader(dataCache, Date.now, durableCopies, keepRunning);

@@ -18,7 +18,8 @@ import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarn
 export const marketDataConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
 
 const call = (path: string, params: Record<string, string>, tier: Tier = "user") => twelveCall(path, params, { tier });
-const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS });
+// swr (speed, Nov 26): the first request of a new slot gets the previous slot's copy at once; the slot's one read runs in the background.
+const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS, swr: true });
 
 async function fetchQuotes(group: string[], tier: Tier = "user"): Promise<Map<string, MarketQuote | null>> {
   const parsed = parseQuotes(await call("quote", { symbol: group.join(","), prepost: "true" }, tier), group);
@@ -94,7 +95,7 @@ async function resolveFresh(id: string, tier: Tier = "user"): Promise<Board> {
   throw new Error(`unresolved ${id}`);
 }
 /** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board a minute. */
-const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS });
+const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS, swr: true });
 async function boardEntry(id: string, fast: boolean): Promise<Board | null> {
   const got = await sharedReader.read<Board>(boardSpec(fast), id, () => resolveFresh(id));
   if (got) resolvedVariant.set(id, got.value.variant);
@@ -349,7 +350,7 @@ export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number;
     await Promise.all(due.map(async job => {
       try {
         if (job.kind === "quote") {
-          const got = await sharedReader.read<Board>(boardSpec(false), job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
+          const got = await sharedReader.read<Board>({ ...boardSpec(false), swr: false }, job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
           if (!got?.fresh) throw new Error("not-read");
           resolvedVariant.set(job.id, got.value.variant);
           entries[boardJobKey(job)] = { at: got.at, quote: boardQuote(job.id, got.value.quote) };
