@@ -217,7 +217,7 @@ test('job: one plan per entitled member per market date, the owner included; moc
  assert.equal(rows[members.plain].plan.estimate,null); // no q08: no estimate
  // The model saw the day's Shock Gauge, the thermometer stage, the watched close and the rulebook; never another member.
  const ownerInput=inputs.find(i=>i.watched.length);
- assert.equal(ownerInput.shockGauge.items[0].stars,3);assert.match(ownerInput.shockGauge.items[0].moves.ja[0],/TP半導体40 \+3\.4%/);
+ assert.equal(ownerInput.shockGauge.items[0].stars,3);assert.match(ownerInput.shockGauge.items[0].moves.ja[0],/TP半導体40　\+3\.4%/);
  assert.deepEqual(ownerInput.thermometer.map(s=>s.ja),['TP大型株100：平常','TP半導体40：熱い']);
  assert.deepEqual(ownerInput.watched[0],{symbol:'NVDA',close:180,dayChangePct:-5.3,fromReferencePct:-10,buyLine:{dropPct:10,reached:true,distancePct:0},upTarget:null});
  assert.equal(ownerInput.plan.rulebook.ja.length>3,true);

@@ -39,5 +39,5 @@ export async function publicRiskFeed(pool,owner=false,now=new Date()){
  // An editor hiding every story is not proof that there was no relevant news.
  if(row.articles.length&&!articles.length)return{state:'stopped',date:day,articles:[],quotes:[]};
  const quotes=(await pool.query('SELECT value FROM resolute.risk_quotes')).rows.map(r=>parseQuote(r.value)).filter(q=>q.approved&&!quoteIssues(q).length);
- return parseRiskFeed({state:'ready',date:day,articles,quotes});
+ return parseRiskFeed({state:'ready',date:day,articles,quotes},{shownOnly:!owner});
 }

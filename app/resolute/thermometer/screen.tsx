@@ -26,9 +26,11 @@ const temperatureDescriptions = {
   en: ["Low compared with the past", "Slightly low compared with the past", "Near the middle of the historical range", "Slightly high compared with the past", "High compared with the past"],
 } as const;
 const colors = ["#6f93bd", "#8db8ee", "#d8b36a", "#e9a65a", "#e5766a"];
+// The arc's five stages follow the bands (owner, Nov 26 spec §6): 0–5, 5–25, 25–75, 75–95, 95–100 of the history.
+const EDGES = [0, 5, 25, 75, 95, 100];
 function segment(i: number) {
   const point = (r: number, d: number) => `${(150 + r * Math.cos(d * Math.PI / 180)).toFixed(2)} ${(150 - r * Math.sin(d * Math.PI / 180)).toFixed(2)}`;
-  const start = 180 - i * 36 - 1.5, end = 180 - (i + 1) * 36 + 1.5;
+  const start = 180 - EDGES[i] * 1.8 - (i ? 1 : 0), end = 180 - EDGES[i + 1] * 1.8 + (i < 4 ? 1 : 0);
   return `M${point(124, start)} A124 124 0 0 1 ${point(124, end)} L${point(98, end)} A98 98 0 0 0 ${point(98, start)} Z`;
 }
 // Display samples in the owner preview (not market data): TP大型株100 hot, TP半導体40 slightly cool, both above the average.
@@ -74,7 +76,7 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
     <div><dt>{t("何を見ている？", "What do we measure?")}</dt><dd>{t("次の2つの指標から、いまの相場の位置を見ています。", "We use two measures to show where the market stands.")}</dd></div>
     <div><dt>{t("① 高値からどれくらい下がったか", "1. How far prices have fallen from their high")}</dt><dd>{t("直近252営業日（約1年）の最も高い終値から、現在の終値が何％下がったかを見ます。", "The percentage decline from the highest closing price in the last 252 trading sessions (about one year).")}</dd></div>
     <div><dt>{t("② 長期の平均からどれくらい離れているか", "2. How far prices are from their long-term average")}</dt><dd>{t("直近200営業日の終値の平均（200日移動平均）と比べ、現在の終値が何％高いか・低いかを見ます。", "How far the latest close is above or below the average closing price over the last 200 trading sessions (the 200-day moving average).")}</dd></div>
-    <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を過去10年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。TP大型株100とTP半導体40は別々に計算します。", "Each measure is compared with the preceding 10 years. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. TP Large Cap 100 and TP Semiconductor 40 are calculated separately.")}</dd></div>
+    <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を、2008年の金融危機を含む過去約20年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。TP大型株100とTP半導体40は別々に計算します。", "Each measure is compared with about the past 20 years, including the 2008 financial crisis. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. TP Large Cap 100 and TP Semiconductor 40 are calculated separately.")}</dd></div>
     <div><dt>{t("TP大型株100とは？", "What is TP Large Cap 100?")}</dt><dd>{t("米国の大型株100銘柄（NASDAQが公表する100銘柄）の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄の見直しは年1〜2回です。", "Tech Phase's own figure: an equal-weighted average of 100 large U.S. stocks, the list Nasdaq publishes. The list is reviewed once or twice a year.")}</dd></div>
     <div><dt>{t("TP半導体40とは？", "What is TP Semiconductor 40?")}</dt><dd>{t("米国上場の半導体関連企業のうち、時価総額が大きい40社の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄は3・6・9・12月に見直します。", "Tech Phase's own figure: an equal-weighted average of the 40 largest U.S.-listed semiconductor companies by market cap. The list is reviewed in March, June, September and December.")}</dd></div>
     <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>

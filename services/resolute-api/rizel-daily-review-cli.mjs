@@ -6,6 +6,11 @@ import {createNewsReader,withSourceRetry} from './rizel-news-source.mjs';
 import {prepareDailyReview,dailyReviewFailure,reselectStoredDay,selectDailyCandidates,previewSelection} from './rizel-daily-review.mjs';
 import {windowHours} from './risk-job.mjs';
 import {createMovesReader,withThermometerFallback} from './risk-moves.mjs';
+import {judgeDay} from './shock-judge.mjs';
+import {sendOwnerShockMail} from './shock-owner-mail.mjs';
+import {createClerkClient} from '@clerk/backend';
+// The day's AI judgement of the stars (owner, Nov 26) is on unless RESOLUTE_SHOCK_AI_JUDGE=false; it falls back to the numeric rule.
+const judge=process.env.RESOLUTE_SHOCK_AI_JUDGE==='false'?null:judgeDay;
 
 // Standalone worker, disabled by default. Never start an HTTP listener or timer.
 if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
@@ -33,8 +38,15 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
    if(r.state!=='reselect-off')console.log(JSON.stringify({event:'RIZEL_SHOCK_GAUGE_RESELECT',...r}));}
   catch(error){const outcome=dailyReviewFailure(error,readFeed?.stats);console.error(JSON.stringify({...outcome.line,event:'RIZEL_SHOCK_GAUGE_RESELECT_FAILED'}));}
   const result=await prepareDailyReview({enabled:true,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,
-   readFeed,publishPool:budgetPool,readMoves});
+   readFeed,publishPool:budgetPool,readMoves,judge});
   console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW',...result,...(readFeed.stats.attempts?{sourceAttempts:readFeed.stats.attempts}:{})}));
+  // The owner's morning mail (off unless RESOLUTE_SHOCK_OWNER_MAIL_ENABLED=true). Only a fixed state is logged, never the address.
+  if(['ready','none-today','no-candidates'].includes(result.state)){
+   try{const secretKey=process.env.RESOLUTE_MAIL_CLERK_SECRET_KEY;
+    const mail=await sendOwnerShockMail({pool:budgetPool,day:result.day,clerk:secretKey?createClerkClient({secretKey}):null});
+    console.log(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,...mail}));}
+   catch{console.error(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,state:'failed'}));}
+  }
   }
  }catch(error){
   const outcome=dailyReviewFailure(error,readFeed?.stats);

@@ -11,6 +11,7 @@ import MarketChartCard,{NeedleCard} from './market-chart-card';
 import TodayCard,{useTodayMember} from './today-card';
 import ds from '../diagnosis.module.css';
 import {ShockCards,ShockList} from './shock-section';
+import {useImpactMember} from '../features/use-impact-member';
 import {AlertsPanel,RuleTiles} from './rules-alerts';
 import { useThermometerSnapshot } from '../use-thermometer-snapshot';
 import { useDesktop } from '../use-desktop';
@@ -39,6 +40,8 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  // First paint (#869): the home is drawn once, in its final order, when the day's feed and the member's own lines (and the AI
  // plan, asked at the same time) are known. Until then the RESOLUTE loader stays, the same one the access check shows.
  const member=useTodayMember(!locked,!displaySample);
+ // あなたへの影響 (owner, Nov 26 spec §4): the member's holdings (this device), watchlist and diagnosis sector, read on the device.
+ const impactMember=useImpactMember(!locked&&!displaySample);
  const firstPaint=status!=='loading'&&(locked||!available||member!==undefined);
  // What this tab already knows is shown at once instead of a dash (owner, Nov 17); both are refreshed right after.
  const knownSettings=useRemembered<NotificationSnapshot>('notifications'),knownPlan=useRemembered<PlanSnapshot>('plan');
@@ -63,7 +66,7 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  const today=!locked&&available?<TodayCard locale={locale} feed={feed} snapshot={thermometerSnapshot} member={member} pc={pc}/>:null;
  const shock=<div id={SHOCK_GAUGE_ANCHOR} className={`${s.card} ${pc?s.shockPc:''} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale} compact/></h2>{!pc&&!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?'Details →':'詳細 →'}</Link>:null}</div>
   {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><Link className={s.primary} href={renewalHref(locale)}>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</Link></div>:<>
-   {available&&feed.articles.length>0?(pc?<ShockCards feed={feed} locale={locale} sample={displaySample}/>:<ShockList feed={feed} locale={locale} sample={displaySample}/>):<p role="status">{riskStatus(en,status,feed?.state)}</p>}
+   {available&&feed.articles.length>0?(pc?<ShockCards feed={feed} locale={locale} sample={displaySample} member={impactMember}/>:<ShockList feed={feed} locale={locale} sample={displaySample} member={impactMember}/>):<p role="status">{riskStatus(en,status,feed?.state)}</p>}
    {displaySample?<p className={s.notice}>{feed?.date} · {en?'Display sample':'表示見本'}</p>:null}
   </>}
  </div>;

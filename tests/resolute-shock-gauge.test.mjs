@@ -59,8 +59,8 @@ test('both indices are measured on that close only, the stronger sets the stars;
  assert.equal(applyMarketReaction(article,{'2026-10-12':{sox:{changePercent:-9}}}).stars,null); // a move without its typical move and breadth is not measured
  const filled=applyMarketReaction(article,{'2026-10-12':{sox:mv(-3.24,1.08,34,40),nas100:mv(-1.6,0.8,70,100),fear:{level:30,previousLevel:27}}});
  assert.deepEqual(filled.market,{index:'sox',session:'2026-10-12',reading:{from:'2026-10-09',sox:{changePercent:-3.2,multiple:3,same:34,total:40},nas100:{changePercent:-1.6,multiple:2,same:70,total:100},fearChange:11}});
- assert.equal(filled.stars,4); // TP半導体40 ★4, TP大型株100 ★3: the stronger
- assert.equal(parseRiskArticle(filled).stars,4);
+ assert.equal(filled.stars,3); // the owner's table: TP半導体40 −3.2% ★3, TP大型株100 −1.6% ★2: the stronger; fear +11% adds nothing
+ assert.equal(parseRiskArticle(filled).stars,3);
  assert.equal(applyMarketReaction(filled,{'2026-10-12':{sox:mv(8,0.5)}}),filled); // never re-scored
 });
 

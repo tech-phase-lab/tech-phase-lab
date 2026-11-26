@@ -1,6 +1,6 @@
 import { usMarketSession } from '../research/us-market-session.ts';
 import { collectThermometer, type ThermometerProviderConfig } from './thermometer-provider.ts';
-import { THERMOMETER_VERSION, validSessionDate } from './thermometer.ts';
+import { THERMOMETER_VERSIONS, validSessionDate } from './thermometer.ts';
 import { gaugeReading, type DailyMoveReading, type ShockReadingView, type ThermometerSnapshot } from './thermometer-view.ts';
 import type { BigDrop, SimilarDay, SimilarHistory } from './similar-days.ts';
 
@@ -32,7 +32,7 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
     const r = source[id];
     if (r?.status === 'unavailable') { empty[id] = {status:'unavailable',reason:reasons.has(r.reason)?r.reason:'invalid-data'}; continue; }
     const reading = gaugeReading(source,id);
-    if (!reading || reading.version !== THERMOMETER_VERSION || !validSessionDate(reading.referenceFrom) || reading.referenceFrom >= expected || !Number.isInteger(reading.observations) || reading.observations < 2400 || reading.drawdownPercent > 0 || reading.drawdownPercent <= -100 || reading.deviationPercent <= -100 || [reading.drawdownPercentile,reading.deviationPercentile].some(v=>!Number.isFinite(v)||v<0||v>100)) continue;
+    if (!reading || !THERMOMETER_VERSIONS.includes(reading.version) || !validSessionDate(reading.referenceFrom) || reading.referenceFrom >= expected || !Number.isInteger(reading.observations) || reading.observations < 2400 || reading.drawdownPercent > 0 || reading.drawdownPercent <= -100 || reading.deviationPercent <= -100 || [reading.drawdownPercentile,reading.deviationPercentile].some(v=>!Number.isFinite(v)||v<0||v>100)) continue;
     const {version,index,asOf,referenceFrom,observations,score,band,drawdownPercent,deviationPercent,drawdownPercentile,deviationPercentile} = reading;
     empty[id] = {status:'ready',version,index,asOf,referenceFrom,observations,score,band,drawdownPercent,deviationPercent,drawdownPercentile,deviationPercentile};
   }
@@ -107,7 +107,8 @@ export async function refreshThermometer(db: ThermometerDatabase, config: Thermo
     // The stocks' own moves (single-company Shock Gauge news) are stored beside the snapshot but never served (readThermometer
     // re-sanitizes with safeThermometerSnapshot, which drops them).
     const stocks = safeShockStocks((collected as {shockStocks?: unknown}).shockStocks, session);
-    const snapshot = {...safeThermometerSnapshot(collected,session), ...(stocks ? {shockStocks: stocks} : {})};
+    const intraday = safeShockIntraday((collected as {shockIntraday?: unknown}).shockIntraday, session);
+    const snapshot = {...safeThermometerSnapshot(collected,session), ...(stocks ? {shockStocks: stocks} : {}), ...(intraday ? {shockIntraday: intraday} : {})};
     await db.query('INSERT INTO resolute_thermometer_snapshots (session_date, snapshot) VALUES ($1, $2::jsonb)',[session,JSON.stringify(snapshot)]);
     await db.query('COMMIT');
     return {status:'stored' as const,asOf:session};
@@ -124,7 +125,29 @@ function safeShockReading(raw: unknown, date: string): ShockReadingView | null {
 }
 /** Each rostered stock's own move per session (single-company news): at most 5 sessions on or before the snapshot's own,
  * each move dated on its session with an earlier previous close at most 7 days before and a plausible typical move. */
-export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number}>>;
+export type ShockStocks = Record<string, Record<string, {date: string; previousDate: string; changePercent: number; typicalPercent: number; intradayPercent?: number}>>;
+/** Each basket's intraday extreme per session (Shock Gauge, owner Nov 26): stored only, never served. Same date rules as the
+ * shock map; a reading is kept only when dated on its session with plausible numbers and counts. */
+export type ShockIntraday = Record<string, {nas100: IntradayView | null; sox: IntradayView | null}>;
+type IntradayView = {date: string; previousDate: string; changePercent: number; typicalPercent: number; same: number; total: number};
+/** Stored-only Shock Gauge numbers are kept to two decimals: the stars read them to 0.1, and the snapshot row stays small
+ * (#876: the served snapshot is near the site's 16 KB read limit, so nothing here may grow it). */
+const r2 = (v: number) => Math.round(v * 100) / 100;
+function safeIntraday(raw: unknown, date: string): IntradayView | null {
+  const m = safeMove(raw, date), x = raw as IntradayView;
+  if (!m || !finite(x.typicalPercent, 0.01, 50) || !count(x.same) || !count(x.total) || x.total < 10 || x.same > x.total) return null;
+  return {...m, changePercent: r2(m.changePercent), typicalPercent: r2(x.typicalPercent), same: x.same, total: x.total};
+}
+export function safeShockIntraday(raw: unknown, expected: string): ShockIntraday | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const out: ShockIntraday = {};
+  for (const [date, value] of Object.entries(raw as Record<string, unknown>).slice(-5)) {
+    if (!validSessionDate(date) || date > expected || !value || typeof value !== 'object') continue;
+    const v = value as Record<string, unknown>, day = {nas100: safeIntraday(v.nas100, date), sox: safeIntraday(v.sox, date)};
+    if (day.nas100 || day.sox) out[date] = day;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
 export function safeShockStocks(raw: unknown, expected: string): ShockStocks | undefined {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
   const out: ShockStocks = {};
@@ -133,7 +156,8 @@ export function safeShockStocks(raw: unknown, expected: string): ShockStocks | u
     const day: ShockStocks[string] = {};
     for (const [ticker, m] of Object.entries(value as Record<string, unknown>).slice(0, 300)) {
       const move = /^[A-Z][A-Z0-9.]{0,9}$/.test(ticker) ? safeMove(m, date) : null, typical = (m as {typicalPercent?: unknown})?.typicalPercent;
-      if (move && finite(typical, 0.01, 50)) day[ticker] = {...move, typicalPercent: typical};
+      const intra = (m as {intradayPercent?: unknown})?.intradayPercent;
+      if (move && finite(typical, 0.01, 50)) day[ticker] = {...move, changePercent: r2(move.changePercent), typicalPercent: r2(typical), ...(finite(intra, -99.99, 99.99) ? {intradayPercent: r2(intra)} : {})};
     }
     if (Object.keys(day).length) out[date] = day;
   }

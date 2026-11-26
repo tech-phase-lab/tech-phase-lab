@@ -23,7 +23,7 @@ export function withThermometerFallback(readMoves,apiKey,fetcher=fetch){
   if(!missing.length)return stored;
   const {collectThermometer}=await import('../../lib/resolute/thermometer-provider.ts');
   const latest=[...missing].sort().at(-1),collected=await collectThermometer({enabled:true,apiKey},latest,fetcher);
-  const measured=await readSessionMoves({query:async()=>({rows:[{shock:collected.shock??null,stocks:collected.shockStocks??null}]})},missing);
+  const measured=await readSessionMoves({query:async()=>({rows:[{shock:collected.shock??null,stocks:collected.shockStocks??null,intraday:collected.shockIntraday??null}]})},missing);
   return {...measured,...stored,...Object.fromEntries(missing.filter(s=>measured[s]).map(s=>[s,measured[s]]))};
  };
  read.end=readMoves.end;return read;

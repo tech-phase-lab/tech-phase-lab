@@ -1,0 +1,39 @@
+/* Shock Gauge card parts (owner, Nov 26 spec §3–5). Kept compact: the owner dislikes tall cards. */
+.badgeRow { display:flex; align-items:center; gap:10px; }
+.badgeRow .badge { font-family:var(--serif, serif); font-size:18px; font-weight:600; line-height:1; color:var(--c); border:1px solid color-mix(in srgb,var(--c) 55%,transparent);
+ background:color-mix(in srgb,var(--c) 14%,transparent); border-radius:8px; padding:5px 9px; }
+.badgeRow .stars { color:var(--c); font-size:15px; letter-spacing:.06em; }
+.badgeRow .stars i { font-style:normal; color:#3a465a; }
+
+.impact { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.impactHead { display:flex; align-items:center; gap:8px; min-height:22px; }
+.impactLabel { font-size:12px; color:var(--sub, #9aa8b8); white-space:nowrap; }
+.logos { display:flex; align-items:center; flex:1; min-width:0; }
+.logo { position:relative; width:22px; height:22px; border-radius:50%; border:1.5px solid #0f1726; background:#22304a; padding:0; margin-left:-5px; display:grid; place-items:center;
+ overflow:visible; cursor:pointer; color:#fff; font-size:8px; font-weight:700; }
+.logo:first-child { margin-left:0; }
+.logo img { width:100%; height:100%; border-radius:50%; object-fit:cover; background:#fff; }
+.logo:hover::after { content:attr(title); position:absolute; top:-24px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:11px; font-weight:400; padding:2px 6px;
+ border-radius:6px; background:#0b111b; border:1px solid var(--line, #263447); color:var(--ink, #f1ece1); pointer-events:none; }
+.tip { position:absolute; top:-24px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:11px; font-weight:400; padding:2px 6px; border-radius:6px;
+ background:#0b111b; border:1px solid var(--line, #263447); color:var(--ink, #f1ece1); }
+.logo:hover .tip { display:none; }
+.level { margin-left:auto; font-size:14px; font-weight:700; color:var(--gold2, #f3dfae); white-space:nowrap; }
+.level[data-level="3"] { color:#ff6b74; } .level[data-level="2"] { color:#f0a24a; } .level[data-level="1"] { color:#e0c070; } .level[data-level="0"] { color:#8fb3e0; }
+.impact[data-empty] .level { color:var(--sub, #9aa8b8); font-weight:400; }
+.bar { position:relative; height:6px; border-radius:6px; background:linear-gradient(90deg,#6f8fc8 0%,#c9cfa0 35%,#f0c050 55%,#f39a4a 75%,#ff5a64 100%); }
+.impact[data-empty] .bar { background:#263447; }
+.needle { position:absolute; top:-5px; width:4px; height:16px; margin-left:-2px; border-radius:3px; background:#fff; box-shadow:0 0 8px rgba(255,255,255,.7); }
+.scale { display:grid; grid-template-columns:repeat(4,1fr); font-size:10px; color:var(--sub, #9aa8b8); text-align:center; }
+.emptyNote { margin:2px 0 0; font-size:12px; line-height:1.6; color:var(--sub, #9aa8b8); }
+.emptyNote a { color:var(--gold, #d8b36a); margin-left:.5em; white-space:nowrap; }
+
+.table { width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--line, #263447); border-radius:10px; overflow:hidden; background:rgba(5,9,15,.45);
+ font-size:13px; line-height:1.3; table-layout:auto; }
+.table th, .table td { padding:5px 10px; white-space:nowrap; }
+.table thead th { font-size:10.5px; font-weight:400; color:var(--sub, #9aa8b8); text-align:right; padding-top:5px; padding-bottom:3px; }
+.table tbody th { text-align:left; font-weight:400; color:var(--ink, #f1ece1); }
+.table tbody td { text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:#fff; font-family:ui-monospace,"SFMono-Regular",Menlo,monospace; letter-spacing:-.02em; }
+.table tbody tr + tr > * { border-top:1px solid var(--line, #263447); }
+.table td[data-tone="down"] { color:#ff6b74; } .table td[data-tone="up"] { color:#6fd39a; }
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }

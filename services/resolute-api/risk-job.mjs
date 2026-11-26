@@ -185,9 +185,11 @@ export function validateGeneration(output,candidate,why={}){
  const market=candidateMarket(candidate),measured=market.index!=='company'||!!market.company;
  try{const article=parseRiskArticle({id:candidate.id,url:candidate.url,publishedAt:candidate.publishedAt,market,stars:null,ja,en,quoteId:null,cause:measured?causeOut:null});delete why.reason;return article;}catch{return null;}
 }
-async function callModel(input,instructions,pool,now,fetcher){
- const requestBody={model:'gpt-5.4-mini',store:false,reasoning:{effort:'none'},max_output_tokens:1800,instructions,
- input,text:{format:{type:'json_schema',name:'resolute_news',strict:true,schema:OUTPUT_SCHEMA}}};
+function callModel(input,instructions,pool,now,fetcher){return callJsonModel({input,instructions,name:'resolute_news',schema:OUTPUT_SCHEMA,pool,now,fetcher});}
+/** One budgeted structured call to the model (the same budget reservation as the summaries). */
+export async function callJsonModel({input,instructions,name,schema,pool,now,fetcher,maxTokens=1800}){
+ const requestBody={model:'gpt-5.4-mini',store:false,reasoning:{effort:'none'},max_output_tokens:maxTokens,instructions,
+ input,text:{format:{type:'json_schema',name,strict:true,schema}}};
  const body=serializeBudgetedRequest(requestBody),settle=await reserveAiSpend(pool,now);
  const response=await fetcher('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:`Bearer ${process.env.RESOLUTE_OPENAI_API_KEY}`,'Content-Type':'application/json'},redirect:'error',signal:AbortSignal.timeout(40000),body});
  if(!response.ok)throw Error('MODEL_UNAVAILABLE');const data=await boundedJSON(response,50000);if(data.status!=='completed')throw Error('MODEL_INCOMPLETE');await settle(data.usage);

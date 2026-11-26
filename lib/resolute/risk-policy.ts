@@ -6,54 +6,40 @@
  * Stars are mechanical (lawyer review, Nov 2026): no owner or AI judgment, no prediction.
  * Each story has a scope decided from its headline by fixed rules (lib/resolute/risk-scope.ts): market-wide or
  * semiconductor-sector news is measured on BOTH TP大型株100 and TP半導体40 (owner, Nov 25) and its stars are the stronger of the
- * two; the scope only decides which index is listed first. Before its session's close the story shows no stars ("waiting").
+ * two; the scope only decides which index is listed first. Before its session is measured the story is not shown.
  *
  * Nov 25 (owner, after the SK hynix ★5): a star reflects only the move AFTER publication (risk-market.ts storySession):
  *  - a story published before the U.S. regular open (pre-market, overnight, a weekend or holiday) is measured on that
  *    session, close-to-close;
  *  - a story published during or after regular hours is measured on the NEXT full session (the move that already happened
  *    before the news is never credited to it).
- * Single-company news (a headline naming one company) is measured too, and gets stars only when, on its session, BOTH its
- * own stock moved strongly against its usual move (companyTest.minMultiple) AND its industry basket did (TP半導体40 for chip
- * companies, otherwise TP大型株100; companyTest.industryMinMultiple), the same way. Its stars are then the industry basket's,
- * by the same levels. A company without a measured stock in either basket never gets stars.
+ * Single-company news (a headline naming one company) is measured on its own stock and its industry index (TP半導体40 for chip
+ * companies, otherwise TP大型株100); its stars are the higher of the stock's row and the index's row (owner, Nov 26).
+ * A company without a measured stock never gets stars.
  * One move, one story: of the stories measured on the same session only the one that best explains it is kept with stars
  * (perSession; rizel-daily-review.mjs).
  *
- * Nov 25 (owner-approved method): the stars measure the SHOCK of that close, from three measured parts (thermometer data,
- * the same daily closes the thermometer already reads: no extra provider calls):
- *  - multiple: |index move| ÷ the index's typical daily move (the median of its absolute daily % moves over the 60 sessions
- *    before), rounded to 0.1 — "ふだんの何倍の動きか". −3% in a calm market counts more than in a turbulent one. A median, so a
- *    few crash days do not shrink every later move (thermometer-basket.ts sessionShock).
- *  - breadth: constituents that moved the same way as the index ÷ constituents priced on both days — "40社中37社が下落".
- *  - fear: change of TP恐怖指数 (20-session realized volatility of TP大型株100, annualized) that day vs the day before,
- *    in whole % — "恐怖指数+18%". Only a rise counts, and only on a DOWN move (owner, Nov 25):
- *    TP恐怖指数 is realized volatility, which also rises on a big UP day, so on an up move the fear condition is not
- *    required (★5 on an up move = at least 5× and at least 80% of constituents up). TP恐怖指数 itself is unchanged
- *    (the thermometer shows it on the VIX scale), and the card does not show the fear line on an up move.
- * The stars are the highest level whose every condition holds. The levels are fixed by what they mean (owner, Nov 25), never
- * tuned to a share of days: if nothing extreme happens for months there is no ★5; in a crisis there can be many.
+ * Nov 26 (owner, final): the stars come from a fixed table only (stars.bands). Each index's move is the larger of its close
+ * move and its largest intraday move against the previous close (thermometer data: the daily bars' high and low). Market-wide
+ * news takes the higher of the two indices. The fear index (TP恐怖指数) up at least fearBump % adds ★1 on a down day only,
+ * ★5 at most. No AI judgement and no cause changes the stars; the AI only chooses which stories to list.
  */
 export const RISK_POLICY = {
   version: 5,
   stars: {
-    method: 'shock',
-    /** Sessions in the typical-move window (median of absolute daily moves). */
+    method: 'table',
+    /** Sessions in the typical-move window (kept as data; the stars no longer use it). */
     typicalDays: 60,
-    /** Highest first. multiple: at least this many times the typical move; breadth: at least this % of constituents moved the
-     * same way; fear: TP恐怖指数 rose at least this many % — required on a DOWN move only (an up move needs only multiple and
-     * breadth: ★5 up = ≥5× and ≥80% up). null = not required. A level below these is ★1. */
-    levels: [
-      // ★5 a historic-scale shock: five ordinary days in one, nearly the whole index the same way, and fear jumping
-      // (Nov 20: TP大型株100 about −5.4%, six times its typical move).
-      { stars: 5, multiple: 5, breadth: 80, fear: 10 },
-      // ★4 a very large, broad shock (a −7% to −8.5% semiconductor day in a turbulent market is about three to four times).
-      { stars: 4, multiple: 3, breadth: 80, fear: null },
-      // ★3 a large move shared by most of the index.
-      { stars: 3, multiple: 2, breadth: 70, fear: null },
-      // ★2 clearly bigger than an ordinary day.
-      { stars: 2, multiple: 1.5, breadth: null, fear: null },
-    ],
+    /** The owner's table (Nov 26, final). Each index's move is the larger of |close move| and |largest intraday move against the
+     * previous close|, in %. Lower bounds of ★2, ★3, ★4, ★5; below the first is ★1. The day's stars are the higher index;
+     * single-stock news uses the stock's own move with the stock row. */
+    bands: {
+      nas100: [1, 2, 3.5, 5],
+      sox: [1.6, 3.2, 5.6, 8],
+      stock: [2, 4, 7, 10],
+    },
+    /** The fear index rose at least this many % from the day before: ★ +1 (★5 at most). */
+    fearBump: 20,
   },
   /** Names shown next to the stars (EN names match the thermometer page). */
   indices: {
@@ -71,10 +57,6 @@ export const RISK_POLICY = {
   },
   /** Shown instead of stars for single-company news that did not pass the two-move test (or cannot be measured). */
   company: { ja: '個別企業のニュース（★はつけません）', en: 'Single-company news (no stars)' },
-  /** Single-company news (owner, Nov 25): stars only when, on the story's session, the company's own stock moved at least
-   * minMultiple times its usual daily move (the median of its absolute daily % moves over the typicalDays sessions before)
-   * AND its industry basket moved at least industryMinMultiple times its usual move, both the same way. */
-  companyTest: { minMultiple: 3, industryMinMultiple: 1.5 },
   /** At most this many starred stories per U.S. session (owner, Nov 25: one move is never given to several stories). */
   perSession: 1,
   /** Status lines shown when there are no stories to list. */
