@@ -54,3 +54,57 @@ test('answers that arrive together after returning to the app count once, and a 
   assert.match(source, /running \?\?= /); // one check at a time
   assert.match(source, /counter\.current = \{ bad: 0, at: 0 \}/); // clean slate on return
 });
+
+test('the freshness answer shares one monitor read, answers from the kept state after 4 s while the read goes on, and ages it (speed, Nov 26)', async t => {
+  const { build } = await import('esbuild');
+  const { mkdtemp, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { pathToFileURL } = await import('node:url');
+  const dir = await mkdtemp(join(tmpdir(), 'freshness-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const out = join(dir, 'route.mjs');
+  await build({ entryPoints: [new URL('../app/api/research/freshness/route.ts', import.meta.url).pathname], bundle: true, format: 'esm', platform: 'node', outfile: out, logLevel: 'silent',
+    alias: { '@': new URL('..', import.meta.url).pathname.replace(/\/$/, '') },
+    plugins: [{ name: 'after', setup(b) { b.onResolve({ filter: /^next\/server$/ }, () => ({ path: 'after', namespace: 's' })); b.onLoad({ filter: /.*/, namespace: 's' }, () => ({ loader: 'js', contents: 'export const after = fn => { globalThis.__after.push(fn()); };' })); } }] });
+  globalThis.__after = [];
+  process.env.RESEARCH_MONITOR_URL = 'https://monitor.example';
+  const live = age => ({ ok: true, mode: 'automatic', monitor: { lastCycleAgeSeconds: age, health: { monitorStaleAfterSeconds: 900, issues: [] } } });
+  let calls = 0, release = null;
+  const realFetch = globalThis.fetch;
+  t.after(() => { globalThis.fetch = realFetch; delete process.env.RESEARCH_MONITOR_URL; });
+  globalThis.fetch = async (_url, init) => { calls++; if (release === 'fail') throw new Error('down');
+    if (release) await new Promise(resolve => { release = resolve; });
+    assert.ok(init.signal, 'the read has a time limit'); return new Response(JSON.stringify(live(calls === 1 ? 10 : 20))); };
+  const { GET } = await import(pathToFileURL(out).href);
+  // No state yet, monitor down: "unreachable", never cached.
+  release = 'fail';
+  let answer = await GET();
+  assert.equal((await answer.json()).status, 'unreachable');
+  assert.equal(answer.headers.get('cache-control'), 'no-store'); assert.equal(answer.headers.get('vercel-cdn-cache-control'), null);
+  release = null; calls = 0;
+  answer = await GET();
+  assert.equal((await answer.json()).status, 'ok');
+  assert.match(answer.headers.get('vercel-cdn-cache-control'), /s-maxage=30/);
+  // 20 s later the read is slow: answered after 4 s from the kept state, not cached; the read goes on and updates the state.
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: Date.now() + 20_000 });
+  release = true;
+  const pending = GET();
+  await new Promise(resolve => setImmediate(resolve)); await new Promise(resolve => setImmediate(resolve));
+  t.mock.timers.tick(4_000);
+  answer = await pending;
+  assert.equal(answer.headers.get('cache-control'), 'no-store');
+  assert.equal(globalThis.__after.length, 1, 'the read continues after the answer');
+  release(); await globalThis.__after[0];
+  t.mock.timers.tick(1_000);
+  const next = await GET();
+  assert.equal(calls, 2, 'the continued read is reused, not read again');
+  assert.match(next.headers.get('vercel-cdn-cache-control'), /s-maxage=30/);
+  const route = await readFile(new URL('../app/api/research/freshness/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /READ_TIMEOUT_MS = 13_000, ANSWER_WAIT_MS = 4_000/);
+  assert.match(route, /lastCycleAgeSeconds: monitor\.lastCycleAgeSeconds \+ Math\.max\(0, now - at\) \/ 1000/);
+  const { assessFreshness } = await import('../lib/research/freshness.ts');
+  assert.equal(assessFreshness(live(600)).status, 'ok');
+  // The same state kept six minutes later is past the 900-second limit.
+  assert.equal(assessFreshness(live(600 + 360)).status, 'delayed');
+});
