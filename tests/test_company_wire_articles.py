@@ -37,7 +37,7 @@ class ArticleOnceTests(unittest.TestCase):
     def tearDown(self):
         self.dir.cleanup()
 
-    def row(self, ticker, title='Nvidia wins a large order from Microsoft', source='stocknews', publisher='Reuters'):
+    def row(self, ticker, title='Nvidia wins a large order from Microsoft and Broadcom', source='stocknews', publisher='Reuters'):
         return {'ticker': ticker, 'source': source, 'title': title, 'publisher': publisher,
                 'url': 'https://news.example/' + ticker + source, 'published': self.published}
 
@@ -57,7 +57,7 @@ class ArticleOnceTests(unittest.TestCase):
     def test_one_article_under_three_tickers_and_two_feeds_is_translated_once_and_shown_for_each_ticker(self):
         # The Stock News API files it under NVDA, MSFT and ORCL; Yahoo carries the same headline (different case and punctuation) for AVGO.
         self.store([self.row('NVDA'), self.row('MSFT'), self.row('ORCL'),
-                    self.row('AVGO', title='NVIDIA wins a large order from Microsoft!', source='yahoo', publisher='')])
+                    self.row('AVGO', title='NVIDIA wins a large order from Microsoft and Broadcom!', source='yahoo', publisher='')])
         seen = []
         self.assertEqual(company_wire.run_round(self.path, transport=answering(seen), env=ENV, now_ts=self.now.timestamp()), ['done'])
         self.assertEqual(len(seen), 1)

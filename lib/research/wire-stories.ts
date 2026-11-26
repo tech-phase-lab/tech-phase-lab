@@ -3,6 +3,7 @@ import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
 import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
 import { MARKETING_SHOWCASE_EN, MARKETING_SHOWCASE_JA } from "./marketing-showcase.ts";
+import { offSubject } from "./company-subjects.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -74,6 +75,15 @@ export const LOW_VALUE = new RegExp([
   String.raw`.{0,60}\b(?:welcome[sd]?|congratulate[sd]?|celebrate[sd]?|honou?r(?:s|ed)?|salute[sd]?|toast(?:s|ed)?|troll(?:s|ed)?|roast(?:s|ed)?|thank(?:s|ed)?`,
   String.raw`|invite[sd]?|pays? tribute|shouts? out|gives?|offers?)\b(?! (?:its |a |the )?new (?:CEO|chief))`,
   String.raw`.{0,100}\b(?:CEO|founder|co-founder|chief executive|billionaire)\b`,
+  // Owner, Nov 26 (「こういう関係のない記事はまだまだたくさんある」, audit of the served feed): investor-conference appearances, earnings-date
+  // notices, option grants, leveraged-ETF promotions, partner-of-the-year and other awards (not a contract award), TV show segment
+  // tags ("… | Closing Bell") and mining-company financings carry no news about a watched company.
+  String.raw`|\b(?:to|will) (?:present|participate|speak|host a fireside)\b.{0,20}\b(?:at|in)\b.{0,80}\bconferences?\b|\bannounces? participation (?:at|in)\b|\bparticipat(?:e|es|ion) (?:at|in) (?:the )?upcoming\b|\bupcoming (?:investor |industry )?conferences?\b`,
+  String.raw`|\b(?:to|will) (?:report|announce|release)\b.{0,80}\b(?:results|earnings)\b.{0,40}\bon\s+(?:(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day,?\s+)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2}\b|\bannounces? (?:the )?(?:timing|date) of\b.{0,60}\b(?:results|earnings)\b`,
+  String.raw`|\bgrant of (?:incentive )?(?:stock )?options\b|\bgrants? (?:incentive )?stock options\b|\bleverage shares\b|\b[-−]?[1-3]X (?:long|short)\b`,
+  String.raw`|\bpartner of the year\b|\b(?:wins?|won|receives?|received|earns?|earned|named (?:a |the )?(?:winner|recipient) of) (?:the |a |an )?(?:\d{4} )?(?:[\w&'’-]+ ){0,5}(?<!contract )awards?\b`,
+  String.raw`|[|]\s*(?:closing bell|opening bell|bloomberg (?:tech|markets|surveillance|businessweek)|the close|balance of power|squawk box|power lunch)\s*$`,
+  String.raw`|\b(?:Gold|Silver|Mining|Minerals|Metals|Lithium|Uranium|Copper|Exploration)\s+(?:Corp|Corporation|Inc|Ltd|Limited)\b|\bflow-through\b|\bFT (?:offering|units?)\b`,
 ].join(""), "i");
 /** Nov 20 review: explainers, "- live", "here's the" and bull/bear-case wording drop a headline only when it reports no concrete event
  * (CONCRETE_EVENT: a company that launches, names, invests, buys, wins, raises, cuts, reports, files, sues, surges ..., or a price target or
@@ -95,6 +105,13 @@ export const LOW_VALUE_SOFT = new RegExp([
   String.raw`|\b(?:another|(?:the|his|her|its|their) other|one more|(?:a |the )?(?:hidden|secret|little-known|unexpected|surprising|curious|strange|odd))\s+`,
   String.raw`(?:[\w'’-]+\s+){0,2}(?:connections?|links?|ties|relationships?|side)\b|.s other (?:[\w'’-]+ )?(?:connections?|links?|ties|relationships?)\b`,
   String.raw`|\b(?:leather jackets?|autographs?|selfies?)\b`,
+  // Owner, Nov 26 (audit): local human-interest stories ("A Man in Denver Has Been Throwing Eggs at Waymo Vehicles"), a former
+  // employee's opinion, game sequels and remasters, "key reasons behind" teasers, "where the market may be …" commentary and TV
+  // soundbites ("Mulvaney: Trump 'Reading the Room Wrong' on Huang"), unless a concrete event is reported.
+  String.raw`|^\s*(?:a|an|one) (?:man|woman|teen(?:ager)?|boy|girl|person|driver|couple|family|student|grandmother|grandfather|mom|dad) (?:in|from) [A-Z]`,
+  String.raw`|^\s*(?:a )?former [\w&.'’-]+ (?:engineer|employee|executive|exec|staffer|worker|insider|manager|designer|researcher|intern)s? (?:says|warns|thinks|believes|explains|predicts|claims)\b`,
+  String.raw`|\bsequel\b|\bremaster(?:s|ed)?\b|\bkey reasons?\b|\breasons? behind\b|^\s*where (?:the )?(?:market|markets|investors|stocks)\b`,
+  String.raw`|^\s*(?!(?:exclusive|breaking|update|updated|report|sources?|watch|live)\b)[A-Z][A-Za-z'’.-]+(?:[- ][A-Z][A-Za-z'’.-]+)?\s*:\s.{0,80}[‘“'\x22][^‘’“”\x22]{3,60}[’”'\x22]`,
 ].join(""), "i");
 export const CONCRETE_EVENT = new RegExp([
   String.raw`\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired`,
@@ -246,7 +263,7 @@ export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: L
   const ja = lang === "ja";
   return Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
-    return title && !noiseSource(item) && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
+    return title && !noiseSource(item) && !offSubject(ticker, item.titleEn, item.source) && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
 }
 /** One broker's action named in a headline (owner, Nov 20: 「MRVLは同じの2つある」 — "Stifel maintains Marvell Technology at Buy, lowers price

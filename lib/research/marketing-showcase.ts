@@ -16,6 +16,11 @@ export const MARKETING_SHOWCASE_EN = new RegExp([
   String.raw`|researchers|scientists|startups|class|cohort|recipients|honorees|fellows|makers)\b`,
   String.raw`|\bbehind[- ]the[- ]scenes\b|\bcustomer (?:stor(?:y|ies)|spotlights?|showcases?)\b|\b(?:builder|creator|developer|customer|partner|startup|community) spotlights?\b`,
   String.raw`|^\s*spotlight\s*[:|]|\bin their own words\b`,
+  // Owner, Nov 26 (「Google Flowでインドの独立系映画製作者が大画面の物語を実現」): customer showcases built on the company's own product
+  // ("X bring … to life with Google Flow", "how X uses …", "X builds … with Gemini") and brand promotions ("Holiday Magic").
+  String.raw`|\bbrings? (?:[\w'’-]+ ){0,5}(?:to life|magic)\b|\bholiday magic\b`,
+  String.raw`|\bhow [A-Z][\w&.'’-]*(?: [A-Z][\w&.'’-]*){0,3} (?:uses|is using|used|built|builds|is building|scaled|scales|transformed|transforms|cut|saved|boosted)\b`,
+  String.raw`|\b(?:builds?|built|creates?|created|makes?|made|scales?|scaled|powers?|powered|transforms?|transformed|reimagines?|reimagined) (?:[\w'’-]+ ){1,5}with (?:Gemini|Vertex AI|Google Cloud|Google Flow|Flow|Veo|Imagen|NotebookLM|Azure(?: AI)?|Copilot|Microsoft Foundry|Amazon Bedrock|AWS|Omniverse|NVIDIA (?:AI Enterprise|Omniverse|NIM)|NIM|Llama|Meta AI|ChatGPT|Claude)\b`,
 ].join(""), "i");
 /** The same posts as they were translated. */
-export const MARKETING_SHOWCASE_JA = /を見てみよう|見てみましょう|が作っているもの|(?:\d+|[一二三四五六七八九十]+)つの(?:方法|使い方|ヒント|アイデア|活用法)|(?:使い方|活用法|活用術|ヒント)\d+選|舞台裏|のヒント(?:集)?$|活用事例/;
+export const MARKETING_SHOWCASE_JA = /を見てみよう|見てみましょう|が作っているもの|(?:\d+|[一二三四五六七八九十]+)つの(?:方法|使い方|ヒント|アイデア|活用法)|(?:使い方|活用法|活用術|ヒント)\d+選|舞台裏|のヒント(?:集)?$|活用事例|(?:で|を使って|を活用して).{0,40}(?:物語|作品|夢|ビジョン|アイデア)を(?:実現|形に)|命を吹き込|ホリデーマジック/;
