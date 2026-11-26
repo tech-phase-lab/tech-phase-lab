@@ -11,7 +11,7 @@
 | ISM製造業景況指数 | 報道の見出し(Google News検索)+PR Newswireに出るISM自身の発表。小数1桁の数字 | **取れる**(実フィードで確認。10月分 55.5、11社が一致) | 2社以上、またはISM自身の発表1つ |
 | GDP | BEAの発表一覧(`/news/current-releases`)でGDPのページを見つけ、本文の「increased/decreased at an annual rate of X percent」を読む | **取れる**(実ページで確認。7〜9月期 速報 +3.4%) | BEA公式 |
 | 小売売上高 | 米国勢調査局の最新発表ページ(`census.gov/retail/sales.html`)の「sales for <月> … were $X billion, up/down Y percent」 | **取れる**(実ページで確認。9月 +0.8%、745.0十億ドル) | Census公式 |
-| 新規失業保険申請件数 | 労働省の週次発表PDF(`dol.gov/ui/data.pdf`)の「the advance figure for seasonally adjusted initial claims was X」 | **取れる**(11/21追加。11/19発表: 203,000件、前週比+1,000) | DOL公式 |
+| 新規失業保険申請件数 | 労働省の週次発表PDF(`dol.gov/ui/data.pdf`)の「the advance figure for seasonally adjusted initial claims was X」 | **取れる**(11/21追加。11/19発表: 203,000件、前週比+1,000。11/26: 同じ発表の4週平均と継続受給者数も読む。予想は取得元がないので出さない) | DOL公式 |
 
 ### 失業保険(11/5は飛ばした → 11/21に追加)
 - 労働省(dol.gov)の発表ページ・RSSは、自動アクセスに403を返す(ロボット対策)。ブラウザのふりをして通すことはしない。
