@@ -3,12 +3,15 @@
  * Facts and numbers only: no comment or rating. Per-ticker totals only, never a list of institutions (that is Capital Map). */
 
 export type WhaleTab = "institutions" | "short" | "insiders" | "buybacks";
+/** Tab order (owner, Nov 26): insider trades first because they change every day; 13F institutions last because they only move quarterly. */
 export const WHALE_TABS: readonly { id: WhaleTab; ja: string; en: string }[] = [
-  { id: "institutions", ja: "機関", en: "Institutions" },
-  { id: "short", ja: "空売り", en: "Short interest" },
   { id: "insiders", ja: "役員売買", en: "Insider trades" },
   { id: "buybacks", ja: "自社株買い", en: "Buybacks" },
+  { id: "short", ja: "空売り", en: "Short interest" },
+  { id: "institutions", ja: "機関", en: "Institutions" },
 ];
+/** The tab that opens first, on the page and in the PRO feature tour's sample. */
+export const DEFAULT_WHALE_TAB: WhaleTab = WHALE_TABS[0].id;
 export const SORTS: Record<WhaleTab, readonly { id: string; ja: string; en: string }[]> = {
   institutions: [{ id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "down", ja: "減った順", en: "Biggest fall" }, { id: "high", ja: "比率の高い順", en: "Highest %" }],
   short: [{ id: "high", ja: "比率の高い順", en: "Highest %" }, { id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "days", ja: "日数の長い順", en: "Days to cover" }],

@@ -386,3 +386,39 @@ test('the outlet and link lists match scripts/research/company_wire.py (owner, N
   const pattern = python.match(/NOISE_URL_PATTERN = \(([\s\S]*?)\)\nDROPPED_HOST/)[1];
   assert.equal([...pattern.matchAll(/r'([^']*)'/g)].map(match => match[1]).join(''), NOISE_URL.source.replaceAll('\\/', '/'));
 });
+
+// Owner, Nov 26 (速報 showed two NVDA rows: 「「あなたのブースが待っています」：Denny'sがエヌビディアCEOジェンセン・フアンを歓迎」 and
+// 「中国関連企業幹部とエヌビディアのもう一つの関係」): a consumer brand's stunt naming a CEO, "another connection" teasers and celebrity
+// trivia are not news; earnings, guidance, export controls, deals and broker actions are kept.
+const STUNTS_AND_TEASERS = [
+  "‘Your booth is waiting': Denny's welcomes Jensen Huang back as Nvidia CEO",
+  "Chinese-Linked Executive's Other Connection to Nvidia", 'Another Nvidia connection for China-linked executive',
+  'The hidden link between Nvidia and a Chinese chip broker', "Wendy's trolls Elon Musk after Tesla CEO's tweet",
+  "McDonald's offers free fries to celebrate Nvidia founder Jensen Huang", 'Jensen Huang signs autographs and poses for selfies in Taipei',
+  "Jensen Huang's leather jacket steals the show at Computex",
+];
+const KEPT_NEAR_MISSES = [
+  'Nvidia reports record third-quarter revenue of $57 billion', 'Nvidia raises fourth-quarter revenue guidance above estimates',
+  'US tightens export controls on Nvidia H20 chips to China', 'Nvidia agrees to buy Run:ai for $700 million',
+  'Bernstein raises Nvidia price target to $300', 'Morgan Stanley upgrades Micron to Overweight',
+  "McDonald's to deploy Nvidia AI across 40,000 restaurants", 'Starbucks partners with Nvidia on drive-thru AI',
+  'Intel cuts ties with Chinese distributor after export probe', 'Meta launches AI selfie feature for Instagram',
+  'Nvidia names Jensen Huang chief executive again after board vote',
+];
+
+test('brand stunts naming a CEO, "another connection" teasers and celebrity trivia are left out; material news is kept (owner, Nov 26)', () => {
+  for (const title of STUNTS_AND_TEASERS) assert.equal(isNotNews(title), true, title);
+  for (const title of KEPT_NEAR_MISSES) assert.equal(isNotNews(title), false, title);
+  // As translated, judged with the English headline beside them.
+  assert.equal(isNotNews("「あなたのブースが待っています」：Denny'sがエヌビディアCEOジェンセン・フアンを歓迎", STUNTS_AND_TEASERS[0]), true);
+  assert.equal(isNotNews('中国関連企業幹部とエヌビディアのもう一つの関係', STUNTS_AND_TEASERS[1]), true);
+  // A Japanese headline alone (English wording unknown) is caught too.
+  assert.equal(isNotNews('中国関連企業幹部とエヌビディアのもう一つの関係', 'Executive and Nvidia'), true);
+  assert.equal(isNotNews('エヌビディア、第3四半期売上高が過去最高の570億ドル', KEPT_NEAR_MISSES[0]), false);
+  // Rows already stored by the monitor are hidden on read as well.
+  const wire = { NVDA: [item('dennys', STUNTS_AND_TEASERS[0], "「あなたのブースが待っています」：Denny'sがエヌビディアCEOジェンセン・フアンを歓迎", '2026-11-26T02:15:51Z'),
+                        item('other', "Chinese-Linked Executive's Other Connection to Nvidia", '中国関連企業幹部とエヌビディアのもう一つの関係', '2026-11-26T02:00:00Z'),
+                        item('guide', KEPT_NEAR_MISSES[1], 'エヌビディア、第4四半期の売上高見通しを予想以上に引き上げ', '2026-11-26T01:00:00Z')] };
+  assert.deepEqual(wireStories(wire, 'ja', WATCHED).map(story => story.id), ['guide']);
+  assert.deepEqual(wireStories(wire, 'en', WATCHED).map(story => story.id), ['guide']);
+});
