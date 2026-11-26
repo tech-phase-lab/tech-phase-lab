@@ -387,7 +387,7 @@ def pct_sign(direction, value):
 
 # ---- Palantir (PLTR) -------------------------------------------------------------------------------------------------------------
 
-def pltr(f, url, before_previous, report=None, events=None, previous=None):
+def pltr(f, url, before_previous, report=None, events=None, previous=None, prior=None):
     need(f, 'revenue', 'grossProfit', 'sbc', 'eps', 'total', 'us', 'usCommercial', 'usGovernment', 'deals', 'tcv', 'rdv', 'gaapOp', 'adjOp', 'cfo', 'fcf',
          'cash', 'guidanceRevenue', 'guidanceAdjOp')
     ev = Evidence(url)
@@ -455,12 +455,17 @@ def pltr(f, url, before_previous, report=None, events=None, previous=None):
     ev.add('summary.cards.change.sections[1]', f['cfo'])
     ev.add('summary.cards.change.sections[1]', f['fcf'])
     ev.add('summary.cards.change.sections[2]', sbc)
+    pa = (prior or {}).get('adjOp')   # the previous quarter's release: its adjusted operating margin
+    if pa:
+        ev.add('summary.cards.change.chips[1]', pa)
+        pa = pa.values[2]
     gm_word = ('やや低下', 'slightly lower') if gm0 < gm1 else ('上昇', 'higher') if gm0 > gm1 else ('横ばい', 'flat')
     changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は{gm_word[0]}', f'Revenue {sign(qoq)} QoQ, gross margin {gm_word[1]}', [
         chip(tone(gm0 - gm1), f'粗利益率 {pc(gm1)} → {pc(gm0)}', f'Gross margin {pc(gm1)} → {pc(gm0)}'),
-        chip('gold', f'調整後営業利益率 {aom}%(GAAPは{gom}%)', f'Adj. operating margin {aom}% (GAAP {gom}%)')], [
-        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。GAAPの粗利益率は{pc(gm1)}から{pc(gm0)}になりました。調整後の営業利益は{aop_ja}で、利益率は{aom}%です。',
-            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. GAAP gross margin went from {pc(gm1)} to {pc(gm0)}. Adjusted operating income was {aop_en}, a {aom}% margin.'),
+        (chip('gold' if pa == aom else tone(int(aom) - int(pa)), f'調整後営業利益率 {aom}%(前期は{pa}%)', f'Adj. operating margin {aom}% ({"also " if pa == aom else ""}{pa}% last quarter)') if pa else
+         chip('gold', f'調整後営業利益率 {aom}%(GAAPは{gom}%)', f'Adj. operating margin {aom}% (GAAP {gom}%)'))], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。GAAPの粗利益率は{pc(gm1)}から{pc(gm0)}になりました。調整後の営業利益は{aop_ja}で、利益率は{aom}%です。' + (f'前期と同じ水準です。' if pa == aom else ''),
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. GAAP gross margin went from {pc(gm1)} to {pc(gm0)}. Adjusted operating income was {aop_en}, a {aom}% margin' + (', the same as last quarter.' if pa == aom else '.')),
         sec('good', f'現金を生む力は強く、営業キャッシュフローは{cfo_ja}、調整後フリーキャッシュフローは{fcf_ja}(売上の{f["fcf"].values[2]}%)でした。現金と米国債の合計は{cash_ja}です。',
             f'Cash conversion is strong: operating cash flow was {cfo_en} and adjusted free cash flow {fcf_en} ({f["fcf"].values[2]}% of revenue). Cash and U.S. Treasuries total {cash_en}.'),
         sec('watch', f'株式報酬は前年同期の{usd(sbc.values[1])["ja"]}から{usd(sbc.values[0])["ja"]}になり、売上の約{q(sbc.values[0] / r0 * 100, 0)}%です。調整後の利益はこの費用を除いています。',

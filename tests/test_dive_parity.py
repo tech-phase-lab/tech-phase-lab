@@ -33,7 +33,7 @@ FILINGS = {
                           ('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm', 'ASML-993')]},
     'AMD': {},   # the release alone carries every figure of the hand-made file
     'ANET': {'report': ('https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm', 'ANET-10q-2026-09-30')},
-    'PLTR': {},
+    'PLTR': {'prior': ('https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm', 'PLTR-release-q2-2026')},
     'ALAB': {},
     'LITE': {},
     'SNDK': {},
@@ -47,8 +47,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'ASML': {'caution.chips[1]': 'the hand-made file showed free cash flow (−€2.61B in Q1 to €11.35B); the statements exhibit gives no quarterly '
                                  'free cash flow line, so the chip shows the contract liabilities the same section explains'},
     'AMD': {}, 'ANET': {},
-    'PLTR': {'summary.cards.change.chips[1]': 'the hand-made file compared the adjusted operating margin with the previous quarter (62% both); the previous '
-                                              'file keeps no adjusted operating margin, so the chip compares it with the GAAP margin of the same release'},
+    'PLTR': {},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
     'VRT': {},
 }

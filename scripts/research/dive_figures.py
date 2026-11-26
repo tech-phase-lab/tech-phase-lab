@@ -619,7 +619,7 @@ def deal(text):
 
 # companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
 # reads both, so a figure of the previous quarter is quoted from that quarter's own release
-PRIOR = {'VRT'}
+PRIOR = {'VRT', 'PLTR'}
 
 
 def read(ticker, text):
