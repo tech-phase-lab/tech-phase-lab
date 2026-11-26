@@ -43,7 +43,7 @@ function timeCell(row: FlashRow, lang: Language) {
 }
 
 /** The alerts the server drew into the first HTML (lib/research/news-first-paint.ts): `full` is the server's own verdict on the session. */
-export type FirstAlerts = { full: boolean; feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]> | null; checkedAt: number };
+export type FirstAlerts = { feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]> | null; checkedAt: number };
 
 /** 速報: the watched companies' live monitor and earnings results as one
  * newest-first timeline. New rows look like the live monitor's: a mint dot
@@ -67,17 +67,21 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
   const ownerAccount = useOwnerAccount();
   const ownerRole = useResearchOwner();
   const memberSettled = useMemberSettled();
-  // Until the browser's own check answers, the server's verdict on this session (it sent the full feed only to PRO or an owner account).
-  const full = (!memberSettled && initial?.full === true) || memberPlan === "pro" || ownerAccount || ownerRole;
-  // A PRO member's last view on this device (lib/research/member-last-view.ts): shown the moment the page opens, then refreshed.
+  const full = memberPlan === "pro" || ownerAccount || ownerRole;
+  // The server draws the FREE view for a signed-out visitor only (lib/research/news-first-paint.ts). A browser that turns out PRO with it
+  // on screen (a remembered PRO hint without a live session) reads both feeds at once instead of after one interval.
+  const drawnFree = initial !== null && !full;
+  // A PRO member's last view on this device (lib/research/member-last-view.ts): shown once the membership check confirmed PRO, then refreshed.
+  const keptShown = useRef(false);
   useEffect(() => {
-    if (initial) return;
+    if (initial || keptShown.current || !memberSettled || !full) return;
+    keptShown.current = true;
     const kept = readLastView<{ feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]>; checkedAt: number }>("alerts");
     if (!kept) return;
     // Read once after mount (reading it during render would not match the server's page).
     setFeed(old => old ?? kept.data.feed); setWire(old => Object.keys(old).length ? old : kept.data.wire);
     setCheckedAt(old => old || kept.data.checkedAt); setWireSettled(true); setWireLoaded(true);
-  }, [initial]);
+  }, [initial, memberSettled, full]);
   useEffect(() => {
     if (memberSettled && !full) { forgetLastView("alerts"); return; }
     if (full && feed && wireLoaded && checkedAt) writeLastView("alerts", { feed, wire, checkedAt });
@@ -118,10 +122,10 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
     });
     // With the server's alerts on screen they are the baseline for "new", and the next read is the regular one.
     if (initial) tracker.current(flashRows(initial.feed, {}, lang).filter(row => !row.id.startsWith("wire:")).map(row => ({ id: row.id, at: row.timeKind === "date" ? `${row.at}T00:00:00Z` : row.at })));
-    poller.start(initial ? NEWS_POLL_INTERVAL_MS : 0);
+    poller.start(drawnFree ? NEWS_POLL_INTERVAL_MS : 0);
     const stop = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => { stop(); poller.stop(); };
-  }, [lang, initial]);
+  }, [lang, initial, drawnFree]);
   useEffect(() => {
     // Wire headlines are a lower-trust lane: a failure here never affects the rest.
     // Until the first list arrives, a failed try is repeated within seconds, not a minute later (owner, Nov 15).
@@ -149,12 +153,12 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
       if (active) timer = setTimeout(run, companyWireDelay(loaded, failures));
     };
     const grace = setTimeout(() => setWireSettled(true), 2_500);
-    const first = initial?.wire;
+    const first = drawnFree ? initial?.wire : null;
     if (first) { wireTracker.current(Object.values(first).flat().map(item => ({ id: `wire:${item.id}`, at: item.publishedAt }))); loaded = true; }
     const stop = observePageActivity(() => { active = true; void run(); }, () => { active = false; clearTimeout(timer); timer = undefined; });
     if (first) timer = setTimeout(run, companyWireDelay(true, 0)); else void run();
     return () => { alive = false; clearTimeout(grace); clearTimeout(timer); stop(); };
-  }, [initial]);
+  }, [initial, drawnFree]);
 
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
   useEffect(() => { if ((feed || failed) && wireSettled) onReady?.(); }, [feed, failed, wireSettled, onReady]);

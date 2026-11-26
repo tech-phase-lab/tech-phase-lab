@@ -23,15 +23,13 @@ test("マーケット: the cards and 原油・米国債 come in the first HTML f
   assert.match(screen, /if \(initial\) return;/);
 });
 
-test("ハイテク速報・注目トピック: this viewer's feed in the first HTML, decided on the server, FREE projected before it is sent (speed, Nov 26)", () => {
+test("ハイテク速報・注目トピック: a signed-out visitor's FREE view in the first HTML, projected before it is sent (speed, Nov 26)", () => {
   const loader = read("lib/research/news-first-paint.ts");
   assert.match(loader, /^import "server-only";/);
-  // A browser without a session is FREE; a signed-in one only with a verified membership, otherwise nothing is drawn (no FREE flash for PRO).
-  assert.match(loader, /if \(!session\) return false;/);
-  assert.match(loader, /return member && member\.status === "signed-in" \? isFullAccess\(member\) : null;/);
-  assert.match(loader, /if \(full === null\) return null;/);
-  // FREE: the same projection the APIs make (30 minutes behind, newest five, headlines only), wire included.
-  assert.match(loader, /if \(full\) return \{ full, feed, wire, checkedAt \};/);
+  // Only a browser without a session (a visitor, FREE by definition) gets the FREE view; nobody's membership is looked up.
+  assert.match(loader, /if \(!await signedOutVisitor\(\)\) return null;/);
+  assert.doesNotMatch(loader, /getMembership|isFullAccess/);
+  // The same projection the APIs make (30 minutes behind, newest five, headlines only), wire included.
   assert.match(loader, /const selection = freeTechSelection\(feed, wire \?\? \{\}, checkedAt\);/);
   assert.match(loader, /feed: projectFreeNews\(feed, selection\), wire: wire \? projectFreeWire\(wire, selection\) : null/);
   // Only the monitor is read; no market-data provider.
@@ -44,7 +42,7 @@ test("ハイテク速報・注目トピック: this viewer's feed in the first H
   }
   const flash = read("app/research/news/flash-page.tsx");
   assert.match(flash, /useState<GeneralNewsFeed \| null>\(initial\?\.feed \?\? null\)/);
-  assert.match(flash, /poller\.start\(initial \? NEWS_POLL_INTERVAL_MS : 0\);/);
+  assert.match(flash, /poller\.start\(drawnFree \? NEWS_POLL_INTERVAL_MS : 0\);/);
   assert.match(read("app/research/news/screen.tsx"), /useState\(initial !== null && initial\.wire !== null\)/);
 });
 

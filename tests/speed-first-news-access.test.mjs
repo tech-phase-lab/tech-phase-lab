@@ -1,7 +1,6 @@
-// Speed, Nov 26: ハイテク速報 and 注目トピック draw this viewer's feed into the first HTML (lib/research/news-first-paint.ts). The loader is run here
-// with the session, the membership and the monitor replaced: signed-out visitors and FREE members get only the FREE projection (30 minutes
-// behind, the latest five, headlines only), PRO and the owner's accounts the full feed where the server can verify them, and an unverifiable
-// signed-in browser (these pages run without the identity proxy) nothing.
+// Speed, Nov 26: ハイテク速報 and 注目トピック draw a signed-out visitor's FREE view into the first HTML (lib/research/news-first-paint.ts).
+// The loader is run here with the session and the monitor replaced: a visitor gets only the FREE projection (30 minutes behind, the latest
+// five, headlines only); any browser with a session gets nothing drawn (these pages run without the identity proxy, owner Oct 21).
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -53,7 +52,7 @@ const ids = first => [...first.feed.items.filter(x => x.tickers?.length), ...fir
 for (const [label, cookies] of [["no cookie at all", []], ["the SDK's signed-out mark", [{ name: "__client_uat", value: "0" }]]]) {
   test(`signed-out visitor (${label}): FREE projection only, never the membership lookup`, async t => {
     const first = await firstFor(t, { cookies, member: new Error("must not be asked") });
-    assert.equal(first.full, false);
+    assert.ok(!("full" in first));
     const json = JSON.stringify(first);
     assert.ok(!json.includes(SECRET), "no paid text");
     // 30 minutes behind: nothing newer than 30 minutes; the latest five at most.
@@ -63,30 +62,14 @@ for (const [label, cookies] of [["no cookie at all", []], ["the SDK's signed-out
   });
 }
 
-test("FREE member: the same FREE projection", async t => {
-  const first = await firstFor(t, { cookies: signedIn, member: { status: "signed-in", plan: "free", isAdmin: false } });
-  assert.equal(first.full, false);
-  assert.ok(!JSON.stringify(first).includes(SECRET));
-  // The newest five at least 30 minutes old across sources: official b (35), news 2 (40), wire w2 (45), news 3 (50), news 4 (60).
-  assert.deepEqual(ids(first), ["2", "3", "4", "b"]);
-  assert.deepEqual(Object.values(first.wire).flat().map(x => x.id), ["w2"]);
-});
-
-test("PRO member and the owner's accounts: the full feed", async t => {
-  for (const member of [{ status: "signed-in", plan: "pro", isAdmin: false }, { status: "signed-in", plan: "free", isAdmin: true, ownerAccount: true }]) {
-    const first = await firstFor(t, { cookies: signedIn, member });
-    assert.equal(first.full, true, JSON.stringify(member));
-    assert.ok(ids(first).includes("1") && ids(first).includes("a"));
-    assert.ok(JSON.stringify(first).includes(SECRET));
+test("any browser with a session gets nothing drawn, and nobody's membership is looked up (no PRO first paint exists)", async t => {
+  for (const cookies of [signedIn, [{ name: "__session", value: "eyJ" }], [{ name: "__client_uat_AbC", value: "1763000000" }]]) {
+    assert.equal(await firstFor(t, { cookies, member: new Error("must not be asked") }), null, JSON.stringify(cookies));
+    assert.deepEqual(globalThis.__first.reads, [], "and the monitor is not read for it");
     t.mock.timers.reset();
   }
-});
-
-test("a signed-in browser the server cannot verify gets nothing drawn (the page asks the APIs as before)", async t => {
-  for (const member of [new Error("no middleware"), { status: "signed-out", plan: "free" }, { status: "unavailable", plan: "free" }]) {
-    assert.equal(await firstFor(t, { cookies: signedIn, member }), null);
-    t.mock.timers.reset();
-  }
+  assert.doesNotMatch(read("lib/research/news-first-paint.ts"), /getMembership|isFullAccess|full:/);
+  assert.doesNotMatch(read("app/research/news/flash-page.tsx"), /initial\?\.full|full: boolean/);
 });
 
 test("nothing member-only can be kept by a shared cache: the pages are rendered per request and verify the session", () => {

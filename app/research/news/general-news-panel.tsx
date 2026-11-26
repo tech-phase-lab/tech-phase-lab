@@ -20,7 +20,7 @@ import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
-import { readLastView, writeLastView } from "@/lib/research/member-last-view";
+import { forgetLastView, readLastView, topicsSubset, writeLastView } from "@/lib/research/member-last-view";
 import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
@@ -62,7 +62,7 @@ export function warmNews() {
   request.catch(() => { /* the list asks again when it appears */ }).finally(() => { if (warming === request) warming = null; });
 }
 
-export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
+export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews, keepPlan }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** 注目トピック: "pro" once the membership check confirmed PRO, "none" once it said otherwise */ keepPlan?: "pro" | "none"; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
   const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [failed, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
@@ -100,6 +100,22 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   }, [generalOnly, receivedAt]);
   // Checking: the company headlines were last asked for before the news feed's latest check (or never).
   const updating = generalOnly && (!wireAt || (!!receivedAt && Date.parse(wireAt) < Date.parse(receivedAt)));
+  // 注目トピック: a PRO member's last view on this device (lib/research/member-last-view.ts), shown once the topics screen's membership
+  // check confirmed PRO (`keepPlan`), then refreshed; forgotten once the check says otherwise.
+  const keepAs = useRef(keepPlan);
+  const keptShown = useRef(false);
+  useEffect(() => {
+    keepAs.current = keepPlan;
+    if (!generalOnly) return;
+    if (keepPlan === "none") { forgetLastView("topics"); return; }
+    if (keepPlan !== "pro" || keptShown.current || initialNews) return;
+    keptShown.current = true;
+    const kept = readLastView<GeneralNewsFeed>("topics");
+    if (!kept) return;
+    // Read once the check answered (reading it during render would not match the server's page).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData(old => old ?? kept.data); setReceivedAt(old => old ?? new Date(kept.at).toISOString());
+  }, [keepPlan, generalOnly, initialNews]);
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -108,11 +124,6 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       snapshot = cached;
       publishNews(cached.data);
     }
-    // 注目トピック: a PRO member's last view on this device, shown at once and then refreshed (lib/research/member-last-view.ts).
-    const kept = generalOnly && !cached ? readLastView<GeneralNewsFeed>("topics") : null;
-    // Read once after mount (reading it during render would not match the server's page).
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (kept) { setData(kept.data); setReceivedAt(new Date(kept.at).toISOString()); }
     const poller = createNewsPoller({
       push: true,
       load: async signal => {
@@ -131,7 +142,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
         const at = new Date().toISOString();
         snapshot = { data: payload, at, time: Date.now() };
         setData(payload); publishNews(payload); setError(false); setReceivedAt(at);
-        if (generalOnly) writeLastView("topics", payload);
+        if (generalOnly && keepAs.current === "pro") writeLastView("topics", topicsSubset(payload));
       },
       onFailure: () => {
         // A failed check must not let a stale module snapshot reappear after remount.
