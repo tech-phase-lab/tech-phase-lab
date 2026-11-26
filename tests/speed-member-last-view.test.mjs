@@ -46,7 +46,9 @@ test("注目トピック keeps only its stories, without impact texts or the res
 
 test("pages: a kept view appears only after the check confirmed PRO; the hint's removal clears them", () => {
   const flash = read("app/research/news/flash-page.tsx");
-  assert.match(flash, /if \(initial \|\| keptShown\.current \|\| !memberSettled \|\| !full\) return;/);
+  assert.match(flash, /if \(keptShown\.current \|\| !memberSettled \|\| !full\) return;/);
+  // It replaces the server's FREE view, never a feed this browser read itself.
+  assert.match(flash, /if \(serverFirstNow\.current\) \{ setFeed\(kept\.data\.feed\);/);
   assert.match(flash, /const full = memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
   assert.match(flash, /const rows = full \? allRows : freeFlashRows\(allRows/);
   // The server's FREE view with a browser that is PRO after all: both feeds are read at once.

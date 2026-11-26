@@ -1,6 +1,6 @@
-// Speed, Nov 26: ハイテク速報 and 注目トピック draw a signed-out visitor's FREE view into the first HTML (lib/research/news-first-paint.ts).
-// The loader is run here with the session and the monitor replaced: a visitor gets only the FREE projection (30 minutes behind, the latest
-// five, headlines only); any browser with a session gets nothing drawn (these pages run without the identity proxy, owner Oct 21).
+// Speed, Nov 26: ハイテク速報 and 注目トピック draw the FREE view into the first HTML for every reader (lib/research/news-first-paint.ts): the
+// projection a visitor or a FREE member gets (30 minutes behind, the latest five, headlines only), never anything member-only. Signed-out
+// visitors and FREE members see it at once; a browser remembering PRO hides it by CSS before the first paint and reads its own feed.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -49,37 +49,43 @@ async function firstFor(t, { cookies, member }) {
 const signedIn = [{ name: "__client_uat", value: "1763000000" }];
 const ids = first => [...first.feed.items.filter(x => x.tickers?.length), ...first.feed.officialUpdates].map(x => x.id).sort();
 
-for (const [label, cookies] of [["no cookie at all", []], ["the SDK's signed-out mark", [{ name: "__client_uat", value: "0" }]]]) {
-  test(`signed-out visitor (${label}): FREE projection only, never the membership lookup`, async t => {
+for (const [label, cookies] of [["a visitor", []], ["the SDK's signed-out mark", [{ name: "__client_uat", value: "0" }]], ["a signed-in FREE member", signedIn], ["a signed-in PRO member", signedIn]]) {
+  test(`${label}: the same FREE projection, and nobody's membership is looked up`, async t => {
     const first = await firstFor(t, { cookies, member: new Error("must not be asked") });
-    assert.ok(!("full" in first));
     const json = JSON.stringify(first);
     assert.ok(!json.includes(SECRET), "no paid text");
-    // 30 minutes behind: nothing newer than 30 minutes; the latest five at most.
-    assert.ok(!ids(first).includes("1") && !ids(first).includes("a"));
-    assert.ok(ids(first).length <= 5);
+    // 30 minutes behind, the newest five across sources, headlines only.
+    assert.deepEqual(ids(first), ["2", "3", "4", "b"]);
+    assert.deepEqual(Object.values(first.wire).flat().map(x => x.id), ["w2"]);
     assert.ok(Object.values(first.wire).flat().every(x => Date.parse(x.publishedAt) <= NOW - 30 * 60_000));
   });
 }
-
-test("any browser with a session gets nothing drawn, and nobody's membership is looked up (no PRO first paint exists)", async t => {
-  for (const cookies of [signedIn, [{ name: "__session", value: "eyJ" }], [{ name: "__client_uat_AbC", value: "1763000000" }]]) {
-    assert.equal(await firstFor(t, { cookies, member: new Error("must not be asked") }), null, JSON.stringify(cookies));
-    assert.deepEqual(globalThis.__first.reads, [], "and the monitor is not read for it");
-    t.mock.timers.reset();
-  }
-  assert.doesNotMatch(read("lib/research/news-first-paint.ts"), /getMembership|isFullAccess|full:/);
+test("the loader reads no session and no membership", () => {
+  assert.doesNotMatch(read("lib/research/news-first-paint.ts"), /getMembership|isFullAccess|cookies\(|full:/);
   assert.doesNotMatch(read("app/research/news/flash-page.tsx"), /initial\?\.full|full: boolean/);
 });
 
-test("nothing member-only can be kept by a shared cache: the pages are rendered per request and verify the session", () => {
+test("under a remembered PRO / owner mark the FREE view is hidden before the first paint and the page reads its own feed at once", () => {
+  assert.match(read("app/research/news/flash-page.module.css"), /:global\(html\[data-member-hint\]\) \.flash\[data-free-first\]\{visibility:hidden\}/);
+  assert.match(read("app/research/news/general-news.module.css"), /:global\(html\[data-member-hint\]\) \.topics\[data-free-first\]\{visibility:hidden\}/);
+  const flash = read("app/research/news/flash-page.tsx");
+  assert.match(flash, /data-free-first=\{serverFirst \? "" : undefined\}/);
+  assert.match(flash, /setFeed\(payload\); setFailed\(false\); setCheckedAt\(Date\.now\(\)\); setServerFirst\(false\);/);
+  assert.match(flash, /poller\.start\(drawnFree \? NEWS_POLL_INTERVAL_MS : 0\)/);
+  const topics = read("app/research/news/general-news-panel.tsx");
+  assert.match(topics, /<TopicsList serverFirst=\{useSeed\}/);
+  assert.match(topics, /if \(generalOnly && initialNews && memberMarked\(\)\) setRefresh\(value => value \|\| 1\);/);
+  // The mark is set before the first paint from the remembered membership.
+  assert.match(read("app/research/layout.tsx"), /<script dangerouslySetInnerHTML=\{\{ __html: memberHintBoot \}\} \/>/);
+});
+
+test("the pages are rendered per request and stay outside the identity proxy", () => {
   for (const page of ["app/research/news/page.tsx", "app/research/general-news/page.tsx"]) {
     const source = read(page);
     assert.match(source, /export const dynamic = "force-dynamic";/);
     assert.doesNotMatch(source, /revalidate|"force-static"|unstable_cache|Cache-Control/);
   }
-  // Owner, Oct 21: public pages open without the identity proxy (no session handshake on a cold open). A signed-in browser therefore cannot
-  // be verified here and gets nothing drawn; members see their own last view from this device instead (lib/research/member-last-view.ts).
+  // Owner, Oct 21: public pages open without the identity proxy (no session handshake on a cold open); the FREE view needs no membership.
   const matcher = read("proxy.ts").match(/"\/research\/\(\(\?!\(\?:([^)]*)\)/)[1].split("|");
   assert.ok(matcher.includes("news") && matcher.includes("general-news"), matcher.join("|"));
   assert.doesNotMatch(read("lib/research/news-first-paint.ts"), /unstable_cache|"use cache"/);

@@ -20,7 +20,7 @@ import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
-import { forgetLastView, readLastView, topicsSubset, writeLastView } from "@/lib/research/member-last-view";
+import { forgetLastView, memberMarked, readLastView, topicsSubset, writeLastView } from "@/lib/research/member-last-view";
 import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
@@ -116,6 +116,11 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setData(old => old ?? kept.data); setReceivedAt(old => old ?? new Date(kept.at).toISOString());
   }, [keepPlan, generalOnly, initialNews]);
+  // Under a remembered PRO / owner mark the server's FREE view is hidden (topics-list.tsx): the page reads its own feed at once.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (generalOnly && initialNews && memberMarked()) setRefresh(value => value || 1);
+  }, [generalOnly, initialNews]);
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -191,7 +196,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
-  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} updating={updating} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
+  if (generalOnly) return <TopicsList serverFirst={useSeed} lang={lang} data={data} wire={wire} wireReady={!!wireAt} updating={updating} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"

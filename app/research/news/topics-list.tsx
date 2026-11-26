@@ -32,7 +32,8 @@ function TopicFoot({ summary, publisher, lang, id }: { summary?: string; publish
  * the time, the full headline (in English, the link to the article in a new tab; in Japanese plain text, owner Nov 21), 「＋」 to open its summary (owner, Nov 26), and the publisher in
  * small type. The same story from several publishers is one card (topicCards). One credit line closes the list.
  * No business-impact text or confidence (the provider gives only a short summary), and no gold: FREE members see this page too. */
-export default function TopicsList({ lang, data, wire, wireReady, updating = false, error, receivedAt, page, onPage }: {
+export default function TopicsList({ lang, data, wire, wireReady, updating = false, error, receivedAt, page, onPage, serverFirst = false }: {
+  /** The server's FREE view (lib/research/news-first-paint.ts) is on screen: hidden under a PRO / owner mark (general-news.module.css). */ serverFirst?: boolean;
   lang: Language; data: GeneralNewsFeed | null; wire: Record<string, CompanyWireItem[]>; wireReady: boolean;
   /** A check for new stories is running: the dot beside 自動で更新中 blinks (owner, Nov 26). */ updating?: boolean; error: boolean;
   receivedAt: string | null; page: number; onPage: (page: number) => void;
@@ -45,7 +46,7 @@ export default function TopicsList({ lang, data, wire, wireReady, updating = fal
   // 今日 / 昨日 are judged at the time the feeds were last checked.
   const now = receivedAt ? Date.parse(receivedAt) : 0;
   const impactText = (impact: TopicImpact) => topicImpact(impact, ja);
-  return <section ref={top} className={styles.topics} aria-label={ja ? "注目トピック一覧" : "Top topics"}>
+  return <section ref={top} className={styles.topics} data-free-first={serverFirst ? "" : undefined} aria-label={ja ? "注目トピック一覧" : "Top topics"}>
     <p className={styles.topicLive}><span aria-hidden="true" className={updating ? styles.topicLiveUpdating : undefined} />{ja ? "自動で更新中" : "Updating automatically"}</p>
     {!cards.length ? (error
       ? <p role="status" className={styles.topicEmpty}>{ja ? "トピックを取得できません。しばらくしてからもう一度開いてください。" : "Topics are unavailable. Please try again shortly."}</p>

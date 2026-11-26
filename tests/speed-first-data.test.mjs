@@ -23,12 +23,11 @@ test("マーケット: the cards and 原油・米国債 come in the first HTML f
   assert.match(screen, /if \(initial\) return;/);
 });
 
-test("ハイテク速報・注目トピック: a signed-out visitor's FREE view in the first HTML, projected before it is sent (speed, Nov 26)", () => {
+test("ハイテク速報・注目トピック: the FREE view in the first HTML, projected before it is sent (speed, Nov 26)", () => {
   const loader = read("lib/research/news-first-paint.ts");
   assert.match(loader, /^import "server-only";/);
-  // Only a browser without a session (a visitor, FREE by definition) gets the FREE view; nobody's membership is looked up.
-  assert.match(loader, /if \(!await signedOutVisitor\(\)\) return null;/);
-  assert.doesNotMatch(loader, /getMembership|isFullAccess/);
+  // The FREE view for every reader; nobody's session or membership is looked up.
+  assert.doesNotMatch(loader, /getMembership|isFullAccess|cookies\(/);
   // The same projection the APIs make (30 minutes behind, newest five, headlines only), wire included.
   assert.match(loader, /const selection = freeTechSelection\(feed, wire \?\? \{\}, checkedAt\);/);
   assert.match(loader, /feed: projectFreeNews\(feed, selection\), wire: wire \? projectFreeWire\(wire, selection\) : null/);
