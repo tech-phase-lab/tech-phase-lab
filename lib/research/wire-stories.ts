@@ -2,6 +2,7 @@ import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
 import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
+import { MARKETING_SHOWCASE_EN, MARKETING_SHOWCASE_JA } from "./marketing-showcase.ts";
 
 /** Company headlines as stories (owner, Oct 17): the same story arrives for several companies and from
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
@@ -106,9 +107,9 @@ export const CONCRETE_EVENT = new RegExp([
 const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$|オプション[・･]?チェーン|(?:本日|今日)のチャート|ポッドキャスト|ウェビナー|何が変わった|タスクバー|(?:^|[\s。、])@[A-Za-z_][A-Za-z0-9_]{2,}|もう一つの(?:関係|つながり|繋がり|接点|顔|側面)|(?:意外|隠れた|知られざる|秘密)(?:な|の)?(?:関係|つながり|繋がり|接点)|(?:デニーズ|Denny.s|マクドナルド|ウェンディーズ|バーガーキング|タコベル|ケンタッキー|KFC|スターバックス|チポトレ|ドミノ[・･]?ピザ|ピザハット|ダイナー|レストランチェーン|ファストフード)(?:が|は).{0,40}(?:CEO|創業者).{0,30}(?:歓迎|祝福|祝|称え|たたえ|感謝|招待)|革ジャン|レザージャケット|自撮り/; // @handles: teasers whose answer is in an article we do not carry (owner, Oct 26); もう一つの関係 teasers, brand stunts naming a CEO and celebrity trivia (owner, Nov 26)
 /** GuruFocus templates ("GF Score", "GF Value"), as they were translated (owner, Nov 21). */
 const GF_TEMPLATE_JA = /GF\s?(?:評価|スコア|バリュー|レーティング)/;
-const lowValueEn = (text: string) => LOW_VALUE.test(text) || (LOW_VALUE_SOFT.test(text) && !CONCRETE_EVENT.test(text));
+const lowValueEn = (text: string) => LOW_VALUE.test(text) || ((LOW_VALUE_SOFT.test(text) || MARKETING_SHOWCASE_EN.test(text)) && !CONCRETE_EVENT.test(text));
 /** ``english`` is the English headline of a translated ``text``: a Japanese explainer phrase is not dropped when the English one reports an event. */
-export const lowValue = (text: string, english = text) => lowValueEn(text) || GF_TEMPLATE_JA.test(text) || (LOW_VALUE_JA.test(text) && !CONCRETE_EVENT.test(english));
+export const lowValue = (text: string, english = text) => lowValueEn(text) || GF_TEMPLATE_JA.test(text) || ((LOW_VALUE_JA.test(text) || MARKETING_SHOWCASE_JA.test(text)) && !CONCRETE_EVENT.test(english));
 
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$

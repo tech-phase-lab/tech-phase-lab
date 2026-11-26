@@ -581,6 +581,18 @@ class LowValueTests(unittest.TestCase):
         self.assertEqual([t for t in self.STUNTS_AND_TEASERS if not company_wire.hidden_title(t)], [])
         self.assertEqual([t for t in self.KEPT_NEAR_MISSES if company_wire.hidden_title(t)], [])
 
+    # Owner, Nov 26: company-blog marketing and customer showcases are never translated; launches, partnerships and expansions are.
+    SHOWCASES = ('See what 5 builders are making with Gemini 4 Neon', '5 ways to use Gemini in Google Docs', 'Tips for holiday shopping with AI Mode',
+                 'How small businesses are using Gemini to grow', 'Meet the students building the future of AI',
+                 'Behind the scenes of the Pixel camera', 'Customer spotlight: Wayfair scales search with Vertex AI')
+    SHOWCASE_NEAR_MISSES = ('Introducing Gemini 4 Neon', 'Meet the new Pixel 11', 'Google launches Gemini 4 Neon: 5 ways to try it',
+                            'Golden State Warriors and Google expand partnership, naming Gemini the official AI assistant partner',
+                            "Nvidia to expand King's Cross hub in London", 'Indie filmmakers in India bring big-screen stories to life with Google Flow')
+
+    def test_marketing_showcases_are_dropped_and_launches_kept(self):
+        self.assertEqual([t for t in self.SHOWCASES if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.SHOWCASE_NEAR_MISSES if company_wire.hidden_title(t)], [])
+
     def test_gurufocus_templates_links_and_outlet_are_dropped(self):
         self.assertEqual([t for t in self.GURUFOCUS if not company_wire.hidden_title(t)], [])
         # GF Securities is a broker, not a GuruFocus template.

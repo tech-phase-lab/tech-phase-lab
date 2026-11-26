@@ -644,14 +644,32 @@ CONCRETE_EVENT_EN = (
     r"|[Ss]ues|[Ss]ued|[Aa]grees|[Aa]greed|[Ss]urges|[Ss]urged|[Pp]lunges|[Pp]lunged)\b"
     r"|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b"
 )
+# Owner, Nov 26 (速報 showed the GOOGL row 「ジェミニ4ネオンを使って5社のビルダーが作っているものを見てみよう」): company-blog marketing and
+# customer showcases ("see what X are building with", "5 ways to use", "tips for", "how creators use", "meet the builders", "behind the
+# scenes", customer spotlights) carry no business fact; dropped, like LOW_VALUE_SOFT_EN, only when no concrete event is reported. The same
+# pattern is MARKETING_SHOWCASE_EN in lib/research/marketing-showcase.ts; keep the two in step (a test compares them).
+MARKETING_SHOWCASE_EN = (
+    r"\bsee (?:what|how)\b.{0,80}\b(?:build(?:s|ing)?|built|mak(?:e|es|ing)|made|creat(?:e|es|ed|ing)|doing|us(?:e|es|ed|ing))\b"
+    r"|^\s*(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s+(?:new |more |easy |simple |fun |creative |great |helpful |smart |quick )?(?:ways|tips|ideas|tricks|things you can do)\b"
+    r"|\btips (?:for|to|on)\b|\btips\s*$"
+    r"|\bhow (?:\d+ |these |our |real |some )?(?:[\w'’-]+ ){0,2}(?:creators|builders|developers|artists|filmmakers|students|teachers|educators|small businesses|businesses"
+    r"|customers|teams|people|musicians|designers|founders|startups|nonprofits|researchers|scientists|doctors|farmers|kids|families|fans)"
+    r" (?:are |is )?(?:us(?:e|es|ing)|build(?:s|ing)?|mak(?:e|es|ing)|creat(?:e|es|ing))\b"
+    r"|^\s*meet (?:the |our |these )?(?:[\w'’-]+ ){0,3}(?:team|teams|people|builders|creators|developers|founders|winners|finalists|students|artists|women|engineers"
+    r"|researchers|scientists|startups|class|cohort|recipients|honorees|fellows|makers)\b"
+    r"|\bbehind[- ]the[- ]scenes\b|\bcustomer (?:stor(?:y|ies)|spotlights?|showcases?)\b|\b(?:builder|creator|developer|customer|partner|startup|community) spotlights?\b"
+    r"|^\s*spotlight\s*[:|]|\bin their own words\b"
+)
 LOW_VALUE = re.compile(LOW_VALUE_EN, re.I)
 LOW_VALUE_SOFT = re.compile(LOW_VALUE_SOFT_EN, re.I)
 CONCRETE_EVENT = re.compile(CONCRETE_EVENT_EN)
+MARKETING_SHOWCASE = re.compile(MARKETING_SHOWCASE_EN, re.I)
 
 
 def low_value(title):
-    """True for a headline that is not news about the company (LOW_VALUE, or LOW_VALUE_SOFT without a concrete event)."""
-    return bool(LOW_VALUE.search(title) or (LOW_VALUE_SOFT.search(title) and not CONCRETE_EVENT.search(title)))
+    """True for a headline that is not news about the company (LOW_VALUE, or LOW_VALUE_SOFT or MARKETING_SHOWCASE without a concrete
+    event)."""
+    return bool(LOW_VALUE.search(title) or ((LOW_VALUE_SOFT.search(title) or MARKETING_SHOWCASE.search(title)) and not CONCRETE_EVENT.search(title)))
 
 
 def hidden_title(title):
