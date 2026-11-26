@@ -105,8 +105,9 @@ test('the calendar reads stored results by month and lists their months', () => 
   assert.match(panel, /\/api\/research\/earnings-results\?month=/);
   assert.match(source('app/research/calendar/event-calendar.tsx'), /historyMonths/);
   const route = source('app/api/research/earnings-results/route.ts');
-  assert.match(route, /readMonitor\("earnings-results"/);
-  assert.match(route, /backfillBriefs\(\)/);
+  assert.match(route, /loadEarningsHistory\(range\)/);
+  assert.match(source('lib/research/earnings-history-server.ts'), /readMonitor\("earnings-results"/);
+  assert.match(source('lib/research/earnings-history-server.ts'), /backfillBriefs\(\)/);
 });
 
 test('the X post copy is shown to the owner accounts only (server-decided ownerAccount)', () => {

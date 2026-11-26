@@ -10,8 +10,10 @@ import ResearchToolShell from "../research-tool-shell";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import { calendarInsight } from "./calendar-insights";
-import EconomicResultsPanel from "./economic-results-panel";
+import EconomicResultsPanel, { reportedRows, uniqueBriefs } from "./economic-results-panel";
 import { zoneFor } from "@/lib/research/display-time";
+import type { FirstCalendar } from "@/lib/research/calendar-first-paint";
+import { checkedBriefs } from "@/lib/research/earnings-results-history";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
   MU: { ja: "注目点：DRAM・NANDの売上と価格動向／粗利益率／HBMと設備投資／次四半期の会社見通し", en: "Watch: DRAM/NAND revenue and pricing; gross margin; HBM and capex; next-quarter guidance." },
@@ -28,7 +30,9 @@ function IndicatorGuide({ id, lang }: { id: string; lang: "ja" | "en" }) {
   return <dl className={calendarStyles.insights}><dt>{lang === "ja" ? "どんな指標？" : "What it is"}</dt><dd>{guide.what}</dd><dt>{lang === "ja" ? "見るポイント" : "What to watch"}</dt><dd>{guide.watch}</dd><dt>{lang === "ja" ? "読み方" : "How to read it"}</dt><dd>{guide.reading}</dd></dl>;
 }
 
-export default function EventCalendar() {
+/** `initial`: the posted results and the minute the server drew the page (lib/research/calendar-first-paint.ts). */
+/** `drawnAt`: the minute the server drew the page, given even when the results could not be read in time (the rows' places are then kept). */
+export default function EventCalendar({ initial = null, drawnAt = null }: { initial?: FirstCalendar | null; drawnAt?: number | null }) {
   const [lang, setLang] = useResearchLanguage();
   const [kind, setKind] = useState<"all" | CalendarEvent["kind"]>("all");
   const [zoneOverride, setZoneOverride] = useState<string | null>(null);
@@ -37,24 +41,27 @@ export default function EventCalendar() {
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
   const [view, setView] = useState<"upcoming" | "results">("upcoming");
   const [period, setPeriod] = useState("all");
-  const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
+  // Known from the first HTML when the server drew the results (so no posted call is ever listed, owner Oct 28).
+  const [reported, setReported] = useState<{ ticker: string; at: number }[]>(() => initial ? reportedRows(initial.news.officialUpdates ?? [], uniqueBriefs(initial.news.resultBriefs ?? [], initial.history ? [checkedBriefs(initial.history.resultBriefs)] : []), initial.news.eventResults ?? [], lang === "ja") : []);
   const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
   // Months that have stored earnings results, older than the live feed included (owner, Nov 18: October came up empty).
-  const [historyMonths, setHistoryMonths] = useState<string[]>([]);
+  const [historyMonths, setHistoryMonths] = useState<string[]>(() => initial?.history?.months ?? []);
   const onMonths = useCallback((months: string[]) => setHistoryMonths(current => [...new Set([...current, ...months])]), []);
   // A company whose result is already in the results view no longer keeps its call row (owner, Oct 15).
   // The same goes for an economic release (jobs, CPI, PPI, PCE) once its result is posted.
   const resultKey = (event: CalendarEvent) => event.ticker ?? (event.kind === "economic" ? `econ:${/^[a-z]+/.exec(event.id)?.[0]}` : undefined);
   const resultPosted = (event: CalendarEvent) => { const key = resultKey(event); return !!key && reported.some(row => row.ticker === key && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000); };
-  const clock = useCalendarClock();
+  const clock = useCalendarClock(initial?.now ?? drawnAt);
   // Upcoming rows are listed once it is known which results are already posted (or after a short grace period), so a call row
   // does not show first and then move to the results (owner, Oct 28).
-  const [resultsKnown, setResultsKnown] = useState(false);
+  const [resultsKnown, setResultsKnown] = useState(initial !== null);
   const onSettled = useCallback(() => setResultsKnown(true), []);
   useEffect(() => { const timer = setTimeout(() => setResultsKnown(true), 3_500); return () => clearTimeout(timer); }, []);
   const now = resultsKnown ? clock : null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).filter(event => period === "all" || calendarDateKey(event.startsAt, zone).startsWith(period)).filter(event => !resultPosted(event));
+  // Until the posted results are known, each upcoming row's place is kept (CLS, Nov 26: a 240px box was replaced by the rows, 0.39).
+  const pendingRows = now === null && clock !== null ? selectCalendarEvents(calendarEvents, kind, "today-upcoming", clock, zone).filter(event => period === "all" || calendarDateKey(event.startsAt, zone).startsWith(period)).length : 0;
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).filter(event => period === "all" || event.date.startsWith(period));
   const months = [...new Set(view === "results"
     ? [...reported.map(row => calendarDateKey(new Date(row.at).toISOString(), zone).slice(0, 7)), ...(kind === "economic" ? [] : historyMonths)]
@@ -72,10 +79,11 @@ export default function EventCalendar() {
       <select aria-label={t("表示月", "Month")} value={period} onChange={event => setPeriod(event.target.value)}><option value="all">{t("すべての月", "All months")}</option>{months.map(month => <option key={month} value={month}>{month}</option>)}</select>
       <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
     </div>
-    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} onMonths={onMonths} onSettled={onSettled} active={view === "results"} />
-    {view === "upcoming" && now === null && <div className={calendarStyles.waiting} aria-busy="true" aria-label={t("予定を読み込み中", "Loading the schedule")} />}
+    <EconomicResultsPanel initial={initial} lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} onMonths={onMonths} onSettled={onSettled} active={view === "results"} />
+    {view === "upcoming" && now === null && clock === null && <div className={calendarStyles.waiting} aria-busy="true" aria-label={t("予定を読み込み中", "Loading the schedule")} />}
     {view === "upcoming" && <div className={calendarStyles.upcomingContent}>
-    <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
+    {pendingRows > 0 && <ol className={calendarStyles.agenda} aria-busy="true" aria-label={t("予定を読み込み中", "Loading the schedule")}>{Array.from({ length: pendingRows }, (_, index) => <li key={index} className={calendarStyles.pendingRow} aria-hidden="true" />)}</ol>}
+    <ol className={calendarStyles.agenda} hidden={pendingRows > 0}>{visible.map((event) => <li key={event.id}>
       <details>
         <summary>
           <time dateTime={event.startsAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short" }).format(new Date(event.startsAt))}<small>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.startsAt))} {zoneLabel(zone)}</small></time>

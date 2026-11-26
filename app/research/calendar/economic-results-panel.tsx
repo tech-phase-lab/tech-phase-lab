@@ -10,7 +10,8 @@ import { releaseView, type Scheduled } from "@/lib/research/economic-release-vie
 import EconomicReleaseItem from "./economic-release-item";
 import { earningsResults } from "@/lib/research/earnings-results";
 import { checkedBriefs, oneResultPerQuarter } from "@/lib/research/earnings-results-history";
-import { createNewsPoller } from "@/lib/research/news-poller";
+import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
+import type { FirstCalendar } from "@/lib/research/calendar-first-paint";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
@@ -28,6 +29,20 @@ const economicSchedule: Scheduled[] = [
   ...dateOnlyEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: `${event.date}T12:00:00-05:00`, dateOnly: true })),
 ];
 
+/** One copy of each result: the live feed's, then the stored ones of every month read so far; one row per company and quarter. */
+export function uniqueBriefs(liveBriefs: ResultBrief[], stored: ResultBrief[][]) {
+  const seen = new Set<string>();
+  const unique = (list: ResultBrief[]) => list.filter(brief => { const key = `${brief.researchId}|${brief.url}`; if (seen.has(key)) return false; seen.add(key); return true; });
+  const live = unique(liveBriefs);
+  return oneResultPerQuarter(live, unique(stored.flat()));
+}
+/** The posted results the agenda leaves out (a company's call, an economic release; owner, Oct 15). The Japanese view counts only rows
+ * with a checked Japanese text, as it shows them. */
+export function reportedRows(updates: OfficialUpdate[], briefs: ResultBrief[], events: EventResult[], ja: boolean) {
+  const economic = mergeEconomicResults(updates, briefs, events).filter(row => !ja || row.title.ja).map(row => ({ ticker: `econ:${/^[a-z]+/.exec(row.id)?.[0]}`, at: Date.parse(row.releasedAt) }));
+  return [...earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })), ...economic];
+}
+
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   const [limit, setLimit] = useState(3);
   const remaining = rows.length - limit;
@@ -37,17 +52,19 @@ function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   </>;
 }
 
-export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onSettled, onReported, onMonths }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onSettled?: () => void; onReported?: (rows: { ticker: string; at: number }[]) => void; onMonths?: (months: string[]) => void }) {
-  const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
-  const [liveBriefs, setBriefs] = useState<ResultBrief[]>([]);
+export default function EconomicResultsPanel({ initial = null, lang, zone, period, kind = "all", active = true, onSettled, onReported, onMonths }: { initial?: FirstCalendar | null; lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onSettled?: () => void; onReported?: (rows: { ticker: string; at: number }[]) => void; onMonths?: (months: string[]) => void }) {
+  // The server's first copy (lib/research/calendar-first-paint.ts), then the feed as before.
+  const [updates, setUpdates] = useState<OfficialUpdate[]>(() => initial?.news.officialUpdates ?? []);
+  const [liveBriefs, setBriefs] = useState<ResultBrief[]>(() => initial?.news.resultBriefs ?? []);
   // Results older than the news feed's seven days, by month (owner, Nov 18): the monitor's stored results and the SEC backfill.
-  const [history, setHistory] = useState<Record<string, ResultBrief[]>>({});
+  const [history, setHistory] = useState<Record<string, ResultBrief[]>>(() => initial?.history ? { recent: checkedBriefs(initial.history.resultBriefs) } : {} as Record<string, ResultBrief[]>);
   const ownerAccount = useOwnerAccount();
-  const [events, setEvents] = useState<EventResult[]>([]);
+  const [events, setEvents] = useState<EventResult[]>(() => initial?.news.eventResults ?? []);
   const [failed, setFailed] = useState(false);
   // "Next release" is the next scheduled date after the page opened.
   const [openedAt] = useState(() => Date.now());
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(initial !== null);
+  const drawn = initial !== null;
   useEffect(() => {
     const poller = createNewsPoller({
       push: true,
@@ -59,13 +76,14 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
       onSuccess: payload => { setUpdates(payload.officialUpdates ?? []); setBriefs(payload.resultBriefs ?? []); setEvents(payload.eventResults ?? []); setFailed(false); setLoaded(true); },
       onFailure: () => { setUpdates([]); setBriefs([]); setEvents([]); setFailed(true); setLoaded(true); },
     });
-    poller.start();
+    // With the server's copy the first read waits one interval (it is a refresh, not what the page waits for).
+    poller.start(drawn ? NEWS_POLL_INTERVAL_MS : 0);
     const stopObserving = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => {
       stopObserving();
       poller.stop();
     };
-  }, []);
+  }, [drawn]);
   const historyMonth = period === "all" ? "recent" : period;
   useEffect(() => {
     if (kind === "economic" || history[historyMonth]) return;
@@ -80,18 +98,12 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
     return () => controller.abort();
   }, [historyMonth, kind, history, onMonths]);
   // One copy of each result: the live feed's, then the stored ones of every month read so far; one row per company and quarter.
-  const briefs = useMemo(() => {
-    const seen = new Set<string>();
-    const unique = (list: typeof liveBriefs) => list.filter(brief => { const key = `${brief.researchId}|${brief.url}`; if (seen.has(key)) return false; seen.add(key); return true; });
-    const live = unique(liveBriefs);
-    return oneResultPerQuarter(live, unique(Object.values(history).flat()));
-  }, [liveBriefs, history]);
+  const briefs = useMemo(() => uniqueBriefs(liveBriefs, Object.values(history)), [liveBriefs, history]);
   const ja = lang === "ja";
   // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).
   useEffect(() => {
     // Posted economic releases count too, keyed "econ:ppi" etc., so their calendar row goes away (owner, Oct 15).
-    const economic = mergeEconomicResults(updates, briefs, events).filter(row => !ja || row.title.ja).map(row => ({ ticker: `econ:${/^[a-z]+/.exec(row.id)?.[0]}`, at: Date.parse(row.releasedAt) }));
-    onReported?.([...earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })), ...economic]);
+    onReported?.(reportedRows(updates, briefs, events, ja));
     // Said after the rows above, in the same step, so the agenda never lists a call that is already posted.
     if (loaded) onSettled?.();
   }, [updates, briefs, events, ja, onReported, onSettled, loaded]);
