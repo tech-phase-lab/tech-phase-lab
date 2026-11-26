@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { calculateTemperature, calculateVixContext, percentile, temperatureBand } from '../lib/resolute/thermometer.ts';
+import { calculateTemperature, calculateVixContext, percentile, temperatureBand, bandOf } from '../lib/resolute/thermometer.ts';
 import { collectThermometer, parseStockHistories } from '../lib/resolute/thermometer-provider.ts';
 import { equalWeightLevels, realizedVolatility } from '../lib/resolute/thermometer-basket.ts';
 function series() {
@@ -44,7 +44,10 @@ test('stale, missing, malformed, duplicate, or short history never produces a re
 });
 test('percentile ties and five boundaries are defined; VIX is separate and rises with fear',()=>{
  assert.equal(percentile(2,[1,2,2,3]),50);
- assert.deepEqual([0,19.99,20,40,60,80,100].map(temperatureBand),[0,0,1,2,3,4,4]);
+ // Owner, Nov 26: bottom 5% 冷えている, 5–25% やや冷えている, 25–75% 平常, 75–95% やや熱い, top 5% 熱い (v2); v1 snapshots keep 20-point bands.
+ assert.deepEqual([0,4.99,5,24.99,25,74.99,75,94.99,95,100].map(temperatureBand),[0,0,1,1,2,2,3,3,4,4]);
+ assert.deepEqual([0,19.99,20,40,60,80,100].map(v=>bandOf('daily-close-v1',v)),[0,0,1,2,3,4,4]);
+ assert.equal(bandOf('daily-close-v2',4.99),0);
  assert.throws(()=>temperatureBand(NaN));assert.throws(()=>percentile(1,[]));
  const bars=series();bars.at(-1).close=150;const result=calculateVixContext(bars,asOf);
  assert.equal(result.percentile,100);assert.equal(result.level,150);assert.equal(result.band,undefined);

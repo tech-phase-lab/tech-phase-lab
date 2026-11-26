@@ -8,7 +8,7 @@ import styles from "../diagnosis.module.css";
 export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["plan"]>;locale:DiagnosisLocale}) {
  const chapters=rulebookChapters(plan,locale),en=locale==="en";
  const [index,setIndex]=useState(0),[turn,setTurn]=useState<{from:number;to:number}|null>(null);
- const stage=useRef<HTMLElement>(null),timer=useRef<ReturnType<typeof setTimeout>|null>(null),locked=useRef(false),touch=useRef<{x:number;y:number}|null>(null);
+ const stage=useRef<HTMLElement>(null),timer=useRef<ReturnType<typeof setTimeout>|null>(null),locked=useRef(false),touch=useRef<{x:number;y:number}|null>(null),swiped=useRef(0);
  const current=Math.min(index,chapters.length),visible=turn?.to??current;
  useEffect(()=>()=>{if(timer.current)clearTimeout(timer.current);},[]);
  function move(to:number) {
@@ -19,7 +19,7 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
   setTurn({from:current,to});timer.current=setTimeout(finish,580);
  }
  function page(number:number) {
-  if(number===0)return <div className={styles.boundCover}><div className={styles.coverFrame}><span className={styles.coverBrand}>RESOLUTE</span><span className={styles.coverEdition}>THE PERSONAL EDITION</span><div className={styles.coverSeal} aria-hidden="true"><span>R</span></div><h2>{en?<>My rules<br/>My resolve</>:<>相場に揺れない<br/>私のルール</>}</h2><div className={styles.coverRule}/><p>{en?<>Written from my answers<br/>Kept for the days that test them</>:<>自分の答えからつくる<br/>迷った日に立ち戻る一冊</>}</p><small>{plan.currency} · {formatDisplay(plan.updatedAt,en?"en":"ja",{year:"numeric",month:"numeric",day:"numeric"})}</small></div></div>;
+  if(number===0)return <BookCover plan={plan} locale={locale}/>;
   const chapter=chapters[number-1];
   return <div className={styles.paperPage}><div className={styles.paperRunning}><span>RESOLUTE</span><span>MY RULES</span></div><span className={styles.chapterKicker}>{chapter.kicker}</span><h2>{chapter.title}</h2><p className={styles.chapterLead}>{chapter.lead}</p>
    {chapter.metrics.length?<dl className={styles.chapterMetrics}>{chapter.metrics.map(metric=><div key={metric.label} data-text={metric.text||undefined}><dt>{metric.label}</dt><dd>{metric.value}</dd>{metric.detail?<dd className={styles.metricDetail}>{metric.detail}</dd>:null}</div>)}</dl>:null}
@@ -34,7 +34,10 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
    onKeyDown={event=>{if(event.key==="ArrowRight"){event.preventDefault();move(current+1);}if(event.key==="ArrowLeft"){event.preventDefault();move(current-1);}}}
    onPointerDown={event=>{if(event.pointerType==="touch")touch.current={x:event.clientX,y:event.clientY};}}
    onPointerCancel={()=>{touch.current=null;}}
-   onPointerUp={event=>{const start=touch.current;touch.current=null;if(!start||event.pointerType!=="touch")return;const dx=event.clientX-start.x,dy=event.clientY-start.y;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2)move(current+(dx<0?1:-1));}}>
+   onPointerUp={event=>{const start=touch.current;touch.current=null;if(!start||event.pointerType!=="touch")return;const dx=event.clientX-start.x,dy=event.clientY-start.y;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2){swiped.current=Date.now();move(current+(dx<0?1:-1));}}}
+   // A tap turns the page too (owner, Nov 25): the right half goes forward, the left half back. A swipe is not also a tap,
+   // and selecting text does not turn the page.
+   onClick={event=>{if(Date.now()-swiped.current<500||window.getSelection()?.toString())return;const box=event.currentTarget.getBoundingClientRect();move(current+(event.clientX-box.left>box.width/2?1:-1));}}>
    <div className={styles.bookRibbon} aria-hidden="true"/>
    <div className={styles.bookStill}>{page(visible)}</div>
    {turn?<div className={`${styles.turningLeaf} ${turn.to>turn.from?styles.leafForward:styles.leafBack}`} aria-hidden="true">{page(turn.from)}</div>:null}
@@ -47,4 +50,10 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
   <p className={styles.readerHint}>{en?"Swipe or use the arrows to turn the page":"スワイプか矢印でページをめくれます"}</p>
   {current>0?<button type="button" className={styles.returnCover} disabled={!!turn} onClick={()=>move(0)}>{en?"Back to the cover":"表紙に戻る"}</button>:null}
  </div>;
+}
+
+/** The cover, shown alone before the first page on the phone and on PC. */
+export function BookCover({plan,locale}:{plan:NonNullable<PlanSnapshot["plan"]>;locale:DiagnosisLocale}) {
+ const en=locale==="en";
+ return <div className={styles.boundCover}><div className={styles.coverFrame}><span className={styles.coverBrand}>RESOLUTE</span><span className={styles.coverEdition}>THE PERSONAL EDITION</span><div className={styles.coverSeal} aria-hidden="true"><span>R</span></div><h2>{en?<>My rules<br/>My resolve</>:<>相場に揺れない<br/>私のルール</>}</h2><div className={styles.coverRule}/><p>{en?<>Written from my answers<br/>Kept for the days that test them</>:<>自分の答えからつくる<br/>迷った日に立ち戻る一冊</>}</p><small>{plan.currency} · {formatDisplay(plan.updatedAt,en?"en":"ja",{year:"numeric",month:"numeric",day:"numeric"})}</small></div></div>;
 }

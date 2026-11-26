@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {bandStars,indexStars,stockStars,marketStars,measureDay,fearChangeOf,readingStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,readingParts,shockTable,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
+import {bandStars,indexStars,stockStars,marketStars,measureDay,fearChangeOf,readingStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,shockTable,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';

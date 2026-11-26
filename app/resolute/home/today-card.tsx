@@ -2,6 +2,7 @@
 import {useEffect,useState} from 'react';
 import {ReviewLink as Link,useNotificationClient,usePlanClient,useReview} from '../review-context';
 import {recall,remember} from '@/lib/resolute/view-memory';
+import {HOME_STALE_AFTER_MS} from './use-fresh-home';
 import {fixedTodayPlan,parseTodayPlanResponse,type TodayInput,type TodayPlan} from '@/lib/resolute/today-plan';
 import {firstDropPct,FIRST_LINE_PRICE_MAX_AGE_MS} from '@/lib/resolute/first-line';
 import {usableFavoriteQuote,type FavoriteQuote} from '@/lib/research/favorite-lists';
@@ -34,11 +35,12 @@ async function requestTodayPlan(signal:AbortSignal):Promise<TodayPlan|null>{
  * What this tab already loaded is used at once (view-memory), so moving back to the home draws the card straight away. */
 export function useTodayMember(enabled:boolean,withPrices:boolean):TodayMember|null|undefined{
  const requestSettings=useNotificationClient(),requestPlan=usePlanClient(),review=useReview(),reviewing=review!==null;
- const [member,setMember]=useState<TodayMember|null|undefined>(()=>reviewing?undefined:recall<TodayMember|null>('today'));
+ // Only what this tab loaded in the last few minutes is reused; older lines and prices are asked again behind the loader.
+ const [member,setMember]=useState<TodayMember|null|undefined>(()=>{if(reviewing)return undefined;const kept=recall<{at:number;member:TodayMember|null}>('today');return kept&&Date.now()-kept.at<HOME_STALE_AFTER_MS?kept.member:undefined;});
  useEffect(()=>{
   if(!enabled)return;
   const c=new AbortController();
-  const done=(m:TodayMember|null)=>{if(c.signal.aborted)return;if(!reviewing)remember('today',m);setMember(m);};
+  const done=(m:TodayMember|null)=>{if(c.signal.aborted)return;if(!reviewing)remember('today',{at:Date.now(),member:m});setMember(m);};
   void (async()=>{
    // The plan, the alert settings and the AI plan are asked together; settings unreachable: the plan's own lines still count.
    const [planResult,settingsResult,aiResult]=await Promise.allSettled([requestPlan(undefined,c.signal),requestSettings(undefined,c.signal),reviewing?Promise.resolve(null):requestTodayPlan(c.signal)]);

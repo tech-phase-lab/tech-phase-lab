@@ -10,11 +10,11 @@ import {basketTrail,TRAIL_SESSIONS} from '../lib/resolute/thermometer-provider.t
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 
 const reading=(sox,nas,fear)=>({index:'sox',session:'2026-11-24',reading:{from:'2026-11-21',sox:{changePercent:sox,multiple:6.5,same:40,total:40},nas100:{changePercent:nas,multiple:7.9,same:89,total:99},fearChange:fear}});
-test('home cards use the shared index lines (#873): no fear index line on an up move, kept on a down move',()=>{
+test('home cards use the shared card parts (owner, Nov 26): the ★ badge and the small table; no fear row on an up move, kept on a down move',()=>{
  assert.ok(!readingParts(reading(14.7,6,19),'ja').some(l=>l.text.startsWith('恐怖指数')));
  assert.equal(readingParts(reading(-8.5,-1.5,0),'ja').at(-1).text,'恐怖指数　0%');
  const section=read('app/resolute/home/shock-section.tsx');
- assert.match(section,/lines=readingParts\(a\.market,locale\)/);assert.match(section,/<ShockStars article=\{a\} locale=\{locale\}\/>/);
+ assert.match(section,/<ShockBadge stars=\{a\.stars\} locale=\{locale\}\/>/);assert.match(section,/<ShockTableView market=\{a\.market\} locale=\{locale\}\/>/);
  assert.ok(!/homeReadingParts|storyChange/.test(section+read('lib/resolute/risk.ts')+read('app/resolute/home/today-card.tsx')));
 });
 

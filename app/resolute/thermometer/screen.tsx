@@ -10,6 +10,7 @@ import gaugeStyles from "./screen.module.css";
 import { gaugeReading, gaugeStatus, temperatureLabels, type ThermometerSnapshot } from "@/lib/resolute/thermometer-view";
 import type { ThermometerIndex } from "@/lib/resolute/thermometer";
 import { THERMOMETER_NOTE, THERMOMETER_METHOD } from "@/lib/resolute/thermometer-copy";
+import { FEAR_BOUNDARIES, FEAR_COPY, fearBand, fearMarkerPosition, formatFearPercent } from "@/lib/resolute/fear-index";
 const positions = [
   { ja: "上向き × 冷えている", en: "Rising × Cool", detailJa: "上昇が続いていますが、相場の価格は最近の水準より低い状態です。", detailEn: "The market is trending upward, but prices are below recent levels." },
   { ja: "上向き × 熱い", en: "Rising × Hot", detailJa: "上昇が続いていて、相場の価格が最近の水準より高い状態です。", detailEn: "The market is trending upward, with prices above recent levels." },
@@ -42,6 +43,7 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
   const band = sample ? (index === "nas100" ? 4 : 1) : reading?.band;
   const label = band === undefined ? "—" : temperatureLabels[locale][band];
   const vix = !sample && snapshot?.vix.status === "ready" && snapshot.vix.asOf === snapshot.asOf && Number.isFinite(snapshot.vix.level) && snapshot.vix.level > 0 && Number.isFinite(snapshot.vix.percentile) && snapshot.vix.percentile >= 0 && snapshot.vix.percentile <= 100 ? snapshot.vix : null;
+  const fear = FEAR_COPY[locale], fearLevel = vix ? fearBand(vix.level) : null;
   const signedPercent = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
   return <div className={styles.section}>
     <header className={styles.toolHeading}><h1>{t("相場の温度計", "Market gauge")}</h1><p className={styles.muted}>{t("いまの相場の位置を、ひと目でつかむ", "See where the market stands at a glance")}</p></header>
@@ -83,13 +85,21 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
       <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>
       <div><dt>{t("データの出どころ", "Data source")}</dt><dd>Twelve Data</dd></div>
     </dl></details>
-    <section className={styles.card}>
-      <div className={styles.switchRow}><h2>{t("市場の警戒度", "Market caution")}</h2><span className={styles.eyebrow}>{t("TP恐怖指数", "TP Fear Index")}</span></div>
-      <p className={styles.bigNumber}>{vix ? vix.level.toFixed(2) : "—"}</p>
-      <p className={styles.muted}>{vix ? `${vix.asOf} · ${t("過去10年内の位置", "Position over the past 10 years")} ${vix.percentile.toFixed(0)} / 100` : t("確定したデータの取得後に表示します。", "Shown once confirmed data is available.")}</p>
-      <p className={styles.muted}>{t("市場の不安の大きさを表します。数値が高いほど、不安が大きい状態です。", "A measure of market anxiety. Higher values indicate greater uncertainty.")}</p>
-      <p className={styles.muted}>{t("直近の値動きから計算", "Calculated from recent price movements")}</p>
-      <p className={styles.disclaimer}>{t("温度の判定には含めません。", "Not included in the temperature score.")}</p>
+    <section className={`${styles.card} ${gaugeStyles.fearCard}`} aria-labelledby="tp-fear-index-heading">
+      <h2 id="tp-fear-index-heading">{fear.title}</h2>
+      <div className={gaugeStyles.fearReading}>
+        <p className={gaugeStyles.fearNumber}>{vix ? formatFearPercent(vix.level) : "—"}</p>
+        <p className={styles.muted}>{vix ? `${vix.asOf} ${t("米国市場の終値", "US market close")}` : t("確定したデータの取得後に表示します。", "Shown once confirmed data is available.")}</p>
+      </div>
+      <div className={gaugeStyles.fearScale}>
+        <div className={gaugeStyles.fearMarkerTrack} aria-hidden="true">{vix ? <span className={gaugeStyles.fearMarker} style={{ left: `clamp(10px, ${fearMarkerPosition(vix.level)}%, calc(100% - 10px))` }}/> : null}</div>
+        <ol className={gaugeStyles.fearBands}>
+          {fear.bandPhrases.map((phrases, i) => <li key={i} data-band={i} data-active={fearLevel === i ? "true" : undefined} aria-current={fearLevel === i ? "true" : undefined}>{phrases.map((phrase, k) => <span key={k}>{phrase}</span>)}</li>)}
+        </ol>
+        <div className={gaugeStyles.fearTicks} aria-hidden="true">{FEAR_BOUNDARIES.map((value, i) => <span key={value} style={{ left: `${(i + 1) * 25}%` }}>{value}%</span>)}</div>
+      </div>
+      <p className={gaugeStyles.fearDescription}>{fear.description}</p>
+      <p className={`${styles.disclaimer} ${gaugeStyles.fearNote}`}>{t("温度の判定には含めません。", "Not included in the temperature score.")}</p>
     </section>
     <section className={styles.card}><h2>{t("4つの位置", "Four ways the market can look")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>
       <div className={styles.mapAxis}><span>{t("◀ 冷えている", "◀ Cool")}</span><span>{t("行き過ぎ", "Temperature")}</span><span>{t("熱い ▶", "Hot ▶")}</span></div>

@@ -37,8 +37,8 @@ test("変えないもの: PRO card copy, the LP's 「もう暴落は怖くない
   // Diagnosis: the drop % is the reader's choice or their own number.
   assert.equal(sha("../lib/resolute/diagnosis-questions-ja.ts"), "a961e67a5c46ea1d687e760999e92ed2be585209eb6c9facf7aa04589cfcc776");
   assert.ok(read("../lib/resolute/diagnosis-questions-ja.ts").includes("自分で数字を入れる"));
-  // Tonight's videos.
-  assert.equal(sha("../lib/resolute/tonight-videos.ts"), "9267d692f1495e1fdc1b3c8a60071bbf1f07221565b28c148affd703b5ff22f4");
+  // Tonight's videos (Nov 25: each entry also carries its length in seconds for the video buttons; the files are unchanged).
+  assert.equal(sha("../lib/resolute/tonight-videos.ts"), "edfc4f35a25e93f31f4fbaedc4fac23768fa19e9a52a8ec28f03b3db397bc38d");
   for (const id of ["breathe", "steady", "history"]) for (const lang of ["ja", "en"]) assert.ok(existsSync(new URL(`../public/media/resolute-tonight/${id}-${lang}.mp4`, import.meta.url)), `${id}-${lang}`);
 });
 
@@ -174,7 +174,10 @@ test("7: the tax estimate shows its assumptions and keeps NISA losses out of off
   for (const fact of ["特定口座", "一般口座", "2026年分", "売った日", "買った日", "為替レート", "確定申告が必要", "ほかの利益と通算できず、繰り越しもできません"]) assert.ok(all.includes(fact), fact);
   assert.ok(TAX_ASSUMPTIONS.every(row => row.en.term && row.en.text));
   const screen = read("../app/resolute/tax/screen.tsx");
-  assert.match(screen, /<section className=\{styles\.card\} aria-labelledby="tax-assumptions"><h2 id="tax-assumptions">\{t\("この計算の前提", "What this assumes"\)\}<\/h2>/);
+  // Phone: every assumption is listed by name and opens with a tap (owner, Nov 25, mobile 12); PC shows them as 3 × 2 cards.
+  assert.match(screen, /<section className=\{x\.phoneAssumptions\} aria-labelledby="tax-assumptions"><h2 id="tax-assumptions" className=\{styles\.headLabel\}>\{t\("この計算の前提", "What this assumes"\)\}<\/h2>/);
+  assert.match(screen, /TAX_ASSUMPTIONS\.map\(row => <details key=\{row\.en\.term\} className=\{x\.phoneAssumption\}><summary>\{row\[locale\]\.term\}<\/summary><p>\{row\[locale\]\.text\}<\/p><\/details>\)/);
+  assert.match(screen, /TAX_ASSUMPTIONS\.map\(row => <div key=\{row\.en\.term\} className=\{x\.assumption\}><dt>\{row\[locale\]\.term\}<\/dt><dd>\{row\[locale\]\.text\}<\/dd><\/div>\)/);
   assert.ok(screen.includes("NISA口座の損失は、ほかの利益と通算できず、繰り越しもできないため、税金は変わりません。"));
   // The calculation: a NISA loss never lowers the tax on other gains and is never carried forward.
   const loss = calcLossRealization({ taxYear: 2026, account: "nisa", lossJpy: 500_000, otherNetGainJpy: 1_000_000 });

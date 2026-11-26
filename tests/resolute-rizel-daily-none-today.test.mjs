@@ -61,10 +61,10 @@ test('known-move ordering looks at every story in the window, not only the newes
  const first=selectDailyCandidates(feed,monday);
  assert.ok(first.sessions.includes('2026-11-20'),'Friday stories are read for their close');
  const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{previousDate:'2026-11-19',changePercent:-2.1,typicalPercent:1,up:5,down:35,total:40},nas100:{previousDate:'2026-11-19',changePercent:-1,typicalPercent:1,up:30,down:70,total:100}}}});
- // One move, one story (owner, Nov 25): Friday was a chip move (TP半導体40 2.1×, 35/40 ★3; TP大型株100 1.0× ★1), so the
- // chip-sector story keeps it and the market-wide one waits in reserve.
- assert.deepEqual(ordered.selected.slice(0,1).map(c=>c.title.split(' ').pop()),['f2']);
- assert.ok(!ordered.selected.some(c=>c.title.endsWith('f1')));
+ // One move, one story: on the owner's table (Nov 26) Friday is ★2 on both indices (TP半導体40 −2.1%, TP大型株100 −1%), so the
+ // market-wide story keeps it (market-wide news first) and the chip-sector one waits in reserve.
+ assert.deepEqual(ordered.selected.slice(0,1).map(c=>c.title.split(' ').pop()),['f1']);
+ assert.ok(!ordered.selected.some(c=>c.title.endsWith('f2')));
  assert.equal(ordered.diagnostics.knownMove,2);
  const db=await setup();const asked=[];
  try{

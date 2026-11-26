@@ -15,6 +15,7 @@ import {useImpactMember} from '../features/use-impact-member';
 import {AlertsPanel,RuleTiles} from './rules-alerts';
 import { useThermometerSnapshot } from '../use-thermometer-snapshot';
 import { useDesktop } from '../use-desktop';
+import { useFreshHome } from './use-fresh-home';
 import type { ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
 import type { NotificationSnapshot } from '@/lib/resolute/notification-settings';
 import type { PlanSnapshot } from '@/lib/resolute/plan-data';
@@ -24,8 +25,8 @@ type Snapshot=ReturnType<typeof validateSnapshot>;
 /** The Shock Gauge section's anchor: the PC menu's 衝撃度チェッカー scrolls here (owner, Nov 25: no detail page on a PC). */
 export const SHOCK_GAUGE_ANCHOR='shock-gauge';
 export default function HomeScreen({identityReady=true,snapshot}:{identityReady?:boolean;snapshot?:ThermometerSnapshot}) {
- const current = useThermometerSnapshot(snapshot);
- return <ToolShell home pc identityReady={identityReady}>{(locale,_deny,entitlement)=><Home locale={locale} entitlement={entitlement} thermometerSnapshot={current}/>}</ToolShell>;
+ const current = useThermometerSnapshot(snapshot),epoch = useFreshHome();
+ return <ToolShell home pc identityReady={identityReady}>{(locale,_deny,entitlement)=><Home key={epoch} locale={locale} entitlement={entitlement} thermometerSnapshot={current}/>}</ToolShell>;
 }
 export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapshot?:ThermometerSnapshot;locale:'ja'|'en';entitlement:Snapshot|null}) {
  const en=locale==='en',review=useReview(),live=useRisk(),pc=useDesktop();
