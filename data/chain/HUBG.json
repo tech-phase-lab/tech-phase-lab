@@ -9,6 +9,10 @@
     {
       "ja": "買収・出資",
       "en": "Acquisitions & investment"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -113,6 +117,58 @@
             "level": "official",
             "date": "2025-02-25",
             "quote": "On August 22, 2022, we acquired TAGG Logistics, LLC (\"TAGG\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARCB",
+      "ticker": "ARCB",
+      "name": "アークベスト",
+      "name_en": "ArcBest",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "sub_short": "混載輸送",
+      "sub_short_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "物流部門の競合に挙げる",
+          "text_en": "Names Hub Group as a competitor of its logistics segment",
+          "source": {
+            "label": "ArcBest 10-K(2025年度)",
+            "label_en": "ArcBest 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/894405/000110465926019699/arcb-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The segment competes most directly with logistics companies, including the North American Surface Transportation segment of C.H. Robinson Worldwide, Inc.; Covenant Logistics Group, Inc.; Hub Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MATX",
+      "ticker": "MATX",
+      "name": "マトソン",
+      "name_en": "Matson",
+      "sub": "海運・物流",
+      "sub_en": "Shipping & logistics",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "輸送仲介の競合に挙げる",
+          "text_en": "Names Hub Group as a brokerage competitor",
+          "source": {
+            "label": "Matson 10-K(2024年度)",
+            "label_en": "Matson 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/3453/000155837025001875/matx-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-28",
+            "quote": "Matson Logistics' Transportation Brokerage services compete most directly with C.H. Robinson Worldwide, Hub Group, RXO and other freight brokers"
           }
         }
       ]

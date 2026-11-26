@@ -129,6 +129,58 @@
         }
       ],
       "name_en": "Core Natural Resources"
+    },
+    {
+      "id": "SND",
+      "ticker": "SND",
+      "name": "スマート・サンド",
+      "name_en": "Smart Sand",
+      "sub": "フラック用の砂",
+      "sub_en": "Frac sand",
+      "sub_short": "珪砂",
+      "sub_short_en": "Sand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ユニオン・パシフィック網の拠点から砂を出荷",
+          "text_en": "Ships frac sand via a terminal on the Union Pacific network",
+          "source": {
+            "label": "Smart Sand 10-K(2025年度)",
+            "label_en": "Smart Sand 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1529628/000152962826000006/snd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "ship our frac sand to our customers on a second Class I rail carrier through our transloading facility located on the Union Pacific rail network"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IPI",
+      "ticker": "IPI",
+      "name": "イントレピッド・ポタッシュ",
+      "name_en": "Intrepid Potash",
+      "sub": "カリ肥料",
+      "sub_en": "Potash",
+      "sub_short": "肥料",
+      "sub_short_en": "Potash",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品をユニオン・パシフィックの鉄道で出荷",
+          "text_en": "Ships products on the Union Pacific Railroad",
+          "source": {
+            "label": "Intrepid Potash 10-K付属の技術報告(2025年度)",
+            "label_en": "Intrepid Potash technical report filed with its 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1421461/000142146126000008/exhibit963eoy2025technical.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "are shipped by both truck and rail via Interstate 80 (I-80) and the Union Pacific Railroad (UPRR) link"
+          }
+        }
+      ]
     }
   ],
   "far": [],

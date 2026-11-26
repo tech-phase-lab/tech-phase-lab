@@ -13,6 +13,10 @@
       "ja": "提携",
       "en": "Partnerships",
       "above": true
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -133,6 +137,84 @@
             "url": "https://apps.shopify.com/axon",
             "level": "official",
             "quote": "AppLovin helps Shopify brands acquire new customers by advertising inside mobile games, reaching over 1 billion potential customers worldwide."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CTKYY",
+      "ticker": "CTKYY",
+      "name": "クーテック",
+      "name_en": "CooTek",
+      "sub": "モバイルアプリ",
+      "sub_en": "Mobile apps",
+      "sub_short": "アプリ",
+      "sub_short_en": "Apps",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "海外で最大の広告顧客と記載",
+          "text_en": "Names AppLovin its top overseas advertising customer",
+          "source": {
+            "label": "CooTek 20-F(2025年度)",
+            "label_en": "CooTek 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1734262/000110465926048866/ctkyy-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-27",
+            "quote": "We have entered into distribution cooperation agreements with AppLovin, the leading advertising exchange platform and our top advertising customer in overseas markets"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APPS",
+      "ticker": "APPS",
+      "name": "デジタル・タービン",
+      "name_en": "Digital Turbine",
+      "sub": "モバイル広告",
+      "sub_en": "Mobile advertising",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合に挙げる(顧客にもなる)",
+          "text_en": "Names AppLovin as a competitor that can also be a customer",
+          "source": {
+            "label": "Digital Turbine 10-K(2026年3月期)",
+            "label_en": "Digital Turbine 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/317788/000162828026038115/apps-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "such as Facebook, Snapchat, Unity Software, lnMobi, Magnite, AppLovin, and others. These companies can be both customers for Digital Turbine products, as well as competitors in certain cases."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVC",
+      "ticker": "EVC",
+      "name": "エントラビジョン",
+      "name_en": "Entravision Communications",
+      "sub": "広告技術・放送",
+      "sub_en": "Ad tech & broadcasting",
+      "sub_short": "広告",
+      "sub_short_en": "Ads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告配信(DSP)の主な競合に挙げる",
+          "text_en": "Names AppLovin among the main competitors of its ad platform",
+          "source": {
+            "label": "Entravision 10-K(2025年度)",
+            "label_en": "Entravision 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109116/000119312526093993/evc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our primary competitors include AppLovin, Moloco Commerce Media, Liftoff Mobile, and Unity Software."
           }
         }
       ]

@@ -128,6 +128,32 @@
         }
       ],
       "name_en": "SCREEN Holdings"
+    },
+    {
+      "id": "SMIC",
+      "ticker": "SMIC",
+      "name": "SMIC",
+      "name_en": "SMIC",
+      "sub": "半導体受託生産",
+      "sub_en": "Foundry",
+      "sub_short": "受託生産",
+      "sub_short_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "中国の主要顧客の1社",
+          "text_en": "One of its major customers in China",
+          "source": {
+            "label": "Axcelis 10-K(2025年度)",
+            "label_en": "Axcelis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "One of our major Chinese customers, Semiconductor Manufacturing International Corporation (\"SMIC\"), is on the U.S. Entity List"
+          }
+        }
+      ]
     }
   ],
   "far": [],

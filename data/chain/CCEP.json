@@ -82,6 +82,84 @@
           }
         }
       ]
+    },
+    {
+      "id": "PACT",
+      "ticker": "PACT",
+      "name": "パクト・グループ",
+      "name_en": "Pact Group",
+      "sub": "包装材",
+      "sub_en": "Packaging",
+      "sub_short": "包装",
+      "sub_short_en": "Packing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州のPETリサイクル合弁の共同出資者",
+          "text_en": "Partner in its Australian PET recycling joint venture",
+          "source": {
+            "label": "CCEP 年次報告(20-F)",
+            "label_en": "CCEP annual report (Form 20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The initiative is a joint venture between Pact Group, Cleanaway Waste Management, Asahi Beverages and CCEP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CWY",
+      "ticker": "CWY",
+      "name": "クリーンアウェイ",
+      "name_en": "Cleanaway Waste Management",
+      "sub": "廃棄物処理",
+      "sub_en": "Waste management",
+      "sub_short": "廃棄物",
+      "sub_short_en": "Waste",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州のPETリサイクル合弁の共同出資者",
+          "text_en": "Partner in its Australian PET recycling joint venture",
+          "source": {
+            "label": "CCEP 年次報告(20-F)",
+            "label_en": "CCEP annual report (Form 20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The initiative is a joint venture between Pact Group, Cleanaway Waste Management, Asahi Beverages and CCEP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "2502",
+      "ticker": "2502",
+      "name": "アサヒグループ",
+      "name_en": "Asahi Group",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "sub_short": "ビール",
+      "sub_short_en": "Beer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州子会社がPETリサイクル合弁に参加",
+          "text_en": "Its Australian arm is a partner in the PET recycling joint venture",
+          "source": {
+            "label": "CCEP 年次報告(20-F)",
+            "label_en": "CCEP annual report (Form 20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The initiative is a joint venture between Pact Group, Cleanaway Waste Management, Asahi Beverages and CCEP."
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -121,6 +121,84 @@
         }
       ],
       "name_en": "Circle Internet Group"
+    },
+    {
+      "id": "HPS",
+      "ticker": "HPS",
+      "name": "HPSインベストメント・パートナーズ",
+      "name_en": "HPS Investment Partners",
+      "sub": "プライベート・クレジット",
+      "sub_en": "Private credit",
+      "sub_short": "融資",
+      "sub_short_en": "Credit",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "BlackRock 10-K(2025年度)",
+            "label_en": "BlackRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the acquisitions of Global Infrastructure Management, LLC (\"GIP\" or the \"GIP Transaction\"), Preqin Holding Limited (\"Preqin\" or the \"Preqin Transaction\") and HPS Investment Partners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GlobalInfraPartners",
+      "ticker": "GlobalInfraPartners",
+      "name": "グローバル・インフラストラクチャー・パートナーズ",
+      "name_en": "Global Infrastructure Partners",
+      "sub": "インフラ投資",
+      "sub_en": "Infrastructure investing",
+      "sub_short": "インフラ",
+      "sub_short_en": "Infra",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収",
+          "text_en": "Acquired",
+          "source": {
+            "label": "BlackRock 10-K(2025年度)",
+            "label_en": "BlackRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the acquisitions of Global Infrastructure Management, LLC (\"GIP\" or the \"GIP Transaction\"), Preqin Holding Limited (\"Preqin\" or the \"Preqin Transaction\") and HPS Investment Partners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PREQIN",
+      "ticker": "PREQIN",
+      "name": "プレキン",
+      "name_en": "Preqin",
+      "sub": "投資データ",
+      "sub_en": "Private markets data",
+      "sub_short": "データ",
+      "sub_short_en": "Data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収",
+          "text_en": "Acquired",
+          "source": {
+            "label": "BlackRock 10-K(2025年度)",
+            "label_en": "BlackRock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2012383/000119312526071966/blk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the acquisitions of Global Infrastructure Management, LLC (\"GIP\" or the \"GIP Transaction\"), Preqin Holding Limited (\"Preqin\" or the \"Preqin Transaction\") and HPS Investment Partners"
+          }
+        }
+      ]
     }
   ],
   "far": [],

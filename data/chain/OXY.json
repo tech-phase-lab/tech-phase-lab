@@ -147,6 +147,84 @@
         }
       ],
       "name_en": "Dolphin Energy Limited"
+    },
+    {
+      "id": "EC",
+      "ticker": "EC",
+      "name": "エコペトロル",
+      "name_en": "Ecopetrol",
+      "sub": "石油ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil & gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "パーミアン盆地で戦略提携",
+          "text_en": "Strategic alliance in the Permian Basin",
+          "source": {
+            "label": "Ecopetrol 20-F(2025年度)",
+            "label_en": "Ecopetrol 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1444406/000110465926053172/ec-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "In 2019, we began operations in the Permian Basin through a strategic alliance with Occidental Petroleum."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRC",
+      "ticker": "CRC",
+      "name": "カリフォルニア・リソーシズ",
+      "name_en": "California Resources",
+      "sub": "石油",
+      "sub_en": "Oil",
+      "sub_short": "石油",
+      "sub_short_en": "Oil",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oxyから分離した旧子会社",
+          "text_en": "Spun off from Oxy, its former parent",
+          "source": {
+            "label": "California Resources 10-K(2025年度)",
+            "label_en": "California Resources 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609253/000160925326000051/crc-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "our former parent, Occidental Petroleum Corporation (Oxy)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTI",
+      "ticker": "DTI",
+      "name": "ドリリング・ツールズ・インターナショナル",
+      "name_en": "Drilling Tools International",
+      "sub": "掘削工具",
+      "sub_en": "Drilling tools",
+      "sub_short": "掘削工具",
+      "sub_short_en": "Rentals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客の掘削・生産会社に挙げる",
+          "text_en": "Names Oxy among its E&P operator customers",
+          "source": {
+            "label": "Drilling Tools International 10-K(2025年度)",
+            "label_en": "Drilling Tools International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1884516/000119312526095973/dti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "E&P operators, which account for approximately 48% of 2025 revenue, included but not limited to Chevron, BPX Energy, EOG Resources Inc., Occidental Petroleum Corporation"
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -122,6 +122,32 @@
         }
       ],
       "name_en": "FedEx"
+    },
+    {
+      "id": "FRIGOTRANS",
+      "ticker": "FRIGOTRANS",
+      "name": "フリゴ・トランス",
+      "name_en": "Frigo-Trans",
+      "sub": "医薬品の低温物流",
+      "sub_en": "Healthcare cold-chain logistics",
+      "sub_short": "低温物流",
+      "sub_short_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に買収",
+          "text_en": "Acquired in January 2025",
+          "source": {
+            "label": "UPS 10-K(2025年度)",
+            "label_en": "UPS 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We also completed the acquisitions of Frigo-Trans and Biotech & Pharma Logistics (\"Frigo-Trans\") and Andlauer Healthcare Group (\"AHG\")"
+          }
+        }
+      ]
     }
   ],
   "far": [],

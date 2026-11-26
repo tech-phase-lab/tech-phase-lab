@@ -129,6 +129,84 @@
         }
       ],
       "name_en": "Fervo Energy Company"
+    },
+    {
+      "id": "CTRA",
+      "ticker": "CTRA",
+      "name": "コテラ・エナジー",
+      "name_en": "Coterra Energy",
+      "sub": "石油・ガス",
+      "sub_en": "Oil & gas",
+      "sub_short": "石油ガス",
+      "sub_short_en": "Oil/gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年2月に全株式交換の合併契約",
+          "text_en": "Signed an all-stock merger agreement in February 2026",
+          "source": {
+            "label": "Coterra Energy 10-K/A(2025年度)",
+            "label_en": "Coterra Energy 10-K/A (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/858470/000085847026000078/cog-20251231.htm",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "on February 1, 2026, we entered into an Agreement and Plan of Merger (the \"Merger Agreement\") with Devon Energy Corporation (\"Devon\") to combine via an all-stock merger transaction"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NGS",
+      "ticker": "NGS",
+      "name": "ナチュラル・ガス・サービシズ",
+      "name_en": "Natural Gas Services Group",
+      "sub": "ガス圧縮機",
+      "sub_en": "Gas compression",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "OxyとDevonで売上の59%",
+          "text_en": "Oxy and Devon together were 59% of its revenue",
+          "source": {
+            "label": "Natural Gas Services Group 10-K(2025年度)",
+            "label_en": "Natural Gas Services Group 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084991/000108499126000015/ngs-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "our revenues from Occidental Permian, LTD. (\"Oxy\") and Devon Energy Corporation (\"Devon\") amounted to 59 percent, 59 percent and 52 percent of our revenue on a combined basis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LB",
+      "ticker": "LB",
+      "name": "ランドブリッジ",
+      "name_en": "LandBridge",
+      "sub": "土地",
+      "sub_en": "Land",
+      "sub_short": "地主",
+      "sub_short_en": "Land",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社WaterBridgeが水処理などを提供する生産者に挙げる",
+          "text_en": "WaterBridge serves Devon among producers on its ranch",
+          "source": {
+            "label": "LandBridge 10-K(2025年度)",
+            "label_en": "LandBridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1995807/000119312526072404/lb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "WaterBridge operates produced water handling infrastructure and a brackish water supply system that serves producers active on the East Stateline Ranch, including ConocoPhillips, Continental Resources, Devon Energy and Occidental Petroleum."
+          }
+        }
+      ]
     }
   ],
   "far": [],

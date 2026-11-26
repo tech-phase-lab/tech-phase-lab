@@ -122,6 +122,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "AAACOOPER",
+      "ticker": "AAACOOPER",
+      "name": "AAAクーパー・トランスポーテーション",
+      "name_en": "AAA Cooper Transportation",
+      "sub": "混載輸送",
+      "sub_en": "LTL trucking",
+      "sub_short": "混載輸送",
+      "sub_short_en": "LTL",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に全株式を取得",
+          "text_en": "Acquired all of it in 2021",
+          "source": {
+            "label": "Knight-Swift 10-K(2025年度)",
+            "label_en": "Knight-Swift 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1492691/000149269126000016/knx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company's acquisition of 100% of the securities of ACT on July 5, 2021"
+          }
+        }
+      ]
     }
   ],
   "far": [],

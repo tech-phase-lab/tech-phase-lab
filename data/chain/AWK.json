@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [
@@ -107,6 +111,58 @@
         }
       ],
       "name_en": "California Water Service Group"
+    },
+    {
+      "id": "NEXUS",
+      "ticker": "NEXUS",
+      "name": "ネクサス・ウォーター・グループ",
+      "name_en": "Nexus Water Group",
+      "sub": "上下水道",
+      "sub_en": "Water utilities",
+      "sub_short": "水道",
+      "sub_short_en": "Water",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社から上下水道事業を買収する契約",
+          "text_en": "Agreed to buy water and wastewater systems from its subsidiary",
+          "source": {
+            "label": "American Water 10-K(2025年度)",
+            "label_en": "American Water 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "the agreement to acquire certain water and wastewater systems from a subsidiary of Nexus Water Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AQN",
+      "ticker": "AQN",
+      "name": "アルゴンキン・パワー・アンド・ユーティリティーズ",
+      "name_en": "Algonquin Power & Utilities",
+      "sub": "電力・水道",
+      "sub_en": "Power & water utilities",
+      "sub_short": "公益",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "事業買収で競合することがある",
+          "text_en": "Competes at times for utility acquisitions",
+          "source": {
+            "label": "American Water 10-K(2025年度)",
+            "label_en": "American Water 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "From time to time, the Company also faces competition from infrastructure funds, multi-utility companies and others, such as Algonquin Power and Utilities Corp. and Nexus Water Group."
+          }
+        }
+      ]
     }
   ],
   "far": [],

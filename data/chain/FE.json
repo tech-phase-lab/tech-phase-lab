@@ -103,6 +103,58 @@
         }
       ],
       "name_en": "AEP (Transource)"
+    },
+    {
+      "id": "TRANSOURCE",
+      "ticker": "TRANSOURCE",
+      "name": "トランスソース・エナジー",
+      "name_en": "Transource Energy",
+      "sub": "送電",
+      "sub_en": "Transmission",
+      "sub_short": "送電",
+      "sub_short_en": "Grid",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "送電会社Valley LinkとGrid Growthを共同設立",
+          "text_en": "Co-formed the transmission ventures Valley Link and Grid Growth",
+          "source": {
+            "label": "FirstEnergy 10-K(2025年度)",
+            "label_en": "FirstEnergy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Valley Link Transmission Company, LLC, a holding company formed by FET, DominionHV and Transource on November 24, 2024"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMBMV",
+      "ticker": "WMBMV",
+      "name": "WMBマーケティング・ベンチャーズ",
+      "name_en": "WMB Marketing Ventures",
+      "sub": "石炭鉱業",
+      "sub_en": "Coal mining",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "鉱業の合弁Global Holdingの共同出資者",
+          "text_en": "Partner in the Global Holding mining joint venture",
+          "source": {
+            "label": "FirstEnergy 10-K(2025年度)",
+            "label_en": "FirstEnergy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Global Mining Holding Company, LLC, a joint venture between FEV, WMB Marketing Ventures, LLC and Pinesdale LLC"
+          }
+        }
+      ]
     }
   ],
   "far": [],
