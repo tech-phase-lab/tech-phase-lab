@@ -1486,6 +1486,52 @@ def original_publication_date(value):
         return None
 
 
+def stated_publication_instant(parsed):
+    """A publisher's own clock time as a UTC instant, or None when it states none.
+
+    Only a time with an explicit zone counts, and an exact local midnight is a
+    date-only placeholder (Lumentum's feed: "Mon, 23 Nov 2026 00:00:00 -0500"),
+    never a publication time (owner, Nov 26: rows must show when they happened).
+    """
+    if not isinstance(parsed, datetime) or parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    if (parsed.hour, parsed.minute, parsed.second, parsed.microsecond) == (0, 0, 0, 0):
+        return None
+    try:
+        return parsed.astimezone(timezone.utc).replace(microsecond=0).isoformat()
+    except (OverflowError, ValueError):
+        return None
+
+
+def original_publication_time(value):
+    """Keep a publisher's stated instant (ISO 8601 with a zone), else None."""
+    if not isinstance(value, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)",
+        value,
+    ):
+        return None
+    try:
+        return stated_publication_instant(datetime.fromisoformat(value.replace("Z", "+00:00")))
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
+def consistent_publication_time(published_at, published_on):
+    """A stated instant is kept only when it lies on (or within a day of) the stated date.
+
+    The date is the publisher's local calendar day; the instant is UTC, so the two
+    can differ by one day across time zones but never by more."""
+    if not published_at:
+        return None
+    if not published_on:
+        return published_at
+    try:
+        gap = abs((datetime.fromisoformat(published_at).date() - datetime.strptime(published_on, "%Y-%m-%d").date()).days)
+    except (TypeError, ValueError):
+        return None
+    return published_at if gap <= 1 else None
+
+
 class ArticlePublication(StructuredArticleText):
     """Read original-date metadata for this article, excluding related items."""
 
@@ -1521,6 +1567,22 @@ class ArticlePublication(StructuredArticleText):
                 self.meta_dates.append(values.get("content"))
 
     def publication_date(self):
+        candidates = self.publication_candidates()
+        if candidates is None:
+            return None
+        dates = {date for value in candidates if (date := original_publication_date(value))}
+        return dates.pop() if len(dates) == 1 else None
+
+    def publication_time(self):
+        """The page's own publication instant, when every stated value agrees on it."""
+        candidates = self.publication_candidates()
+        date = self.publication_date()
+        if candidates is None or not date:
+            return None
+        instants = {instant for value in candidates if (instant := original_publication_time(value))}
+        return consistent_publication_time(instants.pop(), date) if len(instants) == 1 else None
+
+    def publication_candidates(self):
         candidates = list(self.meta_dates)
         nodes_seen = 0
         for block in self.blocks:
@@ -1559,8 +1621,7 @@ class ArticlePublication(StructuredArticleText):
                 # dateModified, uploadDate and HTTP Last-Modified are never
                 # evidence of original publication, even when more recent.
                 candidates.append(node.get("datePublished"))
-        dates = {date for value in candidates if (date := original_publication_date(value))}
-        return dates.pop() if len(dates) == 1 else None
+        return candidates
 
 
 def article_publication_date(content, url, declared_encoding=None):
@@ -1568,6 +1629,14 @@ def article_publication_date(content, url, declared_encoding=None):
     parser.feed(decode_html_document(content, declared_encoding))
     parser.close()
     return parser.publication_date()
+
+
+def article_publication_time(content, url, declared_encoding=None):
+    """article:published_time / JSON-LD datePublished of this page as a UTC instant."""
+    parser = ArticlePublication(url)
+    parser.feed(decode_html_document(content, declared_encoding))
+    parser.close()
+    return parser.publication_time()
 
 
 def decode_html_document(content, declared_encoding=None):
@@ -1775,6 +1844,25 @@ def _feed_publication_date(item):
     return None
 
 
+def _feed_publication_time(item):
+    """The feed's stated publication instant (pubDate / Atom published) in UTC, or None."""
+    atom = "{http://www.w3.org/2005/Atom}"
+    for value in (item.findtext("pubDate"), item.findtext(atom + "published")):
+        value = (value or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            try:
+                parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except (TypeError, ValueError, OverflowError):
+                continue
+        # The first stated value decides, as for the date above.
+        return stated_publication_instant(parsed)
+    return None
+
+
 def feed_links(body, ticker, content_type="application/rss+xml", source_url=None):
     """Extract official links and substantive first-party feed evidence."""
     if b"\x00" in body or re.search(br"<!\s*(DOCTYPE|ENTITY)", body, re.I):
@@ -1813,6 +1901,9 @@ def feed_links(body, ticker, content_type="application/rss+xml", source_url=None
             published_on = _feed_publication_date(item)
             if evidence or published_on:
                 detail = {"title": title, "publishedOn": published_on}
+                published_at = consistent_publication_time(_feed_publication_time(item), published_on)
+                if published_at:
+                    detail["publishedAt"] = published_at
                 if evidence:
                     detail.update({
                         "inlineText": evidence,
@@ -1867,6 +1958,9 @@ def news_json_links(body, ticker, source):
         published = pick(item, source["dateKey"]) if source.get("dateKey") else None
         published_on = published[:10] if isinstance(published, str) and re.match(r"\d{4}-\d{2}-\d{2}(?:T|$)", published) else None
         detail = {"title": title, "publishedOn": published_on} if published_on else {"title": title}
+        published_at = consistent_publication_time(original_publication_time(published), published_on)
+        if published_at:
+            detail["publishedAt"] = published_at
         # A page that is drawn by script (Broadcom's newsroom) carries the
         # release text in the listing record itself; use it as the body.
         raw_body = pick(item, source["bodyKey"]) if source.get("bodyKey") else None
@@ -1888,6 +1982,19 @@ def roc_date(value):
     year = int(value[:3]) + 1911
     parsed = datetime.strptime(f"{year:04d}{value[3:]}", "%Y%m%d")
     return parsed.strftime("%Y-%m-%d")
+
+
+def taiwan_publication_time(published_on, spoken_time):
+    """A MOPS/TWSE announcement's stated 發言時間 (Taiwan time, UTC+8) as a UTC instant, or None."""
+    digits = str(spoken_time or "").strip().replace(":", "")
+    if not published_on or not re.fullmatch(r"\d{1,6}", digits):
+        return None
+    digits = digits.zfill(6)
+    try:
+        local = datetime.strptime(published_on + digits, "%Y-%m-%d%H%M%S").replace(tzinfo=timezone(timedelta(hours=8)))
+    except ValueError:
+        return None
+    return stated_publication_instant(local)
 
 
 def mops_material_links(body, ticker, source):
@@ -1917,7 +2024,11 @@ def mops_material_links(body, ticker, source):
         if not spoken or not subject:
             continue
         url = safe_url(f"https://{MOPS_HOST}{MOPS_DETAIL_PATH}?" + urlencode(query), ticker)
-        links[url] = {"title": subject, "publishedOn": roc_date(spoken.group(1).zfill(3) + spoken.group(2) + spoken.group(3))}
+        published_on = roc_date(spoken.group(1).zfill(3) + spoken.group(2) + spoken.group(3))
+        links[url] = {"title": subject, "publishedOn": published_on}
+        published_at = taiwan_publication_time(published_on, row.get("發言時間"))
+        if published_at:
+            links[url]["publishedAt"] = published_at
     return links
 
 
@@ -1959,6 +2070,9 @@ def twse_material_links(body, ticker, source):
             "inlineText": evidence,
             "contentBytes": len(json.dumps(item, ensure_ascii=False, separators=(",", ":")).encode()),
         }
+        published_at = taiwan_publication_time(published_on, spoken_time)
+        if published_at:
+            links[url]["publishedAt"] = published_at
     return links
 
 
@@ -2406,6 +2520,9 @@ def connect(path):
         "evidence_url": "TEXT",
         "evidence_kind": "TEXT NOT NULL DEFAULT 'direct'",
         "extractor_version": "TEXT NOT NULL DEFAULT ''",
+        # The publisher's stated instant (UTC ISO), beside its calendar date, when
+        # the feed or article states a clock time (owner, Nov 26).
+        "published_at": "TEXT",
     }
     for column, declaration in migrations.items():
         if column not in source_columns:
@@ -3886,7 +4003,7 @@ def operational_incident_summary(db, limit=20, delivery_enabled=False):
     }
 
 
-def add_source(db, ticker, url, published_on=None, title=None):
+def add_source(db, ticker, url, published_on=None, title=None, published_at=None):
     # Manual and fallback discovery paths share the same article identity as
     # feed/index parsing: tracking queries and fragments cannot create another
     # fetch/review record for the same official article. Synthetic inline
@@ -3904,6 +4021,12 @@ def add_source(db, ticker, url, published_on=None, title=None):
                 "UPDATE sources SET published_on=? WHERE url=? AND published_on IS NULL",
                 (published_on, url),
             )
+        published_at = original_publication_time(published_at)
+        if published_at:
+            # Filled once, and only beside the same stated day; a later listing never moves it.
+            stored = db.execute("SELECT published_on FROM sources WHERE url=?", (url,)).fetchone()
+            if stored and consistent_publication_time(published_at, stored[0]):
+                db.execute("UPDATE sources SET published_at=? WHERE url=? AND published_at IS NULL", (published_at, url))
     return url
 
 
@@ -3970,7 +4093,7 @@ def normalized_discovery_candidates(ticker, candidates):
         return None
     normalized = {}
     allowed_detail_keys = {
-        "title", "publishedOn", "inlineText", "contentType", "contentBytes",
+        "title", "publishedOn", "publishedAt", "inlineText", "contentType", "contentBytes",
     } | SEC_DISCOVERY_FIELDS
     for url, candidate in candidates.items():
         if not isinstance(url, str) or not valid_discovery_candidate_url(url, ticker):
@@ -3998,6 +4121,11 @@ def normalized_discovery_candidates(ticker, candidates):
             if not isinstance(published_on, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", published_on):
                 return None
             detail["publishedOn"] = published_on
+        published_at = candidate.get("publishedAt")
+        if published_at is not None:
+            if original_publication_time(published_at) != published_at:
+                return None
+            detail["publishedAt"] = published_at
         inline_text = candidate.get("inlineText")
         if inline_text is not None:
             if not isinstance(inline_text, str) or len(inline_text) > MAX_EXTRACTED_CHARS:
@@ -4371,7 +4499,8 @@ def save_discovery(db, ticker, result, links):
     before = {row[0] for row in db.execute("SELECT url FROM sources WHERE ticker=?", (ticker,))}
     for url, candidate in links.items():
         detail = candidate if isinstance(candidate, dict) else {"title": candidate}
-        retained_url = add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"))
+        retained_url = add_source(db, ticker, url, published_on=detail.get("publishedOn"), title=detail.get("title"),
+                                  published_at=detail.get("publishedAt"))
         title = detail.get("title")
         if (isinstance(title, str) and title.strip()
                 and urlsplit(retained_url).hostname not in {"www.sec.gov", "data.sec.gov"}):
@@ -5477,6 +5606,8 @@ def collect_source(row, transport=fetch):
         "publishedOn": (article_publication_date(content, row["url"], declared_encoding)
                         or (document_identity.original_visible_date() if document_identity else None))
         if content_type == "text/html" and evidence_kind == "direct" else None,
+        "publishedAt": article_publication_time(content, row["url"], declared_encoding)
+        if content_type == "text/html" and evidence_kind == "direct" else None,
     }
 
 
@@ -5579,6 +5710,14 @@ def save_source_check(db, row, result):
             if published_on and published_on <= checked_at[:10]:
                 db.execute("UPDATE sources SET published_on=? WHERE url=?",
                            (published_on, row["url"]))
+            # The article's own stated instant (article:published_time / JSON-LD
+            # datePublished) fills a missing clock time; a feed time is kept.
+            published_at = original_publication_time(result.get("publishedAt"))
+            stored_on = published_on or current["published_on"]
+            if (published_at and datetime.fromisoformat(published_at) <= datetime.fromisoformat(checked_at)
+                    and consistent_publication_time(published_at, stored_on)):
+                db.execute("UPDATE sources SET published_at=? WHERE url=? AND published_at IS NULL",
+                           (published_at, row["url"]))
             db.execute("""
           UPDATE sources
           SET sha256=?,raw_sha256=?,body_sha256=?,checked_at=?,

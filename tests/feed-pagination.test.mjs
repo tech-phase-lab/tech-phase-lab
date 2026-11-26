@@ -71,3 +71,47 @@ test('news navigation is one non-scrolling row and cannot accumulate all sixteen
   assert.doesNotMatch(rule,/overflow[^;]*:auto|flex-wrap:wrap/);
   for(let page=1;page<=16;page++) assert.equal((render(page,16).match(/<button/g)??[]).length,2);
 });
+
+const {turnPageInPlace}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+function fakePage({headerBottom=68,sectionTop,scrollY=900,listHeight=640,minHeight=''}) {
+  const scrolls=[];
+  const header={getBoundingClientRect:()=>({top:0,bottom:headerBottom})};
+  globalThis.window={scrollY,scrollTo:o=>scrolls.push(o)};
+  globalThis.document={querySelectorAll:()=>[header]};
+  globalThis.getComputedStyle=()=>({position:'sticky'});
+  const section={getBoundingClientRect:()=>({top:sectionTop})};
+  const list={offsetHeight:listHeight,style:{minHeight}};
+  return {scrolls,section,list};
+}
+const cleanup=()=>{delete globalThis.window;delete globalThis.document;delete globalThis.getComputedStyle;};
+
+test('owner, Nov 26: a page turn leaves the screen where it is while the list top is visible',()=>{
+  const {scrolls,section,list}=fakePage({sectionTop:250});
+  turnPageInPlace(section,list);
+  assert.deepEqual(scrolls,[]);
+  assert.equal(list.style.minHeight,'640px');
+  cleanup();
+});
+
+test('a hidden list top comes back fully below the fixed header, never half under it',()=>{
+  const {scrolls,section,list}=fakePage({sectionTop:-500,headerBottom:68,scrollY:900});
+  turnPageInPlace(section,list);
+  assert.deepEqual(scrolls,[{top:900-500-68-8,behavior:'instant'}]);
+  cleanup();
+});
+
+test('the reserved height keeps the tallest page so a short last page does not jump',()=>{
+  const {section,list}=fakePage({sectionTop:200,listHeight:300,minHeight:'640px'});
+  turnPageInPlace(section,list);
+  assert.equal(list.style.minHeight,'640px');
+  cleanup();
+});
+
+test('the paged screens use the in-place page turn, not scrollIntoView',async()=>{
+  for(const file of ['../app/research/price-targets-panel.tsx','../app/research/news/general-news-panel.tsx','../app/research/news/topics-list.tsx','../app/research/news/flash-page.tsx']) {
+    const text=await readFile(new URL(file,import.meta.url),'utf8');
+    const pager=text.split('\n').find(line=>line.includes('<FeedPagination'));
+    assert.match(pager,/turnPageInPlace\(/,file);
+    assert.doesNotMatch(pager,/scrollIntoView/,file);
+  }
+});

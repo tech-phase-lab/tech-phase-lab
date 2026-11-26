@@ -37,7 +37,9 @@ class MopsList(unittest.TestCase):
     def test_rows_link_their_own_announcement_with_title_and_date(self):
         links = monitor.discover_links(LIST.read_bytes(), "application/json", "TSM", mops_source())
         self.assertEqual(len(links), 3)  # the row without a detail link and the other company's row are left out
-        self.assertEqual(links[Q3], {"title": "台積公司2026年第三季每股盈餘新台幣29.43元", "publishedOn": "2026-10-15"})
+        # 發言時間 15:21:38 Taiwan time is the announcement's own clock time (owner, Nov 26).
+        self.assertEqual(links[Q3], {"title": "台積公司2026年第三季每股盈餘新台幣29.43元", "publishedOn": "2026-10-15",
+                                     "publishedAt": "2026-10-15T07:21:38+00:00"})
         self.assertTrue(all(monitor.valid_discovery_candidate_url(url, "TSM") for url in links))
         self.assertIn("台積公司2026年10月營收報告", [d["title"] for d in links.values()])
 
