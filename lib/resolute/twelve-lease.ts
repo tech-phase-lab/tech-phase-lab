@@ -7,7 +7,9 @@
  *     place that sees every credit of the minute. A refusal is waited out (the minute's count starts again every minute), never
  *     sent anyway; a 429 from the provider pauses the job to the next minute. Nothing is retried: a call that is not granted before the
  *     job's deadline is simply not made, and the caller treats it like a failed read (no close, no split: nothing is guessed).
- *  3. When the allocator is not configured or cannot be reached, the job keeps only its own pace, lowered to FALLBACK_PER_MINUTE.
+ *  3. When the allocator is not configured or cannot be reached, the job keeps only its own pace, lowered to FALLBACK_PER_MINUTE (or the
+ *     job's own `fallbackPerMinute`: the alerts' closes keep their full pace). When the allocator cannot read the provider's meter it
+ *     answers "meter-unknown": the critical tier then keeps that local pace for a while instead of waiting to its deadline.
  *
  * No key, token or URL is ever printed. Pure apart from `fetch` and the clock, both injectable. */
 
@@ -19,23 +21,27 @@ export const MAX_LEASE_COST = 120;
 export const FALLBACK_PER_MINUTE = 60;
 /** How long a refused lease waits before asking again (the allocator's minute may have room after the meter moves). */
 export const REFUSED_WAIT_MS = 3_000;
+/** After the allocator answers "meter-unknown", the critical tier keeps its local pace this long before asking again. */
+export const METER_UNKNOWN_LOCAL_MS = 30_000;
 const WINDOW_MS = 60_000;
 /** Within the minute the pace is smooth too: at most a sixth of it (or one call) in any ten seconds. */
 const BURST_MS = 10_000;
 
 export type TwelveLease = {
   /** True when `cost` credits may be sent now (counted). Waits for room up to the deadline; false after it. Never throws. */
-  take(cost: number, caller: string): Promise<boolean>;
+  take(cost: number, caller: string, maxWaitMs?: number): Promise<boolean>;
   /** The provider answered 429: nothing more is sent until the next minute. */
   limited(): void;
   /** Credits taken so far, and how they were decided (for the run's report: counts only). */
-  report(): { credits: number; leases: number; refused: number; mode: "allocator" | "local" | "unpaced" };
+  report(): { credits: number; leases: number; refused: number; meterUnknown?: number; mode: "allocator" | "local" | "unpaced" };
 };
 
 type Fetcher = (input: URL, init?: RequestInit) => Promise<Response>;
 export type LeaseOptions = {
   tier: LeaseTier;
   perMinute: number;
+  /** The pace when the allocator is not configured, not reachable, or cannot read the meter (default FALLBACK_PER_MINUTE). */
+  fallbackPerMinute?: number;
   /** Absolute time (ms) after which nothing more is taken. */
   deadline?: number;
   url?: string | null;
@@ -63,31 +69,41 @@ export function createTwelveLease(options: LeaseOptions): TwelveLease {
   const now = options.now ?? Date.now, sleep = options.sleep ?? realSleep, fetcher = options.fetcher ?? ((input, init) => fetch(input, init));
   const endpoint = options.token && options.token.length >= 32 ? leaseEndpoint(options.url) : null;
   let allocator = endpoint !== null;
-  let perMinute = allocator ? options.perMinute : Math.min(options.perMinute, FALLBACK_PER_MINUTE);
+  /** The pace without the allocator's view: FALLBACK_PER_MINUTE unless the job sets its own (the alerts' closes keep their full pace, so
+   * every member's close is read in the run before the allocator is configured). */
+  const fallback = Math.min(options.perMinute, options.fallbackPerMinute ?? FALLBACK_PER_MINUTE);
+  let localUntil = 0; // after a "meter-unknown" answer the critical tier keeps its local pace until then
+  const pace = (t: number) => allocator && t >= localUntil ? options.perMinute : fallback;
   const spends: { at: number; cost: number }[] = [];
-  let pausedUntil = 0, credits = 0, leases = 0, refused = 0;
+  let pausedUntil = 0, credits = 0, leases = 0, refused = 0, meterUnknown = 0;
   const deadline = options.deadline ?? Infinity;
   const used = (t: number) => { while (spends.length && spends[0].at <= t - WINDOW_MS) spends.shift(); return spends.reduce((sum, s) => sum + s.cost, 0); };
   /** Waits until `ms` from now unless that passes the deadline (then false). */
-  const wait = async (ms: number) => { if (now() + ms > deadline) return false; await sleep(Math.max(1, ms)); return true; };
+  let until = deadline; // this call's deadline: the lease's, or sooner with `maxWaitMs` (a request handler never waits long)
+  const wait = async (ms: number) => { if (now() + ms > until) return false; await sleep(Math.max(1, ms)); return true; };
 
-  async function ask(cost: number, caller: string): Promise<boolean | null> {
+  /** The allocator's answer: granted, refused, "meter-unknown" (it cannot read the provider's meter), or null (not reachable). */
+  async function ask(cost: number, caller: string): Promise<"granted" | "refused" | "meter-unknown" | null> {
     try {
       const response = await fetcher(endpoint!, { method: "POST", headers: { Authorization: `Bearer ${options.token}`, "Content-Type": "application/json" },
         body: JSON.stringify({ cost, tier: options.tier, caller }), cache: "no-store", redirect: "error", signal: AbortSignal.timeout(3_000) });
       if (!response.ok) { await response.body?.cancel(); return null; }
-      const body = await response.json().catch(() => null) as { ok?: unknown; granted?: unknown } | null;
-      return body?.ok === true ? body.granted === true : null;
+      const body = await response.json().catch(() => null) as { ok?: unknown; granted?: unknown; reason?: unknown } | null;
+      if (body?.ok !== true) return null;
+      return body.granted === true ? "granted" : body.reason === "meter-unknown" ? "meter-unknown" : "refused";
     } catch { return null; }
   }
 
   return {
-    async take(cost, caller) {
-      if (!Number.isInteger(cost) || cost <= 0 || cost > MAX_LEASE_COST || cost > perMinute) return false;
+    async take(cost, caller, maxWaitMs) {
+      if (!Number.isInteger(cost) || cost <= 0 || cost > MAX_LEASE_COST || cost > options.perMinute) return false;
+      until = Math.min(deadline, maxWaitMs === undefined ? Infinity : now() + maxWaitMs);
       for (;;) {
         const t = now();
-        if (t > deadline) return false;
+        if (t > until) return false;
         if (t < pausedUntil) { if (!await wait(pausedUntil - t)) return false; continue; }
+        const perMinute = pace(t);
+        if (cost > perMinute) { if (allocator && t < localUntil) { if (!await wait(localUntil - t)) return false; continue; } return false; }
         // 1. Own pace: at most a sixth of the minute (or this one call) in any ten seconds, and `perMinute` in any minute.
         const recent = spends.filter(s => s.at > t - BURST_MS);
         const burst = Math.max(cost, Math.floor(perMinute / 6));
@@ -103,18 +119,25 @@ export function createTwelveLease(options: LeaseOptions): TwelveLease {
           if (!await wait(until - t + 1)) return false;
           continue;
         }
-        // 2. The allocator.
-        if (allocator) {
+        // 2. The allocator (not while the critical tier is on its local pace after a "meter-unknown").
+        if (allocator && t >= localUntil) {
           const answer = await ask(cost, /^[a-z][a-z0-9_-]{0,31}$/.test(caller) ? caller : "resolute");
-          if (answer === null) { allocator = false; perMinute = Math.min(perMinute, FALLBACK_PER_MINUTE); continue; }
-          if (!answer) { refused++; if (!await wait(REFUSED_WAIT_MS)) return false; continue; }
+          if (answer === null) { allocator = false; continue; }
+          if (answer === "meter-unknown") {
+            meterUnknown++;
+            // The allocator cannot see the minute: alerts keep their own (fallback) pace for a while instead of waiting to the deadline;
+            // the other tiers wait as for a refusal.
+            if (options.tier === "critical") { localUntil = now() + METER_UNKNOWN_LOCAL_MS; continue; }
+            refused++; if (!await wait(REFUSED_WAIT_MS)) return false; continue;
+          }
+          if (answer === "refused") { refused++; if (!await wait(REFUSED_WAIT_MS)) return false; continue; }
         }
         spends.push({ at: now(), cost }); credits += cost; leases++;
         return true;
       }
     },
     limited() { pausedUntil = (Math.floor(now() / WINDOW_MS) + 1) * WINDOW_MS + 1_000; },
-    report: () => ({ credits, leases, refused, mode: allocator ? "allocator" : "local" }),
+    report: () => ({ credits, leases, refused, meterUnknown, mode: allocator ? "allocator" : "local" }),
   };
 }
 

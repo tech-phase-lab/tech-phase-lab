@@ -8,6 +8,7 @@ import {parsePlan} from '../../lib/resolute/plan-data.ts';
 import {parseNotificationSettings} from '../../lib/resolute/notification-settings.ts';
 import {createSettingsSplitAdjuster} from '../../lib/resolute/notification-splits.ts';
 import {createCachedSplitLoader,createDailyCloseStore} from '../../lib/resolute/twelve-cache.ts';
+import {createSplitLoader} from '../../lib/research/stock-splits.ts';
 import {fetchDailyBatch,SYMBOL} from '../../lib/resolute/twelve-daily.ts';
 import {leaseFromEnv,unpacedLease} from '../../lib/resolute/twelve-lease.ts';
 import {latestRiskDate,parseRiskArticle,isLegacyRiskArticle} from '../../lib/resolute/risk.ts';
@@ -239,12 +240,15 @@ async function main(){
   if(new URL(config.connectionString).username!=='resolute_today_plan_writer')throw Error('SCOPE');
   pool=new Pool({...config,max:4,application_name:'resolute-today-plan'});pool.on('error',()=>{});
   const apiKey=process.env.RESOLUTE_OPENAI_API_KEY,twelve=process.env.TWELVE_DATA_API_KEY;
+  // One lease for the run's Twelve Data reads: warm, 120 credits a minute (also without the allocator), stopped after 15 minutes.
+  const lease=leaseFromEnv(process.env,{tier:'warm',perMinute:120,fallbackPerMinute:120,deadline:Date.now()+900000});
   const only=(process.env.RESOLUTE_TODAY_PLAN_ONLY_USER_IDS??'').split(',').map(s=>s.trim()).filter(Boolean);
   if(only.some(id=>!/^user_[A-Za-z0-9]{1,128}$/.test(id)))throw Error('CONFIG');
   const result=await runTodayPlanJob({pool,model:apiKey?createTodayModel({apiKey,pool,limit:todayPlanMonthlyLimit()}):null,
    // Twelve Data: the shared copies first (closes and splits, filled by the notifications cron's daily prefetch); the rest leased and paced.
-   bars:createDailyBars({apiKey:twelve,store:createDailyCloseStore(pool),lease:leaseFromEnv(process.env,{tier:'warm',perMinute:120,deadline:Date.now()+900000})}),
-   splitLoader:createCachedSplitLoader(pool),onlyUserIds:only.length?only:null,
+   bars:createDailyBars({apiKey:twelve,store:createDailyCloseStore(pool),lease}),
+   // Splits: the shared copy first; a symbol it lacks (or no table yet) is read from the provider under the same lease.
+   splitLoader:createCachedSplitLoader(pool,createSplitLoader({apiKey:twelve,lease})),onlyUserIds:only.length?only:null,
    tonight:apiKey&&process.env.RESOLUTE_TONIGHT_AI_ENABLED==='true'?createTonightJobHook({pool,model:createTonightQuestionModel({apiKey,pool,limit:todayPlanMonthlyLimit()})}):null});
   console.log(JSON.stringify({event:'RESOLUTE_TODAY_PLAN',...result}));
   if(result.state!=='done'||result.errors)process.exitCode=1;

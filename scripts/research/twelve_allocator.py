@@ -159,15 +159,21 @@ class Allocator:
     def grant(self, cost, tier, caller=None):
         """True (and counted) when `cost` credits may be sent now under `tier`. Never waits. `caller` (the provider path, e.g. "quote")
         only labels the minute's summary."""
+        return self.decide(cost, tier, caller) == 'granted'
+
+    def decide(self, cost, tier, caller=None):
+        """'granted' (and counted), 'refused', or 'meter-unknown' (the provider's meter could not be read: nothing is granted, and the
+        caller knows the minute was not judged full; RESOLUTE's alerts then keep their own pace, lib/resolute/twelve-lease.ts)."""
         if tier not in CEILING or not isinstance(cost, int) or isinstance(cost, bool) or not 0 < cost <= MAX_COST:
-            return False
+            return 'refused'
         label = f"{tier}:{caller}" if isinstance(caller, str) and CALLER.fullmatch(caller) else tier
         with self.lock:
             used = self._usage()
             minute = self._minute(self.clock())
             if tier in MEMBER_TIERS:
                 self.member_asks[minute] = self.member_asks.get(minute, 0) + cost
-            if used is None:
+            unknown = used is None
+            if unknown:
                 self.stats['unknownMeter'] += 1
                 ok = False
             else:
@@ -182,7 +188,7 @@ class Allocator:
                 self.stats['refused'] += 1
                 if tier in MEMBER_TIERS:
                     self.member_refused[minute] = self.member_refused.get(minute, 0) + cost
-            return ok
+            return 'granted' if ok else 'meter-unknown' if unknown else 'refused'
 
     def record(self, cost):
         """Credits this monitor's own jobs sent (they decide with usage() first)."""

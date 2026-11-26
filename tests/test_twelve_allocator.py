@@ -211,6 +211,13 @@ class Endpoint(unittest.TestCase):
                 with self.assertRaises(HTTPError) as error:
                     post({'cost': 1, 'tier': 'critical'}, 'Bearer ' + 'x' * 40)
                 self.assertEqual(error.exception.code, 401)
+                # The meter cannot be read: nothing is granted, and the answer says why (RESOLUTE's alerts keep their own pace).
+                ta._installed = ta.Allocator(read_meter=lambda: None, clock=Clock())
+                with post({'cost': 50, 'tier': 'critical'}, 'Bearer ' + resolute) as response:
+                    self.assertEqual(json.loads(response.read()), {'ok': True, 'granted': False, 'reason': 'meter-unknown'})
+            self.assertEqual(ta.Allocator(read_meter=lambda: None, clock=Clock()).decide(5, 'user'), 'meter-unknown')
+            self.assertEqual(ta.Allocator(read_meter=lambda: 600, clock=Clock()).decide(5, 'user'), 'refused')
+            self.assertEqual(ta.Allocator(read_meter=lambda: 0, clock=Clock()).decide(5, 'user'), 'granted')
             # A short token, or one equal to another monitor token, opens nothing.
             self.assertFalse(ta.resolute_token_ok('Bearer short', {'RESOLUTE_TWELVE_LEASE_TOKEN': 'short'}))
             self.assertFalse(ta.resolute_token_ok('Bearer ' + resolute, {'RESOLUTE_TWELVE_LEASE_TOKEN': resolute, 'RESOLUTE_PUSH_TOKEN': resolute}))

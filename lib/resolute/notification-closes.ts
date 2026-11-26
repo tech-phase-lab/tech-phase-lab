@@ -40,7 +40,9 @@ type Fetcher = typeof fetch;
  * daily prefetch) first; only the symbols it lacks are read from the provider, BATCH_SYMBOLS to a request, each request leased from the
  * allocator on the critical tier (alerts), never retried (a 429 or a refusal is no close: the notice state does not move and the next
  * delivery hour judges again). What the provider returns is stored for the other runs of the day. The key never appears in output. */
-export function createCloseProvider(options: { apiKey: string | undefined; now?: () => Date; request?: Fetcher; baseUrl?: string; lease?: TwelveLease; store?: DailyCloseStore }) {
+export function createCloseProvider(options: { apiKey: string | undefined; now?: () => Date; request?: Fetcher; baseUrl?: string; lease?: TwelveLease; store?: DailyCloseStore;
+  /** Symbols whose read failed or was not granted this run (logged by the job: their members get no close and are judged next hour). */
+  onUnread?: (symbols: string[]) => void }) {
   const now = options.now ?? (() => new Date());
   const lease = options.lease ?? unpacedLease();
   const memory = new Map<string, DailyBar[] | null>();
@@ -69,6 +71,8 @@ export function createCloseProvider(options: { apiKey: string | undefined; now?:
         if (bars && (!bars.length || bars.some(b => b.date === date))) answered.push([s, bars]);
       }
       if (options.store && answered.length) await options.store.write(answered, date);
+      const unread = missing.filter(s => read.get(s) == null);
+      if (unread.length) options.onUnread?.(unread);
     }
     const out: Close[] = [];
     for (const symbol of unique) { const c = closeOf(symbol, date); if (c) out.push(c); }

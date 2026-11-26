@@ -5,7 +5,7 @@ import {latestSettledSession} from '../../lib/resolute/notification-closes.ts';
 import {createDailyCloseStore,splitsDue,writeSplits} from '../../lib/resolute/twelve-cache.ts';
 import {dayAfter,fetchDailyBatch,SYMBOL} from '../../lib/resolute/twelve-daily.ts';
 import {leaseFromEnv,unpacedLease} from '../../lib/resolute/twelve-lease.ts';
-import {etDay,parseTwelveSplits} from '../../lib/research/stock-splits.ts';
+import {SPLIT_OVERRIDES,etDay,parseTwelveSplits} from '../../lib/research/stock-splits.ts';
 
 /** RESOLUTE's daily Twelve Data prefetch (owner, Nov 26: Twelve Data use must never grow with members).
  * Reads each watched symbol's closes once per U.S. market date, and its split history at most once per ET day, into the shared copies
@@ -36,13 +36,29 @@ export async function prefetchCloses(db,{apiKey,lease=unpacedLease(),now=new Dat
  const stored=await store.write(answered,date);
  // Two weeks of closes are kept; older market dates are not read by anyone.
  await db.query("DELETE FROM resolute.twelve_daily_closes WHERE market_date < $1::date - 14",[date]).catch(()=>{});
- return {state:'done',marketDate:date,symbols:symbols.length,cached:have.size,stored,unread:missing.length-stored};
+ const unread=missing.filter(s=>read.get(s)==null);
+ return {state:'done',marketDate:date,symbols:symbols.length,cached:have.size,stored,unread:unread.length,...(unread.length?{unreadSymbols:unread.slice(0,50)}:{})};
 }
 
 /** Split histories not read today (ET): never read first, then the oldest, until the lease's deadline. */
+/** Symbols most likely to have split: on the manual list, or whose stored daily close moved by more than 40% from one bar to the next. */
+export async function splitSuspects(db,symbols){
+ const suspects=new Set(SPLIT_OVERRIDES.map(s=>s.ticker).filter(t=>symbols.includes(t)));
+ try{
+  const rows=(await db.query(`SELECT DISTINCT ON (symbol) symbol,bars FROM resolute.twelve_daily_closes WHERE symbol=ANY($1::text[]) ORDER BY symbol,market_date DESC`,[symbols])).rows;
+  for(const r of rows){
+   const bars=Array.isArray(r.bars)?r.bars.filter(b=>typeof b?.close==='number'&&b.close>0):[];
+   for(let i=1;i<bars.length;i++){const q=bars[i].close/bars[i-1].close;if(q>1.4||q<1/1.4){suspects.add(r.symbol);break;}}
+  }
+ }catch{}
+ return suspects;
+}
+
 export async function prefetchSplits(db,{apiKey,lease=unpacedLease(),now=()=>Date.now(),fetcher=fetch,baseUrl='https://api.twelvedata.com'}={}){
  if(!apiKey)return {state:'not-configured'};
- const due=await splitsDue(db,await watchedSymbols(db),etDay(now()));
+ const symbols=await watchedSymbols(db),suspects=await splitSuspects(db,symbols);
+ // Likely splits first (the manual list, a close that moved more than 40%), then never read, then the oldest.
+ const due=(await splitsDue(db,symbols,etDay(now()))).sort((a,b)=>Number(suspects.has(b))-Number(suspects.has(a)));
  let stored=0,failed=0,stopped=0;
  for(const [i,ticker] of due.entries()){
   if(!await lease.take(SPLIT_CREDITS,'resolute-splits')){stopped=due.length-i;break;}
@@ -58,7 +74,7 @@ export async function prefetchSplits(db,{apiKey,lease=unpacedLease(),now=()=>Dat
    await writeSplits(db,ticker,parseTwelveSplits(body,ticker),now());stored++;
   }catch{failed++;}
  }
- return {state:'done',due:due.length,stored,failed,stopped};
+ return {state:'done',due:due.length,suspects:suspects.size,stored,failed,stopped};
 }
 
 async function tablesReady(db){
@@ -77,7 +93,7 @@ async function main(){
   if(!await tablesReady(pool)){console.log(JSON.stringify({enabled:false}));process.exitCode=1;return;}
   // The step's own deadline (run.mjs passes what is left of the cron run); each request is leased before it is sent.
   const budget=Math.max(0,Math.min(Number(env.RESOLUTE_TWELVE_PREFETCH_DEADLINE_MS)||90000,240000)),deadline=Date.now()+budget;
-  const lease=part==='closes'?leaseFromEnv(env,{tier:'critical',perMinute:300,deadline}):leaseFromEnv(env,{tier:'background',perMinute:240,deadline});
+  const lease=part==='closes'?leaseFromEnv(env,{tier:'critical',perMinute:300,fallbackPerMinute:300,deadline}):leaseFromEnv(env,{tier:'background',perMinute:300,fallbackPerMinute:120,deadline});
   const result=part==='closes'?await prefetchCloses(pool,{apiKey:env.TWELVE_DATA_API_KEY,lease}):await prefetchSplits(pool,{apiKey:env.TWELVE_DATA_API_KEY,lease});
   console.log(JSON.stringify({event:'RESOLUTE_TWELVE_PREFETCH',part,...result,lease:lease.report()}));
  }catch(error){

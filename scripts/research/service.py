@@ -4407,11 +4407,13 @@ class Handler(BaseHTTPRequestHandler):
                 payload = self.read_json(1024)
                 if resolute and payload.get("tier") not in twelve_allocator.RESOLUTE_TIERS:
                     raise ValueError("tier")
-                granted = allocator.grant(payload.get("cost"), payload.get("tier"), payload.get("caller"))
+                decision = allocator.decide(payload.get("cost"), payload.get("tier"), payload.get("caller"))
             except Exception:
                 self.send_json(400, {"ok": False})
                 return
-            self.send_json(200, {"ok": True, "granted": granted})
+            # "meter-unknown": nothing granted, and the caller learns the minute could not be judged (the site shows its last copies;
+            # RESOLUTE's alerts keep their own pace).
+            self.send_json(200, {"ok": True, "granted": decision == "granted", **({"reason": "meter-unknown"} if decision == "meter-unknown" else {})})
             return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own

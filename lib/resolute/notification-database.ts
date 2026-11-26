@@ -5,7 +5,8 @@ import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } fr
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
 import { createSettingsSplitAdjuster, keepStoredOriginals, stampPriceDays, type SettingsSplitAdjuster } from "./notification-splits.ts";
-import { etDay } from "../research/stock-splits.ts";
+import { createSplitLoader, etDay } from "../research/stock-splits.ts";
+import { leaseFromEnv } from "./twelve-lease.ts";
 import { createCachedSplitLoader } from "./twelve-cache.ts";
 import { defaultNotificationSettings, parseNotificationMutation, parseNotificationSnapshot,
  type NotificationSnapshot, type NotificationSettings } from "./notification-settings.ts";
@@ -61,8 +62,10 @@ export async function operateNotificationSettings(userId:string,method:"GET"|"PU
   const config=resoluteDatabaseConfig(process.env.RESOLUTE_NOTIFICATION_DB_URL);
   if(new URL(config.connectionString).username!=="resolute_notification_writer") throw new Error("Scoped writer required");
   const pool=new Pool(config);pool.on("error",()=>{});
-  store=createNotificationStore(pool,entitlementSource(),protectionRuntime(),createSettingsSplitAdjuster(createCachedSplitLoader(pool)));
-  // Splits: the shared copy only (refreshed once a day by the notifications cron's prefetch); a settings screen never calls the provider.
+  store=createNotificationStore(pool,entitlementSource(),protectionRuntime(),createSettingsSplitAdjuster(createCachedSplitLoader(pool,
+   createSplitLoader({apiKey:process.env.TWELVE_DATA_API_KEY,lease:leaseFromEnv(process.env,{tier:"critical",perMinute:60}),leaseWaitMs:3000}))));
+  // Splits: the shared copy first (refreshed once a day by the notifications cron's prefetch); a symbol it lacks (or no table yet) is read
+  // from the provider (kept a day per process, leased, waiting at most 3 seconds); without a key, the manual list as before.
  }
  return store(userId,method,mutation,ownerAccess);
 }

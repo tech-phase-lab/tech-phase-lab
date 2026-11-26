@@ -64,9 +64,11 @@ const goodSplits = (raw: unknown, ticker: string): StockSplit[] | null => {
 };
 
 /** The split loader every RESOLUTE reader uses (same answer as lib/research/stock-splits.ts createSplitLoader, from the shared copy):
- * a stored provider list with the manual list laid over it and `through` = the day before the ET day it was read; no stored row
- * (or no table): the manual list alone and no `through`. Never calls the provider. */
-export function createCachedSplitLoader(db: Queryable) {
+ * a stored provider list with the manual list laid over it and `through` = the day before the ET day it was read. A ticker with no
+ * stored row (not prefetched yet, or the table is not applied yet) is read by `fallback` (the leased provider loader: a split missing from
+ * the manual list, SNDK 8-for-1 before it was listed, must never be judged unadjusted); without one, or when it fails, the manual list
+ * alone and no `through`. */
+export function createCachedSplitLoader(db: Queryable, fallback?: (tickers: readonly string[]) => Promise<SplitAnswer>) {
   return async function load(tickers: readonly string[]): Promise<SplitAnswer> {
     const unique = [...new Set(tickers)];
     const splits: Record<string, StockSplit[]> = {}, through: Record<string, string> = {};
@@ -81,10 +83,14 @@ export function createCachedSplitLoader(db: Queryable) {
       const list = typeof row.symbol === "string" ? goodSplits(row.splits, row.symbol) : null;
       if (list && Number.isFinite(at)) stored.set(row.symbol as string, { splits: list, at });
     }
+    const missing = unique.filter(t => !stored.has(t));
+    let read: SplitAnswer | null = null;
+    if (missing.length && fallback) { try { read = await fallback(missing); } catch { read = null; } }
     for (const ticker of unique) {
       const hit = stored.get(ticker);
-      splits[ticker] = mergeSplits(ticker, hit?.splits ?? []);
-      if (hit) through[ticker] = knownThroughDay(hit.at);
+      if (hit) { splits[ticker] = mergeSplits(ticker, hit.splits); through[ticker] = knownThroughDay(hit.at); continue; }
+      splits[ticker] = read?.splits[ticker] ?? mergeSplits(ticker, []);
+      if (read?.through[ticker]) through[ticker] = read.through[ticker];
     }
     return { splits, through };
   };

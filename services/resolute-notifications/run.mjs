@@ -8,7 +8,8 @@ import {spawnSync} from 'node:child_process';
 // Twelve Data (Nov 26): the day's closes are read once for everyone before ① (twelve-prefetch.mjs, a few batched requests), and the
 // split histories are refreshed after ② with what is left of the run (each request leased and paced; the rest waits for the next run).
 const RUN_MS=500000,started=Date.now();
-const steps=[['twelve-prefetch.mjs','--closes',60000],['notification-queue.mjs',null,240000],['mail-worker.mjs',null,240000],['twelve-prefetch.mjs','--splits',120000]];
+// Every step gets at most what is left of RUN_MS (40 s under the container's 540 s limit), so the run always ends on its own.
+const steps=[['twelve-prefetch.mjs','--closes',40000],['notification-queue.mjs',null,240000],['mail-worker.mjs',null,240000],['twelve-prefetch.mjs','--splits',180000]];
 function isDisabledOutput(status,stdout){
  if(status!==1)return false;
  const lines=String(stdout??'').trim().split('\n').filter(Boolean);
@@ -20,7 +21,7 @@ for(const [step,arg,limit] of steps){
  const left=RUN_MS-(Date.now()-started),prefetch=step==='twelve-prefetch.mjs';
  // A prefetch step never takes the time ② and the mail need; with too little left it is skipped (the next run reads what is missing).
  if(prefetch&&left<30000)continue;
- const timeout=prefetch?Math.min(limit,left):limit;
+ const timeout=Math.max(5000,Math.min(limit,left));
  const result=spawnSync(process.execPath,['--experimental-strip-types','services/resolute-api/'+step,...(arg?[arg]:[])],{encoding:'utf8',
   env:prefetch?{...process.env,RESOLUTE_TWELVE_PREFETCH_DEADLINE_MS:String(timeout-15000)}:process.env,timeout,maxBuffer:1<<20});
  if(result.stdout)process.stdout.write(result.stdout);

@@ -2,12 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {createTwelveLease,unpacedLease,FALLBACK_PER_MINUTE} from '../lib/resolute/twelve-lease.ts';
+import {createTwelveLease,unpacedLease,FALLBACK_PER_MINUTE,REFUSED_WAIT_MS} from '../lib/resolute/twelve-lease.ts';
 import {fetchDailyBatch,BATCH_SYMBOLS} from '../lib/resolute/twelve-daily.ts';
 import {createCachedSplitLoader,createDailyCloseStore} from '../lib/resolute/twelve-cache.ts';
+import {createSplitLoader} from '../lib/research/stock-splits.ts';
 import {createCloseProvider} from '../lib/resolute/notification-closes.ts';
 import {collectThermometer,THERMOMETER_ROSTERS} from '../lib/resolute/thermometer-provider.ts';
-import {prefetchCloses,prefetchSplits} from '../services/resolute-api/twelve-prefetch.mjs';
+import {prefetchCloses,prefetchSplits,splitSuspects} from '../services/resolute-api/twelve-prefetch.mjs';
 import {createDailyBars} from '../services/resolute-api/today-plan-job.mjs';
 
 // Owner, Nov 26: Twelve Data use must never grow with members (plan: 610 credits a minute). RESOLUTE's jobs read each symbol once a
@@ -54,7 +55,7 @@ test('lease: paced (never a burst), waits out a refusal without sending, pauses 
   fetcher:async(url,init)=>{asked.push(JSON.parse(init.body));assert.equal(url.pathname,'/twelve/lease');assert.equal(init.headers.Authorization,'Bearer '+'t'.repeat(40));return Response.json({ok:true,granted:answers.shift()??true});}});
  assert.equal(await lease.take(50,'resolute-closes'),true);
  assert.deepEqual(asked.map(a=>[a.cost,a.tier,a.caller]),[[50,'critical','resolute-closes'],[50,'critical','resolute-closes'],[50,'critical','resolute-closes']]);
- assert.deepEqual(lease.report(),{credits:50,leases:1,refused:2,mode:'allocator'});
+ assert.deepEqual(lease.report(),{credits:50,leases:1,refused:2,meterUnknown:0,mode:'allocator'});
  // After a 429 nothing is taken before the next minute.
  lease.limited();const before=c.t;assert.equal(await lease.take(10,'x'),true);assert.ok(Math.floor(c.t/60000)>Math.floor(before/60000));
  // A deadline ends the wait: false, never a call.
@@ -66,6 +67,20 @@ test('lease: paced (never a burst), waits out a refusal without sending, pauses 
  assert.ok(taken<=FALLBACK_PER_MINUTE,`${taken} credits in a minute`);assert.equal(lease.report().mode,'local');
  c=fakeClock();lease=createTwelveLease({tier:'critical',perMinute:300,url:'https://monitor.example',token:'t'.repeat(40),now:c.now,sleep:c.sleep,fetcher:async()=>{throw new Error('down');}});
  assert.equal(await lease.take(10,'x'),true);assert.equal(lease.report().mode,'local');
+ // A job may keep its full pace without the allocator (the alerts' closes before the token is set): 300 a minute, still never a burst.
+ c=fakeClock();lease=createTwelveLease({tier:'critical',perMinute:300,fallbackPerMinute:300,now:c.now,sleep:c.sleep});
+ taken=0;const s2=c.t;while(c.t-s2<60_000){assert.equal(await lease.take(50,'x'),true);if(c.t-s2<60_000)taken+=50;}
+ assert.ok(taken>=250&&taken<=300,`${taken}`);
+ // The allocator cannot read the meter: the critical tier keeps its local pace instead of waiting to the deadline; other tiers wait.
+ c=fakeClock();let asks=0;
+ const unknown=tier=>createTwelveLease({tier,perMinute:300,url:'https://monitor.example',token:'t'.repeat(40),deadline:c.t+20_000,now:c.now,sleep:c.sleep,
+  fetcher:async()=>{asks++;return Response.json({ok:true,granted:false,reason:'meter-unknown'});}});
+ lease=unknown('critical');assert.equal(await lease.take(50,'resolute-closes'),true);assert.equal(lease.report().meterUnknown,1);
+ assert.equal(await lease.take(10,'resolute-closes'),true);assert.equal(asks,1,'not asked again during the local pace');
+ c=fakeClock();lease=unknown('background');assert.equal(await lease.take(20,'resolute-splits'),false);
+ // A request handler's call waits at most maxWaitMs.
+ c=fakeClock();lease=createTwelveLease({tier:'critical',perMinute:300,url:'https://monitor.example',token:'t'.repeat(40),now:c.now,sleep:c.sleep,fetcher:async()=>Response.json({ok:true,granted:false})});
+ const t0=c.t;assert.equal(await lease.take(20,'x',3000),false);assert.ok(c.t-t0<=3000+REFUSED_WAIT_MS);
  // An http (non-local) address or a short token is never used.
  assert.equal(createTwelveLease({tier:'critical',perMinute:300,url:'http://monitor.example',token:'t'.repeat(40)}).report().mode,'local');
  assert.equal(createTwelveLease({tier:'critical',perMinute:300,url:'https://monitor.example',token:'short'}).report().mode,'local');
@@ -128,8 +143,23 @@ test('splits: refreshed at most once a day by the prefetch; readers only read th
  const stopped=await prefetchSplits(db,{apiKey:'k',fetcher:p.fetcher,now:next,lease:{...unpacedLease(),take:async()=>false}});
  assert.deepEqual([stopped.stored,stopped.stopped,p.requests],[0,3,3]);
  // An unreadable table (not applied yet) is "nothing known", never an error.
- const broken=createCachedSplitLoader({query:async()=>{throw new Error('relation does not exist');}});
+ const missingTable={query:async()=>{throw new Error('relation does not exist');}};
+ const broken=createCachedSplitLoader(missingTable);
  assert.deepEqual((await broken(['SNDK'])).splits.SNDK.map(s=>s.ratio),[8]);
+ // With the leased provider loader as fallback (before 029 is applied, or a symbol not prefetched yet), a split missing from the manual
+ // list is still known: never judged unadjusted (a false −88% alert).
+ const q=provider(),takes=[];
+ const lease={...unpacedLease(),take:async(cost,caller)=>{takes.push([cost,caller]);return true;}};
+ const fallback=createSplitLoader({apiKey:'k',request:q.fetcher,lease,now:clock});
+ const before029=await createCachedSplitLoader(missingTable,fallback)(['NVDA']);
+ assert.deepEqual(before029.splits.NVDA.map(s=>s.ratio),[10]);assert.equal(before029.through.NVDA,'2026-11-11');
+ assert.deepEqual(takes,[[20,'resolute-splits']]);
+ // A stored row is used as is; only the symbol without one is read.
+ const mixed=await createCachedSplitLoader(db,fallback)(['NVDA','MU']);
+ assert.deepEqual(mixed.splits.NVDA.map(s=>s.ratio),[10]);assert.equal(q.urls.filter(u=>u.searchParams.get('symbol')==='MU').length,1);
+ // Not granted: the manual list alone, no `through`.
+ const refusedLoader=createCachedSplitLoader(missingTable,createSplitLoader({apiKey:'k',request:q.fetcher,lease:{...unpacedLease(),take:async()=>false}}));
+ assert.deepEqual(await refusedLoader(['AMD']),{splits:{AMD:[]},through:{}});
 });
 
 test('「今日やること」: every watched symbol in one batched read for the run, from the shared copy first',async t=>{
@@ -159,4 +189,33 @@ test('the 029 cache migration grants writes to the prefetch role only',()=>{
  assert.match(text,/GRANT SELECT ON resolute\.twelve_daily_closes, resolute\.twelve_splits TO resolute_today_plan_writer/);
  assert.match(text,/GRANT SELECT ON resolute\.twelve_splits TO resolute_notification_writer/);
  assert.doesNotMatch(text,/GRANT[^;]*(INSERT|UPDATE)[^;]*TO resolute_(today_plan_writer|notification_writer)/);
+});
+
+test('split refresh: likely splits first (the manual list, a close that moved more than 40%), then never read, then the oldest',async t=>{
+ const db=await database(t),p=provider();
+ await members(db,4,i=>[['AAA','JUMP','SNDK','ZZZ'][i]]);
+ await createDailyCloseStore(db).write([['JUMP',[{date:'2026-11-11',close:800},{date:DATE,close:100}]],['AAA',[{date:'2026-11-11',close:100},{date:DATE,close:101}]]],DATE);
+ assert.deepEqual([...await splitSuspects(db,['AAA','JUMP','SNDK','ZZZ'])].sort(),['JUMP','SNDK']);
+ const asked=[];
+ await prefetchSplits(db,{apiKey:'k',fetcher:async url=>{asked.push(url.searchParams.get('symbol'));return p.fetcher(url);},now:()=>Date.parse('2026-11-12T22:00:00Z')});
+ assert.deepEqual(asked.slice(0,2).sort(),['JUMP','SNDK']);assert.equal(asked.length,4);
+});
+
+test('cron run: every step gets at most what is left of the run, so it always ends before the container limit; unread closes are logged',()=>{
+ const run=readFileSync(new URL('../services/resolute-notifications/run.mjs',import.meta.url),'utf8');
+ assert.match(run,/const RUN_MS=500000/);
+ assert.match(run,/const timeout=Math\.max\(5000,Math\.min\(limit,left\)\)/);
+ assert.match(run,/\['twelve-prefetch\.mjs','--closes',40000\]/);
+ const queue=readFileSync(new URL('../services/resolute-api/notification-queue.mjs',import.meta.url),'utf8');
+ assert.match(queue,/RESOLUTE_CLOSES_UNREAD/);
+ assert.match(queue,/fallbackPerMinute:300/);
+ assert.match(queue,/createCachedSplitLoader\(pool,createSplitLoader\(\{apiKey:env\.TWELVE_DATA_API_KEY,lease\}\)\)/);
+ assert.match(readFileSync(new URL('../services/resolute-api/today-plan-job.mjs',import.meta.url),'utf8'),/createCachedSplitLoader\(pool,createSplitLoader\(\{apiKey:twelve,lease\}\)\)/);
+ assert.match(readFileSync(new URL('../lib/resolute/notification-database.ts',import.meta.url),'utf8'),/createCachedSplitLoader\(pool,\s*createSplitLoader\(/);
+});
+
+test('closes: symbols not read are reported to the job',async()=>{
+ const unread=[];
+ const close=createCloseProvider({apiKey:'k',now:()=>RUN,request:async()=>new Response('{}',{status:500}),lease:unpacedLease(),onUnread:s=>unread.push(...s)});
+ assert.deepEqual((await close(['NVDA','AMD'])).closes,[]);assert.deepEqual(unread,['NVDA','AMD']);
 });

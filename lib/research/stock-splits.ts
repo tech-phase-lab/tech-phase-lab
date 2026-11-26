@@ -118,7 +118,9 @@ export type SplitAnswer = { splits: Record<string, StockSplit[]>; through: Recor
 /** Splits per ticker for a background job or a route: the provider's full history (/splits, range=full; 20 credits a call) with the manual
  * list laid over it. An answer is kept in memory for `ttlMs` (a day by default) with the time it was read; a failed read (429, error body,
  * timeout) is never kept and gives the manual list alone, with no `through`. No key in output. */
-export function createSplitLoader(options: { apiKey: string | undefined; request?: Fetcher; baseUrl?: string; ttlMs?: number; now?: () => number }) {
+export function createSplitLoader(options: { apiKey: string | undefined; request?: Fetcher; baseUrl?: string; ttlMs?: number; now?: () => number;
+  /** RESOLUTE's jobs: each 20-credit read is leased and paced first (lib/resolute/twelve-lease.ts); not granted = a failed read. */
+  lease?: { take(cost: number, caller: string, maxWaitMs?: number): Promise<boolean>; limited(): void }; leaseWaitMs?: number }) {
   const request = options.request ?? ((input, init) => fetch(input, init));
   const base = options.baseUrl ?? "https://api.twelvedata.com";
   const ttl = options.ttlMs ?? 24 * 3600_000, now = options.now ?? Date.now;
@@ -128,9 +130,11 @@ export function createSplitLoader(options: { apiKey: string | undefined; request
     if (hit && now() - hit.at < ttl) return hit;
     try {
       if (!options.apiKey || !TICKER.test(ticker)) return null;
+      if (options.lease && !await options.lease.take(20, "resolute-splits", options.leaseWaitMs)) return null;
       const url = new URL(`${base}/splits`);
       url.searchParams.set("symbol", ticker); url.searchParams.set("range", "full"); url.searchParams.set("apikey", options.apiKey);
       const response = await request(url, { cache: "no-store", redirect: "error", signal: AbortSignal.timeout(12_000) });
+      if (response.status === 429) options.lease?.limited();
       if (response.status !== 200) return null;
       const read = { at: now(), splits: mergeSplits(ticker, parseTwelveSplits(await response.json(), ticker)) };
       memory.set(ticker, read);
