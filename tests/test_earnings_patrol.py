@@ -163,6 +163,20 @@ class QuarterFilings(unittest.TestCase):
         self.assertEqual(report['text'], 'report text')
         self.assertEqual([e['accession'] for e in events], ['old-deal', 'deal-1'])  # since the previous release, oldest first; never the release itself
 
+    def test_a_foreign_issuers_results_day_6ks_are_read_only_for_a_dive_that_uses_them(self):
+        sub = filings(('6-K', '2026-11-20T11:00:00.000Z', '', 'later-6k'),
+                      ('6-K', '2026-10-28T10:06:14.000Z', '', 'returns-6k'),
+                      ('6-K', '2026-10-28T10:01:57.000Z', '', 'results-6k'),
+                      ('6-K', '2026-10-14T10:02:00.000Z', '', 'earlier-6k'))
+        release = {'accession': 'results-6k', 'accepted': datetime(2026, 10, 28, 10, 1, 57, tzinfo=timezone.utc)}
+        read = []
+        _, events = patrol.quarter_filings('SKHY', sub, release, {'releasedOn': '2026-07-29'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: read.append(url) or 'notice text')
+        self.assertEqual([e['accession'] for e in events], ['returns-6k'])   # the results day only, never the results 6-K itself
+        _, events = patrol.quarter_filings('NBIS', sub, release, {'releasedOn': '2026-07-29'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
+        self.assertEqual(events, [])   # a company whose dive reads no other 6-K
+
 
 class Records(unittest.TestCase):
     def setUp(self):

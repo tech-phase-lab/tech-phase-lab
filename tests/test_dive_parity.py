@@ -43,6 +43,11 @@ FILINGS = {
             'prior': ('https://www.sec.gov/Archives/edgar/data/1674101/000162828026050323/q22026exhibit991vrt07292026.htm', 'VRT-release-q2-2026')},
     'GEV': {'prior': ('https://www.sec.gov/Archives/edgar/data/1996810/000199681026000147/gevpressrelease2q26.htm', 'GEV-release-q2-2026')},
     'BE': {},
+    # the results-day 6-Ks: the year's shareholder-return plan and the quarter's dividend (Korean fair disclosures filed with the SEC)
+    'SKHY': {'events': [('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435008/d236990d6k.htm', 'SKHY-6k-returns',
+                         datetime(2026, 10, 28, 10, 6, 14, tzinfo=timezone.utc)),
+                        ('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435015/d236994d6k.htm', 'SKHY-6k-dividend',
+                         datetime(2026, 10, 28, 10, 9, 24, tzinfo=timezone.utc))]},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -52,6 +57,13 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'PLTR': {},
     'ALAB': {}, 'LITE': {}, 'SNDK': {},
     'VRT': {}, 'GEV': {}, 'BE': {},
+    # The hand-made file read SK hynix's newsroom release; on EDGAR there are only the preliminary-results 6-K and the results-day 6-Ks.
+    'SKHY': {'tiles[2].label': 'net cash (cash ₩114.5T minus borrowings ₩15.8T) is only in the newsroom release; the tile shows the year\'s '
+                               'shareholder-return plan from its own 6-K (about ₩100T)',
+             'cards.text': 'HBM4, server DDR5, 321-layer NAND, the LTAs with 14 customers, next year\'s investment, M15X and the demand view to '
+                           '2030 are only in the newsroom release; those sections use the filings\' figures (operating profit, pre-tax and net income, '
+                           'the dividend and the return plan)',
+             'tiles[0].note': '"first quarter above ₩100T" needs the full revenue history; the note gives the 6-K\'s own +327.9% year-over-year'},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
@@ -141,8 +153,8 @@ class DepthParity(unittest.TestCase):
                 for i, seg in enumerate(hand['numbers'].get('segments') or []):
                     for k in ('revenue', 'previous', 'operatingMargin', 'previousOperatingMargin'):
                         self.assertAlmostEqual(auto['numbers']['segments'][i][k], seg[k], delta=0.051, msg=f'{ticker} segments[{i}].{k}')
-                hand_tiles = [t['label']['en'] for t in hand['tiles']]
-                self.assertEqual([t['label']['en'] for t in auto['tiles']], hand_tiles, f'{ticker} tiles')
+                same = [i for i in range(len(hand['tiles'])) if f'tiles[{i}].label' not in GAPS[ticker]]   # a gap: another figure in its place
+                self.assertEqual([auto['tiles'][i]['label']['en'] for i in same], [hand['tiles'][i]['label']['en'] for i in same], f'{ticker} tiles')
 
     def test_the_gaps_are_only_what_the_release_does_not_carry(self):
         self.assertEqual(sorted(GAPS), sorted(dive_writers.WRITERS))

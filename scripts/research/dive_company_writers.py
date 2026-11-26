@@ -1307,4 +1307,114 @@ def be(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be}
+
+# ---- SK hynix (SKHY): the preliminary-results 6-K and the results-day 6-Ks (shareholder returns, dividend), in won -------------------
+
+def krw(million):
+    return _money(million, 'KRW')
+
+
+def _money(million, currency):
+    import earnings_dive_generate as g
+    return g.money(million, currency)[0]
+
+
+def skhy(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'opProfit', 'netIncome', 'pretax')
+    ev = Evidence(url)
+    rev, op, ni, pt = f['revenue'], f['opProfit'], f['netIncome'], f['pretax']
+    r0, r1, r2 = rev.values[0], rev.values[2], rev.values[4]
+    for field, i in (('current', 0), ('previous', 2), ('yearAgo', 4)):
+        ev.add(f'numbers.revenue.{field}', rev)
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': None, 'epsEstimate': None,
+               'grossMargin': None, 'guidance': None, 'segments': None}
+    m0, m1, m2 = (q(op.values[i] / rev.values[i] * 100, 0) for i in (0, 2, 4))
+    figs = {}
+    for e in events or []:
+        for k, v in e['figures'].items():
+            figs[k] = v
+    ret, div = figs.get('returns'), figs.get('dividend')
+    tiles = [tile('売上高', 'Revenue', None, f'前年同期比 +{q(rev.values[6], 0)}%', f'+{q(rev.values[6], 0)}% YoY'),
+             text_tile('営業利益率', 'Operating margin', f'{m0}%', f'{m0}%', f'前期 {m1}%、前年同期 {m2}%', f'Prior quarter {m1}%; year ago {m2}%')]
+    shown = krw(r0)
+    tiles[0]['value'] = shown
+    ev.add('tiles[0].value', rev, calc=f'{rev.raws[0]} / 1000 / 1000', rnd=2)
+    ev.add('tiles[0].note', rev, calc=rev.raws[6], rnd=0)
+    ev.add('tiles[1].value', op)
+    ev.add('tiles[1].value', rev, calc=f'{op.raws[0]} / {rev.raws[0]} * 100', rnd=0)
+    ev.add('tiles[1].note', op)
+    ev.add('tiles[1].note', rev, calc=f'{op.raws[2]} / {rev.raws[2]} * 100', rnd=0)
+    if ret:
+        tiles.append(text_tile(f'{ret.values[0]}年の株主還元(計画)', f'Shareholder returns ({ret.values[0]} plan)', f'約{ret.values[1]}兆ウォン', f'~₩{ret.values[1]}T',
+                               f'配当{ret.values[2]}兆ウォン以上、自社株の取得・消却{ret.values[3]}兆ウォン以上', f'Dividends ₩{ret.values[2]}T+ and buybacks ₩{ret.values[3]}T+'))
+        ev.add('tiles[2].value', ret, url=ret.url)
+        ev.add('tiles[2].note', ret, url=ret.url)
+    else:  # before the results-day 6-Ks are read
+        tiles.append(tile('純利益', 'Net income', krw(ni.values[0]), f'前期 {krw(ni.values[2])["ja"]}', f'Prior quarter {krw(ni.values[2])["en"]}'))
+        ev.add('tiles[2].value', ni, calc=f'{ni.raws[0]} / 1000 / 1000', rnd=2)
+        ev.add('tiles[2].note', ni, calc=f'{ni.raws[2]} / 1000 / 1000', rnd=2)
+    qoq, opq = rev.values[3], op.values[3]
+    d = r0 - r1
+    ev.add('summary.cards.growth.sections[1]', op)
+    growth = card(f'売上は前期比 +{q(qoq, 0)}%、営業利益は +{q(opq, 0)}%' if qoq > 0 else f'売上は前期比 {q(qoq, 0)}%', f'Revenue {sign(qoq, 0)} QoQ, operating profit {sign(opq, 0)}', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq, 0)}', f'Revenue {sign(qoq, 0)} QoQ'),
+        chip(tone(opq), f'営業利益 前期比 {sign(opq, 0)}', f'Operating profit {sign(opq, 0)} QoQ')], [
+        sec('happened', f'売上は{krw(r1)["ja"]}から{krw(r0)["ja"]}へ、{krw(abs(d))["ja"]}{rose(d, True)}ました。前年同期の{krw(r2)["ja"]}と比べると約{q(r0 / r2, 1)}倍です。',
+            f'Revenue {rose(d)} {krw(abs(d))["en"]} from {krw(r1)["en"]} to {krw(r0)["en"]}, about {q(r0 / r2, 1)} times the {krw(r2)["en"]} of a year earlier.'),
+        sec('good', f'営業利益は{krw(op.values[2])["ja"]}から{krw(op.values[0])["ja"]}へ{sign(opq, 0)}で、売上の伸び({sign(qoq, 0)})' + ('を上回りました。' if opq > qoq else 'を下回りました。'),
+            f'Operating profit went from {krw(op.values[2])["en"]} to {krw(op.values[0])["en"]}, {sign(opq, 0)}, ' + ('faster than revenue' if opq > qoq else 'slower than revenue') + f' ({sign(qoq, 0)}).'),
+        sec('watch', 'メモリーの価格は需給で大きく動きます。価格の上昇が伸びを支えている間は、価格が下がると売上と利益が大きく減るおそれがあります。製品別の内訳は、この届出にはありません。',
+            'Memory prices swing with supply and demand. While higher prices drive growth, falling prices could cut revenue and profit sharply. This filing has no product breakdown.')])
+    ev.add('summary.cards.change.sections[1]', ni)
+    ev.add('summary.cards.change.sections[1]', pt)
+    above = ni.values[2] > op.values[2]
+    changes = card(f'売上は前期比 +{q(qoq, 0)}%、営業利益率{m0}%' if qoq > 0 else f'営業利益率{m0}%', f'Revenue {sign(qoq, 0)} QoQ; operating margin {m0}%', [
+        chip(tone(m0 - m1), f'営業利益率 {m1}% → {m0}%', f'Operating margin {m1}% → {m0}%'),
+        chip(tone(ni.values[3]), f'純利益 前期比 {sign(ni.values[3], 0)}', f'Net income {sign(ni.values[3], 0)} QoQ')], [
+        sec('happened', f'営業利益は{krw(op.values[2])["ja"]}から{krw(op.values[0])["ja"]}へ{sign(opq, 0)}、営業利益率は{m1}%から{m0}%になりました。売上100ウォンのうち約{m0}ウォンが営業利益として残る計算です。',
+            f'Operating profit went from {krw(op.values[2])["en"]} to {krw(op.values[0])["en"]} ({sign(opq, 0)}), and operating margin from {m1}% to {m0}%. Of every ₩100 of sales, about ₩{m0} stays as operating profit.'),
+        sec('watch', f'純利益は{krw(ni.values[0])["ja"]}で、営業利益を{"下回りました" if ni.values[0] < op.values[0] else "上回りました"}。' + (f'前期の純利益{krw(ni.values[2])["ja"]}は営業利益を上回っており、' if above else '')
+            + f'税引前利益も{krw(pt.values[2])["ja"]}から{krw(pt.values[0])["ja"]}になっています。営業外の損益が最終利益を大きく動かしており、内訳はこの届出にはありません。',
+            f'Net income was {krw(ni.values[0])["en"]}, {"below" if ni.values[0] < op.values[0] else "above"} operating profit.' + (f" Last quarter's net income of {krw(ni.values[2])['en']} exceeded operating profit," if above else '')
+            + f' and pre-tax profit went from {krw(pt.values[2])["en"]} to {krw(pt.values[0])["en"]}. Non-operating items are swinging the bottom line a lot; this filing does not break them down.'),
+        sec('means', '本業の力は営業利益で、株主に残る利益は純利益で見る、と分けて読む必要があります。',
+            'Use operating profit to judge the core business and net income to judge what is left for shareholders; keep them separate.'),
+        sec('view', f'売上は前年同期の約{q(r0 / r2, 1)}倍で、営業利益率は前年同期の{m2}%から{m0}%になりました。', f'Revenue is about {q(r0 / r2, 1)} times a year earlier, and operating margin went from {m2}% a year ago to {m0}%.')])
+    if ret:
+        ev.add('summary.cards.caution.sections[0]', ret, url=ret.url)
+    if div:
+        ev.add('summary.cards.caution.sections[3]', div, url=div.url)
+    caution = card('非常に高い利益率は、価格しだいで変わる', 'Very high margins that depend on prices', [
+        chip('gold', f'営業利益率 {m0}%', f'Operating margin {m0}%'),
+        (chip('gold', f'株主還元 約{ret.values[1]}兆ウォン({ret.values[0]}年)', f'Shareholder returns ~₩{ret.values[1]}T ({ret.values[0]})') if ret else chip('gold', f'純利益 {krw(ni.values[0])["ja"]}', f'Net income {krw(ni.values[0])["en"]}')),
+        (chip('gold', f'第{["first", "second", "third", "fourth"].index(div.values[0]) + 1}四半期配当 1株{int(div.values[2]):,}ウォン', f'Q{["first", "second", "third", "fourth"].index(div.values[0]) + 1} dividend ₩{int(div.values[2]):,} per share') if div else
+         chip('gold', f'前年同期の営業利益率 {m2}%', f'Year-ago operating margin {m2}%'))], [
+        sec('happened', (f'会社は{ret.values[0]}年の株主還元を約{ret.values[1]}兆ウォンとする計画を出しました。配当が{ret.values[2]}兆ウォン以上、自社株の取得・消却が{ret.values[3]}兆ウォン以上です。' if ret else
+                         f'営業利益率は{m0}%で、前年同期の{m2}%から大きく上がりました。'),
+            (f'The company plans about ₩{ret.values[1]}T of shareholder returns for {ret.values[0]}: dividends of ₩{ret.values[2]}T or more and buybacks and cancellations of ₩{ret.values[3]}T or more.' if ret else
+             f'Operating margin was {m0}%, up sharply from {m2}% a year ago.')),
+        sec('watch', 'メモリーの価格は需給で動きます。業界全体が生産能力を増やせば、後から価格が下がるおそれがあります。来年の投資額は、この届出にはありません。',
+            "Memory prices follow supply and demand. If the whole industry adds capacity, prices could fall later. Next year's investment is not in this filing."),
+        sec('means', f'{m0}%の営業利益率が続くとは限りません。価格の動きと合わせて見る必要があります。', f'Do not assume an operating margin of {m0}% will last; read it together with prices.'),
+        sec('view', (f'一方、第{["first", "second", "third", "fourth"].index(div.values[0]) + 1}四半期の配当は1株{int(div.values[2]):,}ウォンで、利益の大きな部分が株主に戻ります。' if div else '株主への還元の計画は、決算発表の日の別の届出で確かめます。'),
+            (f'Meanwhile, the quarterly dividend is ₩{int(div.values[2]):,} per share, so a large part of profit goes back to shareholders.' if div else 'The shareholder-return plan is in a separate filing of the results day.'))])
+    unaudited = f.get('unaudited')
+    if unaudited:
+        ev.add('summary.conclusion[1]', unaudited)
+    nxt = card('数値の見通しはなし。次の決算で水準を確かめる', 'No numeric outlook; check the level next quarter', [
+        chip('gold', '数値の売上見通しなし', 'No numeric revenue guidance'),
+        chip('gold', f'営業利益率 {m0}% を保てるか', f'Can the {m0}% margin hold?')], [
+        sec('happened', 'SKハイニックスは、売上や利益の数値の見通しを出していません。今回の数字は監査前の速報値です。',
+            'SK hynix does not give numeric revenue or profit guidance. These figures are preliminary and unaudited.'),
+        sec('means', '需要と価格の見方は会社の説明会資料にあり、この届出には数字としては出ていません。', "The company's view of demand and prices is in its call materials, not as figures in this filing."),
+        sec('view', '次の決算で、売上と営業利益率がこの水準を保てるか、純利益と営業利益の差がどう動くかを確かめます。',
+            'Next time, check whether revenue and operating margin hold at this level and how the gap between net income and operating profit moves.')])
+    conclusion = [
+        c(f'売上は{krw(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{q(r0 / r2, 1)}倍でした。営業利益は{krw(op.values[0])["ja"]}、営業利益率は{m0}%です。',
+          f'Revenue was {krw(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {q(r0 / r2, 1)} times a year earlier. Operating profit was {krw(op.values[0])["en"]}, a margin of {m0}%.'),
+        c(f'純利益は{krw(ni.values[0])["ja"]}で、前期の{krw(ni.values[2])["ja"]}から{sign(ni.values[3], 0)}でした。数字は監査前の速報値です。',
+          f'Net income was {krw(ni.values[0])["en"]}, {sign(ni.values[3], 0)} from {krw(ni.values[2])["en"]} last quarter. The figures are preliminary and unaudited.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy}

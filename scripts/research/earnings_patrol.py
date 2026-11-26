@@ -390,13 +390,15 @@ def report_text(content):
     return check_dives.html_text(content[:REPORT_MAX_CHARS * 4].decode('utf-8', 'replace'))[:REPORT_MAX_CHARS]
 
 
-def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None):
+def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None, document=None):
     """The filings a dive is deepened with: the quarter's 10-Q / 10-K once filed after the release (its main document), and the 8-Ks with
     a deal (Item 1.01 / 2.01) or a preliminary result (Item 2.02, not the release itself) filed since the previous dive's release."""
     import earnings_reconcile
     # The whole 10-Q, not the monitor's 160,000-character article cut: a customer-concentration note can sit far into the document.
     fetch = fetch or (lambda url: report_text(backtest.get(url, binary=True)))
     exhibit = exhibit or exhibit_with_url
+    document = document or (lambda url: ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split()))
+    import dive_figures
     recent = filings['filings']['recent']
     report = None
     found = earnings_reconcile.report_after(filings, release)
@@ -414,11 +416,20 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         accession = recent['accessionNumber'][i]
         accepted = datetime.fromisoformat(recent['acceptanceDateTime'][i].replace('Z', '+00:00'))
         items = recent['items'][i] if i < len(recent['items']) else ''
-        if form != '8-K' or accession == release['accession'] or accepted < since:
+        # a foreign issuer's other 6-Ks of the results day (a shareholder-return plan, a dividend): read when its dive uses them
+        six_k = form == '6-K' and ticker in dive_figures.EVENT_SPECS and release.get('accepted') and abs(accepted - release['accepted']) <= timedelta(days=3)
+        if (form != '8-K' and not six_k) or accession == release['accession'] or accepted < since:
             continue
-        if not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
+        if form == '8-K' and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
             continue
-        url, text = exhibit(cik(ticker), accession, ('1',))
+        if six_k:
+            url = filing_url(ticker, accession, recent['primaryDocument'][i])
+            try:
+                text = document(url)
+            except Exception:  # noqa: BLE001 - read again at the next patrol
+                url, text = None, None
+        else:
+            url, text = exhibit(cik(ticker), accession, ('1',))
         if url and text:
             events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession})
     return report, sorted(events, key=lambda e: e['accepted'])

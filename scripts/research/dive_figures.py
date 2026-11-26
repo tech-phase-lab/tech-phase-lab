@@ -513,7 +513,32 @@ def bloom(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom}
+def preliminary(t, label):
+    """A row of SK hynix's preliminary-results 6-K (millions of won): this quarter, year to date, the previous quarter, the change (%),
+    a year earlier, that year to date, the changes (%). Negative changes are printed "(57.7 N.A. )"."""
+    num = r'(-?[\d,]+(?:\.\d+)?)'
+    pattern = (re.escape(label) + r' Quarterly Results (?:Year-to-date \(.YTD.\)\(3\)|YTD\(3\)) Results ' + num + ' ' + num + ' ' + num +
+               r' N\.A\.? \* (\(?)' + num + r' N\.A\.? ?\)? \* ' + num + ' ' + num + r' (\(?)' + num + r'\)? (\(?)' + num)
+    found = list(re.finditer(pattern, t))
+    if len(found) != 1:
+        return None
+    m = found[0]
+    raws = [m.group(i).replace(',', '') for i in (1, 2, 3, 5, 6, 7, 9, 11)]
+    signs = [1, 1, 1, -1 if m.group(4) else 1, 1, 1, -1 if m.group(8) else 1, -1 if m.group(10) else 1]
+    return Figure(values=[Decimal(r) * k for r, k in zip(raws, signs)], quote=m.group(0), raws=raws, unit='million')
+
+
+def skhynix(t):
+    return {
+        'revenue': preliminary(t, 'Revenue'),
+        'opProfit': preliminary(t, 'Operating Profit'),
+        'pretax': preliminary(t, 'Profit from Continuing Operations Before Income Tax'),
+        'netIncome': preliminary(t, 'Profit (Loss) for the Period'),
+        'unaudited': sentence(t, r'(provisional figures) for which the audit by the Company.s external auditor has not yet been completed', (1,), unit='text'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -697,6 +722,28 @@ def deal(text):
 # companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
 # reads both, so a figure of the previous quarter is quoted from that quarter's own release
 PRIOR = {'VRT', 'PLTR', 'GEV'}
+
+
+def skhynix_event(t):
+    """SK hynix's results-day 6-Ks (Korean fair disclosures): the year's shareholder-return plan and the quarter's dividend."""
+    return {
+        'returns': sentence(t, r'Expected Size of Shareholder Returns for Fiscal Year (20\d\d): Approximately Won (\d+) trillion • Cash dividends of Won (\d+) trillion or more, '
+                               r'and acquisition and cancellation of treasury shares of Won (\d+) trillion or more', (1, 2, 3, 4), unit='text'),
+        'dividend': sentence(t, r'quarterly cash dividends for the (first|second|third|fourth) quarter of (20\d\d).{0,300}?Dividend amount per share \(Won\) Common Stock ([\d,]+)',
+                             (1, 2, 3), unit='text'),
+    }
+
+
+EVENT_SPECS = {'SKHY': skhynix_event}
+
+
+def read_event(ticker, text):
+    """Figures from another filing of the quarter (a 6-K of the results day), for the companies whose dive uses them; {} otherwise."""
+    spec = EVENT_SPECS.get(ticker)
+    if not spec:
+        return {}
+    flat = ' '.join((text or '').split())
+    return {k: v for k, v in spec(flat).items() if v is not None}
 
 
 def read(ticker, text):

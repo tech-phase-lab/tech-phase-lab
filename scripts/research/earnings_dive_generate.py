@@ -225,6 +225,16 @@ def period_end(text, after=None, before=None):
             continue
         if (after is None or day > after) and (before is None or day < before):
             counts[day] = counts.get(day, 0) + 1
+    if not counts:  # a preliminary-results 6-K (SK hynix): "Current Period (Third quarter(1) of 2026)" and "(1) ... from July 1 to September 30"
+        m = re.search(r'Current Period \((?:First|Second|Third|Fourth) quarter\(1\) of (20\d\d)\).{0,1500}?\(1\) Refers to the three-month period from '
+                      r'[A-Z][a-z]+ \d{1,2} to ([A-Z][a-z]+) (\d{1,2}) of a given year', text or '')
+        if m:
+            try:
+                day = datetime.strptime(f'{m[2]} {m[3]} {m[1]}', '%B %d %Y').date().isoformat()
+            except ValueError:
+                day = None
+            if day and (after is None or day > after) and (before is None or day < before):
+                return day
     return max(counts, key=lambda k: (counts[k], k)) if counts else None
 
 
@@ -422,7 +432,7 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
                                   'location': 'Notes to the financial statements and risk factors'})
     events = []
     for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
-        found = dive_figures.deal(event['text'])
+        found = {**dive_figures.deal(event['text']), **dive_figures.read_event(ticker, event['text'])}
         if not found:
             continue
         for fig in found.values():
