@@ -26,6 +26,8 @@ export type TwelveFactorEvidence = {
   marginPeriod?: "annual";
   /** The margins are pre-tax (a bank or insurer files no operating line): said as such on screen. */
   marginBasis?: "pretax";
+  /** A bank, lender or insurer: no cash-against-debt score or point from these statistics (Financials.sectorKind). */
+  sectorFinancial?: true;
   momentum: null | {from:string;to:string;changePct:number};
 };
 export const twelveFactorMethods: Record<string,Copy> = {
@@ -99,7 +101,7 @@ export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now()) {
   // The last good statistics count for up to a week (owner, Nov 26), as long as they describe the same quarter (quarterEnd, checked on reading).
   const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=7*day ? s : null;
   // Banks have no current ratio (HSBC, MUFG): cash against debt alone on the full ten-point scale, as for US banks from their filings.
-  const financial=stats && stats.totalCash!==null && stats.totalDebt!==null
+  const financial=!e.sectorFinancial && stats && stats.totalCash!==null && stats.totalDebt!==null
     ? stats.currentRatio!==null ? clamp(2.5*Math.min(stats.currentRatio,2)+5*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1)))
       : clamp(10*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1))) : null;
   let stability:number|null=null;

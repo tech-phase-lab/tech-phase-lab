@@ -2,6 +2,7 @@ from contextlib import ExitStack, redirect_stdout
 import io
 import json
 import os
+import tempfile
 from pathlib import Path
 import sqlite3
 import sys
@@ -119,7 +120,8 @@ class PublicationFailureDiagnosticsTests(unittest.TestCase):
         for method, failing_module, wake_name, lane in cases:
             with self.subTest(method=method), ExitStack() as stack:
                 app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
-                app.db_path = Path("fixture-never-opened.sqlite")
+                # A throwaway path outside the checkout: the monitor's helpers may touch it, and the tracked file of this name must never change.
+                app.db_path = Path(stack.enter_context(tempfile.TemporaryDirectory())) / "fixture-never-opened.sqlite"
                 app.stop_event = Mock()
                 app.stop_event.is_set.side_effect = [False, False, False, False, True]
                 wake = Mock()

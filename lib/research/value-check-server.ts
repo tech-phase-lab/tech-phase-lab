@@ -68,7 +68,9 @@ async function loadRanking(): Promise<ValueSnapshot> {
 /** Treasure Hunt's own screen and API: the shared copy without the comparison's list (`values`, every calculated ticker), which only the
  * Stock Comparison reads; the ranking pages stay as small and fast as before. */
 export async function loadValueRanking(): Promise<ValueSnapshot> {
-  const { values, ...ranking } = await loadValueSnapshot();
+  // The ranking copy alone: the comparison's list (/value-check/values) is never read for Treasure Hunt (reviewer, Nov 26: it waited on it
+  // and threw it away). A ranking from an older monitor that still carries the list has it removed.
+  const { values, ...ranking } = await loadRanking();
   void values;
   return ranking;
 }

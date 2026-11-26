@@ -68,6 +68,9 @@ export type Financials = {
   marginSign?: true;
   /** No growth is shown: the revenue line is only part of the revenue (marginPartial, or a bank's line below its operating income). */
   growthWithheld?: true;
+  /** A bank (SIC 6000-6099), a lender (6100-6198) or an insurer (6300-6411): financial strength is its equity ratio, never cash against debt
+   *  (its deposits, loans and policy reserves are its business; reviewer, Nov 26: KEY, TRV, FVCB were "debt exceeds cash"). */
+  sectorKind?: "bank" | "lender" | "insurer";
   /** The filer's SEC industry code is a bank's, broker's or insurer's (6000-6799, not a REIT): no free-cash-flow score from any source. */
   financeSic?: true;
   /** No free-cash-flow margin is scored: a bank, broker or insurer (finance), or cash flow above the revenue itself (aboveRevenue: an
@@ -138,6 +141,12 @@ export const LEASE_REVENUE = "TechPhaseLeaseRevenue";
 export const IFRS_BANK_REVENUE = "TechPhaseIfrsBankRevenue";
 /** A company's own (extension) capital-spending line in its inline XBRL, named plainly as payments for property and equipment. */
 export const EXTENSION_CAPEX = "TechPhaseExtensionCapex";
+/** Which financial firm the filer is, by its SEC industry code (see Financials.sectorKind). */
+export function sectorKindOf(sic?: string): "bank" | "lender" | "insurer" | undefined {
+  if (!/^\d{4}$/.test(sic ?? "")) return undefined;
+  const n = Number(sic);
+  return n >= 6000 && n <= 6099 ? "bank" : n >= 6100 && n <= 6198 ? "lender" : n >= 6300 && n <= 6411 ? "insurer" : undefined;
+}
 /** The SEC industry code of the filer (submissions "sic"), for the sector-only revenue lines above. */
 const financeSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6000 && Number(sic) <= 6799;
 const realEstateSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && (Number(sic) === 6798 || (Number(sic) >= 6500 && Number(sic) <= 6599));
@@ -196,17 +205,31 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
   }
   if (realEstateSic(sic)) firstTag(["OperatingLeaseLeaseIncome", "OperatingLeasesIncomeStatementLeaseRevenue", "RealEstateRevenueNet"], LEASE_REVENUE);
   const stated = index(["OperatingIncomeLoss"]);
-  const revenue = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", BANK_REVENUE, "GrossInvestmentIncomeOperating", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
+  // Totals first (reviewer, Nov 26: BRK's contract revenue less its total costs, divided by its total revenues, showed −16.2% for a +13.5%
+  // operating margin): the operating figure is worked out from the same line the screen divides it by.
+  const revenue = index(["Revenues", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", BANK_REVENUE, "GrossInvestmentIncomeOperating", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
   const gross = index(["GrossProfit"]), opex = index(["OperatingExpenses"]), cost = index(["CostOfRevenue", "CostOfGoodsAndServicesSold"]), costs = index(["CostsAndExpenses"]);
   const sga = index(["SellingGeneralAndAdministrativeExpense"]), rnd = index(["ResearchAndDevelopmentExpense"]), interestOperating = index(["InterestExpenseOperating"]);
   const pretax = index(PRETAX_TAGS);
+  // No pre-tax line (Allstate, Principal tag only net income and the tax): net income plus income tax of the same period and filing.
+  {
+    const net = index(["ProfitLoss", "NetIncomeLoss"]), tax = index(["IncomeTaxExpenseBenefit"]);
+    for (const [unit, rows] of net) for (const [k, n] of rows) {
+      const t = tax.get(unit)?.get(k);
+      if (n.start && t && !pretax.get(unit)?.has(k)) { const u = pretax.get(unit) ?? new Map<string, RawFact>(); u.set(k, { ...n, val: n.val + t.val }); pretax.set(unit, u); }
+    }
+  }
   const derived: Record<string, RawFact[]> = {}, pre: Record<string, RawFact[]> = {};
   // A lender's net interest income is already net of interest expense: its operating result is its pre-tax income (reviewer, Nov 26), never
   // net interest income less every expense line.
-  const others = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", BANK_REVENUE, "GrossInvestmentIncomeOperating", "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
+  const others = index(["Revenues", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", BANK_REVENUE, "GrossInvestmentIncomeOperating", "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
+  // An insurer's "operating income" line is often its non-GAAP adjusted earnings (reviewer, Nov 26: MET): insurers (SIC 6300-6411) are scored
+  // on pre-tax income only.
+  const insurer = /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6300 && Number(sic) <= 6411;
+  if (insurer) delete facts.OperatingIncomeLoss;
   for (const [unit, rows] of revenue) for (const [k, r] of rows) {
-    if (!r.start || stated.get(unit)?.has(k)) continue;
-    if (!others.get(unit)?.has(k)) { const p = pretax.get(unit)?.get(k); if (p) (pre[unit] ??= []).push({ ...r, val: p.val }); continue; }
+    if (!r.start || (!insurer && stated.get(unit)?.has(k))) continue;
+    if (insurer || !others.get(unit)?.has(k)) { const p = pretax.get(unit)?.get(k); if (p) (pre[unit] ??= []).push({ ...r, val: p.val }); continue; }
     const g = gross.get(unit)?.get(k), c = cost.get(unit)?.get(k), t = costs.get(unit)?.get(k);
     // An "operating expenses" line smaller than the selling, general and administrative or R&D line of the same period is only one item, not
     // the total (reviewer, Nov 26: CC's $2m line left SG&A out of its operating income); it is not used.
@@ -217,8 +240,11 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
     const interest = !financeSic(sic) || realEstateSic(sic) ? interestOperating.get(unit)?.get(k)?.val ?? 0 : 0;
     const base = g && o ? g.val - o.val : c && o ? r.val - c.val - o.val : t ? r.val - t.val : o && !c && !g ? r.val - o.val : null;
     const value = base === null ? null : base + interest;
-    if (value !== null && Number.isFinite(value)) { (derived[unit] ??= []).push({ ...r, val: value }); continue; }
     const p = pretax.get(unit)?.get(k);
+    // A worked-out figure that disagrees with the same period's pre-tax income in sign, or by more than a quarter of revenue, was built from
+    // a partial expense line (reviewer, Nov 26: AFL's 59.3% beside 15.3% pre-tax, NAVI's 76.3% beside 4.1%): the pre-tax income is used.
+    const implausible = value !== null && !!p && ((p.val !== 0 && Math.sign(value) !== Math.sign(p.val)) || Math.abs(value - p.val) > 0.25 * Math.abs(r.val));
+    if (value !== null && Number.isFinite(value) && !implausible) { (derived[unit] ??= []).push({ ...r, val: value }); continue; }
     if (p) (pre[unit] ??= []).push({ ...r, val: p.val });
   }
   for (const [unit, rows] of Object.entries(derived)) add(DERIVED_OPERATING, unit, rows);
@@ -289,7 +315,8 @@ const REVENUE_TOTALS = ["Revenues", "Revenue", "RegulatedAndUnregulatedOperating
 export function extractFinancials(ticker: string, cik: string, payload: unknown, now = Date.now(), reportingCurrency?: string, primaryRevenueTag?: string, quarterRevenueTag?: string, sic?: string): Financials {
   // A bank, broker or insurer (finance SIC, not a REIT): carried on every answer so that figures from the provider are withheld the same way
   // (reviewer, Nov 26: the provider's statements bypassed the filing's withholding).
-  const result: Financials = { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), ...(financeSic(sic) && sic !== "6798" ? { financeSic: true as const } : {}) };
+  const result: Financials = { ...emptyFinancials(ticker, "unsupported", new Date(now).toISOString()), ...(financeSic(sic) && sic !== "6798" ? { financeSic: true as const } : {}),
+    ...(sectorKindOf(sic) ? { sectorKind: sectorKindOf(sic)! } : {}) };
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
   const rawFacts = obj(root.facts);
@@ -341,21 +368,43 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
      *  are used only when no instrument family is filed, and unsecured and senior notes are never added to each other. Null when none. */
     function borrowingLines(m: (name: string) => Fact | null): number | null {
       const family = (total: string, ...parts: string[]) => { const t = m(total); if (t) return t.value; const p = parts.map(m).filter((f): f is Fact => !!f); return p.length ? p.reduce((a, f) => a + f.value, 0) : null; };
-      // The same amount under two lines is one borrowing (reviewer, Nov 26: RJF's and COLB's Federal Home Loan Bank advances are also filed as
-      // other borrowings, HNVR's as short-term borrowings): an amount already counted is not added again.
-      const counted: number[] = [];
-      const add = (value: number | null) => { if (value !== null && !counted.includes(value)) counted.push(value); };
-      for (const value of [family("NotesPayable", "NotesPayableCurrent", "LongTermNotesPayable"), family("LoansPayable", "LoansPayableCurrent", "LongTermLoansPayable"),
-        family("LineOfCredit", "LongTermLineOfCredit"), family("OtherLongTermDebt", "OtherLongTermDebtCurrent", "OtherLongTermDebtNoncurrent"), family("OtherBorrowings"),
-        family("AdvancesFromFederalHomeLoanBanks"), family("ShortTermBorrowings"), family("CommercialPaper"), family("DebtCurrent"), family("FinanceLeaseLiability", "FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent")]) add(value);
+      // A bank's borrowings filed twice, as Federal Home Loan Bank advances and as other or short-term borrowings (reviewer, Nov 26: RJF, COLB,
+      // HNVR): within that one family, an amount already counted is not added again. Equal amounts in different families are both counted
+      // (reviewer, Nov 26: dedupe by value only inside one instrument family).
+      const counted: number[] = [], bankFamily: number[] = [];
+      const add = (value: number | null) => { if (value !== null) counted.push(value); };
+      const addBank = (value: number | null) => { if (value !== null && !bankFamily.includes(value)) { bankFamily.push(value); counted.push(value); } };
+      const notes = family("NotesPayable", "NotesPayableCurrent", "LongTermNotesPayable"), debtCurrent = family("DebtCurrent");
+      const senior = family("SeniorNotes", "SeniorNotesCurrent", "SeniorLongTermNotes"), seniorCurrent = m("SeniorNotesCurrent")?.value ?? null;
+      // When the current debt is the current part of the senior notes (TEVA: SeniorNotesCurrent = DebtCurrent = $4.0bn), the senior notes'
+      // total stands in for it.
+      const currentIsSenior = senior !== null && debtCurrent !== null && seniorCurrent === debtCurrent;
+      // Families found unread in the third review's universe-wide scan (Nov 26): loans and notes payable to banks, other notes and loans,
+      // notes and loans payable, short-term bank and non-bank loans, convertible debt, commercial paper at carrying value.
+      // A sub-line (other notes, notes to banks; other loans, loans to banks) is a part of its parent total and is read only without it (PHM's
+      // other notes payable of $25m are inside its notes payable of $1,809m).
+      const loans = family("LoansPayable", "LoansPayableCurrent", "LongTermLoansPayable");
+      const notesParts = notes !== null ? [] : [family("OtherNotesPayable", "OtherNotesPayableCurrent", "OtherLongTermNotesPayable"), family("NotesPayableToBank", "NotesPayableToBankCurrent", "NotesPayableToBankNoncurrent")];
+      const loansParts = loans !== null ? [] : [family("OtherLoansPayable", "OtherLoansPayableCurrent", "OtherLoansPayableLongTerm"), family("LoansPayableToBank", "LoansPayableToBankCurrent", "LoansPayableToBankNoncurrent")];
+      for (const value of [notes, loans, family("LineOfCredit", "LongTermLineOfCredit"),
+        family("OtherLongTermDebt", "OtherLongTermDebtCurrent", "OtherLongTermDebtNoncurrent"), family("CommercialPaper", "CommercialPaperAtCarryingValue", "CommercialPaperNoncurrent"),
+        family("WarehouseAgreementBorrowings"), notes === null && loans === null ? family("NotesAndLoansPayable", "NotesAndLoansPayableCurrent") : null, ...notesParts, ...loansParts,
+        family("ShortTermNonBankLoansAndNotesPayable"), family("ConvertibleDebt", "ConvertibleDebtCurrent", "ConvertibleDebtNoncurrent"),
+        currentIsSenior ? null : debtCurrent, family("FinanceLeaseLiability", "FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent")]) add(value);
+      for (const value of [family("OtherBorrowings"), family("AdvancesFromFederalHomeLoanBanks"), family("ShortTermBorrowings"), family("OtherShortTermBorrowings"),
+        family("ShortTermBankLoansAndNotesPayable")]) addBank(value);
       const instruments = counted.length;
-      // Senior and subordinated notes, and secured debt, are added unless their amount is already counted (RJF's $3.5bn of senior notes beside
-      // its advances; COLB's and HNVR's subordinated debt). Unsecured and senior notes are never added to each other.
-      const unsecured = family("UnsecuredDebt", "UnsecuredDebtCurrent", "UnsecuredLongTermDebt"), senior = family("SeniorNotes", "SeniorNotesCurrent", "SeniorLongTermNotes");
-      add(unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior);
+      // Senior and subordinated notes are added (RJF's $3.5bn of senior notes beside its advances; COLB's and HNVR's subordinated debt) unless
+      // a notes-payable or current-debt line already holds them (reviewer, Nov 26: PHM's $1.78bn of senior notes inside its $1.81bn of notes
+      // payable were counted twice). Unsecured and senior notes are never added to each other.
+      const unsecured = family("UnsecuredDebt", "UnsecuredDebtCurrent", "UnsecuredLongTermDebt");
+      const contains = (value: number) => !currentIsSenior && ((notes !== null && value <= notes) || (debtCurrent !== null && value <= debtCurrent));
+      const classified = unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior;
+      if (classified !== null && (currentIsSenior || !contains(classified))) add(classified);
       // Secured debt is a classification of the instruments above when any is filed; it is added only when none is.
       if (!instruments) add(family("SecuredDebt", "SecuredDebtCurrent", "SecuredLongTermDebt"));
-      add(family("SubordinatedDebt", "SubordinatedLongTermDebt"));
+      const subordinated = family("SubordinatedDebt", "SubordinatedDebtCurrent", "SubordinatedLongTermDebt") ?? family("JuniorSubordinatedNotes", "JuniorSubordinatedLongTermNotes");
+      if (subordinated !== null && !contains(subordinated)) add(subordinated);
       return counted.length ? counted.reduce((a, b) => a + b, 0) : null;
     }
     /** Debt above the filing's total liabilities is a double count somewhere (reviewer, Nov 26: ATLC's notes and line of credit, $11.5bn
@@ -366,19 +415,27 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }
     function debtForms(): BalanceSnapshot["debtTotal"] {
       if (basis !== "us-gaap") return ifrsDebt();
-      const m = balanceMetric, short = m("ShortTermBorrowings")?.value ?? 0;
+      // Short-term borrowings under whichever line the filing uses (SCHW and KEY: other short-term borrowings; NTES: short-term bank loans).
+      const m = balanceMetric, short = (m("ShortTermBorrowings") ?? m("ShortTermBankLoansAndNotesPayable") ?? m("OtherShortTermBorrowings"))?.value ?? 0;
       const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
       if (current && noncurrent) return { value: current.value + noncurrent.value, source: "split" };   // the same figure as before
       const total = m("LongTermDebt");
       if (total) return { value: total.value + short, source: "total" };
-      if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
+      // The current debt line (current maturities and short-term borrowings) when no current part of long-term debt is filed (reviewer, Nov 26:
+      // PG's $17.0bn, XOM's $4.5bn were left out); it already holds the short-term borrowings.
+      const debtCurrent = current ? null : m("DebtCurrent");
+      const currentPart = (fallback: number) => current?.value ?? debtCurrent?.value ?? fallback;
+      if (noncurrent) return { value: noncurrent.value + (debtCurrent ? debtCurrent.value : short), source: "noncurrent" };
+      // Long-term notes and loans as the noncurrent line (reviewer, Nov 26: ORCL's $117.7bn, TEVA's $12.7bn), with the current part.
+      const notesAndLoans = m("LongTermNotesAndLoans");
+      if (notesAndLoans) return { value: notesAndLoans.value + currentPart(m("NotesPayableCurrent")?.value ?? short), source: "split" };
       const carrying = m("DebtInstrumentCarryingAmount");
       if (carrying) return { value: carrying.value + short, source: "carrying" };
       // One line for all debt and finance leases, current maturities included (JPMorgan, ConocoPhillips, United Rentals).
       const allDebt = m("LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities") ?? m("DebtAndCapitalLeaseObligations");
       if (allDebt) return { value: allDebt.value + short, source: "total" };
       const leaseCombined = m("LongTermDebtAndCapitalLeaseObligations");   // noncurrent debt and finance leases, with its current part (APH, LRCX)
-      if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? 0) + short, source: "total" };
+      if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? debtCurrent?.value ?? short) + (m("LongTermDebtAndCapitalLeaseObligationsCurrent") ? short : 0), source: "total" };
       const combined = m("DebtLongtermAndShorttermCombinedAmount");
       if (combined) return { value: combined.value, source: "total" };
       const convertibleCurrent = m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? null;
@@ -845,7 +902,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const fcfWithheld = financeSic(sic) && sic !== "6798" ? "finance" as const : fcfBasis !== null && fcfBasis > 100 ? "aboveRevenue" as const : undefined;
   const sector = financeSic(sic) || collect(basis, ["NetInvestmentIncome"]).length > 0
     ? sectorMetrics(facts, revenue.unit, balance.end, balance.equity?.value ?? null, balance.assets?.value ?? null,
-      quarterRevenue ? { start: quarterRevenue.start, accession: quarterRevenue.accession ?? null, revenue: quarterRevenue.value } : undefined)
+      // The net-investment-income margin is a business development company's (its revenue is total investment income), never an insurer's
+      // (reviewer, Nov 26: ALL and PFG were scored on it).
+      quarterRevenue && quarterRevenue.tag === "GrossInvestmentIncomeOperating" ? { start: quarterRevenue.start, accession: quarterRevenue.accession ?? null, revenue: quarterRevenue.value } : undefined)
     : null;
   const out: Financials = { ...result, status: "ready", ...(sector ? { sectorMetrics: sector } : {}), ...(capexNotReported ? { capexNotReported: true } : {}), ...(annualMargins ? { marginPeriod: "annual" as const } : {}), ...(qp !== "quarter" ? { periodMonths: qp === "half" ? 6 as const : 12 as const } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,

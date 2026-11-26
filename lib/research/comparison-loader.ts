@@ -7,9 +7,9 @@ import { parse } from "node-html-parser";
 type FetchText = (url: string, limit: number) => Promise<string>;
 const annualForm = /^(?:10-K|20-F|40-F)(?:\/A)?$/;
 const warning = (ja: string, en: string) => ({ ja, en });
-/** The largest filing document read (reviewer, Nov 26: RERE's 20-F is 26.2 MB; at the old 20 MB it was never read and the company was shown
- *  as having no revenue). */
-const FILING_LIMIT = 60_000_000;
+/** The largest filing document read, bounded for memory and the request's time limit (third review, Nov 26: a 60 MB parse risked both). A
+ *  larger document (RERE's 26.2 MB 20-F) is not read: the company is then "unreadable" (fail closed), never "no revenue yet". */
+const FILING_LIMIT = 20_000_000;
 /** One path for every SEC-listed issuer, independent of the monitored news list.
  * Check submissions first: companyfacts alone is not proof of freshness.
  */

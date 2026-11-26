@@ -80,8 +80,13 @@ function fillMarket(out: Financials, provider: Financials, supplemented: Set<str
  *  is withheld from them too (reviewer, Nov 26): a bank's, broker's or insurer's free cash flow (its ROE from the filing stands in), and a
  *  margin and margin series on an IFRS bank's partial revenue. */
 export function carryWithholding(provider: Financials, sec: Financials): Financials {
-  if (!sec.financeSic && sec.fcfWithheld !== "finance" && !sec.marginPartial) return provider;
+  if (!sec.financeSic && sec.fcfWithheld !== "finance" && !sec.marginPartial && !sec.sectorKind) return provider;
   const out: Financials = { ...provider };
+  if (sec.sectorKind) {
+    out.sectorKind = sec.sectorKind;
+    if (!out.sectorMetrics && sec.sectorMetrics) out.sectorMetrics = sec.sectorMetrics;
+    if (out.twelveData) out.twelveData = { ...out.twelveData, sectorFinancial: true };
+  }
   if (sec.financeSic || sec.fcfWithheld === "finance") {
     out.quarterFcfMargin = null; out.fcfWithheld = "finance"; out.financeSic = true; delete out.fcfPeriod;
     if (!out.sectorMetrics && sec.sectorMetrics) out.sectorMetrics = sec.sectorMetrics;

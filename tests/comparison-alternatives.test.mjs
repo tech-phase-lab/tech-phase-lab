@@ -70,7 +70,8 @@ test("the scales are fixed: the same figure always gives the same score", () => 
   assert.deepEqual([-50, 0, 50].map(S.lossTrend), [0, 5, 10]);
   assert.deepEqual([0, 40, 80, 100].map(S.rdIntensity), [0, 5, 10, 10]);
   assert.deepEqual([-10, 0, 25, 50, 200].map(S.dilution), [10, 10, 5, 0, 0]);
-  assert.deepEqual([2, 6, 10, 45].map(S.capitalRatio), [0, 5, 10, 10]);   // a bank's scale (reviewer, Nov 26)
+  assert.deepEqual([2, 6, 10, 45].map(p => S.capitalRatio(p, true)), [0, 5, 10, 10]);   // a bank's scale (reviewer, Nov 26)
+  assert.deepEqual([0, 10, 20, 45].map(p => S.capitalRatio(p)), [0, 5, 10, 10]);            // every other financial firm (third review: NLY)
   assert.deepEqual([-15, 0, 15].map(S.roe), [0, 5, 10]);
 });
 

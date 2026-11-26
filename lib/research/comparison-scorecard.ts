@@ -93,7 +93,8 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const pick = (standard: number | null | undefined, id: "financial" | "profitability" | "stability" | "growth" | "cash") =>
     standard !== null && standard !== undefined ? { value: standard } : finite(alt[id]) ? { value: alt[id]!, kind: altKind } : { value: null };
   const scores: ComparisonScore[] = [
-    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},...(recent ? pick(extra?.financial ?? financial, "financial") : { value: balanceOnly ? financial : null })},
+    // A bank, lender or insurer: its equity ratio, never cash against debt (sectorKind).
+    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},...(recent ? pick(c.sectorKind ? null : extra?.financial ?? financial, "financial") : { value: balanceOnly && !c.sectorKind ? financial : null })},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},...pick(profitability, "profitability")},
     // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.
     {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureScore(c.valueCheck) : null},
@@ -123,7 +124,7 @@ export function alternativeScores(c: Financials, recent: boolean, balanceOnly: b
   }
   const s = c.sectorMetrics;
   if (!recent || !s) return {};
-  return { financial: finite(s.capitalRatio) ? S.capitalRatio(s.capitalRatio) : null, cash: s.roe ? S.roe(s.roe.pct) : null,
+  return { financial: finite(s.capitalRatio) ? S.capitalRatio(s.capitalRatio, c.sectorKind === "bank") : null, cash: s.roe ? S.roe(s.roe.pct) : null,
     profitability: finite(s.niiMargin) ? S.niiMargin(s.niiMargin) : null };
 }
 /** The line beside a company-type score (comparison-labels.ts), or null when the standard figure is shown. */
@@ -170,14 +171,14 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   }
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
-  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
+  const providerMetric=c.twelveData && !(id==="financial" && c.sectorKind) ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
   if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
   if(id==="profitability" && finite(c.quarterOperatingMargin) && c.quarterOperatingMargin <= 100) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin) && c.quarterFcfMargin <= 100) return c.fcfPeriod==="annual" ? ALTERNATIVE_LABELS.annualFcf(c.quarterFcfMargin)[lang] : `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
   const ownBalance=c.balance?.end===c.quarterRevenue?.end || (!!c.balance && c.balance.end===c.balanceFromQuarter) || balanceOnly;
-  if(id==="financial" && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
+  if(id==="financial" && !c.sectorKind && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
     const debt=balanceDebt(c)!;
     return debt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(c.balance.cash.value/debt).toFixed(2)}${ja?"倍":"×"}`;
   }

@@ -64,7 +64,9 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
       copy(`希薄化後の平均株式数は前年同期比${pct}。発行済株式数や新株発行数そのものとは異なります。`,
         `Diluted weighted-average shares increased ${pct} year over year. This is not the period-end shares outstanding or the number of newly issued shares.`));
   }
-  if(valid("cash") && Number.isFinite(c.quarterFcfMargin) && c.quarterFcfMargin!==0) {
+  // A strength only where the score calls it one (5 + margin/5 ≥ 7: 10% or more of revenue); a weakness when negative (reviewer, Nov 26: SO's
+  // 0.4% was listed as a strength).
+  if(valid("cash") && Number.isFinite(c.quarterFcfMargin) && (c.quarterFcfMargin!>=10 || c.quarterFcfMargin!<0)) {
     const positive=c.quarterFcfMargin!>0, pct=`${c.quarterFcfMargin!.toFixed(1)}%`;
     add("cash-generation",positive?"strength":"weakness",copy(`簡易FCF率 ${pct}`,`Simple FCF margin ${pct}`),
       copy(`${span.ja}の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の${pct}。買収支出やリース等は網羅しません。`,

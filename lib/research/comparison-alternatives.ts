@@ -176,9 +176,10 @@ export const ALTERNATIVE_SCALES = {
   rdIntensity: (share: number) => clamp(share / 8),
   /** Shares outstanding change: no increase (or fewer shares) = 10, +50% or more = 0. */
   dilution: (pct: number) => clamp(10 - Math.max(0, pct) / 5),
-  /** Equity ÷ assets on a bank's scale (reviewer, Nov 26: at 20% for 10 points every large bank scored weak, HSBC 5.7% → 2.9): 2% = 0,
-   *  10% or more = 10 (a well-capitalised bank holds about 6-10%; a BDC's or insurer's higher ratio scores 10). */
-  capitalRatio: (pct: number) => clamp((pct - 2) * 10 / 8),
+  /** Equity ÷ assets. A bank on a bank's scale (reviewer, Nov 26: at 20% for 10 points every large bank scored weak, HSBC 5.7% → 2.9):
+   *  2% = 0, 10% or more = 10. Every other financial firm (an insurer, a lender, a mortgage REIT, a BDC) on 0% = 0, 20% or more = 10
+   *  (reviewer, Nov 26: NLY scored 10 on the bank scale). */
+  capitalRatio: (pct: number, bank = false) => bank ? clamp((pct - 2) * 10 / 8) : clamp(pct / 2),
   /** Return on equity: 0% = 5, +15% = 10, −15% = 0. */
   roe: (pct: number) => clamp(5 + pct / 3),
   /** Net investment income margin, on the operating-margin scale (50% = 10). */

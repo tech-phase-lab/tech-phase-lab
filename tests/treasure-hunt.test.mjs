@@ -356,7 +356,8 @@ test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidat
   const page = read("../app/research/treasure-hunt/page.tsx");
   assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueRanking\(\)/, "PRO data only for a member the server confirmed");
   // The comparison's list (values) stays out of Treasure Hunt's own payload.
-  assert.match(server, /const \{ values, \.\.\.ranking \} = await loadValueSnapshot\(\);/);
+  assert.match(server, /const \{ values, \.\.\.ranking \} = await loadRanking\(\);/);
+  assert.doesNotMatch(server.slice(server.indexOf("export async function loadValueRanking")), /^[^\n]*sharedValues/m, "the ranking never waits on the comparison's list");
   assert.match(page, /notFound\(\)/);
   assert.match(page, /<TreasureHuntScreen initial=\{initial\} \/>/);
   // The owner's accounts always get it (AGENTS.md, operator access), with the switch off too.
