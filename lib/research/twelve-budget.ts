@@ -217,7 +217,7 @@ export type SlotStore = {
 /** name: the kind of data; slotMs: how long a copy counts as fresh; staleMs: how old a copy may be when nothing fresher can be had. */
 /** `durable`: the copies are also kept by a DurableStore (the monitor, lib/research/twelve-copies.ts) and read back from it when the
  * cross-instance store has lost them (production, Nov 26: Vercel's runtime cache lost costly copies within hours). */
-/** `swr` (speed, Nov 26): when this slot has no copy yet but an earlier one exists, the reader answers with the earlier copy at once and
+/** `swr` (speed, Nov 26): when this slot has no copy yet but one of the two slots before has, the reader answers with that copy at once and
  * reads the new slot in the background (the same single read the request would have waited for: no extra provider call). */
 export type ReadSpec = { name: string; slotMs: number; staleMs: number; durable?: boolean; swr?: boolean };
 /** A store that keeps the newest copy per name and key for weeks (a miss or a failure is null; never throws to the reader). */
@@ -309,8 +309,9 @@ export function createReader(store: SlotStore, now: () => number = Date.now, dur
           return entry;
         });
         if (spec.swr) {
+          // Only the previous slot or the one before (a copy at most two slots old); an older one waits for the read as before.
           const earlier = await stale<T>(spec, key);
-          if (earlier) { background(run()); return { ...earlier, fresh: false }; }
+          if (earlier && earlier.at >= now() - 2 * spec.slotMs) { background(run()); return { ...earlier, fresh: false }; }
         }
         const got = await run();
         if (got) return { ...got, fresh: true };
@@ -329,7 +330,8 @@ export function createReader(store: SlotStore, now: () => number = Date.now, dur
       // swr: a key with an earlier copy is answered with it at once; its read (already running, or started below) continues in the background.
       const earlier = spec.swr ? await Promise.all(missing.map(k => stale<T | null>(spec, k))) : [];
       const answered = new Set<string>();
-      if (spec.swr) missing.forEach((k, i) => { const e = earlier[i]; if (e) { out[k] = { ...e, fresh: false }; answered.add(k); } });
+      const recent = now() - 2 * spec.slotMs;
+      if (spec.swr) missing.forEach((k, i) => { const e = earlier[i]; if (e && e.at >= recent) { out[k] = { ...e, fresh: false }; answered.add(k); } });
       const waiting = missing.filter(k => inflight.has(id(spec, k)) && !answered.has(k));
       const age = (k: string) => memory.get(id(spec, k))?.at ?? -Infinity;
       const toFetch = fetchMany ? missing.filter(k => !inflight.has(id(spec, k))).sort((a, b) => age(a) - age(b)).slice(0, Math.max(0, maxFetch)) : [];

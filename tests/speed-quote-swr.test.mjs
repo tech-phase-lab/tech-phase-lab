@@ -50,6 +50,32 @@ test("many keys: earlier copies answer at once, new keys are read now, and each 
   assert.deepEqual(asked.map(k => k.sort()), [["MU", "NVDA"], ["AVGO", "MU", "NVDA"]]);
 });
 
+test("a copy older than two slots is not answered early: the request waits for the read as before", async () => {
+  const clock = clockAt(T0), store = memoryStore(), pending = [];
+  const reader = createReader(store, clock.now, null, work => pending.push(work));
+  let calls = 0;
+  await reader.read(spec, "NVDA", async () => { calls++; return 1; });
+  clock.advance(3 * 60_000 + 1_000);
+  const got = await reader.read(spec, "NVDA", async () => { calls++; return 2; });
+  assert.deepEqual([got.value, got.fresh, calls, pending.length], [2, true, 2, 0]);
+  const fetchMany = async keys => new Map(keys.map(k => [k, `${k}@${clock.t}`]));
+  await reader.readMany(spec, ["MU"], fetchMany);
+  clock.advance(3 * 60_000);
+  const many = await reader.readMany(spec, ["MU"], fetchMany);
+  assert.equal(many.MU.fresh, true);
+});
+
+test("the routes keep an answer holding an earlier copy out of the shared cache, and report no refresh when every quote is earlier", () => {
+  const quotes = readFileSync(new URL("../app/api/research/market/quotes/route.ts", import.meta.url), "utf8");
+  assert.match(quotes, /const staleHeaders = \{ "Cache-Control": "public, s-maxage=1" \};/);
+  assert.match(quotes, /stale \? staleHeaders : fast \? fastHeaders : headers/);
+  assert.match(quotes, /const allStale = stale > 0 && stale >= Object\.keys\(quotes\)\.length;/);
+  assert.match(quotes, /\.\.\.\(allStale \? \{\} : \{ "X-Quote-Refresh": granted \? "15s" : "60s" \}\)/);
+  const board = readFileSync(new URL("../app/api/research/market/board/route.ts", import.meta.url), "utf8");
+  assert.match(board, /"Cache-Control": stale \? "public, s-maxage=1" :/);
+  assert.match(readFileSync(new URL("../lib/research/market-data.ts", import.meta.url), "utf8"), /if \(quote\) \{ out\.push\(boardQuote\(id, quote\)\); if \(!got\.fresh\) stale\+\+; \}/);
+});
+
 test("the quote and board copies use it; the minute job still reads synchronously; the refresh outlives the response", () => {
   const data = readFileSync(new URL("../lib/research/market-data.ts", import.meta.url), "utf8");
   assert.match(data, /name: "md-quote-v1", slotMs: quoteSlotMs\("AAPL", now\), staleMs: STALE_LIMIT_MS, swr: true/);
