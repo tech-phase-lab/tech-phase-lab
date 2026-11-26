@@ -225,6 +225,16 @@ def period_end(text, after=None, before=None):
             continue
         if (after is None or day > after) and (before is None or day < before):
             counts[day] = counts.get(day, 0) + 1
+    if not counts:  # a preliminary-results 6-K (SK hynix): "Current Period (Third quarter(1) of 2026)" and "(1) ... from July 1 to September 30"
+        m = re.search(r'Current Period \((?:First|Second|Third|Fourth) quarter\(1\) of (20\d\d)\).{0,1500}?\(1\) Refers to the three-month period from '
+                      r'[A-Z][a-z]+ \d{1,2} to ([A-Z][a-z]+) (\d{1,2}) of a given year', text or '')
+        if m:
+            try:
+                day = datetime.strptime(f'{m[2]} {m[3]} {m[1]}', '%B %d %Y').date().isoformat()
+            except ValueError:
+                day = None
+            if day and (after is None or day > after) and (before is None or day < before):
+                return day
     return max(counts, key=lambda k: (counts[k], k)) if counts else None
 
 
@@ -406,7 +416,10 @@ def build(ticker, release, previous, note, today):
 def company_dive(ticker, release, previous, writer, text, url, period, end, today):
     """A company with its own writer (dive_writers): the hand-made file's cards and figure kinds, from the release's tables."""
     import dive_figures
-    figures = dive_figures.read(ticker, release['text'])
+    if ticker in dive_figures.DOC_SPECS:  # results in several exhibits of one 6-K (release, presentation, statements)
+        figures = dive_figures.read_docs(ticker, [(url, release['text'])] + [(e['url'], e['text']) for e in release.get('exhibits') or []])
+    else:
+        figures = dive_figures.read(ticker, release['text'])
     old = previous['history']
     extra_sources = []
     report = {}
@@ -417,17 +430,28 @@ def company_dive(ticker, release, previous, writer, text, url, period, end, toda
         if report:
             extra_sources.append({'url': release['report']['url'], 'title': f"{previous['name']} Form {release['report'].get('form', '10-Q')} for {period}",
                                   'location': 'Notes to the financial statements and risk factors'})
+    for exhibit in release.get('exhibits') or []:  # the other exhibits of the results filing (a presentation, statements, a letter)
+        extra_sources.append({'url': exhibit['url'], 'title': exhibit.get('title') or f"{previous['name']} {period} results, another exhibit of the same filing",
+                              'location': 'Results release' if exhibit.get('title') else 'Exhibit'})
     events = []
     for event in release.get('events') or []:  # other 8-Ks of the quarter: a deal, a preliminary result
-        found = dive_figures.deal(event['text'])
+        found = {**dive_figures.deal(event['text']), **dive_figures.read_event(ticker, event['text'])}
         if not found:
             continue
         for fig in found.values():
             fig.url = event['url']
         day = event['accepted'].astimezone(timezone.utc)
         events.append({'figures': found, 'url': event['url'], 'date': f'{day.month}月{day.day}日', 'dateEn': f'{day.strftime("%B")} {day.day}'})
-        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form 8-K, Exhibit 99.1 ({day.date().isoformat()})", 'location': 'Press release'})
-    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous)
+        form = event.get('form', '8-K')
+        extra_sources.append({'url': event['url'], 'title': f"{previous['name']} Form {form}" + (', Exhibit 99.1' if form == '8-K' else '') + f" ({day.date().isoformat()})",
+                              'location': 'Press release' if form == '8-K' else 'Notice filed the same day'})
+    extra = {}
+    if ticker in dive_figures.PRIOR:  # the previous quarter's release: figures this release prints without that quarter
+        prior = release.get('prior') or {}
+        extra['prior'] = dive_figures.read(ticker, prior.get('text') or '')
+        for fig in extra['prior'].values():
+            fig.url = prior.get('url')
+    written = writer(figures, url, Decimal(str(old[-1]['value'])) if old else None, report=report, events=events, previous=previous, **extra)
     history = [dict(h) for h in old[1:]] + [{'label': f"Q{previous['periodQuarter']}", 'end': previous['periodEnd'],
                                              'value': previous['numbers']['revenue']['current']}]
     evidence = list(written['evidence'])
@@ -633,7 +657,7 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
         return 'passed'
     note = note if note is not None else stored_analysis(db, ticker, release['accepted'])
     texts = {release['url']: check_dives.normalize(release['text'])}
-    for other in [release.get('report')] + list(release.get('events') or []):  # the 10-Q and the quarter's other 8-Ks it may quote
+    for other in [release.get('report'), release.get('prior')] + list(release.get('events') or []) + list(release.get('exhibits') or []):  # 10-Q, the previous release, other 8-Ks, other exhibits
         if other and other.get('url') and other.get('text'):
             texts[other['url']] = check_dives.normalize(other['text'])
     for e in (previous or {}).get('evidence') or []:  # the previous file's quoted passages, for the figures it carries forward

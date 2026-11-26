@@ -381,12 +381,24 @@ def run_once(path, now=None, trigger='schedule', lock=None, **kwargs):
     return line
 
 
-def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None):
+REPORT_MAX_CHARS = 3_000_000
+
+
+def report_text(content):
+    """Plain text of a 10-Q / 10-K, whole (bounded at REPORT_MAX_CHARS), in the form check_dives compares quotes in."""
+    import check_dives
+    return check_dives.html_text(content[:REPORT_MAX_CHARS * 4].decode('utf-8', 'replace'))[:REPORT_MAX_CHARS]
+
+
+def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None, document=None):
     """The filings a dive is deepened with: the quarter's 10-Q / 10-K once filed after the release (its main document), and the 8-Ks with
     a deal (Item 1.01 / 2.01) or a preliminary result (Item 2.02, not the release itself) filed since the previous dive's release."""
     import earnings_reconcile
-    fetch = fetch or (lambda url: ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split()))
+    # The whole 10-Q, not the monitor's 160,000-character article cut: a customer-concentration note can sit far into the document.
+    fetch = fetch or (lambda url: report_text(backtest.get(url, binary=True)))
     exhibit = exhibit or exhibit_with_url
+    document = document or (lambda url: whole_text(backtest.get(url, binary=True)))
+    import dive_figures
     recent = filings['filings']['recent']
     report = None
     found = earnings_reconcile.report_after(filings, release)
@@ -404,14 +416,40 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         accession = recent['accessionNumber'][i]
         accepted = datetime.fromisoformat(recent['acceptanceDateTime'][i].replace('Z', '+00:00'))
         items = recent['items'][i] if i < len(recent['items']) else ''
-        if form != '8-K' or accession == release['accession'] or accepted < since:
+        # a foreign issuer's other 6-Ks of the results day (a shareholder-return plan, a dividend): read when its dive uses them
+        six_k = form == '6-K' and ticker in dive_figures.EVENT_SPECS and release.get('accepted') and abs(accepted - release['accepted']) <= timedelta(days=3)
+        if (form != '8-K' and not six_k) or accession == release['accession'] or accepted < since:
             continue
-        if not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
+        # a leadership change (Item 5.02) is read for a company whose dive reports one (NVIDIA, Nov 2026): its cover document holds the text
+        officer = form == '8-K' and ticker in dive_figures.EVENT_SPECS and re.search(r'\b5\.02\b', items)
+        if form == '8-K' and not officer and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
             continue
-        url, text = exhibit(cik(ticker), accession, ('1',))
+        if six_k or (officer and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items)):
+            url = filing_url(ticker, accession, recent['primaryDocument'][i])
+            try:
+                text = document(url)
+            except Exception:  # noqa: BLE001 - read again at the next patrol
+                url, text = None, None
+        else:
+            url, text = exhibit(cik(ticker), accession, ('1',))
         if url and text:
-            events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession})
+            events.append({'url': url, 'text': text, 'accepted': accepted, 'accession': accession, 'form': form})
     return report, sorted(events, key=lambda e: e['accepted'])
+
+
+def filing_exhibits(ticker, accession, skip_url=None, numbers=('2', '3')):
+    """(url, text) of the other press exhibits of the results filing (EX-99.2, EX-99.3: a presentation, financial statements), for the
+    companies whose dive figures sit there (dive_figures.DOC_SPECS)."""
+    base = f"https://www.sec.gov/Archives/edgar/data/{int(cik(ticker))}/{accession.replace('-', '')}"
+    index = backtest.get(base + '/' + accession + '-index.html')
+    out = []
+    for n in numbers:
+        for m in re.finditer(r'<tr[^>]*>(?:(?!</tr>).)*?href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"(?:(?!</tr>).)*?>\s*EX-99\.' + n + r'\s*<', index, re.S):
+            url = 'https://www.sec.gov' + m[1]
+            if url != skip_url:
+                out.append((url, ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split())))
+            break
+    return out
 
 
 def prefetch_filings(results, filings_by_ticker, env=None):
@@ -427,7 +465,52 @@ def prefetch_filings(results, filings_by_ticker, env=None):
                 out[ticker] = quarter_filings(ticker, filings, release, dives.previous_dive(ticker))
             except Exception:  # noqa: BLE001 - the dive is still built from the release; the filings are read again next time
                 out[ticker] = (None, [])
+            import dive_figures
+            if ticker in dive_figures.DOC_SPECS:
+                try:
+                    exhibits = [{'url': u, 'text': t} for u, t in filing_exhibits(ticker, release['accession'], release.get('url'))]
+                except Exception:  # noqa: BLE001
+                    exhibits = []
+                if ticker in dive_figures.NEWSROOM:  # the company's own results release, read with the filing (SK hynix)
+                    exhibits += newsroom_release(ticker, release.get('period'))
+                out[ticker] = out[ticker] + (exhibits,)
+            if ticker in dive_figures.PRIOR:  # the previous quarter's release, for the figures this release prints without that quarter
+                out[ticker] = out[ticker] + (None,) * (3 - len(out[ticker])) + (prior_release(dives.previous_dive(ticker)),)
     return out
+
+
+def whole_text(content):
+    """Plain text of a filing with every table cell kept: the monitor's article reader drops a line equal to the one before it, which
+    would merge two equal cells side by side ("97.2% 97.2%") and shift a row."""
+    import check_dives
+    return check_dives.html_text(content.decode('utf-8', 'replace'))
+
+
+def newsroom_release(ticker, period, get=None):
+    """[{'url', 'text', 'title'}] of the company's own results release of `period` on its own site (dive_figures.NEWSROOM), the first
+    candidate address that answers with that page; [] when none does (the dive then holds and the patrol tries again)."""
+    import dive_figures
+    get = get or (lambda url: urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; TechPhaseResearch)'}),
+                                                     timeout=30).read(5_000_000))
+    for url in dive_figures.NEWSROOM[ticker](period):
+        try:
+            text = whole_text(get(url))
+        except Exception:  # noqa: BLE001 - the next address, or the next patrol
+            continue
+        if text:
+            return [{'url': url, 'text': text, 'title': f'{ticker} {period} results release (company newsroom)'}]
+    return []
+
+
+def prior_release(previous):
+    """{'url', 'text'} of the release the previous dive was built from (its first source, on sec.gov), or None."""
+    url = (((previous or {}).get('sources') or [{}])[0]).get('url') or ''
+    if not url.startswith('https://www.sec.gov/'):
+        return None
+    try:
+        return {'url': url, 'text': whole_text(backtest.get(url, binary=True))}
+    except Exception:  # noqa: BLE001 - the dive then holds (a figure is missing) and is tried again at the next patrol
+        return None
 
 
 def draft_dives(db, results, now, env=None, extras=None):
@@ -445,7 +528,11 @@ def draft_dives(db, results, now, env=None, extras=None):
         release['releasedOn'] = release_day(release['accepted']).isoformat()
         try:
             if extras and ticker in extras:
-                release['report'], release['events'] = extras[ticker]
+                release['report'], release['events'] = extras[ticker][:2]
+                if len(extras[ticker]) > 2 and extras[ticker][2] is not None:
+                    release['exhibits'] = extras[ticker][2]
+                if len(extras[ticker]) > 3 and extras[ticker][3]:
+                    release['prior'] = extras[ticker][3]
             state = dives.generate(db, ticker, release, now)
         except Exception as exc:  # noqa: BLE001 - one company's failure never stops the others
             state = 'error-' + type(exc).__name__

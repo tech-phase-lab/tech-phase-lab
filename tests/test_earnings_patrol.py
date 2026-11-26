@@ -163,6 +163,45 @@ class QuarterFilings(unittest.TestCase):
         self.assertEqual(report['text'], 'report text')
         self.assertEqual([e['accession'] for e in events], ['old-deal', 'deal-1'])  # since the previous release, oldest first; never the release itself
 
+    def test_a_foreign_issuers_results_day_6ks_are_read_only_for_a_dive_that_uses_them(self):
+        sub = filings(('6-K', '2026-11-20T11:00:00.000Z', '', 'later-6k'),
+                      ('6-K', '2026-10-28T10:06:14.000Z', '', 'returns-6k'),
+                      ('6-K', '2026-10-28T10:01:57.000Z', '', 'results-6k'),
+                      ('6-K', '2026-10-14T10:02:00.000Z', '', 'earlier-6k'))
+        release = {'accession': 'results-6k', 'accepted': datetime(2026, 10, 28, 10, 1, 57, tzinfo=timezone.utc)}
+        read = []
+        _, events = patrol.quarter_filings('SKHY', sub, release, {'releasedOn': '2026-07-29'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: read.append(url) or 'notice text')
+        self.assertEqual([e['accession'] for e in events], ['returns-6k'])   # the results day only, never the results 6-K itself
+        _, events = patrol.quarter_filings('NBIS', sub, release, {'releasedOn': '2026-07-29'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
+        self.assertEqual(events, [])   # a company whose dive reads no other 6-K
+
+    def test_sk_hynix_newsroom_release_is_read_from_its_own_site(self):
+        tried = []
+        page = b'<html><body>SK hynix Newsroom 3Q26 Financial Results</body></html>'
+        got = patrol.newsroom_release('SKHY', 'Q3 2026', get=lambda url: tried.append(url) or page)
+        self.assertEqual(tried, ['https://news.skhynix.com/en/q3-2026-business-results/'])
+        self.assertIn('3Q26 Financial Results', got[0]['text'])
+
+        def blocked(url):
+            tried.append(url)
+            raise OSError('403')
+        tried.clear()
+        self.assertEqual(patrol.newsroom_release('SKHY', 'Q4 2026', get=blocked), [])   # held, read again at the next patrol
+        self.assertEqual(tried, ['https://news.skhynix.com/en/q4-2026-business-results/', 'https://news.skhynix.com/en/sk-hynix-announces-fy26-financial-results/'])
+
+    def test_a_leadership_8k_is_read_from_its_cover_document_for_a_dive_that_reports_it(self):
+        sub = filings(('8-K', '2026-11-23T01:00:00.000Z', '5.02,9.01', 'ceo-back'), ('8-K', '2026-11-11T21:30:00.000Z', '5.02', 'ceo-out'), NVDA_8K)
+        read = []
+        _, events = patrol.quarter_filings('NVDA', sub, nvda_release(), {'releasedOn': '2026-08-26'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: read.append(url) or 'notice text')
+        self.assertEqual([e['accession'] for e in events], ['ceo-out', 'ceo-back'])
+        self.assertEqual(len(read), 2)
+        _, events = patrol.quarter_filings('AMD', sub, nvda_release(), {'releasedOn': '2026-08-26'}, fetch=lambda url: None,
+                                           exhibit=lambda *a: (None, None), document=lambda url: 'notice text')
+        self.assertEqual(events, [])   # Item 5.02 alone is not read for a company whose dive does not report it
+
 
 class Records(unittest.TestCase):
     def setUp(self):
