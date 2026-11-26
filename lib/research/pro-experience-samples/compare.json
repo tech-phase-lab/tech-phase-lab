@@ -356,6 +356,17 @@
       }
      }
     ]
+   },
+   "valueCheck": {
+    "score": -24,
+    "exact": -24.0,
+    "pe": -24.0,
+    "ps": -24.0,
+    "peNow": 42.5,
+    "psNow": 24.1,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
    }
   },
   "AMD": {
@@ -711,6 +722,17 @@
       }
      }
     ]
+   },
+   "valueCheck": {
+    "score": 8,
+    "exact": 8.0,
+    "pe": 8.0,
+    "ps": 8.0,
+    "peNow": 31.0,
+    "psNow": 9.8,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
    }
   },
   "INTC": {
@@ -1039,6 +1061,17 @@
       }
      }
     ]
+   },
+   "valueCheck": {
+    "score": 30,
+    "exact": 30.0,
+    "pe": 30.0,
+    "ps": 30.0,
+    "peNow": 19.5,
+    "psNow": 2.4,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
    }
   },
   "ARM": {
@@ -1388,6 +1421,17 @@
       }
      }
     ]
+   },
+   "valueCheck": {
+    "score": -30,
+    "exact": -30.0,
+    "pe": -30.0,
+    "ps": -30.0,
+    "peNow": 48.0,
+    "psNow": 31.5,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
    }
   }
  }

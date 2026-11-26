@@ -179,7 +179,7 @@ test("Stock Comparison: every factor of every pair has a score and a figure (割
     }
   }
   const metric = ticker => id => comparisonMetric(compareSample([ticker, ticker === "NVDA" ? "AMD" : "NVDA"]).companies[0], id, "ja", compareNow);
-  assert.equal(metric("ARM")("valuation"), "予想PER 48.0×");
+  assert.equal(metric("ARM")("valuation"), "5年平均より30%高い"); // as on Treasure Hunt (owner, Nov 26)
   assert.equal(metric("NVDA")("momentum"), "約3か月 +14.6%");
   assert.equal(metric("ARM")("stability"), "営業黒字 4/4四半期");
   assert.equal(metric("ARM")("cash"), "簡易FCF率 17.6%");

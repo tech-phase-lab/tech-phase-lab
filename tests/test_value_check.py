@@ -204,6 +204,57 @@ class Snapshot(unittest.TestCase):
         self.assertEqual(snap['basis'], 'trailing')
         self.assertEqual(up['ja'], 'UPジャ')
 
+    def test_comparison_values_cover_every_calculable_ticker_with_the_ranking_score(self):
+        # The Stock Comparison's valuation (owner, Nov 26): the same halves as the Value Score, for ranked and unranked tickers alike.
+        snap = self.build()
+        values = snap['values']
+        self.assertEqual(sorted(values), ['DOWN', 'LOSS', 'SHRINK', 'UP'])  # BRK.B (share class) has none
+        up = snap['universes']['tech']['items'][0]
+        self.assertEqual(values['UP']['score'], up['score'])
+        self.assertEqual(values['UP']['basis'], 'pe-ps')
+        self.assertAlmostEqual(values['UP']['exact'], (values['UP']['pe'] + values['UP']['ps']) / 2, delta=0.06)
+        self.assertLess(values['DOWN']['score'], 0)  # above its average: unranked, still listed
+        self.assertEqual(values['LOSS']['basis'], 'ps')  # a loss-maker: the P/S half alone
+        self.assertIsNone(values['LOSS']['pe'])
+        self.assertEqual(values['LOSS']['score'], round(values['LOSS']['ps']))
+        self.assertIn('SHRINK', values)  # falling revenue: unranked, still listed
+
+    def test_thin_earnings_are_judged_on_price_to_sales(self):
+        days = trading_days('2021-01-04', 1300)
+        first = date.fromisoformat(days[0]).toordinal()
+        revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0} for q in range(26)]
+        income = [{**p, 'value': 10.0} for p in revenue]
+        for q in range(20, 26):
+            income[q] = {**income[q], 'value': 0.1}  # earnings collapse for the last year and a half: P/E far above PE_CAP today
+        record = {'revenue': revenue, 'income': income, 'shares': quarterly_shares(first, 1.0)}
+        closes = [(d, 50.0, 50.0) for d in days]
+        value = vc.comparison_value(closes, record, days[-1])
+        self.assertEqual(value['basis'], 'ps')
+        self.assertIsNone(value['peNow'])
+        self.assertEqual(vc.evaluate('THIN', closes, record, days[-1]), {'excluded': 'thin-earnings'})
+
+    def test_an_older_snapshot_gets_the_list_in_memory_without_a_write(self):
+        db = vc.connect(':memory:')
+        try:
+            stored = {k: v for k, v in self.build().items() if k != 'values'}
+            db.execute('INSERT INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(stored)))
+            db.commit()
+            fresh = {**stored, 'values': {'UP': {'score': 55, 'exact': 54.6, 'basis': 'pe-ps', 'period': None}}}
+            original = vc.compute
+            vc.compute = lambda _db, _u: fresh
+            vc.DERIVED.clear()
+            try:
+                self.assertTrue(vc.ensure_values(db, self.universe()))
+                self.assertFalse(vc.ensure_values(db, self.universe()))  # once per stored snapshot
+            finally:
+                vc.compute = original
+            self.assertEqual(vc.values_payload(db)['values'], {'UP': [55, 54.6, 'pe-ps', None]})  # compact rows
+            self.assertNotIn('values', vc.public_payload(db))  # the ranking alone at /value-check
+            self.assertNotIn('values', vc.snapshot(db))  # nothing written
+        finally:
+            vc.DERIVED.clear()
+            db.close()
+
     def test_in_and_out(self):
         rows = [{'ticker': 'A', 'score': 50, 'previous': 20}, {'ticker': 'B', 'score': 20, 'previous': 40},
                 {'ticker': 'C', 'score': 60, 'previous': 40}, {'ticker': 'D', 'score': 31, 'previous': 29}]
@@ -341,3 +392,25 @@ class ValueCheckStorageTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class SplitEndpoint(unittest.TestCase):
+    """Reviewer, Nov 26: the ranking at /value-check must stay within the 1.5 MB the site in production accepts, whichever is deployed first;
+    the comparison's list for every comparable company is served at /value-check/values."""
+    def test_the_ranking_answer_has_no_list_and_the_list_has_its_own(self):
+        db = vc.connect(':memory:')
+        try:
+            values = {f'T{i:04d}': {'score': 50, 'exact': 49.5, 'basis': 'pe-ps', 'period': None} for i in range(6000)}
+            snapshot = {'ok': True, 'asOf': '2026-11-25', 'computedAt': '2026-11-25T22:00:00Z', 'universes': {}, 'values': values}
+            db.execute('INSERT INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(snapshot)))
+            db.commit()
+            ranking = vc.public_payload(db)
+            self.assertNotIn('values', ranking)
+            listed = vc.values_payload(db)
+            self.assertEqual(listed['asOf'], '2026-11-25')
+            self.assertEqual(len(listed['values']), 6000)
+            size = len(json.dumps(listed, separators=(',', ':')).encode())
+            self.assertLess(size, 4_000_000)   # the site reads the list up to 4 MB
+            print(json.dumps({'valuesBytesFor6000': size}))
+        finally:
+            db.close()

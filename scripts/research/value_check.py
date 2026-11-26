@@ -108,6 +108,12 @@ def schema(db):
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_state(key TEXT PRIMARY KEY, value TEXT NOT NULL)''')
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_statements(
       ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
+    # The Stock Comparison's list for every comparable company (compare_values.py): its own SEC records, the days a company could not be
+    # read, the companies to calculate again, and the results.
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_facts(ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_misses(ticker TEXT NOT NULL, kind TEXT NOT NULL, at REAL NOT NULL, PRIMARY KEY(ticker, kind))''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_dirty(ticker TEXT PRIMARY KEY)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_values(ticker TEXT PRIMARY KEY, as_of TEXT NOT NULL, payload TEXT NOT NULL)''')
     db.commit()
 
 
@@ -617,21 +623,35 @@ def score_at(ratios, index):
     five-year trimmed mean, history days above PE_CAP / PS_CAP counted at the cap (loss days have no P/E and are left out of its
     mean); the mean of the two. In percent, unrounded. Also whether both are below every day of the period (5年最安).
     None without enough data, and without a P/E today or a year of profitable days (a loss-maker is never ranked as cheap)."""
+    parts = value_parts(ratios, index)
+    if parts is None or parts['pe_part'] is None:
+        return None
+    pe, ps = parts['pe'], parts['ps']
+    low = ps < min(parts['ps_history']) and pe < min(parts['pe_history'])
+    return {'exact': 100 * (parts['pe_part'] + parts['ps_part']) / 2, 'pe': pe, 'ps': ps, 'low': low, 'days': len(parts['ps_history'])}
+
+
+def value_parts(ratios, index, min_ps_days=MIN_PS_DAYS, min_pe_days=MIN_PE_DAYS):
+    """The two halves of the Value Score on ratios[index], each 1 - today / the five-year trimmed mean (history days above PE_CAP /
+    PS_CAP counted at the cap, loss days left out of the P/E mean). The P/E half is None without a P/E today or a year of profitable
+    days. None when there is no P/S today or under a year of P/S days. score_at and the comparison's list (comparison_value) both read
+    this, so the two can never differ. min_ps_days / min_pe_days: the comparison's fallback for a listing younger than a year
+    (compare_values.py) asks with fewer days; Treasure Hunt always uses the defaults."""
     if index < 0 or index >= len(ratios):
         return None
     day, pe, ps = ratios[index]
-    if ps is None or pe is None:
+    if ps is None:
         return None
     window = [r for r in ratios[:index] if day - r[0] <= WINDOW_DAYS]
     ps_history = [r[2] for r in window if r[2] is not None]
     pe_history = [r[1] for r in window if r[1] is not None]
-    if len(ps_history) < MIN_PS_DAYS or len(pe_history) < MIN_PE_DAYS:
+    if len(ps_history) < min_ps_days:
         return None
-    pe_mean = trimmed_mean([min(value, PE_CAP) for value in pe_history])
-    ps_mean = trimmed_mean([min(value, PS_CAP) for value in ps_history])
-    parts = [1 - pe / pe_mean, 1 - ps / ps_mean]
-    low = ps < min(ps_history) and pe < min(pe_history)
-    return {'exact': 100 * sum(parts) / len(parts), 'pe': pe, 'ps': ps, 'low': low, 'days': len(ps_history)}
+    ps_part = 1 - ps / trimmed_mean([min(value, PS_CAP) for value in ps_history])
+    pe_part = None
+    if pe is not None and len(pe_history) >= min_pe_days:
+        pe_part = 1 - pe / trimmed_mean([min(value, PE_CAP) for value in pe_history])
+    return {'pe': pe, 'ps': ps, 'pe_part': pe_part, 'ps_part': ps_part, 'pe_history': pe_history, 'ps_history': ps_history}
 
 
 def why_unscored(ratios):
@@ -665,20 +685,55 @@ def revenue_growth(record):
     return None
 
 
+def _unusable(closes, record, as_of, fx):
+    """Why a ticker has no figures to judge today (None when it has)."""
+    if record.get('error'):
+        return record['error']
+    if not record.get('revenue'):
+        return 'no-revenue'
+    if not record.get('shares'):
+        return 'no-shares'
+    if not closes:
+        return 'no-price'
+    if closes[-1][0] != as_of:
+        return 'stale-price'
+    if (record.get('currency') or 'USD') != 'USD' and not fx:
+        return 'no-exchange-rate'
+    return None
+
+
+def _period_note(closes, as_of, days):
+    """Why the period is shorter than five years: a recent listing, or filings that start later (None for the full period)."""
+    if days >= FULL_DAYS:
+        return None
+    return 'listed' if _day(closes[0][0]) > _day(as_of) - WINDOW_DAYS + 60 else 'data'
+
+
+def comparison_value(closes, record, as_of, fx=None):
+    """The Stock Comparison's valuation for one ticker (owner, Nov 26: the same yardstick as Treasure Hunt), also for tickers the
+    ranking leaves out (falling revenue, above the average, a loss): the same halves as the Value Score from value_parts. A ticker
+    without a usable P/E today (a loss, under a year of profitable days, or above PE_CAP, earnings too thin to compare) is judged on
+    its P/S half alone. None when even that cannot be calculated, or the P/S is implausible (MAX_PS)."""
+    if _unusable(closes, record, as_of, fx):
+        return None
+    ratios = daily_ratios(closes, record, fx)
+    parts = value_parts(ratios, len(ratios) - 1)
+    if parts is None or parts['ps'] > MAX_PS:
+        return None
+    pe_used = parts['pe_part'] is not None and parts['pe'] <= PE_CAP
+    halves = [parts['pe_part'], parts['ps_part']] if pe_used else [parts['ps_part']]
+    exact = 100 * sum(halves) / len(halves)
+    return {'score': round(exact), 'exact': round(exact, 2),
+            'pe': round(100 * parts['pe_part'], 1) if pe_used else None, 'ps': round(100 * parts['ps_part'], 1),
+            'peNow': round(parts['pe'], 1) if pe_used else None, 'psNow': round(parts['ps'], 1),
+            'basis': 'pe-ps' if pe_used else 'ps', 'period': _period_note(closes, as_of, len(parts['ps_history']))}
+
+
 def evaluate(ticker, closes, record, as_of, fx=None):
     """One ticker: a ranked row, or an exclusion reason."""
-    if record.get('error'):
-        return {'excluded': record['error']}
-    if not record.get('revenue'):
-        return {'excluded': 'no-revenue'}
-    if not record.get('shares'):
-        return {'excluded': 'no-shares'}
-    if not closes:
-        return {'excluded': 'no-price'}
-    if closes[-1][0] != as_of:
-        return {'excluded': 'stale-price'}
-    if (record.get('currency') or 'USD') != 'USD' and not fx:
-        return {'excluded': 'no-exchange-rate'}
+    reason = _unusable(closes, record, as_of, fx)
+    if reason:
+        return {'excluded': reason}
     ratios = daily_ratios(closes, record, fx)
     today = score_at(ratios, len(ratios) - 1)
     if today is None:
@@ -697,9 +752,7 @@ def evaluate(ticker, closes, record, as_of, fx=None):
     previous = score_at(ratios, len(ratios) - 2)
     pe, ps = today['pe'], today['ps']
     # The note says why the period is shorter than five years: a recent listing, or filings that start later.
-    note = None
-    if today['days'] < FULL_DAYS:
-        note = 'listed' if _day(closes[0][0]) > _day(as_of) - WINDOW_DAYS + 60 else 'data'
+    note = _period_note(closes, as_of, today['days'])
     return {'ticker': ticker, 'score': round(today['exact']), 'exact': today['exact'],
             'previous': round(previous['exact']) if previous else None, 'low': today['low'],
             'pe': round(pe, 1), 'ps': round(ps, 1), 'revenueGrowth': round(growth),
@@ -728,13 +781,17 @@ def build_snapshot(universe, closes_by_ticker, records, now=None, fx=None):
     as_of = max(set(last_days), key=last_days.count) if last_days else None  # the day most tickers closed on
     if as_of and last_days and last_days[-1] > as_of:
         as_of = last_days[-1] if last_days.count(last_days[-1]) * 2 >= len(last_days) else as_of
-    evaluated = {}
+    evaluated, values = {}, {}
     for ticker in universe['all']:
         if '.' in ticker:
             evaluated[ticker] = {'excluded': 'share-class'}
             continue
         record = records.get(ticker) or {'error': 'no-sec-data'}
-        evaluated[ticker] = evaluate(ticker, closes_by_ticker.get(ticker) or [], record, as_of, (fx or {}).get(record.get('currency')))
+        closes, rate = closes_by_ticker.get(ticker) or [], (fx or {}).get(record.get('currency'))
+        evaluated[ticker] = evaluate(ticker, closes, record, as_of, rate)
+        value = comparison_value(closes, record, as_of, rate)
+        if value:
+            values[ticker] = value
     companies = universe['companies']
     lists = {}
     for name in ('tech', 'all'):
@@ -758,7 +815,9 @@ def build_snapshot(universe, closes_by_ticker, records, now=None, fx=None):
                        'excluded': {reason: sorted(tickers) for reason, tickers in sorted(excluded.items())}}
     sources = {t: r.get('source') for t, r in evaluated.items() if r.get('source') and r['source'] != 'sec'}
     return {'ok': True, 'version': 3, 'basis': 'trailing', 'asOf': as_of, 'sources': dict(sorted(sources.items())),
-            'computedAt': now.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'universes': lists}
+            'computedAt': now.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'universes': lists,
+            # Every ticker whose Value Score halves could be calculated, ranked or not: the Stock Comparison's valuation reads this.
+            'values': dict(sorted(values.items()))}
 
 
 # ---- one run ------------------------------------------------------------------------------------------------------------------------
@@ -894,14 +953,68 @@ def snapshot(db):
     return json.loads(row[0]) if row else None
 
 
+# The comparison's list for a snapshot stored before the list existed (Nov 26), worked out in memory from the stored closes and figures
+# (no provider call, nothing written), so the comparison need not wait for the next run after the close.
+DERIVED = {}
+
+
+def ensure_values(db, universe=None):
+    """Fills DERIVED when the stored snapshot has no 'values'; the list is kept only if it describes the same close (asOf)."""
+    data = snapshot(db)
+    if not data or 'values' in data or DERIVED.get('computedAt') == data.get('computedAt'):
+        return False
+    fresh = compute(db, universe or load_universe())
+    # Tried once per stored snapshot, whatever the outcome (reviewer, Nov 26: a mismatch used to be recalculated every five minutes).
+    # The service calls this as soon as it starts, so a restart leaves no gap.
+    DERIVED.clear()
+    DERIVED.update(computedAt=data.get('computedAt'), values=fresh['values'] if fresh.get('asOf') == data.get('asOf') else None)
+    return DERIVED['values'] is not None
+
+
 def public_payload(db):
-    """What the site's server reads (it checks PRO first). No credits, no provider call."""
+    """Treasure Hunt's ranking, what the site's server reads at /value-check (it checks PRO first). No credits, no provider call.
+    The comparison's list for every comparable company is served separately (values_payload, /value-check/values; reviewer, Nov 26):
+    this answer stays the size the site in production accepts (1.5 MB), whichever is deployed first."""
     data = snapshot(db)
     if not data:
         return {'ok': False, 'error': 'not-ready'}
     data = dict(data)
     data.pop('credits', None)
+    data.pop('values', None)
     return data
+
+
+def values_payload(db):
+    """The Stock Comparison's figure for every comparable company (compact rows, compare_list()), at /value-check/values."""
+    data = snapshot(db)
+    if not data:
+        return {'ok': False, 'error': 'not-ready'}
+    data = dict(data)
+    if 'values' not in data and DERIVED.get('computedAt') == data.get('computedAt') and DERIVED.get('values') is not None:
+        data['values'] = DERIVED['values']
+    return {'ok': True, 'asOf': data.get('asOf'), 'computedAt': data.get('computedAt'), 'values': compare_list(db, data)}
+
+
+def compact(value):
+    """[score, exact, basis, period]: what the comparison shows and scores, small enough for every comparable company."""
+    return [value['score'], value['exact'], value['basis'], value.get('period')]
+
+
+def compare_list(db, data):
+    """Every comparable company's figure for the close of the snapshot (compare_values.py), Treasure Hunt's own figures first: a
+    company Treasure Hunt calculates shows exactly its number. Compact rows (compact())."""
+    out = {}
+    try:
+        for ticker, payload in db.execute('SELECT ticker, payload FROM compare_values WHERE as_of=?', (data.get('asOf'),)):
+            try:
+                out[ticker] = compact(json.loads(payload))
+            except (ValueError, KeyError, TypeError):
+                continue
+    except sqlite3.Error:
+        pass
+    for ticker, value in (data.get('values') or {}).items():
+        out[ticker] = compact(value)
+    return dict(sorted(out.items()))
 
 
 def due(now, last_day):
@@ -929,7 +1042,8 @@ def main(argv=None):
         return 1
     summary = {name: {'ranked': len(u['items']), 'total': u['total'], 'excluded': {k: len(v) for k, v in u['excluded'].items()},
                       'in': len(u['changes']['in']), 'out': len(u['changes']['out'])} for name, u in data['universes'].items()}
-    print(json.dumps({'asOf': data['asOf'], 'credits': data.get('credits'), 'universes': summary}, ensure_ascii=False, indent=1))
+    print(json.dumps({'asOf': data['asOf'], 'credits': data.get('credits'), 'universes': summary, 'values': len(data.get('values') or {})},
+                     ensure_ascii=False, indent=1))
     return 0
 
 

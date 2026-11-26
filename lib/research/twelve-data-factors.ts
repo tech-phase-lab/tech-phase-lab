@@ -1,3 +1,4 @@
+import { ALTERNATIVE_LABELS } from "./comparison-labels.ts";
 import type { TwelveComparisonSnapshot } from "./twelve-data-comparison.ts";
 import { twelveNumber } from "./twelve-data-values.ts";
 import { sameProviderSymbol } from "./provider-symbol.ts";
@@ -21,11 +22,17 @@ export type TwelveFactorEvidence = {
     /** Market value ÷ trailing four quarters' revenue. Used for every company in a comparison when any of them has no forward P/E (a loss-maker). */
     priceToSales?:number|null };
   margins: {periodEnd:string;value:number}[];
+  /** "annual": the margins are four fiscal years (a foreign filer reporting yearly or half-yearly), said as such. */
+  marginPeriod?: "annual";
+  /** The margins are pre-tax (a bank or insurer files no operating line): said as such on screen. */
+  marginBasis?: "pretax";
+  /** A bank, lender, broker or insurer: no cash-against-debt score or point from these statistics (Financials.sectorKind). */
+  sectorFinancial?: true;
   momentum: null | {from:string;to:string;changePct:number};
 };
 export const twelveFactorMethods: Record<string,Copy> = {
-  financial:{ja:"財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",en:"Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no borrowings\" and treated as debt-free; if the debt figures can't be read, no score is given."},
-  valuation:{ja:"割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",en:"Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."},
+  financial:{ja:"財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",en:"Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no debt\" and treated as debt-free; if the debt figures can't be read, no score is given."},
+  valuation:{ja:"割安性：今のPERとPSRが、その会社の過去5年の平均（上下5%の極端な日を除く）よりどれだけ安いかを見ます。トレジャーハントと同じ計算です。平均と同じなら5点、50%安ければ10点、50%高ければ0点です。",en:"Valuation: how far today's P/E and P/S sit below the company's own five-year average (excluding the most extreme 5% of days at each end), the same calculation as Treasure Hunt. In line with the average scores 5, 50% below scores 10, and 50% above scores 0."},
   stability:{ja:"安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",en:"Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."},
   momentum:{ja:"株価モメンタム：分割調整済み日足の約3か月騰落率。0%＝5点、+50%＝10点、−50%＝0点。配当を含まず、上昇余地の予測ではありません。",en:"Momentum: the stock-price return over roughly three months, adjusted for stock splits. A 0% return scores 5, +50% scores 10, and −50% scores 0. Dividends aren't included, and this isn't a forecast."},
 };
@@ -86,18 +93,17 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   }
   return {version:1,periodEnd:snapshot.periodEnd,retrievedAt:snapshot.retrievedAt,statistics:stats,margins,momentum};
 }
-/** Same factor values drive the radar, bars, winner highlights and saved copy. */
-export type ValuationBasis = "pe" | "ps";
-const psScore = (ps:number) => clamp(9-2*Math.log2(ps));
-export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:ValuationBasis="pe") {
+/** Same factor values drive the radar, bars, winner highlights and saved copy. Valuation is not among them: it comes from Treasure Hunt's
+ *  list (lib/research/comparison-value.ts, owner Nov 26), no longer from a fixed forward P/E or P/S scale. */
+export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now()) {
   const fresh=now-Date.parse(e.periodEnd)>=0 && now-Date.parse(e.periodEnd)<=periodMaxAgeDays(e.periodMonths)*day;
   const s=e.statistics;
-  const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=36*3600000 ? s : null;
+  // The last good statistics count for up to a week (owner, Nov 26), as long as they describe the same quarter (quarterEnd, checked on reading).
+  const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=7*day ? s : null;
   // Banks have no current ratio (HSBC, MUFG): cash against debt alone on the full ten-point scale, as for US banks from their filings.
-  const financial=stats && stats.totalCash!==null && stats.totalDebt!==null
+  const financial=!e.sectorFinancial && stats && stats.totalCash!==null && stats.totalDebt!==null
     ? stats.currentRatio!==null ? clamp(2.5*Math.min(stats.currentRatio,2)+5*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1)))
       : clamp(10*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1))) : null;
-  const valuation=basis==="ps" ? (stats?.priceToSales ? psScore(stats.priceToSales) : null) : stats?.forwardPE ? clamp(11-stats.forwardPE/5) : null;
   let stability:number|null=null;
   if(fresh && e.margins.length===4) {
     const mean=e.margins.reduce((sum,m)=>sum+m.value,0)/4;
@@ -107,15 +113,13 @@ export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:V
   }
   const m=e.momentum;
   const momentum=m && now-Date.parse(m.to)>=0 && now-Date.parse(m.to)<=7*day ? clamp(5+m.changePct/10) : null;
-  return {financial,valuation,stability,momentum};
+  return {financial,stability,momentum};
 }
-export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"en",now=Date.now(),basis:ValuationBasis="pe"):string|null {
-  const scores=twelveExtraFactors(e,now,basis),ja=lang==="ja";
-  if(id==="valuation" && basis==="ps" && scores.valuation!==null)return `PSR ${e.statistics!.priceToSales!.toFixed(1)}×`;
+export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"en",now=Date.now()):string|null {
+  const scores=twelveExtraFactors(e,now),ja=lang==="ja";
   if(id==="financial" && scores.financial!==null)return e.statistics!.currentRatio!==null ? `${ja?"流動比率":"Current ratio"} ${e.statistics!.currentRatio!.toFixed(2)}×`
     : e.statistics!.totalDebt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(e.statistics!.totalCash!/e.statistics!.totalDebt!).toFixed(2)}${ja?"倍":"×"}`;
-  if(id==="valuation" && scores.valuation!==null)return `${ja?"予想PER":"Forward P/E"} ${e.statistics!.forwardPE!.toFixed(1)}×`;
-  if(id==="stability" && scores.stability!==null)return `${ja?"営業黒字":"Profitable"} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
+  if(id==="stability" && scores.stability!==null)return e.marginPeriod==="annual" ? ALTERNATIVE_LABELS.annualStability(e.margins.filter(m=>m.value>0).length, e.marginBasis==="pretax")[lang] : `${ja?(e.marginBasis==="pretax"?"税引前黒字":"営業黒字"):(e.marginBasis==="pretax"?"Pre-tax profitable":"Profitable")} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
   if(id==="momentum" && scores.momentum!==null){const n=e.momentum!.changePct;return `${ja?"約3か月":"~3 months"} ${n>0?"+":""}${n.toFixed(1)}%`;}
   return null;
 }

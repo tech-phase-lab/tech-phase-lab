@@ -111,3 +111,19 @@ test("desktop left menu: Treasure Hunt and Whale Tracks sit in the PRO rows in t
   const quick = sidebar.slice(sidebar.indexOf("const quick: Item[]"), start);
   assert.doesNotMatch(quick + rows.slice(0, rows.indexOf("...(member ? [\n")), /value-check|treasure-hunt|whales/);
 });
+
+test("the comparison's list: every calculated ticker is parsed; a bad entry is left out and never breaks Treasure Hunt", async () => {
+  const { parseValueSnapshot } = await import("../lib/research/value-check.ts");
+  const list = { total: 1, items: [], changes: { in: [], out: [] }, excluded: {} };
+  const base = { ok: true, basis: "trailing", asOf: "2026-11-25", computedAt: "2026-11-25T22:40:00Z", universes: { tech: list, all: list } };
+  assert.equal(parseValueSnapshot(base).values, undefined, "a snapshot from before Nov 26 has no list");
+  const parsed = parseValueSnapshot({ ...base, values: {
+    NVDA: { score: 36, exact: 35.8, pe: 40.1, ps: 31.5, peNow: 42.5, psNow: 21.3, basis: "pe-ps", period: null },
+    RIVN: { score: -20, exact: -19.6, pe: null, ps: -19.6, peNow: null, psNow: 2.1, basis: "ps", period: "listed" },
+    BAD: { score: "x" }, "bad ticker": { score: 1, exact: 1, pe: null, ps: 1, peNow: null, psNow: 1, basis: "ps" },
+    ODD: { score: 5, exact: 5, basis: "pe" }, IMUX: [32, 31.6, "pb", null], FPS: [-15, -14.7, "pe-ps", "listed"], SHORT: [1, 1] } });
+  // Treasure Hunt's own rows and the compact rows of the whole list ([score, exact, basis, period]) both read the same way.
+  assert.deepEqual(Object.keys(parsed.values), ["NVDA", "RIVN", "IMUX", "FPS"]);
+  assert.deepEqual(parsed.values.RIVN, { score: -20, exact: -19.6, basis: "ps", period: "listed", asOf: "2026-11-25" });
+  assert.deepEqual(parsed.values.IMUX, { score: 32, exact: 31.6, basis: "pb", period: null, asOf: "2026-11-25" });
+});

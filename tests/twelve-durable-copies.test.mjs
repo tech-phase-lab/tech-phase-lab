@@ -81,7 +81,8 @@ test("wiring: the facts specs are durable, the shared reader uses the monitor, a
   assert.match(gateway, /monitorEndpoint\("\/twelve\/lease"\)/);
   const store = read("lib/research/twelve-store.ts");
   assert.match(store, /await durablePut\("compare-statistics", ticker, \{ at: Date\.parse\(raw\.retrievedAt\), value: raw\.payload \}\)/);
-  assert.match(store, /return fresh\(await peek\(statisticsDay, ticker, \[d, d - 1\]\)\) \?\? fresh\(await keptStatistics\(ticker\)\);/);
+  // The runtime copy is read back over the whole STATISTICS_MAX_AGE_DAYS window (claude/compare-valuation), then the monitor's copy.
+  assert.match(store, /return fresh\(await peek\(statisticsDay, ticker, Array\.from\(\{ length: STATISTICS_MAX_AGE_DAYS \+ 1 \}, \(_, i\) => d - i\)\)\) \?\? fresh\(await keptStatistics\(ticker\)\);/);
   assert.match(store, /daySlot\(Date\.parse\(kept\.retrievedAt\)\) === daySlot\(now\)/, "a lost copy is not bought again the same day");
   const copies = read("lib/research/twelve-copies.ts");
   assert.match(copies, /^import "server-only";/);

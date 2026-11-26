@@ -20,7 +20,7 @@ const dir = mkdtempSync(join(tmpdir(), "measure-comparison-"));
 const entry = join(dir, "entry.ts");
 writeFileSync(entry, `
 export { loadComparisonFinancials, resolveComparisonCompany, statementsNeeded } from "@/lib/research/comparison-server";
-export { applyValuationBasis, comparisonScores } from "@/lib/research/comparison-scorecard";
+export { comparisonScores } from "@/lib/research/comparison-scorecard";
 export { buildComparison } from "@/lib/research/comparison";
 export { warmStatistics, warmStatements, minuteUsage } from "@/lib/research/twelve-store";
 `);
@@ -59,11 +59,11 @@ const m = await import(pathToFileURL(join(dir, "bundle.mjs")).href);
 async function compare(label) {
   const before = spent.credits, calls = spent.calls.length, started = performance.now();
   const selected = await Promise.all(tickers.map(m.resolveComparisonCompany));
-  const companies = m.applyValuationBasis(await Promise.all(selected.map(async c => ({ ...c, ...await m.loadComparisonFinancials(c.ticker) }))));
+  const companies = await Promise.all(selected.map(async c => ({ ...c, ...await m.loadComparisonFinancials(c.ticker) })));
   const result = m.buildComparison(companies);
   const ms = Math.round(performance.now() - started);
   const factors = Object.fromEntries(result.companies.map(c => [c.ticker, m.comparisonScores(c).filter(s => s.value !== null).map(s => s.id).join(",")]));
-  const valuation = Object.fromEntries(result.companies.map(c => [c.ticker, { basis: c.valuationBasis ?? "pe", forwardPE: c.twelveData?.statistics?.forwardPE ?? null, priceToSales: c.twelveData?.statistics?.priceToSales ?? null }]));
+  const valuation = Object.fromEntries(result.companies.map(c => [c.ticker, c.valueCheck ?? null]));
   console.log(JSON.stringify({ run: label, ms, credits: spent.credits - before, calls: spent.calls.slice(calls), factors, valuation, backgroundJobsScheduled: (globalThis.__after ?? []).length }));
   globalThis.__after = [];
 }

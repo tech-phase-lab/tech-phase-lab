@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { buildTwelveFinancials, prepareTwelveDisplay } from "../lib/research/twelve-data-financials.ts";
 import { comparisonScores, comparisonMetric, comparisonLeaders, radarPoint } from "../lib/research/comparison-scorecard.ts";
 import { currentComparisonAnalysis } from "../lib/research/comparison-analysis.ts";
+import { applyValueCheck } from "../lib/research/comparison-value.ts";
+const figure=score=>({score,exact:score,pe:score,ps:score,peNow:20,psNow:4,basis:"pe-ps",period:null,asOf:"2026-10-02"});
 import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
@@ -21,11 +23,16 @@ test("provider responses reach the exact production radar/bar/JA/EN contract wit
   const {financials:c,scores}=prepareTwelveDisplay(bundle(),now);
   assert.equal(c.quarterRevenue.end,"2026-08-31"); assert.equal(c.quarterRevenue.filed,null);assert.equal(c.quarterRevenue.accession,null);
   assert.equal(c.quarterRevenue.start,null); assert.equal(c.revenue,null); // no annual substitution
-  assert.deepEqual(scores.map(s=>s.value),[10,4,7,10,7,7,8]);
-  assert.ok(scores.every((s,i)=>radarPoint(s.value,i,7)!==null));
-  assert.equal(comparisonMetric(c,"valuation","ja",now),"予想PER 20.0×");
-  assert.equal(comparisonMetric(c,"valuation","en",now),"Forward P/E 20.0×");
-  assert.ok(c.preparedAnalysis.items.some(i=>i.id==="valuation"));
+  // Valuation is Treasure Hunt's figure, added per comparison (applyValueCheck); the provider's forward P/E no longer scores it (owner, Nov 26).
+  assert.deepEqual(scores.map(s=>s.value),[10,4,null,10,7,7,8]);
+  assert.equal(comparisonMetric(c,"valuation","ja",now),"未取得");
+  assert.ok(!c.preparedAnalysis.items.some(i=>i.id==="valuation"));
+  const [v]=applyValueCheck([{...c,ticker:"AAA"}],{values:{AAA:figure(20)}},now);
+  assert.deepEqual(comparisonScores(v,now).map(s=>s.value),[10,4,7,10,7,7,8]);
+  assert.ok(comparisonScores(v,now).every((s,i)=>radarPoint(s.value,i,7)!==null));
+  assert.equal(comparisonMetric(v,"valuation","ja",now),"5年平均より20%安い");
+  assert.equal(comparisonMetric(v,"valuation","en",now),"20% below its 5-year average");
+  assert.ok(v.preparedAnalysis.items.some(i=>i.id==="valuation" && i.kind==="strength"));
   assert.equal(c.preparedAnalysis.method,"deterministic");
   assert.ok(currentComparisonAnalysis(c,now));
 });
@@ -38,11 +45,14 @@ test("a missing endpoint leaves the other factors usable; missing does not becom
   assert.equal(s.find(x=>x.id==="growth").value,7);
   assert.equal(s.find(x=>x.id==="stability").value,10);
 });
-test("outdated statistics disappear from both graph and prepared highlights, while quarter survives",()=>{
-  const c=buildTwelveFinancials(bundle(),now),later=now+48*3600000;
-  assert.equal(comparisonScores(c,later).find(s=>s.id==="valuation").value,null);
+test("statistics stay in use for a week when a refresh is skipped, then disappear from both graph and highlights, while quarter survives",()=>{
+  const c=buildTwelveFinancials(bundle(),now);
+  // Owner, Nov 26: a skipped daily refresh no longer turns financial strength into "—" after 36 hours.
+  assert.equal(comparisonScores(c,now+48*3600000).find(s=>s.id==="financial").value,10);
+  const later=now+8*86400000;
+  assert.equal(comparisonScores(c,later).find(s=>s.id==="financial").value,null);
   assert.equal(comparisonScores(c,later).find(s=>s.id==="growth").value,7);
-  assert.ok(!currentComparisonAnalysis(c,later).items.some(i=>i.id==="valuation"));
+  assert.ok(!currentComparisonAnalysis(c,later).items.some(i=>i.id==="financial"));
 });
 test("nonpositive forward P/E and missing debt never create a cheap-stock or debt-free score",()=>{
   for(const pe of [null,0,-8]) {
@@ -70,10 +80,11 @@ test("unadjusted, stale or duplicated price history cannot create momentum",()=>
   }
 });
 test("two/three-company leaders use the displayed score, and cannot win against missing data",()=>{
-  const a=buildTwelveFinancials(bundle("AAA",10),now),b=buildTwelveFinancials(bundle("BBB",20),now),c=buildTwelveFinancials(bundle("CCC",30),now);
+  const values={values:{AAA:figure(30),BBB:figure(10),CCC:figure(-10)}};
+  const [a,b,c]=applyValueCheck(["AAA","BBB","CCC"].map(t=>({...buildTwelveFinancials(bundle(t),now),ticker:t})),values,now);
   assert.deepEqual(comparisonLeaders([a,b],"valuation",now),[true,false]);
   assert.deepEqual(comparisonLeaders([a,b,c],"valuation",now),[true,false,false]);
-  c.twelveData.statistics=null;assert.deepEqual(comparisonLeaders([a,b,c],"valuation",now),[false,false,false]);
+  c.valueCheck=null;assert.deepEqual(comparisonLeaders([a,b,c],"valuation",now),[false,false,false]);
 });
 test("the actual cards render seven-axis status, bars, provider metrics and compact bullets in JA/EN",async()=>{
   const require=createRequire(import.meta.url),{transform,loadBindings}=require("next/dist/build/swc");
@@ -83,12 +94,13 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
   const scoreURL=new URL("../lib/research/comparison-scorecard.ts",import.meta.url).href;
   const reactURL=pathToFileURL(require.resolve("react")).href;
   const input=`import React from ${JSON.stringify(reactURL)};
-    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentBalance,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    import {VALUE_LABELS,valueAsOfLine,valueCheckItem} from ${JSON.stringify(new URL("../lib/research/comparison-value.ts",import.meta.url).href)};
     const styles=new Proxy({}, {get:(_,key)=>String(key)});const companyColors=["#ddc38a","#9ed8c3","#a5badf"];const colorOf=(index,offset=0)=>companyColors[(index+offset)%companyColors.length];
     ${functions}\nexport {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay};`;
   const compiled=await transform(input,{filename:"comparison-render-check.tsx",jsc:{parser:{syntax:"typescript",tsx:true},transform:{react:{runtime:"classic"}},target:"es2022"},module:{type:"es6"}});
   const {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay}=await import(`data:text/javascript;base64,${Buffer.from(compiled.code).toString("base64")}`);
-  const companies=["AAA","BBB","CCC"].map((ticker,i)=>({...buildTwelveFinancials(bundle(ticker,10+i*10),now),name:`Example ${ticker}`,peer:"example",caution:{ja:"",en:""}}));
+  const companies=applyValueCheck(["AAA","BBB","CCC"].map((ticker,i)=>({...buildTwelveFinancials(bundle(ticker,10+i*10),now),ticker,name:`Example ${ticker}`,peer:"example",caution:{ja:"",en:""}})),{values:{AAA:figure(36),BBB:figure(-12),CCC:figure(0)}},now);
   for(const lang of ["ja","en"]){
     const card=renderToStaticMarkup(React.createElement(CompanyScoreCard,{company:companies[0],lang,now}));
     assert.equal((card.match(/<circle /g)||[]).length,7);
@@ -96,7 +108,9 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
     assert.ok((card.match(/<li /g)||[]).length<=8);
     const table=renderToStaticMarkup(React.createElement(ScoreOverview,{companies,lang,now}));
     assert.equal((table.match(/class="scoreTrack"/g)||[]).length,21);
-    assert.match(table,lang==="ja"?/予想PER 10.0×/:/Forward P\/E 10.0×/);
+    assert.match(table,lang==="ja"?/5年平均より36%安い/:/36% below its 5-year average/);
+    assert.match(table,lang==="ja"?/5年平均より12%高い/:/12% above its 5-year average/);
+    assert.match(table,lang==="ja"?/5年平均と同じ水準/:/In line with its 5-year average/);
     assert.match(table,/data-winner="true"/);
   }
 });
@@ -122,7 +136,7 @@ test("sample and production summaries use complete seven-factor scores and groun
   const low={...companies[0],ticker:"LOW",quarterRevenueGrowth:companies[0].quarterRevenueGrowth-40,preparedAnalysis:{...companies[0].preparedAnalysis,items:[]}};
   assert.match(overallComparison([companies[0],low],"ja",now).description,/^DEMO-Aは成長性で大きく上回ります。ただし、DEMO-Aは営業利益率が38\.0%から32\.0%に下がっています。$/);
   assert.match(overallComparison([companies[0],low],"en",now).description,/^DEMO-A is well ahead in growth\. However, DEMO-A's operating margin fell from 38\.0% to 32\.0%\.$/);
-  const later=currentComparisonAnalysis(companies[1],now+48*3600000);
+  const later=currentComparisonAnalysis(companies[1],now+8*86400000); // statistics older than a week (owner, Nov 26: kept a week)
   assert.ok(!later.items.some(i=>i.id==="debt-cash"));
   const missing=structuredClone(companies);missing[1].twelveData.statistics=null;
   // Owner, Nov 15: a missing factor no longer blocks the overall view; the factors every company has are averaged and the count is said.
@@ -131,7 +145,7 @@ test("sample and production summaries use complete seven-factor scores and groun
   // The yardstick moves to the caveats list; the sentence itself does not repeat it.
   assert.match(partial.note,/^総合点は、全社にそろう\d項目の平均です。$/);
   assert.doesNotMatch(partial.description,/全社にそろう/);
-  const bare=structuredClone(companies);for(const c of bare){c.twelveData=undefined;c.quarterFcfMargin=null;c.balance=undefined;}
+  const bare=structuredClone(companies);for(const c of bare){c.twelveData=undefined;c.quarterFcfMargin=null;c.balance=undefined;c.valueCheck=null;}
   assert.match(overallComparison(bare,"ja",now).title,/揃っていません/, "fewer than three common factors: still no ranking");
   const tied=[companies[0],{...companies[0],ticker:"TIE"}];
   assert.match(overallComparison(tied,"ja",now).title,/拮抗/);

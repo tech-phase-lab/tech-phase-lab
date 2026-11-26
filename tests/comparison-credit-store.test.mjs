@@ -2,10 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
-import { COST, PLAN_CREDITS_PER_MINUTE, WARM_CEILING, BACKGROUND_CEILING, USER_SERIES_CEILING, MINUTES_PER_DAY, dailyCost, hasRoom, tickersForMinute, warmUniverse, daySlot, statementOrder } from "../lib/research/twelve-warm-plan.ts";
+import { COST, PLAN_CREDITS_PER_MINUTE, WARM_CEILING, BACKGROUND_CEILING, USER_SERIES_CEILING, MINUTES_PER_DAY, dailyCost, hasRoom, tickersForMinute, warmUniverse, statementOrder, retryTickers } from "../lib/research/twelve-warm-plan.ts";
 import { extractFinancials } from "../lib/research/comparison.ts";
 import { buildSecMarketEvidence, lastClose } from "../lib/research/sec-market-evidence.ts";
-import { applyValuationBasis, comparisonScores } from "../lib/research/comparison-scorecard.ts";
+import { comparisonScores } from "../lib/research/comparison-scorecard.ts";
 
 const NOW = Date.parse("2026-11-13T12:00:00Z");
 const here = name => new URL(`../lib/research/${name}`, import.meta.url).href;
@@ -78,55 +78,59 @@ const withClock = async (start, fn) => { let t = start; const clock = { now: () 
 /** What one user's comparison asks of the store for one company (collector + comparison server): statements, statistics, series. */
 async function userReads(mod, ticker) {
   await mod.cachedStatements(ticker); await mod.cachedStatistics(ticker); await mod.userSeries(ticker);
-  mod.scheduleFill(ticker, { statistics: true, statements: true });
+  if (mod.releaseStatements) await mod.releaseStatements(ticker, "2026-11-10");
 }
 
-test("cold cache: 300 users each comparing three never-seen companies in one minute never wait and never pass the plan's limit", () => withClock(NOW, async clock => {
-  const p = provider(clock); p.site = 2;
-  const { mod, afterJobs } = await loadStore();
-  const started = Date.now();
-  for (let user = 0; user < 300; user++) await Promise.all([0, 1, 2].map(k => userReads(mod, `RARE${user * 3 + k}`)));
-  assert.equal(Date.now(), started); // the simulated clock never moved: nothing slept or waited for credits
-  // A user's request itself sends only one-credit price series, and only while the minute is under its ceiling.
-  assert.ok(p.calls.every(c => c.startsWith("time_series:")), p.calls.find(c => !c.startsWith("time_series:")));
-  assert.ok(p.used <= USER_SERIES_CEILING + 3, `used ${p.used}`);
-  assert.ok(p.calls.length < 900); // the rest got no series this minute (their factor waits for the next request), not an error
-  // The background fills after the answers stay under their own ceiling, and nothing exceeds the plan's 610.
-  for (const job of afterJobs.splice(0)) await job();
-  assert.ok(p.peak <= PLAN_CREDITS_PER_MINUTE, `peak ${p.peak}`);
-  assert.equal(p.calls.filter(c => !c.startsWith("time_series:")).length, 0); // the minute was already full: no 50- or 200-credit call
-}));
-
-test("a quiet minute: a never-seen company gets its series at once and its statistics in the background, once for everyone", () => withClock(NOW, async clock => {
+test("a user's comparison never calls the provider: 1 user or 1,000 users comparing never-seen companies send zero calls (owner, Nov 26)", () => withClock(NOW, async clock => {
   const p = provider(clock);
   const { mod, afterJobs } = await loadStore();
   await userReads(mod, "AAOI");
-  assert.deepEqual(p.calls, ["time_series:AAOI"]);
-  for (const job of afterJobs.splice(0)) await job();
-  assert.deepEqual(p.calls.sort(), ["cash_flow:AAOI", "income_statement:AAOI", "statistics:AAOI", "time_series:AAOI"]);
-  clock.advance(5 * 60_000); p.calls.length = 0;
-  for (let user = 0; user < 50; user++) await userReads(mod, "AAOI"); // everyone after that reads the shared copy
-  for (const job of afterJobs.splice(0)) await job();
+  assert.deepEqual(p.calls, []); assert.equal(afterJobs.length, 0);
+  for (let user = 0; user < 1000; user++) await Promise.all([0, 1, 2].map(k => userReads(mod, `RARE${(user * 3 + k) % 50}`)));
+  assert.deepEqual(p.calls, []); assert.equal(p.used, 0); assert.equal(afterJobs.length, 0);
+  assert.equal(mod.scheduleFill, undefined); assert.equal(mod.backgroundFill, undefined);
+}));
+
+test("what the job stored is read by every user from the shared copy", () => withClock(NOW, async clock => {
+  const p = provider(clock);
+  const { mod } = await loadStore();
+  await mod.warmStatistics("AAOI", clock.now()); await mod.warmSeries("AAOI", clock.now()); await mod.warmStatements("AAOI", clock.now());
+  p.calls.length = 0; clock.advance(5 * 60_000);
+  for (let user = 0; user < 50; user++) await userReads(mod, "AAOI");
   assert.deepEqual(p.calls, []);
   assert.ok(await mod.cachedStatistics("AAOI") && await mod.cachedStatements("AAOI") && await mod.userSeries("AAOI"));
 }));
 
-test("a full minute: no series is fetched for a user, the background copy from yesterday is used, and nothing waits", () => withClock(NOW, async clock => {
+test("statistics whose daily refresh was skipped stay in use for seven days, then are dropped (no flicker of financial strength)", () => withClock(realNow(), async clock => {
+  // The store stamps each read with new Date() (the real clock), so this test starts at the real time.
+  provider(clock);
+  const { mod } = await loadStore();
+  await mod.warmStatistics("MU", clock.now());
+  clock.advance(2 * 86_400_000); assert.ok(await mod.cachedStatistics("MU"), "two days without a refresh: the last good copy");
+  clock.advance(4.9 * 86_400_000); assert.ok(await mod.cachedStatistics("MU"), "6.9 days");
+  clock.advance(0.2 * 86_400_000); assert.equal(await mod.cachedStatistics("MU"), null, "past seven days: no data");
+}));
+
+test("statements after a release are read by the job in their own slot, at most twice per company and release", () => withClock(NOW, async clock => {
+  const p = provider(clock);
+  const { mod } = await loadStore();
+  await mod.warmStatements("NVDA", clock.now()); // this week's copy, read before the release
+  assert.equal(await mod.releaseStatements("NVDA", "2026-11-10"), null);
+  await mod.warmReleaseStatements("NVDA", "2026-11-10", 0);
+  assert.equal((await mod.releaseStatements("NVDA", "2026-11-10")).attempt, 0);
+  await mod.warmReleaseStatements("NVDA", "2026-11-10", 1);
+  assert.equal((await mod.releaseStatements("NVDA", "2026-11-10")).attempt, 1);
+  assert.equal(p.calls.filter(c => c.startsWith("income_statement:NVDA")).length, 3);
+  assert.equal(mod.RELEASE_ATTEMPTS, 2);
+}));
+
+test("no series is fetched for a user, the background copy from yesterday is used, and nothing waits", () => withClock(NOW, async clock => {
   const p = provider(clock);
   const { mod } = await loadStore();
   await mod.warmSeries("NVDA", clock.now() - 86_400_000); // the daily job's copy from yesterday
   p.calls.length = 0; p.site = 600; clock.advance(60_000);
   const series = await mod.userSeries("NVDA");
   assert.ok(series); assert.deepEqual(p.calls, []);
-}));
-
-test("statistics older than the factor's 36 hours are not used; the day slots keep a refreshed entry for a whole day", () => withClock(NOW, async clock => {
-  provider(clock);
-  const { mod } = await loadStore();
-  await mod.warmStatistics("MU", clock.now());
-  clock.advance(30 * 3600_000); assert.ok(await mod.cachedStatistics("MU"));
-  clock.advance(10 * 3600_000); assert.equal(await mod.cachedStatistics("MU"), null);
-  assert.equal(daySlot(clock.now()) - daySlot(NOW), 2);
 }));
 
 // Production, Nov 26: the runtime cache lost these copies within hours (ASML and AVNT stored at 00:21 UTC, UNFI at 03:30, all missing by 08:05).
@@ -160,14 +164,14 @@ test("the statements (200 credits) a runtime cache has lost are read back from t
 }));
 
 // ---------- the background job ----------
-async function loadWarm(clock, { directory, needs }) {
+async function loadWarm(clock, { directory, needs, pending }) {
   const { mod, cache } = await loadStore();
-  globalThis.__warm = { store: mod, comparisonDirectory: async () => directory, prewarmComparison: async t => { (globalThis.__prewarmed ??= []).push(t); return true; }, statementsNeeded: async t => ({ needs: needs(t), checkedAt: new Date(clock.now()).toISOString() }) };
+  globalThis.__warm = { store: mod, comparisonDirectory: async () => directory, prewarmComparison: async t => { (globalThis.__prewarmed ??= []).push(t); return true; }, statementsNeeded: async t => ({ needs: needs(t), checkedAt: new Date(clock.now()).toISOString() }), pendingRelease: async t => pending?.(t) ?? null };
   const text = readFileSync(new URL("../lib/research/comparison-warm.ts", import.meta.url), "utf8")
     .replace('import "server-only";', "")
     .replace(/import providers from[^;]*;/, "const providers = [];")
-    .replace(/import \{ comparisonDirectory, prewarmComparison, statementsNeeded \}[^;]*;/, "const { comparisonDirectory, prewarmComparison, statementsNeeded } = globalThis.__warm;")
-    .replace(/import \{ cachedStatements,[^;]*;/, "const { cachedStatements, hasSeriesToday, hasStatisticsToday, minuteUsage, providerConfigured, warmSeries, warmStatements, warmStatistics, weeklyNote } = globalThis.__warm.store;")
+    .replace(/import \{ comparisonDirectory, pendingRelease, prewarmComparison, statementsNeeded \}[^;]*;/, "const { comparisonDirectory, pendingRelease, prewarmComparison, statementsNeeded } = globalThis.__warm;")
+    .replace(/import \{ RELEASE_ATTEMPTS, cachedStatements,[^;]*;/, "const { RELEASE_ATTEMPTS, cachedStatements, hasSeriesToday, hasStatisticsToday, minuteUsage, providerConfigured, releaseStatements, warmReleaseStatements, warmSeries, warmStatements, warmStatistics, weeklyNote } = globalThis.__warm.store;")
     .replace('"./twelve-warm-plan"', JSON.stringify(here("twelve-warm-plan.ts")));
   return { warm: await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`), store: mod, cache };
 }
@@ -216,11 +220,52 @@ test("no stored statistics: price-to-sales from the filing (close × diluted sha
   const evidence = buildSecMarketEvidence(mu, series, undefined, NOW);
   assert.equal(evidence.statistics.forwardPE, null);
   assert.ok(Math.abs(evidence.statistics.priceToSales - 120 * mu.quarterDilutedShares / mu.quarterRevenueTtm) < 1e-9);
-  const a = { ...mu, twelveData: evidence }, b = { ...mu, ticker: "MU2", twelveData: evidence };
-  const [x] = applyValuationBasis([a, b], NOW);
-  assert.equal(x.valuationBasis, "ps");
-  assert.notEqual(comparisonScores(x, NOW).find(s => s.id === "valuation").value, null);
+  // Valuation no longer comes from this price-to-sales (owner, Nov 26): it is Treasure Hunt's figure, the company against its own history.
+  const x = { ...mu, twelveData: evidence };
+  assert.equal(comparisonScores(x, NOW).find(s => s.id === "valuation").value, null);
+  assert.equal(comparisonScores({ ...x, valueCheck: { score: 20, exact: 20, pe: 20, ps: 20, peNow: 10, psNow: 3, basis: "pe-ps", period: null, asOf: "2026-11-12" } }, NOW).find(s => s.id === "valuation").value, 7);
   // A foreign filer's shares are not the listed ADS: no price-to-sales from the filing.
   const ifrs = { ...mu, quarterRevenue: { ...mu.quarterRevenue, basis: "ifrs-full" } };
   assert.equal(buildSecMarketEvidence(ifrs, series, undefined, NOW).statistics, null);
 });
+
+test("a company whose statistics were skipped in a full minute is tried first in the next minute with room, never from yesterday's minutes", () => withClock(Date.UTC(2026, 10, 15, 0, 5, 10), async clock => {
+  const p = provider(clock); p.site = 300;
+  const directory = Array.from({ length: 5600 }, (_, i) => ({ ticker: `C${i}`, cik: i, exchange: "NYSE" }));
+  const { warm } = await loadWarm(clock, { directory, needs: () => false });
+  const busy = await warm.warmMinute(clock.now());
+  const skipped = busy.skipped.filter(s => s.endsWith(":statistics")).map(s => s.split(":")[0]);
+  assert.ok(skipped.length > 0);
+  clock.advance(60_000); p.site = 2; p.calls.length = 0;
+  const next = await warm.warmMinute(clock.now());
+  const statistics = p.calls.filter(c => c.startsWith("statistics:")).map(c => c.split(":")[1]);
+  assert.deepEqual(statistics.slice(0, skipped.length), skipped, "the skipped companies come first");
+  for (const t of next.tickers) assert.ok(statistics.includes(t), `this minute's ${t} too`);
+  assert.ok(p.peak <= WARM_CEILING, `peak ${p.peak}`);
+  assert.deepEqual(retryTickers(warmUniverse(directory), Date.UTC(2026, 10, 15, 0, 0, 30)), [], "minute 0 of a day looks at no minute of yesterday");
+  assert.equal(retryTickers(warmUniverse(directory), Date.UTC(2026, 10, 15, 0, 3, 30)).length, 3 * 4);
+}));
+
+test("after an earnings release without its quarterly report, the job reads the statements once a day after the release, and once more only if the quarter was still missing", () => withClock(Date.UTC(2026, 10, 18, 0, 0, 30), async clock => {
+  const p = provider(clock);
+  const directory = [{ ticker: "NVDA", cik: 1045810, exchange: "Nasdaq" }];
+  const release = { day: "2026-11-17", filedEnd: "2026-07-26" };
+  const { warm, store } = await loadWarm(clock, { directory, needs: () => false, pending: t => t === "NVDA" ? release : null });
+  // The rule itself.
+  const at = days => Date.parse("2026-11-17") + days * 86_400_000;
+  assert.equal(warm.releaseAttempt(release, null, at(0.5)), null, "not on the release day");
+  assert.equal(warm.releaseAttempt(release, null, at(1)), 0);
+  assert.equal(warm.releaseAttempt(release, { attempt: 0, retrievedAt: new Date(at(1)).toISOString(), newest: "2026-10-25" }, at(5)), null, "the new quarter is in");
+  assert.equal(warm.releaseAttempt(release, { attempt: 0, retrievedAt: new Date(at(1)).toISOString(), newest: "2026-07-26" }, at(3)), null, "too soon to retry");
+  assert.equal(warm.releaseAttempt(release, { attempt: 0, retrievedAt: new Date(at(1)).toISOString(), newest: "2026-07-26" }, at(5)), 1);
+  assert.equal(warm.releaseAttempt(release, { attempt: 1, retrievedAt: new Date(at(5)).toISOString(), newest: "2026-07-26" }, at(10)), null, "at most two");
+  assert.equal(warm.releaseAttempt(release, null, at(31)), null, "a month later: no more");
+  assert.equal(warm.newestQuarter({ income_statement: [{ fiscal_date: "2026-07-26" }, { fiscal_date: "2026-10-25" }] }), "2026-10-25");
+  // The job: NVDA's minute (index 0, minute 0 of the day) reads the statements after the release once; a second run the same day reads nothing.
+  await warm.warmMinute(clock.now());
+  assert.equal(p.calls.filter(c => c === "income_statement:NVDA").length, 1);
+  assert.ok(await store.releaseStatements("NVDA", "2026-11-17"));
+  p.calls.length = 0;
+  await warm.warmMinute(clock.now());
+  assert.equal(p.calls.filter(c => c.startsWith("income_statement:")).length, 0);
+}));
