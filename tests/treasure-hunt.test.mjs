@@ -350,11 +350,13 @@ test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidat
   assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v1"/, "a fixed key keeps the copy across deployments");
   assert.match(server, /VALUE_SNAPSHOT_REVALIDATE_SECONDS = 600;/);
   const route = read("../app/api/research/value-check/route.ts");
-  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueSnapshot\(\), \{ headers \}\);/);
+  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueRanking\(\), \{ headers \}\);/);
   assert.doesNotMatch(route, /fetch\(|RESEARCH_MONITOR/, "no per-request read of the monitor");
   assert.match(route, /"Cache-Control": "private, no-store"/, "PRO data is never kept by a shared cache in front of the site");
   const page = read("../app/research/treasure-hunt/page.tsx");
-  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueSnapshot\(\)/, "PRO data only for a member the server confirmed");
+  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueRanking\(\)/, "PRO data only for a member the server confirmed");
+  // The comparison's list (values) stays out of Treasure Hunt's own payload.
+  assert.match(server, /const \{ values, \.\.\.ranking \} = await loadValueSnapshot\(\);/);
   assert.match(page, /notFound\(\)/);
   assert.match(page, /<TreasureHuntScreen initial=\{initial\} \/>/);
   // The owner's accounts always get it (AGENTS.md, operator access), with the switch off too.

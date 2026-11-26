@@ -1,4 +1,5 @@
-import { periodMaxAgeDays, twelveExtraFactors, twelveFactorMetric, twelveFactorMethods } from "./twelve-data-factors.ts";
+import { periodMaxAgeDays, twelveExtraFactors, twelveFactorMetric } from "./twelve-data-factors.ts";
+import { valueFigureScore, valueFigureText } from "./comparison-value.ts";
 import type { Financials } from "./comparison.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
@@ -63,11 +64,12 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const financial = balanced && finite(balance!.currentRatio) ? clamp(5*Math.min(balance!.currentRatio,2)/2 + 5*Math.min(balance!.cash!.value/Math.max(debt!,1),1))
     : balanced ? clamp(10*Math.min(balance!.cash!.value/Math.max(debt!,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
-  const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now,c.valuationBasis) : null;
+  const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
   const scores: ComparisonScore[] = [
     {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : null},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
-    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:recent ? extra?.valuation ?? null : null},
+    // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.
+    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck ? valueFigureScore(c.valueCheck) : null},
     {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : null},
     {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:extra?.momentum ?? null},
     {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
@@ -89,11 +91,12 @@ export function balanceDebt(c: Financials): number | null {
 }
 /** Display actual measurements beside the reference bars, including unscored factors. */
 export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
-  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now,c.valuationBasis).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   const reference=c.referenceEvaluation?.factors.find(f=>f.id===id);
+  if(id==="valuation" && !reference) return c.valueCheck ? valueFigureText(c.valueCheck,lang) : missingReason(c,id,lang==="ja");
+  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
-  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now,c.valuationBasis) : null;
+  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
   if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
@@ -117,28 +120,11 @@ function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
   if(id==="cash") return r("キャッシュフロー未開示","Cash flow not available");
   if(id==="stability") return r("4四半期分の利益率がそろいません","Four quarters of margins not available");
   if(id==="financial") return r("借入の記載を読み取れません","Debt figures not readable");
-  if(id==="valuation") return r("予想PER・PSRが未取得","No forward P/E or P/S");
+  if(id==="valuation") return r("未取得","Unavailable");
   if(id==="momentum") return r("株価の履歴が不足（上場直後など）","Not enough price history");
   return r("必要データ未取得","Data unavailable");
 }
 
-/** Valuation needs one yardstick for the whole comparison. Forward P/E as before when every company has one; when any company has none (a
- * loss-maker such as AAOI or POET, Nov 14) and every company has price-to-sales, all of them are scored on price-to-sales, so the factor and
- * the overall ranking are no longer empty. Otherwise nothing changes. The valuation bullet is rewritten to the same yardstick. */
-export function applyValuationBasis<T extends Financials>(companies: T[], now=Date.now()): T[] {
-  if(companies.length<2 || companies.some(c=>!!c.referenceEvaluation || !c.twelveData || !hasRecentQuarter(c,now))) return companies;
-  if(companies.every(c=>twelveExtraFactors(c.twelveData!,now,"pe").valuation!==null)) return companies;
-  if(!companies.every(c=>twelveExtraFactors(c.twelveData!,now,"ps").valuation!==null)) return companies;
-  return companies.map(c=>{
-    const value=twelveExtraFactors(c.twelveData!,now,"ps").valuation!;
-    const prepared=c.preparedAnalysis ? {...c.preparedAnalysis,items:c.preparedAnalysis.items.filter(item=>item.id!=="valuation")} : c.preparedAnalysis;
-    if(prepared && (value<=3 || value>=7)) {
-      const ja=twelveFactorMetric(c.twelveData!,"valuation","ja",now,"ps")!,en=twelveFactorMetric(c.twelveData!,"valuation","en",now,"ps")!;
-      prepared.items.push({id:"valuation",kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods.valuation});
-    }
-    return {...c,valuationBasis:"ps" as const,preparedAnalysis:prepared};
-  });
-}
 /** Missing factors must never improve the composite by being omitted. */
 export function compositeScore(scores: ComparisonScore[]): number | null {
   if (!scores.length || scores.some(s => s.value === null)) return null;
@@ -227,9 +213,20 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   ranked.sort((a,b)=>b.total!-a.total!);
   const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
   const value=(r:typeof best,id:ScoreId)=>r.scores.find(s=>s.id===id)!.value!;
-  // The factors where `r` is ahead of every company in `others`, largest lead first.
-  const edges=(r:typeof best,others:typeof ranked)=>r.scores.map(s=>({id:s.id,lead:s.value!-Math.max(...others.map(o=>value(o,s.id)))}))
-    .filter(s=>s.lead>0).sort((a,b)=>b.lead-a.lead).slice(0,2);
+  // The factors where `r` is ahead of every company in `others`, largest lead first. Price momentum is a strength only when the price rose
+  // (owner, Nov 26: "AMDは株価の勢いが強みですが、株価が約3か月で14.8%下がっています"): a smaller fall is never called one.
+  const change=(r:typeof best)=>r.c.twelveData?.momentum?.changePct ?? null;
+  const rose=(r:typeof best)=>{const pct=change(r);return pct!==null && pct>0;};
+  const rawEdges=(r:typeof best,others:typeof ranked)=>r.scores.map(s=>({id:s.id,lead:s.value!-Math.max(...others.map(o=>value(o,s.id)))}))
+    .filter(s=>s.lead>0).sort((a,b)=>b.lead-a.lead);
+  const edges=(r:typeof best,others:typeof ranked)=>rawEdges(r,others).filter(s=>s.id!=="momentum" || rose(r)).slice(0,2);
+  // When every company fell, the one that fell least is described as such (owner's words), only in this summary.
+  const allFell=ranked.every(o=>{const pct=change(o);return pct!==null && pct<=0;}) && common.ids.includes("momentum");
+  const fellLess=(r:typeof best,others:typeof ranked)=>{
+    if(!allFell || !rawEdges(r,others).some(s=>s.id==="momentum")) return "";
+    const pct=Math.abs(change(r)!).toFixed(1), names=others.map(o=>o.c.ticker);
+    return ja?`${r.c.ticker}は株価の下げが${names.join("・")}より小さく、約3か月で${pct}%の下落です。`:`${r.c.ticker} has fallen less than ${names.join(" and ")}, down ${pct}% over about three months.`;
+  };
   const words=(list:{id:ScoreId}[])=>joinWords(list.map(s=>factorWords[s.id][lang]),ja);
   const weakness=(r:typeof best)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness");
   if(gap<0.3) {
@@ -243,9 +240,12 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
     : (ja?`${best.c.ticker}は項目全体のバランスで上回ります。`:`${best.c.ticker} leads on the balance of the factors.`);
   // The runner-up: its own strength against the leader, and its weakness as the one caution; otherwise the leader's weakness.
   const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next), bestWeak=weakness(best);
+  const leaderFellLess=fellLess(best,ranked.slice(1)), nextFellLess=leaderFellLess ? "" : fellLess(next,[best]);
   let second="";
-  if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
+  if(nextFellLess && !counter.length) second=nextFellLess;
+  else if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
   else if(bestWeak) second=ja?`ただし、${best.c.ticker}は${cautionClause(bestWeak,lang)}。`:`However, ${cautionClause(bestWeak,lang).replace(/^its /,`${best.c.ticker}'s `).replace(/^watch /,`watch ${best.c.ticker}'s `)}.`;
   else if(counter.length) second=ja?`${next.c.ticker}は${words(counter)}で上回ります。`:`${next.c.ticker} is ahead in ${words(counter)}.`;
+  if(leaderFellLess) second=ja?`${leaderFellLess}${second}`:`${leaderFellLess} ${second}`.trim();
   return {title:ja?`${best.c.ticker} が優位`:`${best.c.ticker} leads`,leader:best.c.ticker,description:ja?`${periods}${first}${second}`:`${periods}${first} ${second}`.trim(),note};
 }

@@ -29,13 +29,11 @@ export type Financials = {
   supplementedFromQuarter?: string;
   /** False when the filing's own balance already scores financial strength: the provider's balance is then never used. */
   supplementedFinancialAllowed?: boolean;
-  /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
-  previousQuarterShown?: string;
   /** True when the company never tags a capital-spending line (AirBnB, AppLovin: immaterial, folded into "other"), so free cash flow
    *  is operating cash flow with capital spending counted as zero. Said on screen. */
   capexNotReported?: boolean;
-  /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
-  valuationBasis?: import("./twelve-data-factors").ValuationBasis;
+  /** The valuation from Treasure Hunt's list (lib/research/comparison-value.ts), set per comparison; null: not in the list (未取得). */
+  valueCheck?: import("./comparison-value").ValueFigure | null;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];

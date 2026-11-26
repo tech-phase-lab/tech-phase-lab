@@ -1398,8 +1398,12 @@ class AutomaticMonitor:
                         print(json.dumps({"event": "value-check-run", "asOf": result.get("asOf"), "credits": result.get("credits"),
                                           "ranked": {k: len(v["items"]) for k, v in result["universes"].items()},
                                           # the first ten of each list (public tickers), so the ranking can be checked from the logs
-                                          "top": {k: [f'{i["ticker"]}:{i["score"]}' for i in v["items"][:10]] for k, v in result["universes"].items()}}),
+                                          "top": {k: [f'{i["ticker"]}:{i["score"]}' for i in v["items"][:10]] for k, v in result["universes"].items()},
+                                          "values": len(result.get("values") or {})}),
                               flush=True)
+                    elif value_check.ensure_values(db):
+                        # A snapshot stored before the comparison's list existed: the list from the stored data, in memory only.
+                        print(json.dumps({"event": "value-check-values-derived", "values": len(value_check.DERIVED.get("values") or {})}), flush=True)
                 finally:
                     db.close()
             except Exception as error:

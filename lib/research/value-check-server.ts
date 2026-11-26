@@ -45,3 +45,11 @@ export async function loadValueSnapshot(): Promise<ValueSnapshot> {
     throw new ValueSnapshotUnavailable(reason === "not-connected" || reason === "not-ready" ? reason : "unavailable");
   }
 }
+
+/** Treasure Hunt's own screen and API: the shared copy without the comparison's list (`values`, every calculated ticker), which only the
+ * Stock Comparison reads; the ranking pages stay as small and fast as before. */
+export async function loadValueRanking(): Promise<ValueSnapshot> {
+  const { values, ...ranking } = await loadValueSnapshot();
+  void values;
+  return ranking;
+}

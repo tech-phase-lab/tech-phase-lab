@@ -61,10 +61,7 @@ function fillMarket(out: Financials, provider: Financials, supplemented: Set<str
       supplemented.add("financial");
     }
     if (!evidence.momentum && theirs.momentum) { evidence = { ...evidence, momentum: theirs.momentum }; supplemented.add("momentum"); }
-    if (!evidence.statistics?.forwardPE && !evidence.statistics?.priceToSales && (theirs.statistics?.forwardPE || theirs.statistics?.priceToSales)) {
-      evidence = { ...evidence, statistics: { ...(evidence.statistics ?? theirs.statistics!), forwardPE: theirs.statistics!.forwardPE, priceToSales: theirs.statistics!.priceToSales ?? null } };
-      supplemented.add("valuation");
-    }
+    // Valuation is not filled from the provider: it comes from Treasure Hunt's list for every company (owner, Nov 26).
     out.twelveData = evidence;
   } else if (!mine && theirs) { out.twelveData = theirs; supplemented.add("market"); }
 }

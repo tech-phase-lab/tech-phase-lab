@@ -14,9 +14,11 @@ export type TwelveComparisonBundle = {
  * Shared by the provider-sourced and the SEC-sourced companies, so both read the same evidence the same way. */
 export function appendMarketItems(prepared:NonNullable<Financials["preparedAnalysis"]>,evidence:TwelveFactorEvidence,periodEnd:string,currency:string,now=Date.now()) {
     const extras=twelveExtraFactors(evidence,now);
-    for(const id of ["financial","valuation","stability","momentum"] as const) {
+    for(const id of ["financial","stability","momentum"] as const) {
       const value=extras[id];
       if(value===null || value>3 && value<7)continue;
+      // Momentum is a strength only when the price rose (owner, Nov 26); a smaller fall is said in the summary, never listed as a strength.
+      if(id==="momentum" && value>=7 && !(evidence.momentum!.changePct>0))continue;
       const ja=twelveFactorMetric(evidence,id,"ja",now)!,en=twelveFactorMetric(evidence,id,"en",now)!;
       prepared.items.push({id,kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods[id]});
     }

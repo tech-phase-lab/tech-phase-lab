@@ -1,5 +1,6 @@
 import { buildTwelveFinancials } from "./twelve-data-financials.ts";
 import type { ComparisonResult } from "./comparison.ts";
+import { applyValueCheck, type ValueFigure } from "./comparison-value.ts";
 
 /** Fictional companies and fabricated financial inputs, solely for UI interaction.
  * Keep out of stock search, provider caches, normal comparison API and real tickers.
@@ -7,9 +8,9 @@ import type { ComparisonResult } from "./comparison.ts";
 export function buildComparisonSample(): ComparisonResult {
   const now=Date.parse("2026-10-04T10:00:00Z"),retrievedAt=new Date(now).toISOString();
   const specs=[
-    {ticker:"DEMO-A",name:"Atlas Demo",growth:40,margin:32,fcf:18,pe:18,ratio:2.1,cash:100,debt:60,change:24,margins:[32,38,40,35]},
-    {ticker:"DEMO-B",name:"Beacon Demo",growth:65,margin:16,fcf:-6,pe:34,ratio:1.2,cash:35,debt:90,change:48,margins:[16,8,-3,12]},
-    {ticker:"DEMO-C",name:"Cedar Demo",growth:8,margin:24,fcf:22,pe:12,ratio:1.8,cash:80,debt:50,change:-14,margins:[24,25,24,25]},
+    {ticker:"DEMO-A",value:24,name:"Atlas Demo",growth:40,margin:32,fcf:18,pe:18,ratio:2.1,cash:100,debt:60,change:24,margins:[32,38,40,35]},
+    {ticker:"DEMO-B",value:-8,name:"Beacon Demo",growth:65,margin:16,fcf:-6,pe:34,ratio:1.2,cash:35,debt:90,change:48,margins:[16,8,-3,12]},
+    {ticker:"DEMO-C",value:36,name:"Cedar Demo",growth:8,margin:24,fcf:22,pe:12,ratio:1.8,cash:80,debt:50,change:-14,margins:[24,25,24,25]},
   ];
   const companies=specs.map(d=>{
     const ends=["2026-08-31","2026-05-31","2026-02-28","2025-11-30","2025-08-31"];
@@ -24,6 +25,8 @@ export function buildComparisonSample(): ComparisonResult {
     },now);
     return {...financials,name:d.name,peer:"fictional-demo",caution:{ja:"架空のサンプルです。",en:"Fictional sample."}};
   });
-  return {companies,comparable:true,reasons:[],generatedAt:retrievedAt,
+  // Valuation as on Treasure Hunt: fictional Value Scores against each company's own five-year average.
+  const values:Record<string,ValueFigure>=Object.fromEntries(specs.map(d=>[d.ticker,{score:d.value,exact:d.value,pe:d.value,ps:d.value,peNow:d.pe,psNow:5,basis:"pe-ps",period:null,asOf:"2026-10-02"}]));
+  return {companies:applyValueCheck(companies,{values}),comparable:true,reasons:[],generatedAt:retrievedAt,
     conclusion:{ja:"Atlasは収益性、Beaconは成長性で上回ります",en:"Atlas leads in profitability; Beacon leads in growth"}};
 }

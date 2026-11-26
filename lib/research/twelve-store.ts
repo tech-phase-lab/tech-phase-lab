@@ -1,10 +1,9 @@
 import "server-only";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { unstable_cache } from "next/cache";
-import { after } from "next/server";
 import { parseUsage, shareInflight } from "./twelve-credit-gate";
 import { providerSymbol } from "./provider-symbol";
-import { BACKGROUND_CEILING, COST, USER_SERIES_CEILING, daySlot, hasRoom, hourSlot, weekSlot } from "./twelve-warm-plan";
+import { COST, STATISTICS_MAX_AGE_DAYS, USER_SERIES_CEILING, daySlot, hourSlot, weekSlot } from "./twelve-warm-plan";
 import { reserveCredits, sharedMeterUsage } from "./twelve-gateway";
 import type { Tier } from "./twelve-budget.ts";
 
@@ -13,7 +12,8 @@ import type { Tier } from "./twelve-budget.ts";
  * a writer fills the current one; nothing has to be overwritten or invalidated.
  *
  * A read is cache-only unless it runs inside `fetching(...)`: a missing entry then costs nothing and is reported as missing. Only the
- * background job, a background fill after a user's answer, and a user's one-credit price series ever spend credits. */
+ * background job (app/api/research/compare/warm, once a minute, under WARM_CEILING) ever spends credits; a user's request never does
+ * (owner, Nov 26), so the provider's cost does not grow with users or page views. */
 
 export type Raw = { payload: unknown; retrievedAt: string };
 export type Series = Raw & { adjust: "splits" };
@@ -74,19 +74,20 @@ const required = <T>(value: T | null, reason: string): T => {
 };
 const stamp = () => new Date().toISOString();
 
-const statisticsDay = sharedCache("comparison-store-statistics-day-v1", 3 * 86400,
+const statisticsDay = sharedCache("comparison-store-statistics-day-v1", 8 * 86400,
   async (ticker): Promise<Raw> => ({ payload: required(await providerCall("statistics", { symbol: providerSymbol(ticker) }), "statistics-unavailable"), retrievedAt: stamp() }));
 const seriesParams = (ticker: string) => ({ symbol: providerSymbol(ticker), interval: "1day", outputsize: "100", adjust: "splits" });
 const readSeries = async (ticker: string): Promise<Series> => ({ payload: required(await providerCall("time_series", seriesParams(ticker), 4_000), "series-unavailable"), adjust: "splits", retrievedAt: stamp() });
 const seriesHour = sharedCache("comparison-store-series-hour-v1", 3 * 3600, readSeries);
 const seriesDay = sharedCache("comparison-store-series-day-v1", 3 * 86400, readSeries);
-const statementsWeek = sharedCache("comparison-store-statements-week-v1", 21 * 86400, async (ticker): Promise<Statements> => {
+async function readStatements(ticker: string): Promise<Statements> {
   const [income, cashFlow] = await Promise.all([
     providerCall("income_statement", { symbol: providerSymbol(ticker), period: "quarterly" }),
     providerCall("cash_flow", { symbol: providerSymbol(ticker), period: "quarterly" }),
   ]);
   return { income: required(income, "statements-unavailable"), cashFlow, retrievedAt: stamp() };
-});
+}
+const statementsWeek = sharedCache("comparison-store-statements-week-v1", 21 * 86400, readStatements);
 
 async function peek<T>(store: (ticker: string, slot: number) => Promise<T>, ticker: string, slots: number[]): Promise<T | null> {
   for (const slot of slots) {
@@ -97,11 +98,8 @@ async function peek<T>(store: (ticker: string, slot: number) => Promise<T>, tick
 const running = new Map<string, Promise<unknown>>();
 async function fill<T>(name: string, store: (ticker: string, slot: number) => Promise<T>, ticker: string, slot: number, tier: Tier = "background"): Promise<T | null> {
   try { return await shareInflight(running, `${name}:${ticker}:${slot}`, () => fetching(() => store(ticker, slot), tier)) as T; }
-  catch (error) { if (!(error instanceof ProviderLimited)) failedRecently.set(`${name}:${ticker}`, Date.now()); return null; }
+  catch { return null; }
 }
-/** A symbol the provider could not serve is not asked again by this instance for six hours (the background job still tries daily). */
-const failedRecently = new Map<string, number>();
-const recentlyFailed = (name: string, ticker: string) => Date.now() - (failedRecently.get(`${name}:${ticker}`) ?? 0) < 6 * 3600_000;
 
 // ---- the minute's credit meter (one credit per read; remembered ten seconds, and this instance's own spending is added meanwhile) ----
 let meter: { at: number; used: number | null } | null = null;
@@ -120,53 +118,43 @@ async function readMeter(): Promise<number | null> {
 }
 
 // ---- what a user's comparison reads ----
-const MAX_STATISTICS_AGE = 36 * 3600_000; // the valuation factor's own limit
-/** The stored statistics (forward P/E, market value), today's or yesterday's; never fetched for a user. */
+/** The newest stored statistics (current ratio, cash, debt) up to STATISTICS_MAX_AGE_DAYS old; never fetched for a user. A day whose
+ * refresh was skipped keeps the last good copy (owner, Nov 26: a skipped refresh used to turn financial strength into "—" after 36 hours,
+ * which dropped the factor for every company in the comparison and moved the overall scores). */
 export async function cachedStatistics(ticker: string, now = Date.now()): Promise<Raw | null> {
   const d = daySlot(now);
-  const value = await peek(statisticsDay, ticker, [d, d - 1]);
-  return value && now - Date.parse(value.retrievedAt) <= MAX_STATISTICS_AGE ? value : null;
+  const value = await peek(statisticsDay, ticker, Array.from({ length: STATISTICS_MAX_AGE_DAYS + 1 }, (_, i) => d - i));
+  return value && now - Date.parse(value.retrievedAt) <= STATISTICS_MAX_AGE_DAYS * 86_400_000 ? value : null;
 }
 /** The stored quarterly statements, this week's or last week's; never fetched for a user. */
 export async function cachedStatements(ticker: string, now = Date.now()): Promise<Statements | null> {
   const w = weekSlot(now);
   return peek(statementsWeek, ticker, [w, w - 1]);
 }
-/** The daily price series: this hour's shared copy, else the background job's copy from today (it holds every completed daily close up to
- * yesterday, which is all the momentum factor reads), else one credit now if the minute has plenty of room (four seconds at most, no wait),
- * else yesterday's copy. Speed (owner, Nov 18): the user no longer waits for the meter and the provider when today's copy is stored. */
+/** The daily price series, read from the shared store only (owner, Nov 26: a user's request never calls the provider, so the cost never
+ * grows with users or page views): the background job's copy from today, else yesterday's (it holds every completed daily close up to
+ * yesterday, which is all the momentum factor reads). An hour copy written by an older build is still read first. */
 export async function userSeries(ticker: string, now = Date.now()): Promise<Series | null> {
   const h = hourSlot(now), d = daySlot(now);
-  const hot = await peek(seriesHour, ticker, [h, h - 1]);
-  if (hot) return hot;
-  const today = await peek(seriesDay, ticker, [d]);
-  if (today) return today;
-  if (providerConfigured() && !recentlyFailed("series", ticker) && hasRoom(await minuteUsage(), COST.series, USER_SERIES_CEILING, true)) {
-    const fresh = await fill("series", seriesHour, ticker, h, "user");
-    if (fresh) return fresh;
-  }
-  return peek(seriesDay, ticker, [d - 1]);
+  return await peek(seriesHour, ticker, [h, h - 1]) ?? await peek(seriesDay, ticker, [d, d - 1]);
 }
 
-/** After the answer is sent, fill what this comparison missed (statistics, and statements when the filing could not give every figure), one
- * at a time and only while the minute has room under the background ceiling. Never waits for credits: a full minute leaves it to the daily
- * job or the next request. Cost is per company and slot, shared by everyone, so it does not grow with users. */
-export function scheduleFill(ticker: string, wants: { statistics?: boolean; statements?: boolean }) {
-  if (!providerConfigured()) return;
-  try { after(() => backgroundFill(ticker, wants)); } catch { /* outside a request (tests, scripts) */ }
+/** The provider's statements read again after a newer earnings release, by the background job only: at most two reads per company and
+ * release (RELEASE_ATTEMPTS), each in its own slot keyed by the release day, so a statement stored earlier in the week never hides the
+ * new quarter. */
+const statementsRelease = sharedCache("comparison-store-statements-release-v1", 60 * 86400, readStatements);
+const releaseSlot = (releaseDay: string, attempt: number) => Math.floor(Date.parse(releaseDay) / 86_400_000) * 10 + attempt;
+export const RELEASE_ATTEMPTS = 2;
+/** The newest statements read after the release of `releaseDay` (YYYY-MM-DD), the later attempt first; null when none was read yet. */
+export async function releaseStatements(ticker: string, releaseDay: string): Promise<(Statements & { attempt: number }) | null> {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(releaseDay)) return null;
+  for (let attempt = RELEASE_ATTEMPTS - 1; attempt >= 0; attempt--) {
+    const value = await peek(statementsRelease, ticker, [releaseSlot(releaseDay, attempt)]);
+    if (value) return { ...value, attempt };
+  }
+  return null;
 }
-let backgroundChain: Promise<unknown> = Promise.resolve();
-export function backgroundFill(ticker: string, wants: { statistics?: boolean; statements?: boolean }, now = Date.now) {
-  const job = async () => {
-    if (wants.statistics && !recentlyFailed("statistics", ticker) && !await cachedStatistics(ticker, now())
-      && hasRoom(await minuteUsage(), COST.statistics, BACKGROUND_CEILING)) await fill("statistics", statisticsDay, ticker, daySlot(now()));
-    if (wants.statements && !recentlyFailed("statements", ticker) && !await cachedStatements(ticker, now())
-      && hasRoom(await minuteUsage(), COST.statements, BACKGROUND_CEILING)) await fill("statements", statementsWeek, ticker, weekSlot(now()));
-  };
-  const run = backgroundChain.then(job, job);
-  backgroundChain = run.catch(() => undefined);
-  return run;
-}
+export const warmReleaseStatements = (ticker: string, releaseDay: string, attempt: number) => fill("statements-release", statementsRelease, ticker, releaseSlot(releaseDay, attempt), "warm");
 
 // ---- what the background job writes (it checks the meter itself) ----
 export const warmStatistics = (ticker: string, now = Date.now()) => fill("statistics", statisticsDay, ticker, daySlot(now), "warm");

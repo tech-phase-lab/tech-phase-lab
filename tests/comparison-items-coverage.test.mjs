@@ -84,7 +84,7 @@ async function server(stubs) {
     .replace(/import \{ appendEquityItem, appendFilingFinancialItems \}[^;]*;/, "const { appendEquityItem, appendFilingFinancialItems } = globalThis.__items;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__items.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__items;")
-    .replace(/import \{ scheduleFill \}[^;]*;/, "const scheduleFill = () => {};")
+    .replace(/import \{ releaseStatements \}[^;]*;/, "const releaseStatements = async () => null;")
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__items.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__items.appendMarketItems;")
@@ -104,7 +104,7 @@ test("a filing shown while a newer release is pending gets its points (before: �
   assert.equal(prepareComparisonAnalysis(read, NOW), undefined);
   const { loadComparisonFinancials } = await server({ loadSecComparison: async () => read });
   const c = await loadComparisonFinancials("DTE");
-  assert.equal(c.previousQuarterShown, "2026-11-06");
+  assert.equal(c.previousQuarterShown, undefined); // the 「四半期報告書の提出待ち」 sentence is gone for good (owner, Nov 26)
   assert.equal(comparisonAvailability(c, "ja", NOW), null);
   assert.deepEqual(c.preparedAnalysis.items.map(i => `${i.kind}:${i.short.ja}`),
     ["strength:売上成長 +5.7%", "strength:営業利益率 16.2%", "weakness:流動比率 0.62倍", "weakness:有利子負債が現金を上回る"]);

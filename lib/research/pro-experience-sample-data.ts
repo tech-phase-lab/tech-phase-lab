@@ -2,6 +2,7 @@
  * anything: real PRO data costs money to read and must not reach FREE visitors. scripts/pro-experience/build-samples.mjs writes them; each
  * file says where its numbers came from (_source). Pure: no network, no storage. */
 import type { ComparisonResult } from "./comparison.ts";
+import { applyValueCheck, type ValueFigure } from "./comparison-value.ts";
 import type { Holding, Quote } from "../portfolio/calc.ts";
 import compareFile from "./pro-experience-samples/compare.json" with { type: "json" };
 import portfolioFile from "./pro-experience-samples/portfolio.json" with { type: "json" };
@@ -22,8 +23,11 @@ export function nextPicks(current: readonly string[], ticker: string): string[] 
 /** The result page's data for two of the four stocks; null for anything else (another stock, the same stock twice, more than two). */
 export function compareSample(tickers: readonly string[]): ComparisonResult | null {
   if (tickers.length !== 2 || tickers[0] === tickers[1] || !tickers.every(t => (COMPARE_TICKERS as readonly string[]).includes(t))) return null;
-  const companies = tickers.map(t => compare.companies[t]);
-  if (companies.some(c => !c)) return null;
+  const saved = tickers.map(t => compare.companies[t]);
+  if (saved.some(c => !c)) return null;
+  // Valuation as on Treasure Hunt (owner, Nov 26): each sample company's fictional figure against its own five-year average.
+  const values = Object.fromEntries(saved.map(c => [c.ticker, c.valueCheck as ValueFigure]));
+  const companies = applyValueCheck(saved, { values });
   return { companies, comparable: true, reasons: [], generatedAt: compare.snapshotAt, conclusion: { ja: "", en: "" } };
 }
 

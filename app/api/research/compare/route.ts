@@ -1,7 +1,8 @@
 import { getMembership } from "@/lib/membership/server";
 import { buildComparison, comparisonAccess, comparisonExpiresAt, validateComparisonTickers } from "@/lib/research/comparison";
 import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";
-import { applyValuationBasis } from "@/lib/research/comparison-scorecard";
+import { applyValueCheck } from "@/lib/research/comparison-value";
+import { loadValueSnapshot } from "@/lib/research/value-check-server";
 import { buildReviewedTrial } from "@/lib/research/comparison-trial";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
@@ -26,10 +27,13 @@ export async function GET(request: Request) {
     if (selected.some(c => !c)) return Response.json({ ok: false, error: "unknown-company" }, { status: 400, headers });
     // Each company's time is measured on its own (they load in parallel), for the log line and the Server-Timing header below.
     const each: number[] = [];
-    const companies = applyValuationBasis(await Promise.all(selected.map(async (company, i) => {
+    // Valuation: Treasure Hunt's shared copy of its daily list (one copy for every member, value-check-server.ts), read beside the companies.
+    // Without it every company's valuation is 未取得 and the overall verdict uses the remaining factors.
+    const values = loadValueSnapshot().catch(() => null);
+    const companies = applyValueCheck(await Promise.all(selected.map(async (company, i) => {
       const t = performance.now();
       try { return { ...company!, ...await loadComparisonFinancials(company!.ticker) }; } finally { each[i] = Math.round(performance.now() - t); }
-    })));
+    })), await values);
     // The entitlement may expire while upstream data is being fetched.
     if (comparisonAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     const total = Math.round(performance.now() - started), auth = Math.round(signedIn - started);

@@ -86,7 +86,8 @@ test("a cached entry older than allowed is read again now; a fresh one is served
   assert.equal(fresh.v, "cached"); assert.equal(direct, 1);
 });
 
-import { applyValuationBasis, comparisonScores, overallComparison } from "../lib/research/comparison-scorecard.ts";
+import { comparisonScores, overallComparison } from "../lib/research/comparison-scorecard.ts";
+import { applyValueCheck } from "../lib/research/comparison-value.ts";
 const company = (ticker, forwardPE, priceToSales) => ({
   ticker, status: "ready", retrievedAt: new Date(NOW).toISOString(),
   quarterRevenue: { value: 100, unit: "USD", start: "2026-07-01", end: "2026-09-30", filed: "2026-11-05", accession: Q3, tag: "Revenues", basis: "us-gaap" },
@@ -98,17 +99,22 @@ const company = (ticker, forwardPE, priceToSales) => ({
 });
 const valuation = c => comparisonScores(c, NOW).find(s => s.id === "valuation").value;
 
-test("valuation: forward P/E when every company has one; price-to-sales for all when any company has none", () => {
-  const both = applyValuationBasis([company("A", 20, 4), company("B", 30, 8)], NOW);
-  assert.deepEqual(both.map(valuation), [7, 5]);                    // unchanged: forward P/E
-  assert.equal(both[0].valuationBasis, undefined);
-  const mixed = applyValuationBasis([company("A", 20, 4), company("B", null, 8)], NOW);
-  assert.deepEqual(mixed.map(valuation), [5, 3]);                   // both on PSR: 4x -> 5, 8x -> 3
-  assert.ok(mixed.every(c => c.valuationBasis === "ps"));
-  assert.ok(!mixed[0].preparedAnalysis.items.some(i => i.short.ja.includes("予想PER")));   // the bullet follows the yardstick
-  assert.notEqual(overallComparison(mixed, "ja", NOW).title, "必要なデータが揃っていません");
-  const missing = applyValuationBasis([company("A", 20, 4), company("B", null, null)], NOW);
-  assert.deepEqual(missing.map(valuation), [7, null]);              // no yardstick for everyone: left as before, never zero
+test("valuation: Treasure Hunt's figure for each company whatever its forward P/E or P/S; a company outside the list is 未取得 and the verdict uses the rest", () => {
+  const figure = score => ({ score, exact: score, pe: score, ps: score, peNow: 20, psNow: 4, basis: "pe-ps", period: null, asOf: "2026-11-12" });
+  const values = { A: figure(20), B: figure(-20) };
+  const both = applyValueCheck([company("A", 20, 4), company("B", 30, 8)], { values });
+  assert.deepEqual(both.map(valuation), [7, 3]);
+  // No forward P/E for B (a loss-maker): nothing changes for A (before Nov 26 it switched every company to P/S).
+  const mixed = applyValueCheck([company("A", 20, 4), company("B", null, 8)], { values });
+  assert.deepEqual(mixed.map(valuation), [7, 3]);
+  assert.ok(!mixed[0].preparedAnalysis.items.some(i => i.short.ja.includes("予想PER")));   // the old fixed-scale bullet is gone
+  assert.deepEqual(mixed[0].preparedAnalysis.items.filter(i => i.id === "valuation").map(i => [i.kind, i.short.ja]), [["strength", "5年平均より20%安い"]]);
+  assert.deepEqual(mixed[1].preparedAnalysis.items.filter(i => i.id === "valuation").map(i => [i.kind, i.short.en]), [["weakness", "20% above its 5-year average"]]);
+  const missing = applyValueCheck([company("A", 20, 4), company("C", 30, 8)], { values });
+  assert.deepEqual(missing.map(valuation), [7, null]);              // outside the list: 未取得, never zero
+  const verdict = overallComparison(missing, "ja", NOW);
+  assert.notEqual(verdict.title, "必要なデータが揃っていません");
+  assert.match(verdict.note, /6項目の平均/);
 });
 
 test("financial strength reads debt in the form the filing uses; a filing with no borrowing figure at all is debt-free; unreadable stays empty", () => {

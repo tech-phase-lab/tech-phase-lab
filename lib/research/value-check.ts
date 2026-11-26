@@ -1,3 +1,4 @@
+import { parseValueFigure, type ValueFigure } from "./comparison-value.ts";
 /** トレジャーハント / Treasure Hunt (PRO, owner Nov 22; first named 割安判別ツール / Value Check, which stays the internal name). The research monitor computes the scores once a day after the close
  * (scripts/research/value_check.py); the site only checks membership and shows them. Mechanical and the same for every member. */
 
@@ -15,7 +16,9 @@ export type ValuePeriod = "listed" | "data" | null;
 export type ValueItem = { ticker: string; ja: string; en: string; score: number; previous: number | null; pe: number | null; ps: number; revenueGrowth: number; in: boolean; low: boolean; period: ValuePeriod };
 export type ValueChange = { ticker: string; from: number; to: number };
 export type ValueList = { total: number; items: ValueItem[]; changes: { in: ValueChange[]; out: ValueChange[] }; excluded: Record<string, string[]> };
-export type ValueSnapshot = { ok: true; basis: "trailing" | "forward"; asOf: string; computedAt: string; universes: Record<ValueUniverse, ValueList> };
+/** values: every ticker the monitor could calculate, ranked or not, for the Stock Comparison's valuation (absent on snapshots before Nov 26). */
+export type ValueSnapshot = { ok: true; basis: "trailing" | "forward"; asOf: string; computedAt: string; universes: Record<ValueUniverse, ValueList>;
+  values?: Record<string, ValueFigure> };
 
 /** The release switch (default off). The owner's accounts may always use it (AGENTS.md, operator access). */
 // Read as a literal so Next.js inlines it into the browser bundle (the menu needs it too).
@@ -73,8 +76,15 @@ export function parseValueSnapshot(raw: unknown): ValueSnapshot {
   const r = (raw ?? {}) as Record<string, unknown>;
   if (r.ok !== true || !/^\d{4}-\d{2}-\d{2}$/.test(String(r.asOf))) throw Error("Invalid snapshot");
   const u = (r.universes ?? {}) as Record<string, unknown>;
-  return { ok: true, basis: r.basis === "forward" ? "forward" : "trailing", asOf: String(r.asOf), computedAt: text(r.computedAt, 40),
-    universes: { tech: list(u.tech), all: list(u.all) } };
+  const asOf = String(r.asOf);
+  // The comparison's list: an entry that does not fit is left out (that company's valuation is then 未取得); it never fails Treasure Hunt.
+  const values: Record<string, ValueFigure> = {};
+  if (r.values && typeof r.values === "object" && !Array.isArray(r.values)) for (const [ticker, raw] of Object.entries(r.values as Record<string, unknown>)) {
+    const figure = TICKER.test(ticker) ? parseValueFigure(raw, asOf) : null;
+    if (figure) values[ticker] = figure;
+  }
+  return { ok: true, basis: r.basis === "forward" ? "forward" : "trailing", asOf, computedAt: text(r.computedAt, 40),
+    universes: { tech: list(u.tech), all: list(u.all) }, ...(r.values ? { values } : {}) };
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

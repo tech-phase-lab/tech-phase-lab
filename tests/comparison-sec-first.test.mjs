@@ -26,7 +26,7 @@ async function server(stubs) {
     .replace(/import \{ appendEquityItem, appendFilingFinancialItems \}[^;]*;/, "const { appendEquityItem, appendFilingFinancialItems } = globalThis.__t;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__t.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__t;")
-    .replace(/import \{ scheduleFill \}[^;]*;/, "const scheduleFill = (...a) => globalThis.__t.scheduleFill?.(...a);")
+    .replace(/import \{ releaseStatements \}[^;]*;/, "const releaseStatements = async (...a) => (await globalThis.__t.releaseStatements?.(...a)) ?? null;")
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
@@ -49,12 +49,13 @@ test("SEC first: a US filer is served from the filing; the provider is asked onl
   });
   const c = await loadComparisonFinancials("MU");
   // The provider's statements are read only when a factor is still empty after the filing (owner, Nov 14: fill every figure we can).
-  assert.equal(twelveStatements, comparisonScores(c, NOW).some(s => s.value === null) ? 1 : 0); assert.equal(marketAsked, 1);
+  // Valuation is never filled from the provider (it is Treasure Hunt's figure, added per comparison), so it does not count here.
+  assert.equal(twelveStatements, comparisonScores(c, NOW).some(s => s.id !== "valuation" && s.value === null) ? 1 : 0); assert.equal(marketAsked, 1);
   assert.equal(c.quarterRevenue.basis, "us-gaap"); assert.equal(c.quarterRevenue.end, "2026-09-03");
   assert.equal(c.twelveData.margins.length, 4);
   const scores = Object.fromEntries(comparisonScores(c, NOW).map(s => [s.id, s.value]));
-  assert.equal(scores.valuation, 8.7); assert.equal(scores.momentum, 7); assert.ok(scores.stability > 0);
-  assert.ok(c.preparedAnalysis.items.some(i => i.id === "valuation"));
+  assert.equal(scores.valuation, null); assert.equal(scores.momentum, 7); assert.ok(scores.stability > 0); // valuation: applyValueCheck
+  assert.ok(!c.preparedAnalysis.items.some(i => i.id === "valuation"));
   assert.ok(currentComparisonAnalysis(c, NOW)); // the saved text matches this exact evidence
 }));
 
@@ -71,21 +72,31 @@ test("a company the SEC cannot serve falls back to the provider's statements; bu
   const unsupported = async () => emptyFinancials("ASML", "unsupported");
   let result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: { financials: twelveFinancials, scores: [{ id: "financial", value: 5 }] }, busy: false }) })).loadComparisonFinancials("ASML");
   assert.equal(result.quarterRevenue.basis, "twelve-standardized");
-  // Nothing stored yet (Nov 15): the answer comes at once without "busy", and the statements are asked for in the background, never waited for.
-  const fills = [];
-  result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), scheduleFill: (t, w) => fills.push([t, { ...w }]) })).loadComparisonFinancials("ASML");
+  // Nothing stored yet: the answer comes at once without "busy"; the background job (not this request) fills the store (owner, Nov 26).
+  result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }) })).loadComparisonFinancials("ASML");
   assert.equal(result.busy, undefined);
   assert.doesNotMatch(comparisonAvailability(result, "ja", NOW), /混み合っています/);
-  assert.deepEqual(fills, [["ASML", { statistics: true, statements: true }]]);
 }));
 
-test("a US filer with every figure from its filing asks the background only for statistics, never for 200-credit statements", () => withClock(async () => {
-  const fills = [];
-  const { loadComparisonFinancials } = await server({ loadSecComparison: async () => mu(), loadMarketInputs: async () => ({ series, statistics }),
-    loadTwelveComparisonState: async () => ({ data: null, busy: false }), scheduleFill: (t, w) => fills.push([t, { ...w }]) });
+test("a newer earnings release without its quarterly report: the statements the job read after the release give the new quarter, and no pending sentence is set", () => withClock(async () => {
+  const filed = mu();
+  // MU's filing ends 2026-09-03; an earnings 8-K of 2026-11-10 is out without its 10-Q (the NVDA case of Nov 26).
+  const pending = { ...filed, dataWarnings: [{ ja: "2026-11-10の新しい決算発表は数値の反映が未確認です。", en: "Figures from the newer earnings release on 2026-11-10 are not verified." }] };
+  const newer = { ...filed, quarterRevenue: { ...filed.quarterRevenue, end: "2026-11-27", basis: "twelve-standardized" } };
+  const asked = [];
+  const { loadComparisonFinancials, releaseDay } = await server({ loadSecComparison: async () => pending, loadMarketInputs: async () => ({}),
+    releaseStatements: async (t, day) => { asked.push([t, day]); return { income: {}, cashFlow: null, retrievedAt: "2026-11-12T00:00:00Z", attempt: 0 }; },
+    loadTwelveComparisonState: async (t, stored) => ({ data: stored ? { financials: newer, scores: [] } : null, busy: false }) });
+  assert.equal(releaseDay(pending, NOW), "2026-11-10");
   const c = await loadComparisonFinancials("MU");
-  const missingStatementFactor = comparisonScores(c, NOW).some(s => ["growth", "profitability", "cash", "financial", "stability"].includes(s.id) && s.value === null);
-  assert.deepEqual(fills, [["MU", { statistics: true, statements: missingStatementFactor }]]);
+  assert.deepEqual(asked, [["MU", "2026-11-10"]]);
+  assert.equal(c.quarterRevenue.end, "2026-11-27");
+  assert.equal(c.previousQuarterShown, undefined);
+  // Nothing read after the release yet: the filing's previous quarter, without the old sentence either.
+  const { loadComparisonFinancials: load2 } = await server({ loadSecComparison: async () => pending, loadMarketInputs: async () => ({}),
+    loadTwelveComparisonState: async () => ({ data: null, busy: false }) });
+  const old = await load2("MU");
+  assert.equal(old.quarterRevenue.end, "2026-09-03"); assert.equal(old.previousQuarterShown, undefined); assert.deepEqual(old.dataWarnings, []);
 }));
 
 test("the provider's standardized statements compare with a filing under the same 100-day window as before; two different filing bases never rank", async () => {

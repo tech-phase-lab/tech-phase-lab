@@ -204,6 +204,55 @@ class Snapshot(unittest.TestCase):
         self.assertEqual(snap['basis'], 'trailing')
         self.assertEqual(up['ja'], 'UPジャ')
 
+    def test_comparison_values_cover_every_calculable_ticker_with_the_ranking_score(self):
+        # The Stock Comparison's valuation (owner, Nov 26): the same halves as the Value Score, for ranked and unranked tickers alike.
+        snap = self.build()
+        values = snap['values']
+        self.assertEqual(sorted(values), ['DOWN', 'LOSS', 'SHRINK', 'UP'])  # BRK.B (share class) has none
+        up = snap['universes']['tech']['items'][0]
+        self.assertEqual(values['UP']['score'], up['score'])
+        self.assertEqual(values['UP']['basis'], 'pe-ps')
+        self.assertAlmostEqual(values['UP']['exact'], (values['UP']['pe'] + values['UP']['ps']) / 2, delta=0.06)
+        self.assertLess(values['DOWN']['score'], 0)  # above its average: unranked, still listed
+        self.assertEqual(values['LOSS']['basis'], 'ps')  # a loss-maker: the P/S half alone
+        self.assertIsNone(values['LOSS']['pe'])
+        self.assertEqual(values['LOSS']['score'], round(values['LOSS']['ps']))
+        self.assertIn('SHRINK', values)  # falling revenue: unranked, still listed
+
+    def test_thin_earnings_are_judged_on_price_to_sales(self):
+        days = trading_days('2021-01-04', 1300)
+        first = date.fromisoformat(days[0]).toordinal()
+        revenue = [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0} for q in range(26)]
+        income = [{**p, 'value': 10.0} for p in revenue]
+        income[-1] = {**income[-1], 'value': 0.1}  # earnings collapse in the last quarter: P/E far above PE_CAP today
+        record = {'revenue': revenue, 'income': income, 'shares': quarterly_shares(first, 1.0)}
+        closes = [(d, 50.0, 50.0) for d in days]
+        value = vc.comparison_value(closes, record, days[-1])
+        self.assertEqual(value['basis'], 'ps')
+        self.assertIsNone(value['peNow'])
+        self.assertEqual(vc.evaluate('THIN', closes, record, days[-1]), {'excluded': 'thin-earnings'})
+
+    def test_an_older_snapshot_gets_the_list_in_memory_without_a_write(self):
+        db = vc.connect(':memory:')
+        try:
+            stored = {k: v for k, v in self.build().items() if k != 'values'}
+            db.execute('INSERT INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(stored)))
+            db.commit()
+            fresh = {**stored, 'values': {'UP': {'score': 55}}}
+            original = vc.compute
+            vc.compute = lambda _db, _u: fresh
+            vc.DERIVED.clear()
+            try:
+                self.assertTrue(vc.ensure_values(db, self.universe()))
+                self.assertFalse(vc.ensure_values(db, self.universe()))  # once per stored snapshot
+            finally:
+                vc.compute = original
+            self.assertEqual(vc.public_payload(db)['values'], {'UP': {'score': 55}})
+            self.assertNotIn('values', vc.snapshot(db))  # nothing written
+        finally:
+            vc.DERIVED.clear()
+            db.close()
+
     def test_in_and_out(self):
         rows = [{'ticker': 'A', 'score': 50, 'previous': 20}, {'ticker': 'B', 'score': 20, 'previous': 40},
                 {'ticker': 'C', 'score': 60, 'previous': 40}, {'ticker': 'D', 'score': 31, 'previous': 29}]
