@@ -56,6 +56,10 @@ MAX_PS = 200                  # a P/S above this means the filed revenue is only
 CHEAP = 30                    # 割安: Value Score of 30% or more (IN / OUT), owner Nov 22
 TRIM = 0.05                   # the five-year mean leaves out the top and bottom 5% of days
 FACTS_MAX_AGE = 7 * 86400     # SEC company facts are read again after a week
+FACTS_VERSION = 2             # the stored record's shape; a record of another version is read again on the next run (2: share points say their kind)
+MAX_SHARE_AGE = 800           # a share count older than this (days after its date) is not used; one missing yearly count (20-F) is bridged
+COVER_GAP = 200               # no cover count within this many days of a period: its weighted average count fills in
+SAME_BASIS = 1.5              # a weighted count further than this from the first cover count (split-adjusted) is not the same share basis
 MAX_FIGURE_AGE = 400          # a twelve-month figure older than this (days after its period end) is no longer used
 TD_WHEN_OLDER = 300           # SEC figures older than this: the provider's quarterly statements fill in (100 credits a read)
 TD_STATEMENT_COST = 100
@@ -200,19 +204,12 @@ def ttm_points(rows_by_tag, widest=False):
 
 
 def share_points(facts):
-    """Shares outstanding by cover date: every share class of one filing added together (dei). Before the first cover count (a
-    company with several share classes files them only by class, which the SEC's company facts leave out), the diluted weighted
-    average share count of each period as first reported (a later filing restates it for a split; the closes are matched to the
-    count as it was then)."""
+    """Shares outstanding by cover date: every share class of one filing added together (dei). Where there is no cover count (before
+    the first one, or once they stop for COVER_GAP days: a company with several share classes files them only by class, which the
+    SEC's company facts leave out), the diluted weighted average share count of each period as first reported (a later filing
+    restates it for a split; the closes are matched to the count as it was then). Owner's check of Nov 26: Workday's last cover count
+    in the company facts is of 2018, Comcast's and Accenture's of 2009-10, and those had been used for today's market value."""
     rows = _rows(facts, 'dei', 'EntityCommonStockSharesOutstanding', 'shares') or _rows(facts, 'ifrs-full', 'NumberOfSharesOutstanding', 'shares')
-    first_cover = min((row['end'] for row in rows), default=None)
-    weighted = {}
-    for row in _rows(facts, 'us-gaap', 'WeightedAverageNumberOfDilutedSharesOutstanding', 'shares'):
-        if row['val'] <= 0 or (first_cover is not None and row['end'] >= first_cover):
-            continue
-        best = weighted.get(row['end'])
-        if best is None or (row['filed'], _dur(row)) < (best['filed'], _dur(best)):
-            weighted[row['end']] = row
     by_filing = {}
     for row in rows:
         key = (row['accn'], row['end'])
@@ -221,9 +218,28 @@ def share_points(facts):
     for (accn, end), value in by_filing.items():
         if value > 0:
             latest[end] = value
+    covers = sorted(latest)
+    first_cover = covers[0] if covers else None
+
+    def no_cover_near(end):
+        if first_cover is None or end < first_cover:
+            return True
+        at = _latest_index(covers, end)
+        return end - covers[at] > COVER_GAP and (at + 1 >= len(covers) or covers[at + 1] - end > COVER_GAP)
+
+    weighted = {}
+    for row in _rows(facts, 'us-gaap', 'WeightedAverageNumberOfDilutedSharesOutstanding', 'shares'):
+        if row['val'] <= 0 or not 80 <= _dur(row) <= 380 or not no_cover_near(row['end']):
+            continue
+        # As first reported; of two counts in that filing the larger (PDD's 20-F for 2022-24 also gives each count in thousands).
+        best = weighted.get(row['end'])
+        if best is None or (row['filed'], _dur(row), -row['val']) < (best['filed'], _dur(best), -best['val']):
+            weighted[row['end']] = row
+    kinds = {end: 'cover' for end in latest}
     for end, row in weighted.items():
         latest[end] = row['val']
-    return [{'end': end, 'value': value} for end, value in sorted(latest.items())]
+        kinds[end] = 'weighted'
+    return [{'end': end, 'value': value, 'kind': kinds[end]} for end, value in sorted(latest.items())]
 
 
 def _name(tag):
@@ -256,7 +272,7 @@ def fundamentals(facts):
     revenue = ttm_points(flows(REVENUE), widest=True)
     income = ttm_points(flows(NET_INCOME))
     shares = share_points(facts)
-    return {'revenue': revenue, 'income': income, 'shares': shares, 'currency': currency, 'source': 'sec'}
+    return {'revenue': revenue, 'income': income, 'shares': shares, 'currency': currency, 'source': 'sec', 'v': FACTS_VERSION}
 
 
 # ---- the provider's quarterly statements, where the SEC's figures are missing or old -------------------------------------------------
@@ -520,9 +536,27 @@ def clean_shares(points):
     return out
 
 
+def same_basis(points, factor_at):
+    """Leaves out the weighted average counts used before the first cover count that are not on the cover's share basis: more than
+    SAME_BASIS apart once both are brought to today's basis (factor_at: the split factor on a day). Owner's check of Nov 26: Astera Labs
+    and Credo counted their pre-IPO weighted shares (a third and a half of the shares after the listing) for the first weeks of trading,
+    and Nutanix's 2020-21 weighted counts are filed a thousand times too small. Those days then have no share count (no guessed number)."""
+    covers = [p for p in points if p.get('kind') != 'weighted']
+    if not covers:
+        return points
+    first = min(covers, key=lambda p: p['end'])
+    base = first['value'] * factor_at(first['end'])
+    if base <= 0:
+        return points
+    return [p for p in points if p.get('kind') != 'weighted' or p['end'] > first['end']
+            or 1 / SAME_BASIS <= p['value'] * factor_at(p['end']) / base <= SAME_BASIS]
+
+
 def daily_ratios(closes, record, fx=None):
     """[(ordinal day, pe or None, ps or None)] for every stored close. closes: [(day text, raw, adj)] oldest first.
-    fx: [(day text, units of the filing currency per dollar)] when the figures are not in dollars."""
+    fx: [(day text, units of the filing currency per dollar)] when the figures are not in dollars.
+    A day whose latest share count is older than MAX_SHARE_AGE has no ratios (GoDaddy files no share count for 2017-2023 in the SEC's
+    company facts; its 2016 count, half of today's, had been used for those years)."""
     shares = clean_shares(record.get('shares') or [])
     if not closes or not shares:
         return []
@@ -542,6 +576,8 @@ def daily_ratios(closes, record, fx=None):
                 hi = mid
         return factors[max(lo - 1, 0)]
 
+    shares = same_basis(shares, factor_at)
+
     revenue = sorted(record.get('revenue') or [], key=lambda p: p['filed'])
     income = sorted(record.get('income') or [], key=lambda p: p['filed'])
     out, r_i, i_i, rev, inc = [], 0, 0, None, None
@@ -555,7 +591,7 @@ def daily_ratios(closes, record, fx=None):
                 inc = income[i_i]
             i_i += 1
         point = _latest(shares, ordinal, 'end')
-        if point is None:
+        if point is None or ordinal - point['end'] > MAX_SHARE_AGE:
             out.append((ordinal, None, None))
             continue
         value = adj * point['value'] * factor_at(point['end'])
@@ -780,10 +816,12 @@ def run_once(db, *, universe=None, transport=None, sec=None, sec_pause=0.25, now
         agent = monitor.sec_user_agent()
         sec = lambda cik: sec_fetch(cik, agent)  # noqa: E731
     stored = {row[0]: row[1] for row in db.execute('SELECT ticker, fetched_at FROM value_check_facts')}
+    # A record of an earlier shape is read again at once (the SEC is free); otherwise once a week.
+    old_shape = {ticker for ticker, record in load_records(db).items() if not record.get('error') and record.get('v') != FACTS_VERSION}
     for ticker in tickers:
         if should_stop():
             break
-        if stamp - stored.get(ticker, 0) < FACTS_MAX_AGE:
+        if stamp - stored.get(ticker, 0) < FACTS_MAX_AGE and ticker not in old_shape:
             continue
         cik = (universe['companies'].get(ticker) or {}).get('cik')
         try:

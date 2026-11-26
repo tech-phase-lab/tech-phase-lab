@@ -6,7 +6,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { parseCompanyWire } from "../lib/research/company-wire.ts";
-import { impactOf, publisherRank, sameTopic, SUMMARY_LINES, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
+import { fitSummary, impactOf, publisherRank, sameTopic, SUMMARY_JA_MAX, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
 
 // Owner, Nov 15: 一般ニュース becomes 注目トピック, a list of open cards of the Stock News API stories.
 const require = createRequire(import.meta.url);
@@ -100,16 +100,18 @@ test("the page: TOPICS / 注目トピック, an automatic-update line, open card
   const html = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: feed, wire: wire(), wireReady: true, error: false,
     receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
   assert.match(html, /自動で更新中/);
-  assert.doesNotMatch(html, /<button|更新<\/button>|＋|<details|日英の内容を確認|画面取得|確信度|事業への影響/, "a short summary has no 「＋」");
+  assert.doesNotMatch(html, /更新<\/button>|<details|日英の内容を確認|画面取得|確信度|事業への影響/);
+  // Owner, Nov 26: a closed card shows its headline only; the one card with a summary has 「＋」, the others none.
+  assert.equal((html.match(/<button/g) ?? []).length, 1, "「＋」 only on the card with a summary");
+  assert.doesNotMatch(html, /topicSummary/, "no summary preview under a closed card's headline");
   assert.deepEqual([...html.matchAll(/<h2 class="topicDay">([^<]+)<\/h2>/g)].map(match => match[1]), ["今日", "昨日"]);
   assert.equal((html.match(/<article /g) ?? []).length, 4);
   assert.match(html, /<time dateTime="[^"]+">11:30<\/time>/, "the time alone, in Japan time");
   assert.match(html, /<span class="topicTicker">MU<\/span><span class="topicImpact">● 中立<\/span>/);
   assert.match(html, /class="topicCard topicNegative"/);
-  assert.match(html, /<p class="topicSummary topicClamped" lang="ja">次世代メモリHBM4[^<]*<\/p><\/div>/);
+  assert.match(html, /<div class="topicFoot"><p class="topicPublisher">Bloomberg<\/p><button type="button" class="topicMore" aria-expanded="false" aria-controls="news-d1-summary" aria-label="要約をすべて表示">＋<\/button><\/div>/);
   // Owner, Nov 21: the articles are in English, so the Japanese headline is plain text with no link.
   assert.match(html, /<h3 class="topicTitle" lang="ja">マイクロン、HBM4の出荷を前倒し<\/h3>/, "the Japanese headline is plain text");
-  assert.match(html, /<p class="topicPublisher">Bloomberg<\/p>/);
   assert.doesNotMatch(html, /元記事を読む|Read the article|↗/, "no per-card link row");
   assert.equal((html.match(/<a |href=|target=/g) ?? []).length, 0, "no link to the English article on the Japanese page");
   const en = renderToStaticMarkup(React.createElement(Topics, { lang: "en", data: feed, wire: wire(), wireReady: true, error: false,
@@ -132,7 +134,7 @@ test("the cards follow the owner's colours and sizes, with no gold", () => {
   assert.doesNotMatch(topics, /#d0ae65|#dcc58e|gold|#c9a|#e6c|#f5d/i);
   assert.doesNotMatch(topics, /text-overflow:ellipsis|\.topicSource/);
   assert.doesNotMatch(topics.match(/\.topicTitle\{[^}]*\}/)[0], /line-clamp|overflow:hidden/, "headlines are never cut");
-  assert.match(topics, /\.topicClamped\{[^}]*-webkit-line-clamp:4/, "only the summary is clamped, to four lines");
+  assert.doesNotMatch(topics, /line-clamp/, "nothing is clamped: the summary opens whole behind 「＋」");
 });
 
 test("the name 注目トピック is used everywhere the page is named", () => {
@@ -205,31 +207,53 @@ test("the same-story rule and the publisher order", () => {
   assert.ok(publisherRank("TechCrunch") < publisherRank("Some Blog"));
 });
 
-test("a long summary is clamped to four lines with 「＋」 (「−」 when open); a short one has no button", () => {
-  assert.equal(summaryMayOverflow("あ".repeat(88), true), false);
-  assert.equal(summaryMayOverflow("あ".repeat(89), true), true);
-  assert.equal(summaryMayOverflow("a".repeat(192), false), false);
-  assert.equal(summaryMayOverflow("a".repeat(193), false), true);
-  // Owner, Nov 17: summaries aim for 80 to 100 Japanese characters, so four lines are shown from the start (「＋」 would add one line).
-  assert.equal(SUMMARY_LINES, 4);
-  assert.equal(summaryMayOverflow("あ".repeat(85), true), false, "an 85-character summary shows in full without 「＋」");
+test("a closed card shows the headline only; 「＋」 opens the whole summary of up to 100 characters in whole sentences", () => {
+  // Owner, Nov 26 (agreed Nov 16: about 80 to 100 characters): a longer summary keeps its leading whole sentences; never a cut sentence.
+  assert.equal(SUMMARY_JA_MAX, 100);
+  const first = "シンガポールのiConnections Global Alts Asia会議で、AIブームによるリスクと機会が議論された。";
+  const second = "DSC Meridian CapitalのSheru Chowdhryは、AIの評価や景気後退懸念にもかかわらず、データセンターは引き続き魅力的な投資先と述べた。";
+  assert.equal(fitSummary(first + second, true), first, "the 142-character summary keeps its first sentence");
+  assert.equal(fitSummary("あ".repeat(100), true), "あ".repeat(100));
+  assert.equal(fitSummary("あ".repeat(101) + "。", true), undefined, "a first sentence over 100 characters is not shown, never cut");
+  assert.equal(fitSummary("いい。".repeat(40), true).length, 99);
+  assert.equal(fitSummary("「あ。」".repeat(30), true), "「あ。」".repeat(25), "a closing bracket stays with its sentence");
+  assert.equal(fitSummary("x".repeat(600), false), "x".repeat(600), "the English summary is the article's own text, unchanged");
+  assert.equal(fitSummary("  ", true), undefined);
   assert.deepEqual(summaryToggle(false, true), { text: "＋", label: "要約をすべて表示" });
   assert.deepEqual(summaryToggle(true, true), { text: "−", label: "要約を閉じる" });
   assert.deepEqual(summaryToggle(false, false), { text: "＋", label: "Show the full summary" });
   assert.equal(topicCredit(true), "提供：Stock News API");
   assert.equal(topicCredit(false), "Source: Stock News API");
   const Topics = loadTopics();
-  const long = "要約".repeat(60);
-  const items = parseCompanyWire({ ok: true, items: { META: [meta("m1", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊当局から8億8700万ドルの制裁金", "Reuters", 20, { summaryEn, summaryJa: long })] } }).items;
+  const items = parseCompanyWire({ ok: true, items: {
+    META: [meta("m1", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊当局から8億8700万ドルの制裁金", "Reuters", 20, { summaryEn, summaryJa: first + second })],
+    NVDA: [meta("n1", "Nvidia signs a supply deal with Foxconn", "エヌビディア、フォックスコンと供給契約", "Reuters", 25)] } }).items;
   const render = lang => renderToStaticMarkup(React.createElement(Topics, { lang, data: null, wire: items, wireReady: true, error: false,
     receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
   const html = render("ja");
-  assert.match(html, new RegExp(`<p class="topicSummary topicClamped" lang="ja">${long}</p><button type="button" class="topicMore" aria-expanded="false" aria-label="要約をすべて表示">＋</button>`));
+  assert.doesNotMatch(html, /topicSummary|シンガポール/, "the closed card shows no summary preview");
+  assert.equal((html.match(/<button/g) ?? []).length, 1, "the card without a summary has no 「＋」");
+  assert.match(html, /<p class="topicPublisher">Reuters<\/p><button type="button" class="topicMore" aria-expanded="false" aria-controls="wire-m1-summary" aria-label="要約をすべて表示">＋<\/button>/);
   const en = render("en");
-  assert.match(en, /<p class="topicSummary topicClamped" lang="en">Italy&#x27;s antitrust authority fined Meta/);
+  assert.doesNotMatch(en, /topicSummary/);
   assert.match(en, /<p class="topicCredit">Source: Stock News API<\/p>/);
   assert.doesNotMatch(en, /Read the article|元記事/);
   const source = read("../app/research/news/topics-list.tsx");
   assert.match(source, /setOpen\(!open\)/, "the button opens and closes the summary");
-  assert.match(source, /scrollHeight > element\.clientHeight/, "the browser measures whether the text is cut");
+  assert.match(source, /summary && open && <p id=\{panel\} className=\{styles\.topicSummary\}/, "the summary is shown only when open");
+  assert.match(source, /\{summary && <button/, "no 「＋」 without a summary");
+});
+
+test("the dot beside 自動で更新中 blinks only while a check runs, and never with reduced motion", () => {
+  const Topics = loadTopics();
+  const render = updating => renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: feed, wire: wire(), wireReady: true, updating, error: false,
+    receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
+  assert.match(render(true), /<p class="topicLive"><span aria-hidden="true" class="topicLiveUpdating"><\/span>自動で更新中<\/p>/);
+  assert.match(render(false), /<p class="topicLive"><span aria-hidden="true"><\/span>自動で更新中<\/p>/, "steady when idle, as before");
+  const css = read("../app/research/news/general-news.module.css");
+  assert.match(css, /\.topicLive span\.topicLiveUpdating\{animation:topicLiveFlash \.9s infinite\}/);
+  assert.match(css, /prefers-reduced-motion:reduce\)\{\.topicLive span\.topicLiveUpdating\{animation:none\}/);
+  const panel = read("../app/research/news/general-news-panel.tsx");
+  assert.match(panel, /const updating = generalOnly && \(!wireAt \|\| \(!!receivedAt && Date\.parse\(wireAt\) < Date\.parse\(receivedAt\)\)\)/);
+  assert.match(panel, /updating=\{updating\}/);
 });
