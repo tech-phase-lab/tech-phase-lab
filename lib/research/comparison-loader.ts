@@ -75,10 +75,30 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
       }
     } catch { /* Keep retrieved figures with an explicit freshness warning below. */ }
   }));
-  const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
+  let result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
   // No revenue yet: only the balance sheet is read, so freshness is the balance sheet's against the newest periodic report.
+  const newest = [annual, quarter].filter((f): f is FinancialFiling => !!f).sort((a, b) => b.end.localeCompare(a.end))[0];
   if (result.preRevenue) {
-    const newest = [annual, quarter].filter((f): f is FinancialFiling => !!f).sort((a, b) => b.end.localeCompare(a.end))[0];
+    // "No revenue yet" must be true. A company that tags its revenue only under its own (extension) names, which the SEC's company facts
+    // leave out (APA Corporation's oil and gas revenues), has a positive revenue fact in its newest report: it is left without a current
+    // period ("comparable data unavailable") rather than shown as pre-revenue.
+    let revenueFiled = false;
+    if (newest?.inline) {
+      try {
+        const html = await fetchText(newest.url, 20_000_000);
+        if (companyRevenueTagged(html)) {
+          revenueFiled = true;
+          // Its standard revenue lines are read from the filing itself (APA: us-gaap Revenues in the 10-Q, absent from company facts).
+          const inline = inlineFinancialFacts(html, cik, newest);
+          const again = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, [...additions, inline],cik),now,currency,
+            newest === annual ? inline.primaryRevenueTag : primaryRevenueTag, newest === quarter ? inline.primaryRevenueTag : quarterRevenueTag, sic);
+          if (!again.preRevenue) result = again;
+        }
+      } catch { /* the facts read stand */ }
+    }
+    if (revenueFiled && result.preRevenue) return emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
+  }
+  if (result.preRevenue) {
     return { ...result, dataWarnings: newest && (!result.balance || result.balance.end < newest.end)
       ? [warning(`${newest.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${newest.end} are unavailable.`)] : [] };
   }
@@ -109,6 +129,21 @@ export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
   return months > 0 && months % 3 === 0;
 }
 
+/** A positive revenue or sales fact in a filing's inline XBRL outside any dimensional context, under a standard or the company's own
+ *  name (company facts leave extension names out, and can lag the filing). */
+export function companyRevenueTagged(html: string): boolean {
+  const segmented = new Set<string>();
+  for (const m of html.matchAll(/<xbrli:context[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/xbrli:context>/gi)) if (/<xbrli:segment/i.test(m[2])) segmented.add(m[1]);
+  for (const m of html.matchAll(/<ix:nonFraction([^>]*)>([^<]*)</gi)) {
+    const attrs = m[1], name = /name="([^"]+)"/i.exec(attrs)?.[1] ?? "", context = /contextRef="([^"]+)"/i.exec(attrs)?.[1] ?? "";
+    const [prefix, local] = name.split(":");
+    if (!local || prefix === "dei" || segmented.has(context)) continue;
+    if (!/Revenue|Sales/.test(local) || /Cost|Deferred|Unearned|Receivable|Tax|Percent|Expense|Gain|Loss|Proceeds|Investment|Interest|ProForma|Remaining|Liabilit|Unbilled/.test(local)) continue;
+    if (/sign="-"/.test(attrs)) continue;
+    if (Number(m[2].replace(/[^0-9.]/g, "")) > 0) return true;
+  }
+  return false;
+}
 /** At most this many extra periodic reports are read when company facts lack them (four quarters back from the newest). */
 const GAP_FILINGS = 4;
 /** The accession numbers company facts already holds (every standard-taxonomy fact names the filing it came from). */

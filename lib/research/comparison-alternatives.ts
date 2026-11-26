@@ -58,7 +58,6 @@ function chain(ends: string[], newest: string, n = 4): string[] {
   return out;
 }
 
-const CASH = ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashAndCashEquivalents"];
 const SHORT_TERM = ["ShortTermInvestments", "MarketableSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "ShorttermInvestments"];
 const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations", "CashFlowsFromUsedInOperatingActivities"];
 const NET_INCOME = ["NetIncomeLoss", "ProfitLoss", "ProfitLossAttributableToOwnersOfParent"];

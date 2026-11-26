@@ -182,7 +182,8 @@ function rebuildAnalysis(c: Financials, now: number): Financials {
 async function completeFromProvider(ticker: string, c: Financials, now: number, provider?: Financials | null): Promise<Financials> {
   // Valuation comes from Treasure Hunt's list (applyValueCheck), never from the provider.
   const scores = comparisonScores(c, now).filter(score => score.id !== "valuation");
-  if (scores.every(score => score.value !== null)) return c;
+  // A fiscal year's cash flow or margins standing in for the quarter is replaced by the provider's same quarter when it has one.
+  if (scores.every(score => score.value !== null) && !c.fcfPeriod && !c.marginPeriod) return c;
   const other = provider === undefined ? (await loadTwelveComparisonState(ticker)).data?.financials : provider;
   if (!other) return c;
   const ownFinancial = scores.find(score => score.id === "financial")?.value !== null;

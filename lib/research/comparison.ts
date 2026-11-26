@@ -63,6 +63,8 @@ export type Financials = {
   preRevenueMetrics?: import("./comparison-alternatives").PreRevenueMetrics;
   /** A bank's, insurer's, broker's or BDC's figures (finance SIC, or a company filing net investment income). */
   sectorMetrics?: import("./comparison-alternatives").SectorMetrics;
+  /** "annual": quarterFcfMargin is the latest fiscal year's (the quarter's cash flows are not available). */
+  fcfPeriod?: "annual";
   /** "annual": quarterMargins holds four fiscal years (a foreign filer reporting yearly or half-yearly), not four quarters. */
   marginPeriod?: "annual";
   /** Revenue of those same four consecutive quarters added up (for price-to-sales). Null unless all four are present. */
@@ -403,6 +405,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // income only).
   const stale = !!latest && !!balanceNow && !!newestRevenueEnd && day(newestRevenueEnd) < day(balanceNow.f.end) - 365 && !financeSic(sic)
     && !revenueLikeSince(day(balanceNow.f.end) - 365);
+  // Revenue filed only under a line the comparison does not read (APA's oil and gas revenue, VIV's and TLK's IFRS lines) is not "no revenue
+  // yet": the company is left without a current period rather than labelled pre-revenue (Nov 26: they showed 「売上がまだ無い」).
+  if (!latest && balanceNow && revenueLikeSince(day(balanceNow.f.end) - 365)) return result;
   if (!latest || stale) return preRevenue();
   /** No revenue yet: the latest balance sheet alone, so financial strength is still scored, and the company-type figures read from the same
    *  filings (comparison-alternatives.ts: runway, net-loss trend, R&D intensity, dilution). */
@@ -643,8 +648,11 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (picked.length !== 4) return null;
     return picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 }));
   }
-  const annualMargins = qp === "quarter" ? null : annualMarginSeries();
-  const quarterMargins = qp === "quarter" ? marginSeries() : annualMargins;
+  // Four quarters when the filings give them; otherwise four fiscal years, said as annual (a foreign filer reporting yearly or half-yearly, a
+  // quarterly 6-K filer whose quarters are not all tagged, a US filer whose quarters break at a tag change).
+  const quarterly = qp === "quarter" ? marginSeries() : null;
+  const annualMargins = quarterly ? null : annualMarginSeries();
+  const quarterMargins = quarterly ?? annualMargins;
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
   const balanceTags = basis === "us-gaap" ? ["CashAndCashEquivalentsAtCarryingValue", "AssetsCurrent", "LiabilitiesCurrent"] : ["CashAndCashEquivalents", "CurrentAssets", "CurrentLiabilities"];
@@ -652,6 +660,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const anchor = quarterHasBalance ? quarterRevenue! : revenue;
   const balancePeriod = quarterHasBalance ? ip : "annual";
   const balance = balanceSnapshot(basis, anchor, balancePeriod);
+  // Free cash flow of the quarter; when its cash flows are not tagged or cannot be isolated (a 6-K filer, a broken year-to-date), the latest
+  // fiscal year's own free cash flow margin, said as annual (fcfPeriod), only while that year is at most 500 days old.
+  const quarterFcf = quarterRevenue && quarterOperatingCash && quarterCapex && quarterCapex.value>=0 ? (quarterOperatingCash.value-quarterCapex.value)/quarterRevenue.value*100 : null;
+  const annualFcf = !quarterOnly && operatingCash && capex && capex.value >= 0 && now / 86400000 - day(revenue.end) <= 500 ? (operatingCash.value - capex.value) / revenue.value * 100 : null;
   const sector = financeSic(sic) || collect(basis, ["NetInvestmentIncome"]).length > 0
     ? sectorMetrics(facts, revenue.unit, balance.end, balance.equity?.value ?? null, balance.assets?.value ?? null,
       quarterRevenue ? { start: quarterRevenue.start, accession: quarterRevenue.accession ?? null, revenue: quarterRevenue.value } : undefined)
@@ -663,7 +675,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
-    quarterFcfMargin: quarterRevenue && quarterOperatingCash && quarterCapex && quarterCapex.value>=0 ? (quarterOperatingCash.value-quarterCapex.value)/quarterRevenue.value*100 : null,
+    quarterFcfMargin: quarterFcf ?? annualFcf,
+    ...(quarterFcf === null && annualFcf !== null ? { fcfPeriod: "annual" as const } : {}),
     quarterStockCompensationRatio: quarterRevenue && quarterCompensation && quarterCompensation.value>=0 ? quarterCompensation.value/quarterRevenue.value*100 : null,
     quarterDilutedSharesGrowth: quarterShares && previousQuarterShares ? (quarterShares.value/previousQuarterShares.value-1)*100 : null,
     // A fourth quarter has no quarterly share count in the annual report: the year's diluted average from that same report stands in.

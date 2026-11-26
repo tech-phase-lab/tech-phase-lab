@@ -29,7 +29,7 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
   const supplemented = new Set(sec.supplemented ?? []);
   const before = supplemented.size;
   if (lagging) {
-    if (!finite(out.quarterFcfMargin) && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; supplemented.add("cash"); }
+    if ((!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
     fillMarket(out, provider, supplemented, now);
     out.supplemented = [...supplemented];
     if (supplemented.size > before) out.supplementedFromQuarter = provider.quarterRevenue!.end;
@@ -41,7 +41,8 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
   if (!finite(out.quarterOperatingMargin) && finite(provider.quarterOperatingMargin)) {
     out.quarterOperatingMargin = provider.quarterOperatingMargin; out.quarterOperatingIncome = provider.quarterOperatingIncome; supplemented.add("profitability");
   }
-  if (!finite(out.quarterFcfMargin) && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; supplemented.add("cash"); }
+  // A fiscal year's figure that stood in for the quarter (fcfPeriod, marginPeriod "annual") gives way to the provider's same quarter.
+  if ((!finite(out.quarterFcfMargin) || out.fcfPeriod === "annual") && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; delete out.fcfPeriod; supplemented.add("cash"); }
   fillMarket(out, provider, supplemented, now);
   out.supplemented = [...supplemented];
   return out;
@@ -51,7 +52,9 @@ function fillMarket(out: Financials, provider: Financials, supplemented: Set<str
   const mine = out.twelveData, theirs = provider.twelveData;
   if (mine && theirs) {
     let evidence = mine;
-    if (mine.margins.length !== 4 && theirs.margins.length === 4) { evidence = { ...evidence, margins: theirs.margins }; supplemented.add("stability"); }
+    if ((mine.margins.length !== 4 || mine.marginPeriod === "annual") && theirs.margins.length === 4 && theirs.marginPeriod !== "annual") {
+      evidence = { ...evidence, margins: theirs.margins }; delete evidence.marginPeriod; supplemented.add("stability");
+    }
     // Financial strength from the provider's balance only when the filing's own balance gives no score.
     const s = theirs.statistics;
     if (out.supplementedFinancialAllowed !== false && s && s.totalCash !== null && s.totalDebt !== null

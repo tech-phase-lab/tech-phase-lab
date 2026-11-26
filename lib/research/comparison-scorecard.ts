@@ -56,7 +56,8 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
   return null;
 }
 /** Reference scale, not an industry percentile or a buy recommendation.
- * Annual numbers never fill a missing quarterly score. Quote/forecast
+ * A fiscal year's figure fills a missing quarterly cash or stability score only when the quarter's own is not filed, and is labelled as
+ * annual on screen (fcfPeriod, marginPeriod; Nov 26). Quote/forecast
  * valuation stays unavailable until a licensed, timestamped feed is connected.
  */
 export function comparisonScores(c: Financials, now = Date.now()): ComparisonScore[] {
@@ -151,7 +152,7 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
   if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
-  if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
+  if(id==="cash" && finite(c.quarterFcfMargin)) return c.fcfPeriod==="annual" ? ALTERNATIVE_LABELS.annualFcf(c.quarterFcfMargin)[lang] : `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
   const ownBalance=c.balance?.end===c.quarterRevenue?.end || (!!c.balance && c.balance.end===c.balanceFromQuarter) || balanceOnly;
   if(id==="financial" && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
     const debt=balanceDebt(c)!;

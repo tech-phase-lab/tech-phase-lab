@@ -18,6 +18,8 @@ export const ALTERNATIVE_LABELS = {
   niiMargin: (pct: number): Copy => ({ ja: `純投資利益率 ${pct.toFixed(1)}%`, en: `Net investment income margin ${pct.toFixed(1)}%` }),
   /** Stability from four fiscal years (a foreign filer reporting yearly or half-yearly). */
   annualStability: (profitable: number): Copy => ({ ja: `営業黒字 ${profitable}/4期（年次）`, en: `Profitable ${profitable}/4 fiscal years` }),
+  /** Cash generation from the latest fiscal year when the quarter's cash flows are not available. */
+  annualFcf: (pct: number): Copy => ({ ja: `簡易FCF率（年次） ${pct.toFixed(1)}%`, en: `Simple FCF margin (fiscal year) ${pct.toFixed(1)}%` }),
   /** Valuation: no multiple exists for a company whose shareholders' equity is negative and which has no revenue. */
   negativeEquity: { ja: "純資産がマイナスのため倍率なし", en: "No multiple: shareholders' equity is negative" } as Copy,
   /** Why a pre-revenue metric is missing (the filing has no such figure), instead of a bare "no revenue yet". */
