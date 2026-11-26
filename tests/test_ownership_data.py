@@ -299,7 +299,14 @@ class OwnershipContentionTest(unittest.TestCase):
 
     def contend(self, open_ingest):
         """A slow ownership ingest (network waits between writes) in a thread while three main-database lanes keep writing with
-        a short busy timeout (0.2 s). Returns the lanes' SQLITE_BUSY errors and the tickers the ingest stored."""
+        a short busy timeout (0.2 s). Returns the lanes' SQLITE_BUSY errors, the tickers the ingest stored and the
+        number of lane writes that went through.
+
+        The lanes take turns among themselves (lane_turn) so that only a writer outside the lanes, i.e. the ingest, can make a
+        lane wait. Without it the three lanes starved each other: SQLite's busy handler polls with growing sleeps and gives no
+        turn order, so under CPU load one lane could miss the lock for its whole 0.2 s while the other two kept taking it, and
+        the test reported 'database is locked' with no ownership code involved (seen in CI on Nov 26; also with the ingest on an
+        unrelated file or on no file at all). The monitor's own lanes wait up to 5 s (monitor.connect, busy_timeout 5000)."""
         import threading
         import monitor
         with monitor.connect(self.main_path) as main:
@@ -321,16 +328,22 @@ class OwnershipContentionTest(unittest.TestCase):
 
         worker = threading.Thread(target=ingest)
         errors = []
+        writes = []
+        lane_turn = threading.Lock()
 
         def lane():
             db = sqlite3.connect(self.main_path, timeout=0.2, isolation_level=None)
             while worker.is_alive():
-                try:
-                    db.execute('BEGIN IMMEDIATE')
-                    db.execute('INSERT INTO lane_probe VALUES(1)')
-                    db.execute('COMMIT')
-                except sqlite3.OperationalError as error:
-                    errors.append(str(error))
+                with lane_turn:
+                    try:
+                        db.execute('BEGIN IMMEDIATE')
+                        db.execute('INSERT INTO lane_probe VALUES(1)')
+                        db.execute('COMMIT')
+                        writes.append(1)
+                    except sqlite3.OperationalError as error:
+                        errors.append(str(error))
+                        if db.in_transaction:
+                            db.execute('ROLLBACK')
                 threading.Event().wait(0.01)
             db.close()
 
@@ -341,7 +354,7 @@ class OwnershipContentionTest(unittest.TestCase):
         worker.join(60)
         for t in lanes:
             t.join(60)
-        return errors, stored
+        return errors, stored, len(writes)
 
     def test_reproduces_the_incident_when_the_ingest_writes_the_monitor_database(self):
         """The Nov 22 shape: the jobs in the monitor database with Python's implicit transaction left open across SEC calls."""
@@ -349,15 +362,16 @@ class OwnershipContentionTest(unittest.TestCase):
             db = sqlite3.connect(self.main_path, timeout=30)
             db.executescript(od.SCHEMA)
             return db
-        errors, stored = self.contend(old_connect)
+        errors, stored, _ = self.contend(old_connect)
         self.assertTrue(errors)
         self.assertIn('database is locked', errors[0])
         self.assertEqual(stored, [20])
 
     def test_long_ingest_never_blocks_the_monitor_lanes(self):
-        errors, stored = self.contend(lambda: od.connect(od.ownership_path(self.main_path)))
+        errors, stored, writes = self.contend(lambda: od.connect(od.ownership_path(self.main_path)))
         self.assertEqual(errors, [])
         self.assertEqual(stored, [20])
+        self.assertGreater(writes, 0)  # the lanes really wrote while the ingest ran
 
     def test_runtime_files_are_in_the_monitor_image(self):
         """value-check-failed FileNotFoundError (Nov 22): the image lacked lib/research/value-check-universe.json."""
