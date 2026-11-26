@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {storySession,applyMarketReaction,candidateMarket,readSessionMoves,measureStock} from '../lib/resolute/risk-market.ts';
 import {storyScope,storyTicker} from '../lib/resolute/risk-scope.ts';
 import {industryOf,namedCompanies} from '../lib/resolute/risk-companies.ts';
-import {marketStars,companyQualifies,formatReading,readingParts,noStarsLabel,parseRiskArticle,parseRiskMarket,starsFromShock} from '../lib/resolute/risk.ts';
+import {marketStars,indexStars,formatReading,readingParts,noStarsLabel,parseRiskArticle,parseRiskMarket} from '../lib/resolute/risk.ts';
 import {stockShock} from '../lib/resolute/thermometer-basket.ts';
 import {safeThermometerSnapshot,safeShockStocks} from '../lib/resolute/thermometer-runtime.ts';
 import {selectDailyCandidates,previewSelection,breaksCurrentRules,repeatsTaken} from '../services/resolute-api/rizel-daily-review.mjs';
@@ -46,33 +46,31 @@ test('replay of Nov 23: the Monday-afternoon SK hynix story never gets Monday\'s
  // With only Monday measured, it keeps waiting: Monday's +14.7% is never credited to it.
  assert.equal(applyMarketReaction(article,{[MON]:rally}).stars,null);
  assert.equal(applyMarketReaction(article,{[MON]:rally}).market.reading,null);
- // Tuesday: SKHY −11.2% (3.6× its usual 3.1%) and TP半導体40 −8.5% (3.8×, 39/40 down) → the chip basket's ★4.
+ // Tuesday: SKHY −11.2% (★5 on the stock row, 10% or more) and TP半導体40 −8.5% (★5, 8% or more) → ★5.
  const filled=applyMarketReaction(article,moves);
  assert.equal(filled.market.reading.from,MON);assert.deepEqual(filled.market.reading.company,{changePercent:-11.2,multiple:3.6});
- assert.equal(filled.stars,4);assert.equal(parseRiskArticle(filled).stars,4);
+ assert.equal(filled.stars,5);assert.equal(parseRiskArticle(filled).stars,5);
  // The same story as a market-wide headline published at the same time also measures Tuesday, not the rally.
  const market=story('Stocks rally as tech megacaps surge','2026-11-23T19:00:00.000Z');
  assert.equal(candidateMarket(market).session,TUE);
  // Under the old rule (first close after the news) it would have been Monday: ★5 from the rally.
- assert.equal(starsFromShock({changePercent:6,multiple:7.9,same:89,total:99,fearChange:19}),5);
+ assert.equal(indexStars('nas100',{changePercent:6,multiple:7.9,same:89,total:99}),5);
 });
 
-test('single-company news gets stars only when BOTH the company and its industry basket moved strongly, the same way',()=>{
+test('single-company news (owner, Nov 26): the higher of the stock\'s row and its industry index\'s row; never against the headline',()=>{
  const c=story('Apple shares slide after iPhone orders are cut','2026-11-23T21:00:00.000Z',{tickers:['AAPL']});
  const waiting=validateGeneration({...copy,ja:{...copy.ja,title:'アップル株が下落'},en:{...copy.en,title:'Apple shares slide'}},{...c,body:'Apple shares slid after reports that iPhone orders were cut by suppliers, the report said.'});
  assert.deepEqual(waiting.market.company,{ticker:'AAPL',basket:'nas100'});
- // AAPL −4.5% (4.1×) but TP大型株100 only −1.5% (2.0×) … that is ≥1.5×: industry moved too → stars from TP大型株100 (47/99 down: ★2).
- const both=applyMarketReaction(waiting,moves);assert.equal(companyQualifies(both.market),true);assert.equal(both.stars,2);
- assert.deepEqual(formatReading(both.market,'ja'),['AAPL　−4.5%','TP大型株100　−1.5%','恐怖指数　0%']);
+ // AAPL −4.5% (★3 on the stock row, 4–7%) and TP大型株100 −1.5% (★2) → ★3.
+ const both=applyMarketReaction(waiting,moves);assert.equal(both.stars,3);
+ assert.deepEqual(formatReading(both.market,'ja'),['AAPL　−4.5%','TP大型株100　−1.5%']);
  assert.deepEqual(readingParts(both.market,'en')[0],{text:'AAPL  −4.5%'});
- // Only the company moved: the industry basket at 1.0× → no stars, shown as single-company news.
+ // Only the company moved: the stock's own row still gives ★3.
  const calmIndustry={[TUE]:{...tuesday,nas100:{...tuesday.nas100,changePercent:-0.74}}};
- const alone=applyMarketReaction(waiting,calmIndustry);
- assert.equal(companyQualifies(alone.market),false);assert.equal(alone.stars,null);assert.equal(noStarsLabel(alone,'ja'),'個別企業のニュース（★はつけません）');
- assert.equal(alone.stars,null);
- // Only the industry moved: MU −1.2% (0.4×) on a −8.5% chip day → no stars.
+ assert.equal(applyMarketReaction(waiting,calmIndustry).stars,3);
+ // Only the industry moved: MU −1.2% on a −8.5% chip day → TP半導体40's ★5.
  const mu=validateGeneration({...copy,ja:{...copy.ja,title:'マイクロンの調査'},en:{...copy.en,title:'Micron probe'}},{...story('Micron faces probe over memory exports','2026-11-23T21:00:00.000Z',{tickers:['MU']}),body:'Micron said it faces a probe over memory exports, the report said.'});
- assert.equal(applyMarketReaction(mu,moves).stars,null);
+ assert.equal(applyMarketReaction(mu,moves).stars,5);
  // Opposite directions never count.
  const opposite={[TUE]:{...tuesday,stocks:{AAPL:{previousDate:MON,changePercent:4.5,typicalPercent:1.1}}}};
  assert.equal(applyMarketReaction(waiting,opposite).stars,null);
@@ -88,12 +86,13 @@ test('single-company news gets stars only when BOTH the company and its industry
 test('up days stay eligible; the fear rise counts on down days only, and the card never shows the fear line on an up day',()=>{
  const m={index:'nas100',session:MON,reading:{from:'2026-11-20',nas100:{changePercent:6,multiple:7.9,same:89,total:99},sox:{changePercent:14.7,multiple:6.5,same:40,total:40},fearChange:19}};
  assert.equal(marketStars(m),5);
- // ★5 up = ≥5× and ≥80% up, whatever the fear index does.
+ // Up 5% or more on TP大型株100 is ★5, whatever the fear index does.
  assert.equal(marketStars({...m,reading:{...m.reading,fearChange:-5}}),5);
  assert.equal(marketStars({...m,reading:{...m.reading,fearChange:null}}),5);
- // The same move DOWN still needs the fear rise for ★5.
- const down={...m,reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:-6},sox:{...m.reading.sox,changePercent:-14.7},fearChange:5}};
- assert.equal(marketStars(down),4);assert.equal(marketStars({...down,reading:{...down.reading,fearChange:19}}),5);
+ // Down: the fear index up 20% or more adds ★1 (TP大型株100 −4%: ★4 → ★5); never on the up day above.
+ const down={...m,reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:-4},sox:null,fearChange:5}};
+ assert.equal(marketStars(down),4);assert.equal(marketStars({...down,reading:{...down.reading,fearChange:19}}),4);assert.equal(marketStars({...down,reading:{...down.reading,fearChange:20}}),5);
+ assert.equal(marketStars({...m,reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:4},sox:null,fearChange:40}}),4);
  // Card lines (home, detail and PC panel all use readingParts): sign and 上昇 show the direction; no 「恐怖指数」 line.
  assert.deepEqual(formatReading(m,'ja'),['TP大型株100　+6.0%','TP半導体40　+14.7%']);
  assert.deepEqual(formatReading(m,'en'),['TP Large Cap 100  +6.0%','TP Semiconductor 40  +14.7%']);
@@ -127,7 +126,7 @@ test('at most 3 stories, never two with stars on the same session; market-wide n
  const sessions=preview.selected.filter(p=>p.marketStars!==null||p.reading===null&&p.session).map(p=>p.session);
  assert.equal(new Set(sessions).size,sessions.length,'no session twice');
  assert.deepEqual(preview.selected.map(p=>[p.title.split(' ').slice(0,2).join(' '),p.session,p.marketStars]),[
-  ['Nasdaq falls',TUE,4],['Stocks drop','2026-11-25',null],['US opens',null,null]]);
+  ['Nasdaq falls',TUE,5],['Stocks drop','2026-11-25',null],['US opens',null,null]]);
  // The SK hynix story lost Tuesday to the chip-sector story (same fit, market and chip-sector news first): shown without stars.
  assert.equal(preview.selected[2].starred,false);
  // The others on Tuesday wait in reserve; picking one of them next to the chip story would repeat the move.
@@ -143,8 +142,8 @@ test('when the market did not move after the market-wide headline, the company t
   row('US opens probe into SK hynix over chip exports','2026-11-23T19:00:00.000Z',{tickers:['SKHY']})];
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves:calm});
  const preview=previewSelection({selected,reserve,diagnostics},calm);
- // SK hynix passes the two-move test with TP半導体40's ★4.
- assert.deepEqual(preview.selected.map(p=>[p.index,p.company??null,p.session,p.marketStars]),[['company','SKHY',TUE,4]]);
+ // SK hynix: SKHY −11.2% and TP半導体40 −8.5%, both ★5 on the table.
+ assert.deepEqual(preview.selected.map(p=>[p.index,p.company??null,p.session,p.marketStars]),[['company','SKHY',TUE,5]]);
  assert.deepEqual(reserve.map(c=>c.title),['Nasdaq falls as Treasury yields climb']);
 });
 
@@ -155,9 +154,9 @@ test('stored days: a story measured on the move before it, or two stars on one s
  // The stored 11/25 SK hynix story: Monday 14:00 ET, measured on Monday's rally (the old rule).
  assert.equal(breaksCurrentRules([base('SKハイニックスを巡る調査を開始','2026-11-23T19:00:00.000Z',{index:'sox',session:MON,reading:rallyReading},5)]),true);
  const tueReading={from:MON,nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0};
- const ok=base('Chip stocks tumble','2026-11-24T12:00:00.000Z',{index:'sox',session:TUE,reading:tueReading},4);
+ const ok=base('Chip stocks tumble','2026-11-24T12:00:00.000Z',{index:'sox',session:TUE,reading:tueReading},5);
  assert.equal(breaksCurrentRules([ok]),false);
- assert.equal(breaksCurrentRules([ok,base('Nasdaq falls','2026-11-24T11:00:00.000Z',{index:'nas100',session:TUE,reading:tueReading},4)]),true);
+ assert.equal(breaksCurrentRules([ok,base('Nasdaq falls','2026-11-24T11:00:00.000Z',{index:'nas100',session:TUE,reading:tueReading},5)]),true);
 });
 
 test('the thermometer keeps each rostered stock\'s own move for the stored snapshot only (never served to the site)',async()=>{
@@ -196,7 +195,7 @@ test('a headline whose direction is clear gets no stars from a session that move
  assert.deepEqual(parseRiskFeed({state:'ready',date:'2026-11-25',articles:[filled],quotes:[]}).articles,[]);
  assert.ok(!JSON.stringify((await import('../lib/resolute/risk-policy.ts')).RISK_POLICY).includes('見出しと逆'));
  // The same headline measured on an up session keeps its stars.
- assert.equal(applyMarketReaction(article,{[TUE]:{...tuesday,sox:{...tuesday.sox,changePercent:8.51,up:39,down:1},nas100:{...tuesday.nas100,changePercent:1.47,up:47,down:52}}}).stars,4);
+ assert.equal(applyMarketReaction(article,{[TUE]:{...tuesday,sox:{...tuesday.sox,changePercent:8.51,up:39,down:1},nas100:{...tuesday.nas100,changePercent:1.47,up:47,down:52}}}).stars,5);
  // Company news: the company's own move decides (a "soar" headline on a falling stock gets none).
  const soar=validateGeneration(copy,story('SK hynix shares soar after HBM deal','2026-11-23T19:00:00.000Z',{tickers:['SKHY']}));
  assert.equal(soar.market.headline,'up');assert.equal(applyMarketReaction(soar,moves).stars,null);

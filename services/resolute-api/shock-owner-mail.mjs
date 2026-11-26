@@ -1,5 +1,5 @@
 import {PRODUCTION_OWNER_ACCOUNT_ID} from '../../lib/membership/entitlements.ts';
-import {parseRiskArticle,readingParts,isShownStory} from '../../lib/resolute/risk.ts';
+import {parseRiskArticle,readingParts,isShownStory,byStars} from '../../lib/resolute/risk.ts';
 
 /** The owner's morning mail (owner, Nov 26): at 08:20 JST on each market day, right after the daily selection, the production
  * owner account receives the day's Shock Gauge in plain Japanese: each story, its ★ and the AI's reason, the index lines exactly
@@ -8,17 +8,17 @@ import {parseRiskArticle,readingParts,isShownStory} from '../../lib/resolute/ris
  * RESOLUTE_MAIL_FROM, as the other mail). One mail per day: Resend's idempotency key is the day. */
 const EMAIL=/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 export function ownerShockMailText({day,articles,quotes,fallback}){
- const shown=articles.filter(isShownStory);
+ const shown=byStars(articles.filter(isShownStory));
  const lines=[`衝撃度チェッカー ${day}`,''];
- if(!shown.length)lines.push('今日は、★をつけるニュースはありませんでした（会員には「今日は、気にするニュースはありません」と表示されます）。','');
+ if(!shown.length)lines.push('今日は、★をつけるニュースはありませんでした。会員には「今日は、気にするニュースはありません」と表示されます。','');
  shown.forEach((a,i)=>{
   const q=a.quoteId?quotes.find(x=>x.id===a.quoteId):null;
   lines.push(`${i+1}. ${a.ja.title}`,`★${a.stars}（${'★'.repeat(a.stars)}${'☆'.repeat(5-a.stars)}）`);
-  if(a.judge)lines.push(`判定の理由: ${a.judge.reason.ja}`);
-  for(const l of readingParts(a.market,'ja')){lines.push(l.text);if(l.detail)lines.push(`  ${l.detail}`);}
+  if(a.judge)lines.push(`選んだ理由: ${a.judge.reason.ja}`);
+  lines.push('使った数字:');for(const l of readingParts(a.market,'ja'))lines.push(`  ${l.text}`);
   lines.push(`リゼルの一言: ${q?q.ja.title:'なし'}`,'');
  });
- lines.push(fallback?'※ 今日はAIの判定に失敗したため、指標の動きの基準（取引中の動きを含む）で★をつけました。':'★は、AIがその日の市場の動きとニュースを読んで判定しました。');
+ lines.push('★は、終値の動きと取引中のいちばん大きな動きのうち大きいほうを決まった表に当てはめて付けています。AIは★を変えません。',fallback?'※ 今日はAIによるニュースの選定に失敗したため、★の多い順に選びました。':'載せるニュースは、AIがその日の市場のまとめ記事とニュースを読んで選びました。');
  return lines.join('\n');
 }
 /** Reads the stored day and sends the mail. Returns a fixed-code state; never throws the address or the provider's text. */
@@ -35,7 +35,7 @@ export async function sendOwnerShockMail({env=process.env,pool,day,clerk,fetcher
  const fallback=articles.some(a=>a.judge?.source==='rule');
  const response=await fetcher('https://api.resend.com/emails',{method:'POST',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(15000),
   headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json','Idempotency-Key':'resolute-shock-owner-'+day},
-  body:JSON.stringify({from,to:[to],subject:`衝撃度チェッカー ${day}${fallback?'（数値の基準で判定）':''}`,text:ownerShockMailText({day,articles,quotes,fallback}),tags:[{name:'resolute_shock_owner',value:day}]})});
+  body:JSON.stringify({from,to:[to],subject:`衝撃度チェッカー ${day}${fallback?'（AIの選定なし）':''}`,text:ownerShockMailText({day,articles,quotes,fallback}),tags:[{name:'resolute_shock_owner',value:day}]})});
  if(!response.ok){await response.body?.cancel();return {state:'provider-error',status:response.status};}
  await response.body?.cancel();
  return {state:'sent',stories:articles.filter(isShownStory).length,fallback};

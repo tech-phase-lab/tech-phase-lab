@@ -1,7 +1,7 @@
 import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions,assignQuote} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle,parseRiskMarket,parseRiskCause,causeStars,isDailyRunHour,dailyRunStart,marketStars,measureStars,directionMismatch} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,parseRiskMarket,isDailyRunHour,dailyRunStart,marketStars,indexStars,directionMismatch,byStars} from '../../lib/resolute/risk.ts';
 import {applyMarketReaction,candidateMarket,storySession,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {storyScope,isBarePriceMove,headlineCause,companyKey,storyTicker,titleSimilarity,NEAR_DUPLICATE} from '../../lib/resolute/risk-scope.ts';
@@ -29,7 +29,7 @@ export function explainsMove(c,moves){
  const market=measuredMarket(c,moves);if(!market||directionMismatch(market))return 0;
  const r=market.reading;if(!r)return 0;
  if(market.index==='company')return marketStars(market)??0;
- const x=r[market.index];return x?measureStars(x,r.fearChange):0;
+ const x=r[market.index];return x?indexStars(market.index,x):0;
 }
 /** Stories a day and model attempts a day: RISK_POLICY defaults, lowered or raised (within the policy's hard caps) by
  * RESOLUTE_RIZEL_DAILY_STORIES and RESOLUTE_RIZEL_DAILY_ATTEMPTS. Anything malformed falls back to the default. */
@@ -182,8 +182,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   }
   diagnostics={...intake.diagnostics,...(market?{market}:{})};
   const selected=intake.selected,reserve=[...intake.reserve];
-  // The day's judgement (owner, Nov 26): the AI picks the stories that explain what moved the market and gives the stars, with
-  // retries; when every attempt fails, the numeric rule (intraday extremes included) is used and logged. Every day gets stars.
+  // The day's selection (owner, Nov 26): the AI picks the stories that explain what moved the market, with retries; the stars
+  // always come from the table (marketStars). When every attempt fails, the stories are taken by their stars and it is logged.
   let picks=null;
   if(judge&&moves){
    const pool=judgePool([...selected,...reserve],moves),wraps=marketWraps(feed,now.getTime()-windowHours(now)*3600000,now.getTime());
@@ -215,9 +215,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    let article;
    const pick=pickOf.get(candidate);
    if(pick){
-    // Judged: the measured session and the judged stars (the rule's stars also take the cause step; nothing lifts a quiet story).
-    const stars=pick.source==='rule'?causeStars(pick.stars,parsed.cause)??pick.stars:pick.stars;
-    article=parseRiskArticle(assignQuote({...parsed,market:pick.market,judge:{stars,source:pick.source,reason:pick.reason}},quotes,day));
+    // Picked: the measured session; the stars come from the owner's table (risk.ts marketStars), never from the AI.
+    article=parseRiskArticle(assignQuote({...parsed,market:pick.market,stars:marketStars(pick.market),judge:{source:pick.source,reason:pick.reason}},quotes,day));
    }else{
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
    [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
@@ -243,6 +242,8 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   diagnostics.attempts=attempts;if(withheld.length)diagnostics.withheld=countReasons(withheld);
   stage='readback';
   // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
+  // Up to three, the most stars first (owner, Nov 26 spec §1); waiting stories (no stars yet) last.
+  articles.splice(0,articles.length,...byStars(articles));
   const stored=articles.length?articles:(noneQualified||diagnostics.coverageComplete&&!tried?[]:null);
   if(replace){if(!articles.length)throw Error('NO_VERIFIED_OUTPUT');
    const r=await (publishPool??budgetPool).query("UPDATE resolute.risk_days SET state='ready',articles=$2::jsonb,updated_at=$3 WHERE day=$1::date AND articles=$4::jsonb RETURNING day",[day,JSON.stringify(articles),replace.at.toISOString(),JSON.stringify(replace.articles)]);
@@ -316,7 +317,7 @@ export function breaksCurrentRules(articles){
  const slots=new Set();
  for(const a of articles){
   const m=a?.market;if(!m||typeof m!=='object')return false;
-  let expected=null,market;try{market=parseRiskMarket(m);expected=causeStars(marketStars(market),parseRiskCause(a.cause));}catch{return true;}
+  let expected=null,market;try{market=parseRiskMarket(m);expected=marketStars(market);}catch{return true;}
   if(a.stars!==expected)return true;
   if(market.session&&(market.index!=='company'||market.company)){
    if(market.session!==storySession(newsInstant(a.publishedAt)))return true;

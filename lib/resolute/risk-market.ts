@@ -1,5 +1,5 @@
 import { usMarketSession } from '../research/us-market-session.ts';
-import { measureDay, fearChangeOf, storyStars, roundMove, type RiskArticle, type RiskIndex, type RiskMarket, type RiskStock } from './risk.ts';
+import { measureDay, fearChangeOf, marketStars, roundMove, type RiskArticle, type RiskIndex, type RiskMarket, type RiskStock } from './risk.ts';
 import { storyScope, scopeIndex, storyTicker, headlineDirection } from './risk-scope.ts';
 import { industryOf } from './risk-companies.ts';
 /** Shock Gauge stars from actual market moves (server/worker only; no browser import).
@@ -101,7 +101,7 @@ export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): 
   const reading: NonNullable<RiskMarket['reading']> = { from, nas100: nas100 ? measureDay(nas100) : null, sox: sox ? measureDay(sox) : null, fearChange: fearChangeOf(entry?.fear ?? null) };
   if (company) { const s = entry?.stocks?.[company.ticker]; reading.company = s && validStock(s) && s.previousDate === from ? measureStock(s) : null; }
   const market: RiskMarket = { index, session, reading, ...keep };
-  return { ...article, market, stars: storyStars(market, article.cause, article.judge) };
+  return { ...article, market, stars: marketStars(market) };
 }
 function validStock(m: Partial<StockMove>): m is StockMove {
   return typeof m.previousDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.previousDate) && finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50);

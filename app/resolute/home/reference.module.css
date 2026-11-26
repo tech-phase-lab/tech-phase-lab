@@ -163,8 +163,8 @@
 .needleCard .chartNote { margin-top:auto; padding-top:8px; }
 .shockPc { padding:26px 28px; gap:18px; scroll-margin-top:24px; border-left:0; }
 .shockPc::before { content:""; position:absolute; left:-1px; top:24px; bottom:24px; width:3px; border-radius:3px; background:linear-gradient(180deg,#ff4d55,#f0a24a); }
-.shockGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(5,auto); column-gap:18px; row-gap:16px; }
-.shockCard { grid-row:span 5; display:grid; grid-template-rows:subgrid; padding:20px 20px 16px; border-radius:16px; border:1px solid #2a3547; background:linear-gradient(180deg,#141e30,#0f1726); min-width:0; transition:box-shadow .2s ease,border-color .2s ease; }
+.shockGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(6,auto); column-gap:18px; row-gap:12px; }
+.shockCard { grid-row:span 6; border-left:3px solid var(--c,var(--gold))!important; display:grid; grid-template-rows:subgrid; padding:20px 20px 16px; border-radius:16px; border:1px solid #2a3547; background:linear-gradient(180deg,#141e30,#0f1726); min-width:0; transition:box-shadow .2s ease,border-color .2s ease; }
 .shockCard[data-open] { border-color:rgba(255,90,100,.6); box-shadow:0 0 0 1px rgba(255,90,100,.25),0 0 26px rgba(255,77,85,.22); background:linear-gradient(180deg,#24141c,#141522); }
 .badgeRow { display:flex; align-items:center; gap:10px; }
 .badge { font-family:var(--serif); font-size:20px; font-weight:600; color:var(--c,var(--gold2)); border:1px solid color-mix(in srgb,var(--c,#d8b36a) 55%,transparent); background:color-mix(in srgb,var(--c,#d8b36a) 12%,transparent); border-radius:8px; padding:0 10px; }
@@ -176,7 +176,12 @@
 .readings p { margin:0; }
 .readings span { display:block; }
 .readings .detail { display:block; font-size:.85em; color:var(--sub, #8c98ab); white-space:nowrap; letter-spacing:0; font-feature-settings:"palt"; }
-.sayCell .say { margin-top:0; }
+.sayCell { border-top:1px solid var(--line); padding-top:10px; }
+.sayCell:empty { border-top-color:transparent; }
+.sayCell .say { margin-top:0; padding-top:0; border-top:0; }
+.tableCell { min-width:0; }
+.panelImpact { max-width:420px; }
+.shockItem { gap:8px!important; padding:12px 14px 12px!important; }
 .moreBtn { align-self:end; justify-self:start; border:0; background:none; padding:4px 0; color:var(--gold); font-size:13px; }
 .shockCard[data-open] .moreBtn { color:var(--ink); }
 .shockPanel { border-radius:16px; border:1px solid rgba(255,90,100,.45); background:linear-gradient(180deg,#1a1018,#120f18); padding:22px 26px; display:flex; flex-direction:column; gap:16px; }

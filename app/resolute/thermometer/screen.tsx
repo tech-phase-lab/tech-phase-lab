@@ -21,9 +21,11 @@ const temperatureDescriptions = {
   en: ["Low compared with the past", "Slightly low compared with the past", "Near the middle of the historical range", "Slightly high compared with the past", "High compared with the past"],
 } as const;
 const colors = ["#6f93bd", "#8db8ee", "#d8b36a", "#e9a65a", "#e5766a"];
+// The arc's five stages follow the bands (owner, Nov 26 spec §6): 0–5, 5–25, 25–75, 75–95, 95–100 of the history.
+const EDGES = [0, 5, 25, 75, 95, 100];
 function segment(i: number) {
   const point = (r: number, d: number) => `${(150 + r * Math.cos(d * Math.PI / 180)).toFixed(2)} ${(150 - r * Math.sin(d * Math.PI / 180)).toFixed(2)}`;
-  const start = 180 - i * 36 - 1.5, end = 180 - (i + 1) * 36 + 1.5;
+  const start = 180 - EDGES[i] * 1.8 - (i ? 1 : 0), end = 180 - EDGES[i + 1] * 1.8 + (i < 4 ? 1 : 0);
   return `M${point(124, start)} A124 124 0 0 1 ${point(124, end)} L${point(98, end)} A98 98 0 0 0 ${point(98, start)} Z`;
 }
 export default function ThermometerScreen({ identityReady = true, snapshot }: { identityReady?: boolean; snapshot?: ThermometerSnapshot }) {

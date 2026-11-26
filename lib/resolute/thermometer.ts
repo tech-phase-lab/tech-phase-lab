@@ -37,10 +37,15 @@ export function percentile(value: number, reference: readonly number[]): number 
   for (const x of reference) { if (x < value) below++; else if (x === value) tied++; }
   return 100 * (below + tied / 2) / reference.length;
 }
+/** The five stages by the position among the basket's own history (owner, Nov 26 spec §6): bottom 5% 冷えている (only crashes such
+ * as autumn 2008 or March 2020), 5–25% やや冷えている, 25–75% 平常, 75–95% やや熱い, top 5% 熱い. Each basket separately. */
+export const BAND_EDGES = [5, 25, 75, 95] as const;
 export function temperatureBand(score: number): Temperature['band'] {
   if (!Number.isFinite(score) || score < 0 || score > 100) throw new Error('invalid-score');
-  return Math.min(4, Math.floor(score / 20)) as Temperature['band'];
+  return BAND_EDGES.filter(edge => score >= edge).length as Temperature['band'];
 }
+/** v1 snapshots (stored before Nov 26) used five equal fifths. */
+export const bandOf = (version: string, score: number): Temperature['band'] => version === 'daily-close-v1' ? Math.min(4, Math.floor(score / 20)) as Temperature['band'] : temperatureBand(score);
 function unavailable(reason: GaugeUnavailable['reason']): GaugeUnavailable { return { status: 'unavailable', reason }; }
 /** Reject duplicates, malformed bars and gaps rather than silently changing the baseline.
  * Future/unconfirmed bars are excluded before calculating either current or reference values.

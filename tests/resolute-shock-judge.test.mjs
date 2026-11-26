@@ -4,9 +4,9 @@ import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {prepareDailyReview} from '../services/resolute-api/rizel-daily-review.mjs';
 import {validateGeneration} from '../services/resolute-api/risk-job.mjs';
-import {judgeDay,judgePool,judgeInput,validateJudgement,marketWraps,ruleJudgement,RULE_REASON,JUDGE_ATTEMPTS} from '../services/resolute-api/shock-judge.mjs';
+import {judgeDay,judgePool,judgeInput,validateJudgement,marketWraps,ruleJudgement,RULE_REASON,JUDGE_ATTEMPTS,JUDGE_SCHEMA,JUDGE_INSTRUCTIONS} from '../services/resolute-api/shock-judge.mjs';
 import {ownerShockMailText,sendOwnerShockMail} from '../services/resolute-api/shock-owner-mail.mjs';
-import {parseRiskArticle,parseRiskFeed,readingParts,formatReading,marketStars,storyStars} from '../lib/resolute/risk.ts';
+import {parseRiskArticle,parseRiskFeed,readingParts,formatReading,marketStars} from '../lib/resolute/risk.ts';
 import {duringSession,measureStock} from '../lib/resolute/risk-market.ts';
 import {sessionIntraday,stockShock} from '../lib/resolute/thermometer-basket.ts';
 import {calculateTemperature,THERMOMETER_VERSIONS} from '../lib/resolute/thermometer.ts';
@@ -16,7 +16,8 @@ import {hash} from '../services/resolute-api/risk-store.mjs';
 
 const W='　';
 // The owner's case (Nov 26): NASDAQ-100 fell more than 4.5% intraday and closed about −0.6%. Measured close-to-close only, the
-// day read as quiet (TP大型株100 +0.2%, 0.2×) and the story got ★2 from a lasting cause. The intraday extreme now counts.
+// day read as quiet (TP大型株100 +0.2%, 0.2×) and the story got ★2 from a lasting cause. Now the table reads the larger of the
+// close and the intraday extreme, and nothing else changes the stars.
 const S='2026-11-25',PREV='2026-11-24';
 const moves={[S]:{nas100:{previousDate:PREV,changePercent:-0.6,typicalPercent:0.76,up:20,down:80,total:100,intraday:{changePercent:-4.6,typicalPercent:0.9,same:80}},
  sox:{previousDate:PREV,changePercent:-1.8,typicalPercent:2.2,up:10,down:30,total:40,intraday:{changePercent:-7.9,typicalPercent:2.6,same:36}},fear:{level:44.8,previousLevel:40},
@@ -32,21 +33,21 @@ const ITEMS=[
  row('Stock market today: Dow, S&P 500, Nasdaq claw back from steep intraday losses','2026-11-25T21:10:00.000Z',{lane:'market'}),
 ];
 
-test('the intraday extreme counts: a −4.6% intraday fall that closed −0.6% is a shock, not a quiet day',()=>{
+test('the intraday extreme counts: a −4.6% intraday fall that closed −0.6% is ★4, not a quiet day',()=>{
  const market={index:'nas100',session:S,reading:{from:PREV,nas100:{changePercent:-0.6,multiple:0.8,same:80,total:100,intraday:{changePercent:-4.6,multiple:5.1,same:80}},sox:null,fearChange:12}};
- assert.equal(marketStars(market),5);
+ assert.equal(marketStars(market),4);
  assert.equal(marketStars({...market,reading:{...market.reading,nas100:{...market.reading.nas100,intraday:undefined}}}),1);
- // The card: two lines per index, no parentheses, the fear line on a down day.
- assert.deepEqual(readingParts(market,'ja'),[{text:`TP大型株100${W}−0.6%`,detail:'取引中は −4.6% まで下落'},{text:`恐怖指数${W}+12%`}]);
- // An up day: 「取引中は +x% まで上昇」, and no fear line.
+ // The text lines (owner mail, daily plan facts) follow the card's table: 終値 and 一番下げた時, then the fear row on a down day.
+ assert.deepEqual(readingParts(market,'ja'),[{text:`TP大型株100${W}終値 −0.6%${W}一番下げた時 −4.6%`},{text:`恐怖指数${W}+12%`}]);
+ // An up day: 一番上げた時, and no fear row.
  const up={index:'nas100',session:S,reading:{from:PREV,nas100:{changePercent:1.2,multiple:1.6,same:70,total:100,intraday:{changePercent:3.4,multiple:3.8,same:60}},sox:null,fearChange:9}};
- assert.deepEqual(readingParts(up,'ja'),[{text:`TP大型株100${W}+1.2%`,detail:'取引中は +3.4% まで上昇'}]);
- // Within one point of the close: no second line.
- assert.deepEqual(readingParts({...up,reading:{...up.reading,nas100:{...up.reading.nas100,intraday:{changePercent:2.0,multiple:2.2,same:50}}}},'ja'),[{text:`TP大型株100${W}+1.2%`}]);
- // Single-company: 「NVDA　−3.1%」 with the same second line, then its industry basket.
+ assert.deepEqual(readingParts(up,'ja'),[{text:`TP大型株100${W}終値 +1.2%${W}一番上げた時 +3.4%`}]);
+ assert.equal(marketStars(up),3);
+ // Single-company: the stock's row, then its industry index's row; the higher of the two gives the stars (NVDA 9.4% → ★4, TP半導体40 7.9% → ★4).
  const company={index:'company',session:S,company:{ticker:'NVDA',basket:'sox'},reading:{from:PREV,nas100:null,sox:{changePercent:-1.8,multiple:0.8,same:30,total:40,intraday:{changePercent:-7.9,multiple:3,same:36}},fearChange:12,company:measureStock({previousDate:PREV,changePercent:-3.1,typicalPercent:1.9,intradayPercent:-9.4})}};
- assert.deepEqual(formatReading(company,'ja'),[`NVDA${W}−3.1%取引中は −9.4% まで下落`,`TP半導体40${W}−1.8%取引中は −7.9% まで下落`,`恐怖指数${W}+12%`]);
- for(const l of [...readingParts(market,'ja'),...readingParts(company,'ja')])assert.ok(!/[()（）]|倍|社中/.test(l.text+(l.detail??'')),l.text);
+ assert.deepEqual(formatReading(company,'ja'),[`NVDA${W}終値 −3.1%${W}一番下げた時 −9.4%`,`TP半導体40${W}終値 −1.8%${W}一番下げた時 −7.9%`]);
+ assert.equal(marketStars(company),4);
+ for(const l of [...readingParts(market,'ja'),...readingParts(company,'ja')])assert.ok(!/[()（）▼▲]|倍|社中/.test(l.text),l.text);
 });
 
 test('the thermometer measures each basket\'s intraday extreme and each stock\'s own, from the daily bars\' high and low',()=>{
@@ -62,7 +63,7 @@ test('the thermometer measures each basket\'s intraday extreme and each stock\'s
  const s=stockShock(basket.T0,dates.at(-1));assert.ok(s.intradayPercent<-4);
 });
 
-test('the AI judges the day: retried with backoff, then its picks and stars are used; numbers are input only',async()=>{
+test('the AI selects the stories (retried with backoff) but never gives or changes stars; numbers are input only',async()=>{
  const pool=judgePool(ITEMS.map(i=>({...i,id:hash(i.url),body:i.bodyEn,tickers:i.tickers})),moves);
  assert.deepEqual(pool.map(p=>[p.candidate.title.split(' ')[0],p.market.session]),[['Stocks',S],['S&P',S],['Chip',S]]);
  assert.equal(duringSession(new Date('2026-11-25T15:30:00Z')),S);assert.equal(duringSession(new Date('2026-11-25T12:00:00Z')),null);
@@ -70,29 +71,33 @@ test('the AI judges the day: retried with backoff, then its picks and stars are 
  assert.deepEqual(wraps.map(w=>w.title),['Stock market today: Dow, S&P 500, Nasdaq claw back from steep intraday losses']);
  const input=judgeInput({day:'2026-11-26',pool,wraps});
  assert.equal(input.stories[0].tpLargeCap100.intradayExtremePercent,-4.6);assert.equal(input.stories[0].fearIndexChangePercent,12);
+ // The output has no stars at all (owner, Nov 26: no AI ±1).
+ assert.deepEqual(JUDGE_SCHEMA.properties.picks.items.required,['key','reasonJa','reasonEn']);assert.ok(!('stars' in JUDGE_SCHEMA.properties.picks.items.properties));
+ assert.ok(!/give .*stars|assign .*stars/i.test(JUDGE_INSTRUCTIONS));
  let calls=0;const sleeps=[];
- const call=async()=>{calls++;if(calls<3)throw Error('MODEL_UNAVAILABLE');return {picks:[{key:'s1',stars:4,reasonJa:'取引中にTP大型株100が-4.6%まで下げた',reasonEn:'The market fell sharply during the day.'},{key:'s2',stars:3,reasonJa:'格付けの見通し引き下げでNVDAが急落',reasonEn:'Nvidia fell after the rating watch.'}]};};
+ const call=async()=>{calls++;if(calls<3)throw Error('MODEL_UNAVAILABLE');return {picks:[{key:'s1',reasonJa:'取引中にTP大型株100が-4.6%まで下げた',reasonEn:'The market fell sharply during the day.'},{key:'s2',reasonJa:'格付けの見通し引き下げでNVDAが急落',reasonEn:'Nvidia fell after the rating watch.'}]};};
  const j=await judgeDay({day:'2026-11-26',pool,wraps,call,sleep:async ms=>sleeps.push(ms)});
- assert.equal(j.attempts,3);assert.deepEqual(sleeps,[5000,20000]);assert.deepEqual(j.picks.map(p=>[p.candidate.title.split(' ')[0],p.stars]),[['Stocks',4],['S&P',3]]);
+ assert.equal(j.attempts,3);assert.deepEqual(sleeps,[5000,20000]);
+ assert.deepEqual(j.picks.map(p=>[p.candidate.title.split(' ')[0],marketStars(p.market)]),[['Stocks',4],['S&P',4]]);
+ assert.ok(j.picks.every(p=>!('stars' in p)));
  // Every attempt failing: no picks, the caller falls back.
  const failed=await judgeDay({day:'2026-11-26',pool,wraps,call:async()=>{throw Error('MODEL_UNAVAILABLE');},sleep:async()=>{}});
  assert.equal(failed.picks,null);assert.equal(failed.attempts,JUDGE_ATTEMPTS);assert.equal(failed.failure,'MODEL_UNAVAILABLE');
- // Validators: unknown story, a number not in the input, banned wording, a sixth-plus pick.
- assert.equal(validateJudgement({picks:[{key:'s9',stars:3,reasonJa:'下落',reasonEn:'Fell.'}]},input),null);
- assert.equal(validateJudgement({picks:[{key:'s1',stars:3,reasonJa:'-12.3%まで下落',reasonEn:'Fell.'}]},input),null);
- assert.equal(validateJudgement({picks:[{key:'s1',stars:3,reasonJa:'一時的な下げ',reasonEn:'Fell.'}]},input),null);
- assert.equal(validateJudgement({picks:[{key:'s1',stars:6,reasonJa:'下落',reasonEn:'Fell.'}]},input),null);
- // The numeric fallback: the rule's stars with the intraday extreme, a fixed reason.
- // NVDA (1.6× its normal day) fails the two-move test: ★1 under the rule, never hidden.
- assert.deepEqual(ruleJudgement(pool).map(p=>[p.stars,p.reason]),[[5,RULE_REASON],[1,RULE_REASON],[5,RULE_REASON]]);
+ // Validators: unknown story, a number not in the input, banned wording.
+ assert.equal(validateJudgement({picks:[{key:'s9',reasonJa:'下落',reasonEn:'Fell.'}]},input),null);
+ assert.equal(validateJudgement({picks:[{key:'s1',reasonJa:'-12.3%まで下落',reasonEn:'Fell.'}]},input),null);
+ assert.equal(validateJudgement({picks:[{key:'s1',reasonJa:'一時的な下げ',reasonEn:'Fell.'}]},input),null);
+ // The fallback: the pool by the table's stars, a fixed reason.
+ assert.deepEqual(ruleJudgement(pool).map(p=>[p.candidate.title.split(' ')[0],marketStars(p.market),p.reason]),[['Stocks',4,RULE_REASON],['S&P',4,RULE_REASON],['Chip',4,RULE_REASON]]);
 });
 
-test('no lift: on a day the market did not move, a judged story is stored at ★1 at most; a quiet day still gets stars',()=>{
+test('a quiet day stays ★1 whatever the AI or a cause says; the same story on the −4.6% intraday day is ★4',()=>{
  const m={index:'nas100',session:S,reading:{from:PREV,nas100:{changePercent:0.2,multiple:0.3,same:57,total:100,intraday:{changePercent:-0.5,multiple:0.6,same:10}},sox:null,fearChange:0}};
- assert.equal(storyStars(m,null,{stars:3,source:'ai',reason:{ja:'x',en:'x'}}),1);
- assert.equal(storyStars(m,{kind:'lasting',ja:'取締役会の懸念',en:'board concerns'},null),1,'a lasting cause never lifts a quiet story');
+ const article=parseRiskArticle({id:'b'.repeat(64),url:'https://news.example/b',publishedAt:'2026-11-25T13:00:00.000Z',stars:1,quoteId:null,market:m,
+  judge:{source:'ai',reason:{ja:'取締役会の懸念',en:'Board concerns.'}},ja:{title:'取締役会の懸念',source:'x',content:'本文\nこのニュースで、あなたのルールの条件に当てはまるものはありますか？',date:'2026年11月25日'},en:{title:'Board concerns',source:'x',content:'Body\nDoes anything in this news meet a condition in your rules?',date:'November 25, 2026'}});
+ assert.equal(article.stars,1);assert.equal(marketStars(m),1);
  const moved={...m,reading:{...m.reading,nas100:{...m.reading.nas100,intraday:{changePercent:-4.6,multiple:5.1,same:80}}}};
- assert.equal(storyStars(moved,null,{stars:3,source:'ai',reason:{ja:'x',en:'x'}}),3);
+ assert.equal(marketStars(moved),4);
 });
 
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
@@ -106,15 +111,16 @@ async function run(judge){
   return {result,saved,lines};
  }finally{await db.close();}
 }
-test('the morning run uses the AI\'s picks and stars; members see them with the card lines',async()=>{
- const judge=async({pool})=>({attempts:1,picks:[{...pool[1],stars:3,reason:{ja:'格付けの見通し引き下げでNVDAが急落',en:'Nvidia fell.'}},{...pool[0],stars:4,reason:{ja:'取引中に大きく下げた',en:'The market fell sharply.'}}]});
+test('the morning run uses the AI\'s picks with the table\'s stars; members see them with the card lines',async()=>{
+ const judge=async({pool})=>({attempts:1,picks:[{...pool[1],stars:1,reason:{ja:'格付けの見通し引き下げでNVDAが急落',en:'Nvidia fell.'}},{...pool[0],stars:1,reason:{ja:'取引中に大きく下げた',en:'The market fell sharply.'}}]});
  const {result,saved}=await run(judge);
  assert.equal(result.state,'ready');assert.equal(result.diagnostics.judge.source,'ai');
  const feed=parseRiskFeed({state:'ready',date:'2026-11-26',articles:saved[0],quotes:[]});
- assert.deepEqual(feed.articles.map(a=>[a.ja.title.split(' ')[0],a.stars,a.judge.source]),[['S&P',3,'ai'],['Stocks',4,'ai']]);
- assert.deepEqual(formatReading(feed.articles[0].market,'ja'),[`NVDA${W}−3.1%取引中は −9.4% まで下落`,`TP半導体40${W}−1.8%取引中は −7.9% まで下落`,`恐怖指数${W}+12%`]);
+ // A stars field slipped into a pick is ignored: the table gives ★4 to both.
+ assert.deepEqual(feed.articles.map(a=>[a.ja.title.split(' ')[0],a.stars,a.judge.source]),[['S&P',4,'ai'],['Stocks',4,'ai']]);
+ assert.deepEqual(formatReading(feed.articles[0].market,'ja'),[`NVDA${W}終値 −3.1%${W}一番下げた時 −9.4%`,`TP半導体40${W}終値 −1.8%${W}一番下げた時 −7.9%`]);
 });
-test('every AI attempt failing: the numeric rule with intraday extremes gives the stars, and it is logged',async()=>{
+test('every AI attempt failing: the stories are taken by the table\'s stars, and it is logged',async()=>{
  const {result,saved,lines}=await run(async()=>({picks:null,attempts:4,failure:'MODEL_UNAVAILABLE'}));
  assert.equal(result.state,'ready');assert.equal(result.diagnostics.judge.source,'rule');
  assert.ok(lines.some(l=>JSON.parse(l).event==='RIZEL_SHOCK_JUDGE_FALLBACK'));
@@ -122,14 +128,14 @@ test('every AI attempt failing: the numeric rule with intraday extremes gives th
  assert.ok(articles.length>=1&&articles.every(a=>a.stars>=1&&a.judge.source==='rule'));
 });
 
-test('owner mail: off by default; the stories, stars, the AI reason, the card lines, リゼルの一言 and the fallback flag',async()=>{
+test('owner mail: off by default; the stories, stars, the AI\'s reason for choosing, the numbers used, リゼルの一言 and the fallback flag',async()=>{
  const article=parseRiskArticle({id:'a'.repeat(64),url:'https://news.example/a',publishedAt:'2026-11-25T13:00:00.000Z',stars:4,quoteId:'calm',
   market:{index:'nas100',session:S,reading:{from:PREV,nas100:{changePercent:-0.6,multiple:0.8,same:80,total:100,intraday:{changePercent:-4.6,multiple:5.1,same:80}},sox:null,fearChange:12}},
-  judge:{stars:4,source:'ai',reason:{ja:'取引中に大きく下げた',en:'Fell sharply.'}},ja:{title:'米国株が取引中に急落',source:'x',content:'本文\nこのニュースで、あなたのルールの条件に当てはまるものはありますか？',date:'2026年11月25日'},en:{title:'Stocks tumble',source:'x',content:'Body\nDoes anything in this news meet a condition in your rules?',date:'November 25, 2026'}});
+  judge:{source:'ai',reason:{ja:'取引中に大きく下げた',en:'Fell sharply.'}},ja:{title:'米国株が取引中に急落',source:'x',content:'本文\nこのニュースで、あなたのルールの条件に当てはまるものはありますか？',date:'2026年11月25日'},en:{title:'Stocks tumble',source:'x',content:'Body\nDoes anything in this news meet a condition in your rules?',date:'November 25, 2026'}});
  const quotes=[{id:'calm',approved:true,ja:{title:'一度大きく揺れた日は、自分のルールを先に確かめます。',reasons:[]},en:{title:'x',reasons:[]}}];
  const text=ownerShockMailText({day:'2026-11-26',articles:[article],quotes,fallback:false});
- for(const s of ['1. 米国株が取引中に急落','★4','判定の理由: 取引中に大きく下げた',`TP大型株100${W}−0.6%`,'  取引中は −4.6% まで下落',`恐怖指数${W}+12%`,'リゼルの一言: 一度大きく揺れた日は、自分のルールを先に確かめます。','AIがその日の市場の動きとニュースを読んで判定しました'])assert.ok(text.includes(s),s);
- assert.ok(ownerShockMailText({day:'2026-11-26',articles:[article],quotes,fallback:true}).includes('AIの判定に失敗したため'));
+ for(const s of ['1. 米国株が取引中に急落','★4','選んだ理由: 取引中に大きく下げた',`  TP大型株100${W}終値 −0.6%${W}一番下げた時 −4.6%`,`  恐怖指数${W}+12%`,'リゼルの一言: 一度大きく揺れた日は、自分のルールを先に確かめます。','AIは★を変えません','AIがその日の市場のまとめ記事とニュースを読んで選びました'])assert.ok(text.includes(s),s);
+ assert.ok(ownerShockMailText({day:'2026-11-26',articles:[article],quotes,fallback:true}).includes('AIによるニュースの選定に失敗したため'));
  const pool={query:async sql=>sql.includes('risk_days')?{rows:[{state:'ready',articles:[article]}]}:{rows:quotes.map(value=>({value}))}};
  assert.deepEqual(await sendOwnerShockMail({env:{},pool,day:'2026-11-26'}),{state:'off'});
  const sent=[],asked=[];

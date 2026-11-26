@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {starsFromShock,measureDay,fearChangeOf,readingStars,causeStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,readingParts,formatCause,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
+import {bandStars,indexStars,stockStars,marketStars,measureDay,fearChangeOf,readingStars,riskAction,parseRiskFeed,latestRiskDate,formatReading,readingParts,shockTable,SUMMARY_QUESTION,starCriteria,starSummary,STAR_INFO_LABEL,noStarsLabel} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
@@ -13,57 +13,59 @@ const body='NVIDIA warned that export restrictions across the semiconductor sect
 const candidate={id:hash('https://investor.nvidia.com/test'),title:'Chipmakers warn of export restrictions',body,url:'https://investor.nvidia.com/test',publishedAt:'2026-10-12T20:00:00Z',source:'official'};
 const generated={publishable:true,ja:{title:'NVIDIAが輸出規制について警告',source:'NVIDIAの公式発表',content:'NVIDIAが、半導体業界への輸出規制が計画段階にあると発表しました。',date:'2026年10月12日の発表'},en:{title:'NVIDIA warns of export restrictions',source:'NVIDIA announcement',content:'NVIDIA said export restrictions across the semiconductor sector are planned, not completed.',date:'Announced on October 12, 2026'}};
 const article=validateGeneration(generated,candidate);
-// A down move unless given (the fear condition counts on a down move only).
-const shock=(multiple,same,total,fearChange,changePercent=-1)=>({changePercent,multiple,same,total,fearChange});
-test('Shock Gauge stars are mechanical: the highest level whose every condition holds (multiple of the typical move, breadth, fear)',()=>{
- assert.deepEqual(RISK_POLICY.stars.levels,[{stars:5,multiple:5,breadth:80,fear:10},{stars:4,multiple:3,breadth:80,fear:null},{stars:3,multiple:2,breadth:70,fear:null},{stars:2,multiple:1.5,breadth:null,fear:null}]);
- assert.equal(RISK_POLICY.stars.typicalDays,60);assert.equal(RISK_POLICY.reviewMinStars,4);
- for(const [s,stars] of [[shock(0.6,20,40,0),1],[shock(1.4,40,40,50),1],[shock(1.5,0,40,null),2],[shock(2,28,40,0),3],[shock(2,27,40,0),2],[shock(3,32,40,0),4],[shock(3,31,40,0),3],
-  [shock(5,32,40,10),5],[shock(5,32,40,9),4],[shock(5,32,40,null),4],[shock(9,31,40,40),3]])assert.equal(starsFromShock(s),stars,JSON.stringify(s));
- // Owner, Nov 25: on an UP move the fear index does not count (it rises on big up days too): ★5 = ≥5× and ≥80% up.
- for(const [s,stars] of [[shock(5,32,40,null,1),5],[shock(5,32,40,-30,1),5],[shock(7.9,89,99,19,6),5],[shock(4.9,40,40,50,1),4],[shock(5,31,40,50,1),3]])assert.equal(starsFromShock(s),stars,'up '+JSON.stringify(s));
- // Owner anchors (Nov 25), measured on the thermometer's own data: Nov 20 TP大型株100 −5.4% (6.0×, 47/55, fear +12%) ★5;
- // Nov 24 TP半導体40 −8.5% (3.8×, 39/40, fear 0%) ★4; an ordinary day ★1–2.
- assert.equal(starsFromShock(shock(6,47,55,12)),5);assert.equal(starsFromShock(shock(3.8,39,40,0)),4);assert.equal(starsFromShock(shock(1.1,30,55,1)),1);
+const R=(nas,sox,fearChange=0)=>({from:'2026-11-24',nas100:nas,sox,fearChange});
+const M=(changePercent,intraday)=>({changePercent,multiple:1,same:50,total:100,...(intraday!==undefined?{intraday:{changePercent:intraday,multiple:1,same:50}}:{})});
+test('Shock Gauge stars come from the owner\'s table only (Nov 26): the larger of the close and the intraday extreme, the higher index',()=>{
+ assert.deepEqual(RISK_POLICY.stars.bands,{nas100:[1,2,3.5,5],sox:[1.6,3.2,5.6,8],stock:[2,4,7,10]});assert.equal(RISK_POLICY.stars.fearBump,20);
+ for(const [move,want] of [[0.99,1],[1,2],[1.99,2],[2,3],[3.49,3],[3.5,4],[4.99,4],[5,5],[12,5]])assert.equal(bandStars(move,RISK_POLICY.stars.bands.nas100),want,String(move));
+ for(const [move,want] of [[1.59,1],[1.6,2],[3.2,3],[5.6,4],[7.9,4],[8,5]])assert.equal(bandStars(move,RISK_POLICY.stars.bands.sox),want,String(move));
+ for(const [move,want] of [[1.9,1],[2,2],[4,3],[7,4],[10,5]])assert.equal(bandStars(move,RISK_POLICY.stars.bands.stock),want,String(move));
+ // Owner check, Nov 25: TP大型株100 −0.6% close, −4.6% intraday → ★4; TP半導体40 −1.8% / −7.9% → ★4; the day ★4 (fear +12%: no bump).
+ assert.equal(indexStars('nas100',M(-0.6,-4.6)),4);assert.equal(indexStars('sox',M(-1.8,-7.9)),4);
+ assert.equal(readingStars(R(M(-0.6,-4.6),M(-1.8,-7.9),12)),4);
+ // The close alone when there is no intraday figure, and whichever is larger.
+ assert.equal(indexStars('nas100',M(-2.4)),3);assert.equal(indexStars('nas100',M(-5.2,-3)),5);
+ // The fear index up 20% or more adds ★1 on a down day only, ★5 at most.
+ assert.equal(readingStars(R(M(-2.4),null,20)),4);assert.equal(readingStars(R(M(-2.4),null,19)),3);
+ assert.equal(readingStars(R(M(2.4),null,25)),3,'never on an up day');assert.equal(readingStars(R(M(-6),null,40)),5);
+ // Single-company news: the higher of the stock's row and its industry index's row.
+ const company=(stock,basket,fear=0)=>({index:'company',session:'2026-11-25',company:{ticker:'NVDA',basket:'sox'},reading:{...R(null,basket,fear),company:stock}});
+ assert.equal(marketStars(company({changePercent:-3.1,multiple:1,intraday:-9.4},M(-1.8,-7.9))),4); // NVDA 9.4% → ★4; TP半導体40 7.9% → ★4
+ assert.equal(marketStars(company({changePercent:-3.1,multiple:1,intraday:-5.8},M(-1.8,-4.2))),3); // NVDA 5.8% → ★3; TP半導体40 4.2% → ★3
+ assert.equal(marketStars(company({changePercent:-1,multiple:1},M(-0.5))),1);
+ assert.equal(stockStars({changePercent:12,multiple:1}),5);
+ assert.equal(readingStars(null),null);
  // Measured and rounded exactly as shown.
  assert.deepEqual(measureDay({changePercent:-8.51,typicalPercent:2.24,up:1,down:39,total:40}),{changePercent:-8.5,multiple:3.8,same:39,total:40});
- assert.deepEqual(measureDay({changePercent:4.1,typicalPercent:0.65,up:50,down:5,total:55}),{changePercent:4.1,multiple:6.3,same:50,total:55});
  assert.equal(fearChangeOf({level:60.1,previousLevel:60}),0);assert.equal(fearChangeOf({level:33,previousLevel:29}),14);assert.equal(fearChangeOf(null),null);
- // Both indices are measured; the story's stars are the stronger of the two (owner, Nov 25).
- const both={from:'2026-11-23',nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0};
- assert.equal(readingStars(both),4);assert.equal(readingStars({...both,sox:null}),2);assert.equal(readingStars(null),null);
- // The model's reading of the cause moves the stars by one step at most, within 1–5; ★5 only from a market ★4.
- const off={kind:'one-off',ja:'システム障害',en:'system outage'},last={kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'};
- for(const [m,c,want] of [[4,null,4],[4,off,3],[1,off,1],[4,last,5],[3,last,4],[5,last,5],[null,last,null]])assert.equal(causeStars(m,c),want,`${m} ${c?.kind}`);
  assert.equal(riskAction(4),'review');assert.equal(riskAction(3),'none');assert.equal(riskAction(null),'none');assert.throws(()=>riskAction(0));
 });
 test('the published criteria text is plain, generated from the levels, in both languages, and shown on the Shock Gauge page',()=>{
- // Owner, Nov 26: the stars are judged daily by AI reading the day; the 「i」 text says so plainly.
- const ja=starCriteria('ja');
- assert.ok(ja.startsWith('★のつけ方\n・毎朝、AIがその日の市場のまとめ記事とニュース、指標の動きを読み、市場を実際に動かしたニュースを3つまで選びます。市場全体のニュースを優先します。'));
- for(const line of ['・★5：歴史に残るほどの衝撃','・★1：小さな動き','・取引中に大きく動いて終値にかけて戻した日も、衝撃として数えます。','・市場がほとんど動かなかったときのニュースは、★1までです。'])assert.ok(ja.includes(line),line);
- assert.ok(ja.includes('ふだんの1日の値動きの何倍か')&&!ja.includes('いつもの'));
- assert.match(starCriteria('en'),/^How stars are set\n- Every morning AI reads the day's market wrap-ups/);
- assert.equal(starSummary('ja'),'★は、毎朝AIが、前の日のアメリカ市場の動き（TP大型株100とTP半導体40の終値と取引中の動き、下落の日の恐怖指数、1社だけのニュースはその会社の株価）と、市場のまとめ記事やニュースを読んで、市場を実際に動かしたニュースを選び、5段階でつけています。');
- assert.match(starSummary('en'),/^Every morning AI reads how the U\.S\. market moved/);
+ // Owner, Nov 26 spec §1: the 「i」 text describes the table plainly, in the owner's words.
+ assert.equal(starCriteria('ja'),['★のつけ方',
+  '・TP大型株100とTP半導体40のそれぞれで、終値の動きと取引中のいちばん大きな動きのうち大きいほうで決めます。2つの指標のうち★が多いほうがその日の★です。',
+  '・TP大型株100：★1 1%未満、★2 1〜2%、★3 2〜3.5%、★4 3.5〜5%、★5 5%以上',
+  '・TP半導体40：★1 1.6%未満、★2 1.6〜3.2%、★3 3.2〜5.6%、★4 5.6〜8%、★5 8%以上',
+  '・1社だけのニュースは、その会社の株価の動きで決めます：★1 2%未満、★2 2〜4%、★3 4〜7%、★4 7〜10%、★5 10%以上',
+  '・恐怖指数が前の日より20%以上上がった日は、★を1つ足します。★5が上限です。',
+  '・ニュースが出る前に起きた動きは数えません。見出しと逆の向きに動いたニュースは載せません。',
+  '・どのニュースを載せるかは、毎朝AIが市場のまとめ記事とニュースを読み、市場を動かしたものを3つまで選びます。市場全体のニュースを優先します。★の数はAIでは変えません。'].join('\n'));
+ assert.match(starCriteria('en'),/^How stars are set\n- For each of TP Large Cap 100 and TP Semiconductor 40, we take the larger of the close move and the largest move during trading/);
+ assert.ok(starSummary('ja').includes('終値の動きと取引中のいちばん大きな動きのうち大きいほうで決め、2つの指標のうち★が多いほうをとります。恐怖指数が20%以上上がった日は★を1つ足します。'));
  const screen=readFileSync(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),gauge=readFileSync(new URL('../app/resolute/features/shock-gauge.tsx',import.meta.url),'utf8');
  assert.ok(screen.includes("<span className={s.k}>{en?'Shock':'衝撃度'}<StarInfo locale={locale}/></span>"));
  assert.ok(!/starCriteria|starSummary/.test(screen),'nothing else on the page');
  assert.match(gauge,/aria-expanded=\{open\}[^]*\{open\?<span role="note"[^]*\{starSummary\(locale\)\+'\\n\\n'\+starCriteria\(locale\)\}/);
  assert.equal(STAR_INFO_LABEL.ja,'★のつけ方');
- const m={index:'sox',session:'2026-11-24',reading:{from:'2026-11-23',nas100:{changePercent:-1.5,multiple:2,same:47,total:99},sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0}};
- // Owner, Nov 26 (approved mock-up): no parentheses, no multiples, no company counts.
- assert.deepEqual(formatReading(m,'ja'),['TP半導体40　−8.5%','TP大型株100　−1.5%','恐怖指数　0%']);
- assert.deepEqual(formatReading({...m,index:'nas100'},'en'),['TP Large Cap 100  −1.5%','TP Semiconductor 40  −8.5%','Fear index  0%']);
- // The second line (smaller, muted) only when the intraday extreme differs from the close by 1 point or more.
- const swing={...m,index:'nas100',reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:-0.6,intraday:{changePercent:-4.6,multiple:5.2,same:80}},sox:{...m.reading.sox,intraday:{changePercent:-9.1,multiple:3,same:38}}}};
- assert.deepEqual(readingParts(swing,'ja'),[{text:'TP大型株100　−0.6%',detail:'取引中は −4.6% まで下落'},{text:'TP半導体40　−8.5%'},{text:'恐怖指数　0%'}]);
- assert.deepEqual(readingParts(swing,'en')[0],{text:'TP Large Cap 100  −0.6%',detail:'Intraday low −4.6%'});
- assert.match(gauge,/readingParts\(article\.market,locale\)/);
- assert.match(gauge,/const detail:CSSProperties=\{whiteSpace:'nowrap',fontSize:'\.87em'[^}]*display:'block'/);
- assert.equal(formatCause({market:m,stars:3,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}},'ja'),'一過性とみられる要因（システム障害）→ ★−1');
- assert.equal(formatCause({market:m,stars:5,cause:{kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'}},'en'),'Likely to last (tighter export controls) → ★+1');
- assert.equal(formatCause({market:m,stars:4,cause:null},'ja'),null);
+ // Owner, Nov 26 spec §3: the card's small table, 終値 and 一番下げた時 (一番上げた時 on an up day), − and + (never ▼▲).
+ const m={index:'nas100',session:'2026-11-25',reading:{from:'2026-11-24',nas100:{changePercent:-0.6,multiple:1,same:80,total:100,intraday:{changePercent:-4.6,multiple:5,same:80}},sox:{changePercent:-1.8,multiple:1,same:30,total:40,intraday:{changePercent:-7.9,multiple:3,same:36}},fearChange:12}};
+ assert.deepEqual(shockTable(m,'ja'),{close:'終値',extreme:'一番下げた時',rows:[
+  {label:'TP大型株100',close:'−0.6%',extreme:'−4.6%',tone:'down'},{label:'TP半導体40',close:'−1.8%',extreme:'−7.9%',tone:'down'},{label:'恐怖指数',close:'+12%',extreme:'−',tone:null,fear:true}]});
+ const up={...m,reading:{...m.reading,nas100:{...m.reading.nas100,changePercent:1.2,intraday:{changePercent:3.4,multiple:3,same:60}},sox:null,fearChange:9}};
+ assert.deepEqual(shockTable(up,'en'),{close:'Close',extreme:'Intraday high',rows:[{label:'TP Large Cap 100',close:'+1.2%',extreme:'+3.4%',tone:'up'}]});
+ assert.deepEqual(formatReading(m,'ja'),['TP大型株100\u3000終値 −0.6%\u3000一番下げた時 −4.6%','TP半導体40\u3000終値 −1.8%\u3000一番下げた時 −7.9%','恐怖指数\u3000+12%']);
+ const card=readFileSync(new URL('../app/resolute/features/shock-card.tsx',import.meta.url),'utf8');
+ assert.ok(!/[▼▲]/.test(card+JSON.stringify(shockTable(m,'ja'))));
 });
 test('a new story waits for the market: no stars, its index and the session after the news are recorded',()=>{
  // 2026-10-12T20:00Z is 16:00 New York time: after regular hours, so it is measured on the next full session.
@@ -83,8 +85,8 @@ test('a new story waits for the market: no stars, its index and the session afte
  assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,market:{...article.market,reading:{...reading,from:'2026-10-13'}}}],quotes:[]}));
  const filled={...article,market:{...article.market,reading},stars:3,quoteId:'calm'};
  assert.deepEqual((({stars,quoteId})=>({stars,quoteId}))(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[filled],quotes:[]}).articles[0]),{stars:3,quoteId:'calm'});
- // The cause is part of the stored story; the stars follow it.
- assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...filled,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}}],quotes:[]}).articles[0].stars,2);
+ // The cause is stored with the story but never changes the stars (owner, Nov 26: no AI ±1).
+ assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...filled,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}}],quotes:[]}).articles[0].stars,3);
  assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...filled,cause:{kind:'maybe',ja:'x',en:'x'}}],quotes:[]}));
  assert.equal(noStarsLabel(article,'ja'),'市場の反応待ち');
  // Legacy rubric fields are gone.

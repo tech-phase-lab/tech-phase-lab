@@ -6,7 +6,7 @@ import {selectDailyCandidates,breaksCurrentRules,reselectStoredDay,previewSelect
 import {validateGeneration,SUMMARY_INSTRUCTIONS} from '../services/resolute-api/risk-job.mjs';
 import {applyMarketReaction} from '../lib/resolute/risk-market.ts';
 import {storyScope,isBarePriceMove,titleSimilarity} from '../lib/resolute/risk-scope.ts';
-import {parseRiskArticle,readingStars,measureDay,fearChangeOf,causeStars,formatReading,formatCause,noStarsLabel} from '../lib/resolute/risk.ts';
+import {parseRiskArticle,readingStars,measureDay,fearChangeOf,formatReading,noStarsLabel} from '../lib/resolute/risk.ts';
 import {hash} from '../services/resolute-api/risk-store.mjs';
 
 // Owner, Nov 25 (JST): the first public Shock Gauge day listed three NVIDIA stories, each ★★★★★ with 「TP半導体40 −8.5%」:
@@ -52,10 +52,10 @@ test('a day with market-wide and chip-sector news: one move, one story — marke
  ];
  const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
  // Nov 24: TP大型株100 −1.5% (2.0×, 47/99) moved at least the ★2 line, so a market-wide story keeps Nov 24 (owner: market-wide
- // news first) and shows the stronger index's ★4 (TP半導体40 −8.5%, 3.8×, 39/40 down). One move, one story.
+ // news first) and shows the stronger index's ★5 (TP半導体40 −8.5%: 8% or more). One move, one story.
  assert.deepEqual(selected.map(c=>c.title),['Nasdaq falls as Treasury yields climb ahead of Fed minutes','Nvidia shares slide as investors question AI spending',TODAY.cipher.en]);
  const preview=previewSelection({selected,reserve,diagnostics},moves);
- assert.deepEqual(preview.selected.map(p=>[p.index,p.session,p.marketStars]),[['nas100',session,4],['company','2026-11-25',null],['company',null,null]]);
+ assert.deepEqual(preview.selected.map(p=>[p.index,p.session,p.marketStars]),[['nas100',session,5],['company','2026-11-25',null],['company',null,null]]);
  assert.equal(preview.selected[1].company,'NVDA');
  assert.deepEqual(formatReading({index:'nas100',session,reading:preview.selected[0].reading},'ja'),['TP大型株100　−1.5%','TP半導体40　−8.5%','恐怖指数　0%']);
  // The chip-sector stories and the other market-wide one on Nov 24 repeat the move already shown: reserve only.
@@ -71,21 +71,18 @@ test('a day with market-wide and chip-sector news: one move, one story — marke
 });
 
 const day=(nas,sox,fear)=>({from:'2026-01-01',nas100:nas?measureDay(nas):null,sox:sox?measureDay(sox):null,fearChange:fearChangeOf(fear)});
-const OFF={kind:'one-off',ja:'システム障害',en:'system outage'},LAST={kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'};
-test('owner anchors under the published rule (measured with the thermometer formulas on the constituents\' daily closes)',()=>{
- // Nov 20: TP大型株100 −4.7% (usual 0.74%: 6.3×, 81 of 99 down), TP半導体40 −10.4% (usual 2.11%: 4.9×, 40 of 40), fear +12% → ★5.
+test('owner anchors under the table (Nov 26): the larger of the close and the intraday extreme, the higher index, fear +1 on a down day',()=>{
+ // Nov 20: TP大型株100 −4.7% → ★4, TP半導体40 −10.4% → ★5; fear +12% (no bump) → ★5.
  const nov20=day({changePercent:-4.70,typicalPercent:0.744,up:18,down:81,total:99},{changePercent:-10.41,typicalPercent:2.114,up:0,down:40,total:40},{level:34.70,previousLevel:30.87});
- assert.equal(readingStars(nov20),5);assert.equal(causeStars(5,OFF),4);
- // Nov 24: TP半導体40 −8.5% (3.8×, 39 of 40) ★4; TP大型株100 −1.5% (2.0×, 47 of 99) ★2; fear 0% → ★4 for any market or chip story.
+ assert.equal(readingStars(nov20),5);
+ // Nov 24: TP半導体40 −8.5% → ★5 (8% or more); TP大型株100 −1.5% → ★2.
  const nov24=day({changePercent:-1.47,typicalPercent:0.744,up:52,down:47,total:99},{changePercent:-8.51,typicalPercent:2.24,up:1,down:39,total:40},{level:41.15,previousLevel:41.33});
- assert.equal(readingStars(nov24),4);assert.equal(causeStars(4,LAST),5);assert.equal(causeStars(4,null),4);
- // 2025-11-20, a calm market: TP大型株100 −2.9% is 4.7× its usual 0.62% with 88 of 97 down and fear +11% → ★4 (TP半導体40 −4.3%,
- // 3.1×, 38 of 38: ★4). If the article shows a one-off cause it is ★3; a lasting cause makes it ★5.
- const calm=day({changePercent:-2.9,typicalPercent:0.62,up:9,down:88,total:97},{changePercent:-4.3,typicalPercent:1.4,up:0,down:38,total:38},{level:22.2,previousLevel:20});
- assert.equal(readingStars(calm),4);assert.equal(causeStars(4,OFF),3);assert.equal(causeStars(4,LAST),5);
+ assert.equal(readingStars(nov24),5);
+ // A −2.9% large-cap day with the fear index up 11%: ★3 (no bump below 20%); with fear +25% it would be ★4.
+ assert.equal(readingStars(day({changePercent:-2.9,typicalPercent:0.62,up:9,down:88,total:97},null,{level:22.2,previousLevel:20})),3);
+ assert.equal(readingStars(day({changePercent:-2.9,typicalPercent:0.62,up:9,down:88,total:97},null,{level:25,previousLevel:20})),4);
  // An ordinary day.
  assert.equal(readingStars(day({changePercent:-0.6,typicalPercent:0.9,up:40,down:60,total:100},null,{level:20,previousLevel:20})),1);
- assert.equal(causeStars(2,LAST),3,'a lasting cause never jumps to ★5 from a small move');
  assert.ok(titleSimilarity('Nvidia Falls 5.6% in Premarket','Nvidia Falls 3.1% in Premarket')>=0.5,'same headline with another number');
 });
 
@@ -106,9 +103,9 @@ test('breaksCurrentRules: today\'s stored day (three ★5 on one TP半導体40 m
  assert.equal(breaksCurrentRules(days),true);
  assert.equal(breaksCurrentRules(days.map(a=>({...a,stars:4}))),true,'still three stories on one index and close');
  const measured={index:'sox',session,reading:{from:'2026-11-23',nas100:null,sox:{changePercent:-8.5,multiple:3.8,same:39,total:40},fearChange:0}};
- assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:4},{...days[1],market:{index:'company',session:null,reading:null},stars:null}]),false);
- assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:5}]),true,'stars the rule does not give');
- assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:3,cause:OFF}]),false,'a one-off cause, one step down');
+ assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:5},{...days[1],market:{index:'company',session:null,reading:null},stars:null}]),false);
+ assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:4}]),true,'stars the table does not give');
+ assert.equal(breaksCurrentRules([{...days[0],market:measured,stars:5,cause:{kind:'one-off',ja:'システム障害',en:'system outage'}}]),false,'a cause never changes the stars');
  assert.equal(breaksCurrentRules([]),false);
 });
 
@@ -145,7 +142,7 @@ test('one-off re-selection of today: gated by RESOLUTE_SHOCK_GAUGE_RESELECT_DAY,
   assert.ok(!tried.includes(TODAY.pre56.en),'bare premarket recap dropped');
   const day=(await risk.query("SELECT state,articles FROM resolute.risk_days WHERE day='2026-11-25'")).rows[0];
   assert.equal(day.state,'ready');
-  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.reading?.sox?.changePercent??null,a.stars]),[['nas100',-8.5,4],['company',null,null]]);
+  assert.deepEqual(day.articles.map(a=>[a.market.index,a.market.reading?.sox?.changePercent??null,a.stars]),[['nas100',-8.5,5],['company',null,null]]);
   assert.equal(breaksCurrentRules(day.articles),false);
   // The flag left in place never runs it again.
   const calls=tried.length;
@@ -167,20 +164,14 @@ test('a failed re-selection leaves the stored day as it was',async()=>{
  }finally{await risk.close();await rizel.close();}
 });
 
-test('the model reads the cause in the same call, from the article only; the cause line is checked and shown with the step',()=>{
+test('the model still reads the cause in the same call, but it never changes the stars (owner, Nov 26: no AI ±1)',()=>{
  for(const phrase of ['classify the cause of the development, from the supplied text only','technical glitch','export controls','When the text does not state the cause, use unclear','no numbers and no evaluation'])assert.ok(SUMMARY_INSTRUCTIONS.includes(phrase),phrase);
  const c=row('Chip stocks tumble as Nvidia selloff spreads across AI hardware',600,{tickers:['NVDA']});
  const cand={...c,id:hash(c.url),body:c.bodyEn,source:'report'};
  const out=cause=>validateGeneration({...copy,ja:{...copy.ja,title:'半導体株が下落'},en:{...copy.en,title:'Chip stocks fell'},cause},cand);
  const measured=a=>applyMarketReaction(a,moves);
- // Lasting cause named in the text → ★4 on the Nov 24 close becomes ★5, and the line says why.
- const lasting=measured(out({kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'}));
- assert.equal(lasting.stars,5);assert.equal(formatCause(lasting,'ja'),'長引きやすい要因（輸出規制の強化）→ ★+1');
- const oneOff=measured(out({kind:'one-off',ja:'システム障害',en:'system outage'}));
- assert.equal(oneOff.stars,3);assert.equal(formatCause(oneOff,'en'),'Looks one-off (system outage) → ★−1');
- // Unclear, a figure, banned wording or a long phrase: no cause, the market's stars stand.
- for(const cause of [{kind:'unclear',ja:'',en:''},{kind:'one-off',ja:'3日間の障害',en:'3-day outage'},{kind:'one-off',ja:'一時的な売り',en:'temporary selling'},{kind:'lasting',ja:'あ'.repeat(21),en:'x'},undefined])
-  {const a=measured(out(cause));assert.equal(a.stars,4,JSON.stringify(cause));assert.equal(a.cause,undefined);}
+ for(const cause of [{kind:'lasting',ja:'輸出規制の強化',en:'tighter export controls'},{kind:'one-off',ja:'システム障害',en:'system outage'},{kind:'unclear',ja:'',en:''},undefined])
+  assert.equal(measured(out(cause)).stars,5,JSON.stringify(cause));
  // One company's story never carries a cause (it has no stars to move).
  const co=row(TODAY.cipher.en,120,{tickers:TODAY.cipher.tickers});
  assert.equal(validateGeneration({...copy,cause:{kind:'lasting',ja:'需要の減速',en:'slowing demand'}},{...co,id:hash(co.url),body:co.bodyEn,source:'report'}).cause,undefined);
