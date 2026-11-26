@@ -21,8 +21,6 @@ const S='2026-11-25',PREV='2026-11-24';
 const moves={[S]:{nas100:{previousDate:PREV,changePercent:-0.6,typicalPercent:0.76,up:20,down:80,total:100,intraday:{changePercent:-4.6,typicalPercent:0.9,same:80}},
  sox:{previousDate:PREV,changePercent:-1.8,typicalPercent:2.2,up:10,down:30,total:40,intraday:{changePercent:-7.9,typicalPercent:2.6,same:36}},fear:{level:44.8,previousLevel:40},
  stocks:{NVDA:{previousDate:PREV,changePercent:-3.1,typicalPercent:1.9,intradayPercent:-9.4}}}};
-const quiet={[S]:{nas100:{previousDate:PREV,changePercent:0.2,typicalPercent:0.76,up:57,down:43,total:100,intraday:{changePercent:-0.5,typicalPercent:0.9,same:10}},
- sox:{previousDate:PREV,changePercent:-0.1,typicalPercent:2.2,up:18,down:22,total:40},fear:{level:40,previousLevel:40}}};
 const runAt=new Date('2026-11-25T23:20:00Z'); // Thu Nov 26 08:20 JST
 const body=t=>`${t}. The report said the move weighed on technology shares across the session and investors sold chip stocks.`;
 const row=(title,publishedAt,{tickers=[],lane='company'}={})=>({title,bodyEn:body(title),url:`https://news.example/${encodeURIComponent(title).slice(0,80)}`,publishedAt,publisher:'Example Wire',tickers,lane,sentiment:'negative'});

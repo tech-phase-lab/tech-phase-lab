@@ -22,7 +22,6 @@ export function marketWraps(feed,since,until){
   .sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt)).slice(0,8)
   .map(a=>({title:a.title.slice(0,200),publishedAt:new Date(a.publishedAt).toISOString(),text:String([a.bodyEn,a.summaryEn,a.bodyJa,a.summaryJa].find(t=>typeof t==='string'&&t)??'').slice(0,600)}));
 }
-const one=n=>Math.round(n*10)/10;
 /** The numbers the AI sees for one index on one session. */
 function indexFacts(x,fear){
  if(!x)return null;const s=strongestMove(x,fear);
