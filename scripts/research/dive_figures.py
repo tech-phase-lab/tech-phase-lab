@@ -285,7 +285,34 @@ def palantir(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir}
+def astera(t):
+    ops, cf = 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS'
+    bs, rec = 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES'
+    sbc = 'SUPPLEMENTAL FINANCIAL INFORMATION STOCK-BASED COMPENSATION EXPENSE'
+    return {   # this quarter, the previous quarter, a year earlier, then nine months x2 (in thousands)
+        'revenue': row(t, 'Revenue', 3, ops, 'Cost of revenue', thousands=True, width=5),
+        'opIncome': row(t, 'Operating income', 3, ops, 'Interest and other income', thousands=True, width=5),
+        'netIncome': row(t, 'Net income', 3, ops, 'Net income per share', thousands=True, width=5),
+        'gm': row(t, ('Non-GAAP gross margin(1)', 'Non-GAAP gross margin (1)', 'Non-GAAP gross margin'), 3, rec, 'GAAP operating income', unit='percent', width=5),
+        'opIncomeNonGaap': row(t, 'Non-GAAP operating income', 3, rec, 'GAAP operating margin', thousands=True, width=5),
+        'opMarginGaap': row(t, 'GAAP operating margin', 3, rec, 'Non-GAAP operating margin', unit='percent', width=5),
+        'opMargin': row(t, 'Non-GAAP operating margin', 3, rec, 'GAAP net income', unit='percent', width=5),
+        'epsGaap': row(t, 'GAAP - diluted', 3, rec, 'Non-GAAP - diluted', unit='per-share', width=5),
+        'eps': row(t, 'Non-GAAP - diluted', 3, rec, 'Weighted average shares', unit='per-share', width=5),
+        'sbc': row(t, 'Total stock-based compensation expense', 3, sbc, None, thousands=True, width=5),
+        'receivables': row(t, 'Accounts receivable, net', 2, bs, 'Inventory', thousands=True),
+        'inventory': row(t, 'Inventory', 2, bs, 'Prepaid expenses', thousands=True),
+        'cfo': row(t, 'Net cash provided by operating activities', 2, cf, 'Cash flows from investing', thousands=True),
+        'leader': sentence(t, r'(Scorpio)\S* fabric switches became the company.s largest product family', (1,), unit='text'),
+        'ariesSampling': sentence(t, r'Aries 7 products are expected to begin sampling in (Q[1-4] 20\d\d)', (1,), unit='text'),
+        'orion': sentence(t, r'on track for availability through .{0,60}? beginning in (Q[1-4] 20\d\d)', (1,), unit='text'),
+        'guidanceRevenue': sentence(t, r'Revenue within a range of \$([\d,.]+) million to \$([\d,.]+) million', (1, 2)),
+        'guidanceGm': sentence(t, r'Non-GAAP gross margin of approximately ([\d.]+)%', (1,), unit='percent'),
+        'guidanceEps': sentence(t, r'Non-GAAP diluted net income per share of approximately \$([\d.]+) to \$([\d.]+)', (1, 2), unit='per-share'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------

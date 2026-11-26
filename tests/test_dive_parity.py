@@ -34,6 +34,7 @@ FILINGS = {
     'AMD': {},   # the release alone carries every figure of the hand-made file
     'ANET': {'report': ('https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm', 'ANET-10q-2026-09-30')},
     'PLTR': {},
+    'ALAB': {},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
@@ -42,6 +43,7 @@ GAPS = {  # what is still different from the hand-made file with every filing in
     'AMD': {}, 'ANET': {},
     'PLTR': {'summary.cards.change.chips[1]': 'the hand-made file compared the adjusted operating margin with the previous quarter (62% both); the previous '
                                               'file keeps no adjusted operating margin, so the chip compares it with the GAAP margin of the same release'},
+    'ALAB': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'

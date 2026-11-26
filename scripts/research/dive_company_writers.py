@@ -57,10 +57,10 @@ def summary(conclusion, growth, changes, caution, nxt):
 
 
 def revenue_numbers(ev, rev, cur=0, prev=1, ago=2):
-    ev.add('numbers.revenue.current', rev)
-    ev.add('numbers.revenue.previous', rev)
+    ev.add('numbers.revenue.current', rev, cur)
+    ev.add('numbers.revenue.previous', rev, prev)
     if ago is not None:
-        ev.add('numbers.revenue.yearAgo', rev)
+        ev.add('numbers.revenue.yearAgo', rev, ago)
     return {'current': float(rev.values[cur]), 'previous': float(rev.values[prev]), 'yearAgo': float(rev.values[ago]) if ago is not None else None}
 
 
@@ -510,4 +510,105 @@ def pltr(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr}
+
+# ---- Astera Labs (ALAB) ------------------------------------------------------------------------------------------------------------
+
+def alab(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'opIncome', 'netIncome', 'gm', 'opIncomeNonGaap', 'opMarginGaap', 'opMargin', 'epsGaap', 'eps', 'sbc', 'receivables', 'inventory', 'cfo',
+         'guidanceRevenue', 'guidanceGm', 'guidanceEps')
+    ev = Evidence(url)
+    rev, gm, eps, epsg = f['revenue'], f['gm'], f['eps'], f['epsGaap']
+    r0, r1, r2 = rev.values
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.adjustedEPS', eps)
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    g, ggm = f['guidanceRevenue'], f['guidanceGm']
+    low, high = range_guidance(ev, g)
+    ev.add('numbers.guidance.grossMarginPercent', ggm)
+    numbers = {'revenue': revenue_numbers(ev, rev), 'adjustedEPS': float(eps.values[0]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm.values[0]), 'previous': float(gm.values[1])},
+               'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': float(ggm.values[0])}, 'segments': None}
+    om, omg = f['opMargin'], f['opMarginGaap']
+    lo_up, hi_up = change(low, r0), change(high, r0)
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前期比 {sign(qoq, 0)}、前年同期比 {sign(yoy, 0)}', f'QoQ {sign(qoq, 0)}, YoY {sign(yoy, 0)}'),
+             text_tile('調整後(non-GAAP)営業利益率', 'Non-GAAP operating margin', pc(om.values[0]), pc(om.values[0]), f'GAAPは{pc(omg.values[0])}', f'GAAP {pc(omg.values[0])}'),
+             text_tile('次期の売上見通し', 'Next-quarter revenue outlook', f'{usd(low)["ja"]}〜{usd(high)["ja"]}', f'${g.raws[0]}–{g.raws[1]}M',
+                       f'今回より約{sign(lo_up, 0)}〜{sign(hi_up, 0)}', f'About {sign(lo_up, 0)}–{format(q(hi_up, 0), "f")}% vs. this quarter')]
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 0, 1), rnd=0)
+    ev.add('tiles[1].value', om)
+    ev.add('tiles[1].note', omg)
+    ev.add('tiles[2].value', g)
+    ev.add('tiles[2].note', g, calc=f'({g.raws[0]} * 1000 / {rev.raws[0]} - 1) * 100', rnd=0)
+    ev.add('tiles[2].note', rev)
+    d = r0 - r1
+    oin, opi, ni = f['opIncomeNonGaap'], f['opIncome'], f['netIncome']
+    leader = f.get('leader')
+    if leader:
+        ev.add('summary.cards.growth.sections[0]', leader)
+    new = [x for x in (('ariesSampling', 'Aries 7は{}にサンプル出荷を始め', 'Aries 7 begins sampling in {}'), ('orion', 'Orionは{}から提供が始まります', 'Orion becomes available from {}')) if x[0] in f]
+    for k, _, _ in new:
+        ev.add('summary.cards.growth.sections[3]', f[k])
+    growth = card(f'{leader.values[0]}が最大の製品群に' if leader else f'売上は前期比 {sign(qoq, 0)}', f'{leader.values[0]} switches became the largest product family' if leader else f'Revenue {sign(qoq, 0)} QoQ', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq, 0)}', f'Revenue {sign(qoq, 0)} QoQ'),
+        chip(tone(yoy), f'売上 前年同期比 {sign(yoy, 0)}', f'Revenue {sign(yoy, 0)} YoY')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。' + (f'会社は、{leader.values[0]}が売上で最大の製品群になったとしています。' if leader else ''),
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}.' + (f' The company says {leader.values[0]} became its largest product family by revenue.' if leader else '')),
+        sec('good', f'利益も出ています。調整後の営業利益は{usd(oin.values[0])["ja"]}で利益率は{pc(om.values[0])}、GAAPでも営業利益は{usd(opi.values[0])["ja"]}で利益率{pc(omg.values[0])}、純利益は{usd(ni.values[0])["ja"]}でした。',
+            f'Profit is solid: non-GAAP operating income was {usd(oin.values[0])["en"]} ({pc(om.values[0])} margin), and on a GAAP basis operating income was {usd(opi.values[0])["en"]} ({pc(omg.values[0])}) and net income {usd(ni.values[0])["en"]}.'),
+        sec('watch', '決算発表には、製品別・顧客別の売上の内訳がありません。少数の大口AI顧客にどこまで頼っているかは、10-Qで確かめる必要があります。',
+            'The release gives no revenue split by product or customer. How much the company relies on a few large AI customers needs to be checked in the 10-Q.'),
+        sec('view', ('新製品では、' + '、'.join(ja.format(f[k].values[0]) for k, ja, _ in new) + '。' if new else '') + '今の伸びは主に既存製品の量産によるものとみられます。',
+            ('Among the new products, ' + ' and '.join(en.format(f[k].values[0]) for k, _, en in new) + '. ' if new else '') + 'Current growth appears to come largely from the existing products ramping.')])
+    g0, g1, g2 = gm.values
+    gm_word = ('低下', 'lower') if g0 < g1 else ('上昇', 'higher') if g0 > g1 else ('横ばい', 'flat')
+    changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は{gm_word[0]}', f'Revenue {sign(qoq)} QoQ, gross margin {gm_word[1]}', [
+        chip(tone(g0 - g1), f'調整後粗利益率 {pc(g1)} → {pc(g0)}', f'Adj. gross margin {pc(g1)} → {pc(g0)}'),
+        chip(tone(eps.values[0] - eps.values[1]), f'調整後EPS {ps(eps.values[0])["ja"]}', f'Adj. EPS {ps(eps.values[0])["en"]}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後粗利益率は{pc(g1)}から{pc(g0)}になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Non-GAAP gross margin went from {pc(g1)} to {pc(g0)}.'),
+        sec('good', f'GAAPのEPSは{ps(epsg.values[0])["ja"]}、調整後EPSは{ps(eps.values[0])["ja"]}で、前期の{ps(eps.values[1])["ja"]}から{"増え" if eps.values[0] > eps.values[1] else "減り"}ました。',
+            f'GAAP EPS was {ps(epsg.values[0])["en"]} and non-GAAP EPS {ps(eps.values[0])["en"]}, {"up" if eps.values[0] > eps.values[1] else "down"} from {ps(eps.values[1])["en"]} last quarter.'),
+        sec('watch', f'調整後粗利益率は前年同期の{pc(g2)}から{pc(g0)}になりました。決算発表は理由を説明していません。',
+            f'Non-GAAP gross margin went from {pc(g2)} a year ago to {pc(g0)}. The release does not explain why.'),
+        sec('means', f'次期の粗利益率の見通しも約{ggm.raws[0]}%で、会社はこの水準での推移を見込んでいます。',
+            f'The outlook for next quarter is also about {ggm.raws[0]}%, so the company expects the margin to settle around this level.')])
+    ar, inv, sbc, cfo = f['receivables'], f['inventory'], f['sbc'], f['cfo']
+    sbc_share = q(sbc.values[0] / r0 * 100)
+    ev.add('summary.cards.caution.sections[0]', ar)
+    ev.add('summary.cards.caution.sections[0]', inv)
+    ev.add('summary.cards.caution.sections[0]', cfo)
+    ev.add('summary.cards.caution.sections[2]', sbc)
+    caution = card('売掛金と在庫が急増', 'Receivables and inventory jumped', [
+        chip(tone(ar.values[1] - ar.values[0]), f'売掛金 {usd(ar.values[1])["ja"]} → {usd(ar.values[0])["ja"]}', f'Receivables {usd(ar.values[1])["en"]} → {usd(ar.values[0])["en"]}'),
+        chip(tone(inv.values[1] - inv.values[0]), f'在庫 {usd(inv.values[1])["ja"]} → {usd(inv.values[0])["ja"]}', f'Inventory {usd(inv.values[1])["en"]} → {usd(inv.values[0])["en"]}'),
+        chip('gold', f'株式報酬 売上の{pc(sbc_share)}', f'Stock compensation {pc(sbc_share)} of revenue')], [
+        sec('happened', f'前年度末から今期末にかけて、売掛金は{usd(ar.values[1])["ja"]}から{usd(ar.values[0])["ja"]}、在庫は{usd(inv.values[1])["ja"]}から{usd(inv.values[0])["ja"]}になりました。9か月間の営業キャッシュフローは{usd(cfo.values[0])["ja"]}です。',
+            f'From the prior year-end to quarter end, receivables went from {usd(ar.values[1])["en"]} to {usd(ar.values[0])["en"]} and inventory from {usd(inv.values[1])["en"]} to {usd(inv.values[0])["en"]}. Operating cash flow for the nine months was {usd(cfo.values[0])["en"]}.'),
+        sec('means', '売上が急に伸びると、売掛金や在庫も増えるのは自然です。ただ、売上より速く増え続けると、現金の回収が遅れます。',
+            'Fast sales growth naturally raises receivables and inventory. But if they keep growing faster than sales, cash collection suffers.'),
+        sec('watch', f'株式報酬は今期{usd(sbc.values[0])["ja"]}で、売上の{pc(sbc_share)}です。GAAPと調整後の営業利益の差の大部分を占め、株数の増加にもつながります。',
+            f'Stock-based compensation was {usd(sbc.values[0])["en"]} this quarter, {pc(sbc_share)} of revenue, and accounts for most of the gap between GAAP and non-GAAP operating income. It also adds to the share count.'),
+        sec('view', '次の決算で、売掛金と在庫が売上に見合った水準に落ち着くかを確かめます。', 'The next report will show whether receivables and inventory settle in line with sales.')])
+    ge = f['guidanceEps']
+    ev.add('summary.cards.next.chips[2]', ge)
+    nxt = card('次期の会社見通しを追う', "Follow the company's outlook for next quarter", [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue ${g.raws[0]}–{g.raws[1]}M'),
+        chip('gold', f'調整後粗利益率 約{ggm.raws[0]}%', f'Adj. gross margin ~{ggm.raws[0]}%'),
+        chip('gold', f'調整後EPS {ps(ge.values[0])["ja"]}〜{ps(ge.values[1])["ja"]}', f'Adj. EPS {ps(ge.values[0])["en"]}–{ge.raws[1]}')], [
+        sec('happened', f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}、調整後粗利益率を約{ggm.raws[0]}%と見込んでいます。今回の{usd(r0)["ja"]}と比べると、下限でも約{q(lo_up, 1)}%の増加です。',
+            f'The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}M and a non-GAAP gross margin of about {ggm.raws[0]}%. Against {usd(r0)["en"]} this quarter, even the low end would be about {q(lo_up, 1)}% higher.'),
+        sec('watch', f'粗利益率の見通し(約{ggm.raws[0]}%)は、今回の{pc(g0)}' + ('をわずかに下回ります。利益率が下がり続けると、利益の伸びは売上より小さくなります。' if ggm.values[0] < g0 else 'を下回っていません。'),
+            f"The margin outlook (about {ggm.raws[0]}%) is " + (f"slightly below this quarter's {pc(g0)}. If the margin keeps slipping, profit will grow more slowly than sales." if ggm.values[0] < g0 else f"not below this quarter's {pc(g0)}.")),
+        sec('view', '次の決算で、実際の結果がこの幅のどこに入るかを確かめます。', 'What matters is where actual results land within this range in the next report.')])
+    times = q(r0 / r2, 1)
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{times}倍でした。' + (f'{leader.values[0]}が最大の製品群になりました。' if leader else ''),
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {times} times a year ago.' + (f' {leader.values[0]} became the largest product family.' if leader else '')),
+        c(f'調整後粗利益率は{pc(g0)}で、前期の{pc(g1)}、前年同期の{pc(g2)}と比べられます。', f'Non-GAAP gross margin was {pc(g0)}, versus {pc(g1)} last quarter and {pc(g2)} a year ago.'),
+        c(f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}、調整後粗利益率を約{ggm.raws[0]}%と見込んでいます。',
+          f'The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}M with a non-GAAP gross margin of about {ggm.raws[0]}%.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab}
