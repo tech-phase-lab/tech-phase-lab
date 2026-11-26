@@ -71,17 +71,24 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
   // The server draws the FREE view for a signed-out visitor only (lib/research/news-first-paint.ts). A browser that turns out PRO with it
   // on screen (a remembered PRO hint without a live session) reads both feeds at once instead of after one interval.
   const drawnFree = initial !== null && !full;
+  // The server's FREE view stays marked until this browser's first own read; under a PRO / owner mark it is hidden by CSS before the
+  // first paint (flash-page.module.css), so a PRO reader never sees it (lib/research/news-first-paint.ts).
+  const [serverFirst, setServerFirst] = useState(initial !== null);
+  const serverFirstNow = useRef(serverFirst);
+  serverFirstNow.current = serverFirst;
   // A PRO member's last view on this device (lib/research/member-last-view.ts): shown once the membership check confirmed PRO, then refreshed.
   const keptShown = useRef(false);
   useEffect(() => {
-    if (initial || keptShown.current || !memberSettled || !full) return;
+    if (keptShown.current || !memberSettled || !full) return;
     keptShown.current = true;
     const kept = readLastView<{ feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]>; checkedAt: number }>("alerts");
     if (!kept) return;
     // Read once after mount (reading it during render would not match the server's page).
-    setFeed(old => old ?? kept.data.feed); setWire(old => Object.keys(old).length ? old : kept.data.wire);
-    setCheckedAt(old => old || kept.data.checkedAt); setWireSettled(true); setWireLoaded(true);
-  }, [initial, memberSettled, full]);
+    // The server's FREE view is replaced; a feed this browser already read is kept.
+    if (serverFirstNow.current) { setFeed(kept.data.feed); setWire(kept.data.wire); setCheckedAt(kept.data.checkedAt); setServerFirst(false); }
+    else { setFeed(old => old ?? kept.data.feed); setWire(old => Object.keys(old).length ? old : kept.data.wire); setCheckedAt(old => old || kept.data.checkedAt); }
+    setWireSettled(true); setWireLoaded(true);
+  }, [memberSettled, full]);
   useEffect(() => {
     if (memberSettled && !full) { forgetLastView("alerts"); return; }
     if (full && feed && wireLoaded && checkedAt) writeLastView("alerts", { feed, wire, checkedAt });
@@ -116,7 +123,7 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
       },
       onSuccess: payload => {
         markFresh(tracker.current(flashRows(payload, {}, lang).filter(row => !row.id.startsWith("wire:")).map(row => ({ id: row.id, at: row.timeKind === "date" ? `${row.at}T00:00:00Z` : row.at }))).map(row => row.id));
-        setFeed(payload); setFailed(false); setCheckedAt(Date.now());
+        setFeed(payload); setFailed(false); setCheckedAt(Date.now()); setServerFirst(false);
       },
       onFailure: () => setFailed(true),
     });
@@ -180,7 +187,7 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
       <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication="" capDetail />
     </div>
   </article>;
-  return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
+  return <section className={styles.flash} data-free-first={serverFirst ? "" : undefined} aria-label={ja ? "速報" : "Alerts"}>
     <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { if (list.current) list.current.style.minHeight = ""; setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}

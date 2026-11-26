@@ -24,3 +24,5 @@
 .freeNote { margin:0 0 14px; padding:10px 14px; border:1px solid #b8923f55; border-radius:10px; background:linear-gradient(110deg,#1b1810,#101821 70%); color:#cdbd93; font-size:12.5px; line-height:1.75; }
 .freeNote b { margin-right:8px; padding:2px 9px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font-size:10.5px; letter-spacing:.1em; }
 .freeNote a { color:#ecd08e; text-decoration:underline; text-underline-offset:3px; white-space:nowrap; }
+/* The server's FREE view (lib/research/news-first-paint.ts) under a remembered PRO / owner mark, until the page's own read: never shown. */
+:global(html[data-member-hint]) .flash[data-free-first]{visibility:hidden}

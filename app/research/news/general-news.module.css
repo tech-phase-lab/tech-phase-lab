@@ -93,3 +93,5 @@
 .topicMore:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
 .topicPublisher{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;overflow-wrap:anywhere}
 .topicCredit{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;text-align:right}
+/* The server's FREE view under a remembered PRO / owner mark, until the page's own read: never shown (lib/research/news-first-paint.ts). */
+:global(html[data-member-hint]) .topics[data-free-first]{visibility:hidden}
