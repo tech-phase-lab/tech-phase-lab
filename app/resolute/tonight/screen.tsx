@@ -6,6 +6,7 @@ import {useSavedPlan} from '../features/use-plan';
 import {useRisk} from '../features/use-risk';
 import {useDesktop} from '../use-desktop';
 import {TONIGHT_VIDEOS} from '@/lib/resolute/tonight-videos';
+import {browserLandscapeEnvironment,enterLandscape,exitLandscape,LANDSCAPE_VIEW_QUERY} from '@/lib/resolute/tonight-landscape';
 import {thermometerSession} from '@/lib/resolute/thermometer-runtime';
 import {expireThermometerSnapshot,type ThermometerSnapshot} from '@/lib/resolute/thermometer-view';
 import {dayLabel,periodLabel,periodRange,type BigDrop,type SimilarHistory} from '@/lib/resolute/similar-days';
@@ -144,23 +145,41 @@ function NextLine({line,en}:{line:TonightLine;en:boolean}){
 
 /** Owner, Nov 25: click the video to play; a play button in the middle (gone while playing); a bar below with play/pause, seek,
  * time and full screen. The old small mark at the bottom right was a page overlay (not in the cover image or the video) and is gone.
- * Switching video or language remounts this (key). */
+ * Owner, Nov 26: on a phone the video has to be landscape without touching the phone's rotation lock. Starting the video or the
+ * full-screen button opens the landscape view (lib/resolute/tonight-landscape.ts); closing it, or the end of the video, returns to
+ * the page. PCs are unchanged. Switching video or language remounts this (key). */
 function TonightVideo({url,poster,title,en}:{url:string;poster:string|null;title:string;en:boolean}){
  const ref=useRef<HTMLVideoElement>(null),box=useRef<HTMLDivElement>(null);
- const [playing,setPlaying]=useState(false),[time,setTime]=useState(0),[duration,setDuration]=useState(0);
- const toggle=()=>{const v=ref.current;if(!v)return;if(v.paused){const p=v.play();if(p)p.catch(()=>{});}else v.pause();};
- const fullscreen=()=>{const el=box.current as (HTMLDivElement&{webkitRequestFullscreen?:()=>void})|null,v=ref.current as (HTMLVideoElement&{webkitEnterFullscreen?:()=>void})|null;
+ const [playing,setPlaying]=useState(false),[time,setTime]=useState(0),[duration,setDuration]=useState(0),[landscape,setLandscape]=useState(false);
+ const play=()=>{const v=ref.current;if(!v)return;const p=v.play();if(p)p.catch(()=>{});};
+ const phone=()=>typeof window!=='undefined'&&window.matchMedia(LANDSCAPE_VIEW_QUERY).matches;
+ const openLandscape=()=>{const el=box.current;if(!el)return;setLandscape(true);void enterLandscape(el,browserLandscapeEnvironment()).then(mode=>{
+  // Closed while full screen was still opening: undo it instead of leaving the phone locked sideways.
+  if(el.hasAttribute('data-landscape'))el.dataset.landscapeMode=mode;else void exitLandscape(browserLandscapeEnvironment());});};
+ const closeLandscape=()=>setLandscape(false);
+ const toggle=()=>{const v=ref.current;if(!v)return;if(v.paused){if(!landscape&&phone())openLandscape();play();}else v.pause();};
+ const fullscreen=()=>{if(landscape){closeLandscape();return;}if(phone()){openLandscape();return;}
+  const el=box.current as (HTMLDivElement&{webkitRequestFullscreen?:()=>void})|null,v=ref.current as (HTMLVideoElement&{webkitEnterFullscreen?:()=>void})|null;
   if(document.fullscreenElement){void document.exitFullscreen();return;}
   if(el?.requestFullscreen)void el.requestFullscreen().catch(()=>v?.webkitEnterFullscreen?.());else if(el?.webkitRequestFullscreen)el.webkitRequestFullscreen();else v?.webkitEnterFullscreen?.();};
- return <div ref={box} className={s.player} data-tonight-video>
-  <video ref={ref} src={url} poster={poster??undefined} playsInline preload="metadata" onClick={toggle} onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onEnded={()=>setPlaying(false)}
+ // While the view is open: the page behind does not scroll, and leaving full screen by the phone's own back gesture closes it too.
+ useEffect(()=>{const el=box.current;if(!landscape||!el)return;
+  const root=document.documentElement,overflow=root.style.overflow;root.style.overflow='hidden';
+  const change=()=>{if(!document.fullscreenElement&&el.dataset.landscapeMode==='locked')setLandscape(false);};
+  document.addEventListener('fullscreenchange',change);
+  // Closing, or a remount (another video or language) while open, gives the phone back its own rotation and leaves full screen.
+  return ()=>{root.style.overflow=overflow;document.removeEventListener('fullscreenchange',change);delete el.dataset.landscapeMode;void exitLandscape(browserLandscapeEnvironment());};},[landscape]);
+ const ended=()=>{setPlaying(false);if(landscape)closeLandscape();};
+ return <div ref={box} className={`${s.player} ${landscape?s.landscape:''}`} data-tonight-video data-landscape={landscape?'':undefined}>
+  <video ref={ref} src={url} poster={poster??undefined} playsInline preload="metadata" onClick={toggle} onPlay={()=>setPlaying(true)} onPause={()=>setPlaying(false)} onEnded={ended}
    onTimeUpdate={e=>setTime(e.currentTarget.currentTime)} onLoadedMetadata={e=>setDuration(e.currentTarget.duration)} aria-label={title}/>
+  {landscape?<button type="button" className={s.closeView} onClick={closeLandscape} aria-label={en?'Close':'閉じる'} data-tonight-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" strokeWidth="2" strokeLinecap="round"/></svg></button>:null}
   {!playing?<button type="button" className={s.bigPlay} onClick={toggle} aria-label={en?`Play “${title}”`:`「${title}」を再生`} data-tonight-play><i/></button>:null}
   <div className={`${s.bar} ${playing?s.barHide:''}`}>
    <button type="button" className={s.barBtn} onClick={toggle} aria-label={playing?(en?'Pause':'一時停止'):(en?'Play':'再生')}>{playing?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>:<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>}</button>
    <input type="range" min={0} max={duration||0} step={0.1} value={Math.min(time,duration||0)} aria-label={en?'Seek':'再生位置'} onChange={e=>{const v=ref.current;if(v){v.currentTime=Number(e.target.value);setTime(v.currentTime);}}} style={{['--p' as string]:`${duration?time/duration*100:0}%`}}/>
    <span className={s.time}>{clock(time)} / {clock(Math.round(duration||0))}</span>
-   <button type="button" className={s.barBtn} onClick={fullscreen} aria-label={en?'Full screen':'全画面'}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" strokeWidth="2"/></svg></button>
+   <button type="button" className={s.barBtn} onClick={fullscreen} aria-label={en?'Full screen':'全画面'} aria-pressed={landscape} data-tonight-fullscreen><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" strokeWidth="2"/></svg></button>
   </div>
  </div>;
 }
