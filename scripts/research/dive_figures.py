@@ -565,7 +565,41 @@ def arm(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm}
+def coreweave(t):
+    hl = between(t, 'Financial Highlights (In millions', 'Non-GAAP Financial Measures (In millions')
+    non = between(t, 'Non-GAAP Financial Measures (In millions', '(See')
+    ops = between(t, 'CONSOLIDATED STATEMENTS OF OPERATIONS', 'Operating expenses:')
+    bs = between(t, 'CONSOLIDATED BALANCE SHEETS', 'CONSOLIDATED STATEMENTS OF CASH FLOWS')
+    out = between(t, 'Business Outlook', 'Webcast')
+    return {   # this quarter and a year earlier (the highlights); the statements add nine months
+        'revenue': row(hl, 'Revenue', 2, None, None),
+        # nine months only: the last quarter of the year is the full-year guidance minus these (a Q4 release has no such quarter)
+        'nineMonths': row(ops, 'Revenue', 4, None, None) if 'Nine Months Ended' in ops else None,
+        'opIncome': row(hl, 'Operating income', 2, None, None),
+        'interest': row(hl, 'Interest expense, net', 2, None, None),
+        'netLoss': row(hl, 'Net loss', 2, None, None),
+        'ebitda': row(non, 'Adjusted EBITDA', 2, None, None),
+        'ebitdaMargin': row(non, 'Adjusted EBITDA margin', 2, None, None, unit='percent'),
+        'adjOp': row(non, 'Adjusted operating income', 2, None, None),
+        'adjOpMargin': row(non, 'Adjusted operating income margin', 2, None, None, unit='percent'),
+        'backlog': sentence(t, r'Revenue backlog ?\d? was approximately \$([\d.]+) billion as of (' + MONTHS + r' \d{1,2}), (20\d\d)', (1, 2, 3), unit='text'),
+        'activePower': sentence(t, r'Added more than (\d+) MWs? of active power to reach over ([\d.]+) GW', (1, 2), unit='text'),
+        'contracted': sentence(t, r'Grew total contracted power more than (\d+) MWs? to over ([\d.]+) GW', (1, 2), unit='text'),
+        'capex': row(t, 'Purchases of property and equipment, including capitalized internal-use software', 2, 'Cash flows from investing activities', 'Purchases of marketable', width=4),
+        'debtCurrent': row(bs, 'Recourse debt, current', 2, None, None),
+        'nonRecourseCurrent': row(bs, 'Non-recourse debt, current', 2, None, None),
+        'debtLong': row(bs, 'Recourse debt, non-current', 2, None, None),
+        'nonRecourseLong': row(bs, 'Non-recourse debt, non-current', 2, None, None),
+        'converts': sentence(t, r'Raised approximately \$([\d.]+) billion through an upsized offering of convertible senior notes', (1,), unit='text'),
+        'atm': sentence(t, r'at-the-market equity program for up to (\d+) million shares', (1,), unit='text'),
+        'prepayments': sentence(t, r'approximately \$(\d+) billion in customer prepayments and deposits expected in the next three months', (1,), unit='text'),
+        'guidance': sentence(out, r'raising our full year (20\d\d) revenue guidance to a range of \$([\d.]+) billion to \$([\d.]+) billion', (1, 2, 3), unit='text'),
+        'capexGuidance': sentence(out, r'full year 20\d\d capital expenditures of \$(\d+) billion to \$(\d+) billion, raising the (low|high) end', (1, 2, 3), unit='text'),
+        'interestGuidance': sentence(out, r'interest expense for (Q[1-4]) (20\d\d) in the range of \$([\d.]+) to \$([\d.]+) billion', (1, 2, 3, 4), unit='text'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista, 'PLTR': palantir, 'ALAB': astera, 'LITE': lumentum, 'SNDK': sandisk, 'VRT': vertiv, 'GEV': vernova, 'BE': bloom, 'SKHY': skhynix, 'ARM': arm, 'CRWV': coreweave}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -713,7 +747,15 @@ def arista_report(t):
     }
 
 
-REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report, 'ANET': arista_report}
+def coreweave_report(t):
+    sig = between(t, 'Significant Customers', 'Customer did not represent')
+    return {
+        'customers': sentence(sig, r'Customer A (\d+) % \S+(?: %)? \S+(?: %)? \S+(?: %)? Customer B (\d+) %', (1, 2), unit='percent'),
+        'committed': sentence(t, r'committed contracts accounted for (\d+)% of our revenue', (1,), unit='percent'),
+    }
+
+
+REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report, 'ANET': arista_report, 'CRWV': coreweave_report}
 
 
 def read_report(ticker, text):
@@ -748,7 +790,7 @@ def deal(text):
 
 # companies whose dive also reads the previous quarter's release (a figure this release prints without that quarter): the same spec
 # reads both, so a figure of the previous quarter is quoted from that quarter's own release
-PRIOR = {'VRT', 'PLTR', 'GEV', 'ARM'}
+PRIOR = {'VRT', 'PLTR', 'GEV', 'ARM', 'CRWV'}
 
 
 def skhynix_event(t):

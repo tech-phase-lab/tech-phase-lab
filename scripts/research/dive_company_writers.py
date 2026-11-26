@@ -1536,4 +1536,131 @@ def arm(f, url, before_previous, report=None, events=None, previous=None, prior=
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
-WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm}
+
+# ---- CoreWeave (CRWV): no EPS or margin; the quarter's guidance is the full-year range minus nine months; the 10-Q for customers --------
+
+def crwv(f, url, before_previous, report=None, events=None, previous=None, prior=None):
+    need(f, 'revenue', 'nineMonths', 'opIncome', 'interest', 'netLoss', 'ebitda', 'ebitdaMargin', 'adjOp', 'adjOpMargin', 'backlog', 'capex',
+         'debtCurrent', 'nonRecourseCurrent', 'debtLong', 'nonRecourseLong', 'guidance')
+    need_prior(prior, 'revenue', 'adjOpMargin', 'backlog')
+    report = report or {}
+    ev = Evidence(url)
+    rev, nm, prev = f['revenue'], f['nineMonths'], prior['revenue']
+    r0, r2, r1 = rev.values[0], rev.values[1], prev.values[0]
+    qoq, yoy = change(r0, r1), change(r0, r2)
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    ev.add('numbers.revenue.previous', prev)
+    g = f['guidance']
+    ytd = nm.values[2]
+    low, high = Decimal(g.values[1]) * 1000 - ytd, Decimal(g.values[2]) * 1000 - ytd
+    for field, raw in (('low', g.raws[1]), ('high', g.raws[2])):
+        ev.add(f'numbers.guidance.{field}', g)
+        ev.add(f'numbers.guidance.{field}', nm, calc=f'{raw} * 1000 - {nm.raws[2]}')
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': None, 'epsEstimate': None,
+               'grossMargin': None, 'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': None}, 'segments': None}
+    bl, pbl, loss = f['backlog'], prior['backlog'], f['netLoss']
+    pday = datetime.strptime(f'{pbl.values[1]} {pbl.values[2]}', '%B %d %Y')
+    tiles = [tile('売上高', 'Revenue', money_tile(ev, 0, rev, 0, None), f'前年同期比 {sign(yoy, 0)}', f'{sign(yoy, 0)} YoY'),
+             text_tile('受注残(将来の売上)', 'Revenue backlog', usd(Decimal(bl.values[0]) * 1000)['ja'], f'${bl.values[0]}B',
+                       f'{pday.month}月{pday.day}日時点は{usd(Decimal(pbl.values[0]) * 1000)["ja"]}', f'${pbl.values[0]}B at {pday.strftime("%B")} {pday.day}'),
+             tile('純損失(GAAP)', 'Net loss (GAAP)', money_tile(ev, 2, loss, 0, None), f'前年同期は{usd(loss.values[1])["ja"]}', f'{usd(loss.values[1])["en"]} a year earlier')]
+    ev.add('tiles[0].note', rev, calc=growth_calc(rev, 0, 1), rnd=0)
+    ev.add('tiles[1].value', bl)
+    ev.add('tiles[1].note', pbl)
+    ev.add('tiles[2].note', loss)
+    ap, cp, cust, com = f.get('activePower'), f.get('contracted'), report.get('customers'), report.get('committed')
+    times_bl = q(Decimal(bl.values[0]) * 1000 / r0, 0)
+    for x in (ap, cp):
+        if x:
+            ev.add('summary.cards.growth.sections[0]', x)
+    if cust:
+        ev.add('summary.cards.growth.sections[2]', cust)
+    if com:
+        ev.add('summary.cards.growth.sections[1]', com)
+    growth = card(f'受注残は約{usd(Decimal(bl.values[0]) * 1000)["ja"]}に', f'Revenue backlog reached about ${bl.values[0]}B', [
+        chip('up' if Decimal(bl.values[0]) > Decimal(pbl.values[0]) else 'down', f'受注残 約{usd(Decimal(pbl.values[0]) * 1000)["ja"]} → {usd(Decimal(bl.values[0]) * 1000)["ja"]}', f'Backlog ~${pbl.values[0]}B → ${bl.values[0]}B'),
+        (chip('up', f'稼働中の電力 {ap.values[1]}GW超', f'Active power over {ap.values[1]} GW') if ap else chip('gold', f'売上の約{times_bl}倍の受注残', f'Backlog ~{times_bl}x quarterly revenue'))], [
+        sec('happened', f'受注残(契約済みでまだ売上になっていない金額)は、{pday.month}月{pday.day}日時点の約{usd(Decimal(pbl.values[0]) * 1000)["ja"]}から約{usd(Decimal(bl.values[0]) * 1000)["ja"]}になりました。'
+            + (f'稼働中の電力は{ap.values[0]}MW以上増えて{ap.values[1]}GWを超え、' if ap else '') + (f'契約済みの電力は{cp.values[1]}GWを超えました。' if cp else ''),
+            f'Revenue backlog (contracted amounts still to be recognized) went from about ${pbl.values[0]}B at {pday.strftime("%B")} {pday.day} to about ${bl.values[0]}B.'
+            + (f' Active power grew by more than {ap.values[0]} MW to over {ap.values[1]} GW' if ap else '') + (f', and contracted power exceeded {cp.values[1]} GW.' if cp else '.' if ap else '')),
+        sec('good', (f'10-Qによると、売上の{com.values[0]}%は確定した契約によるものです。' if com else '') + f'受注残は今期の売上の約{times_bl}倍あり、設備が稼働すれば売上になる分が多く控えています。',
+            (f'Per the 10-Q, {com.values[0]}% of revenue comes from committed contracts. ' if com else '') + f"Backlog is about {times_bl} times this quarter's revenue, so a large amount is lined up to become revenue once capacity comes online."),
+        sec('watch', (f'顧客の集中は高いままで、10-Qによると、今期は2社(AとB)が売上のそれぞれ{cust.values[0]}%と{cust.values[1]}%を占めました。' if cust else
+                      '少数の大口顧客への集中が高く、顧客ごとの比率は決算発表の後に出る10-Qで確かめます。'),
+            (f'Customer concentration remains high: per the 10-Q, two customers (A and B) accounted for {cust.values[0]}% and {cust.values[1]}% of revenue this quarter.' if cust else
+             'Customer concentration is high; the 10-Q, filed after the release, shows each large customer\'s share.')),
+        sec('means', '受注残を売上に変えるには、電力と設備を予定どおり用意できるかにかかっています。', 'Turning backlog into revenue depends on getting power and equipment ready on schedule.')])
+    om, pom, eb, ebm, oi, it = f['adjOpMargin'], prior['adjOpMargin'], f['ebitda'], f['ebitdaMargin'], f['opIncome'], f['interest']
+    d = r0 - r1
+    ev.add('summary.cards.change.sections[0]', om)
+    ev.add('summary.cards.change.sections[0]', pom)
+    ev.add('summary.cards.change.sections[1]', eb)
+    ev.add('summary.cards.change.sections[1]', ebm)
+    ev.add('summary.cards.change.sections[2]', it)
+    ev.add('summary.cards.change.sections[2]', oi)
+    changes = card(f'売上は前期比 {sign(qoq)}、調整後営業利益率は{om.raws[0] if om.values[0] >= 0 else om.values[0]}%に', f'Revenue {sign(qoq)} QoQ, adjusted operating margin from {pom.values[0]}% to {om.values[0]}%', [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ'),
+        chip(tone(om.values[0] - pom.values[0]), f'調整後営業利益率 {pom.values[0]}% → {om.values[0]}%', f'Adj. operating margin {pom.values[0]}% → {om.values[0]}%')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後営業利益率は{pom.values[0]}%から{om.values[0]}%になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Adjusted operating margin went from {pom.values[0]}% to {om.values[0]}%.'),
+        sec('good', f'調整後EBITDA(減価償却などを引く前の利益)は{usd(eb.values[0])["ja"]}で、売上の{ebm.values[0]}%です。設備が生む現金の力は増えています。',
+            f'Adjusted EBITDA (profit before depreciation and similar items) was {usd(eb.values[0])["en"]}, or {ebm.values[0]}% of revenue, so the cash-generating power of the equipment is growing.'),
+        sec('watch', f'GAAPの純損失は前年同期の{usd(-loss.values[1])["ja"]}から{usd(-loss.values[0])["ja"]}になりました。支払利息{usd(-it.values[0])["ja"]}が営業利益{usd(oi.values[0])["ja"]}を大きく上回ったためです。',
+            f'The GAAP net loss went from {usd(-loss.values[1])["en"]} a year ago to {usd(-loss.values[0])["en"]}, because interest expense of {usd(-it.values[0])["en"]} far exceeded operating income of {usd(oi.values[0])["en"]}.'),
+        sec('view', '売上と調整後の利益は伸びていますが、借入の利息で最終損益は赤字のままです。調整後の数字と最終損益は分けて読む必要があります。',
+            'Revenue and adjusted profit are growing, but interest on debt keeps the bottom line negative. Read adjusted figures and net results separately.')])
+    cx = f['capex']
+    debt0 = f['debtCurrent'].values[0] + f['nonRecourseCurrent'].values[0] + f['debtLong'].values[0] + f['nonRecourseLong'].values[0]
+    debt1 = f['debtCurrent'].values[1] + f['nonRecourseCurrent'].values[1] + f['debtLong'].values[1] + f['nonRecourseLong'].values[1]
+    conv, atm, ig = f.get('converts'), f.get('atm'), f.get('interestGuidance')
+    ev.add('summary.cards.caution.sections[0]', cx)
+    for k in ('debtCurrent', 'nonRecourseCurrent', 'debtLong', 'nonRecourseLong'):
+        ev.add('summary.cards.caution.sections[0]', f[k])
+    for x in (conv, atm):
+        if x:
+            ev.add('summary.cards.caution.sections[1]', x)
+    if ig:
+        ev.add('summary.cards.caution.sections[2]', ig)
+    cap = -cx.values[0]
+    caution = card(f'設備投資は売上の約{q(cap / r0, 1)}倍、借入も増加', f'Capex was about {q(cap / r0, 1)}x revenue; debt {"rose" if debt0 > debt1 else "fell"}', [
+        chip('down', f'四半期の設備投資 {usd(cap)["ja"]}', f'Quarterly capex {usd(cap)["en"]}'),
+        chip('down' if debt0 > debt1 else 'up', f'借入 {usd(debt1)["ja"]} → {usd(debt0)["ja"]}', f'Debt {usd(debt1)["en"]} → {usd(debt0)["en"]}')], [
+        sec('happened', f'設備投資(設備などの購入)は今期{usd(cap)["ja"]}で、売上{usd(r0)["ja"]}の約{q(cap / r0, 1)}倍でした。借入の合計は前年度末の{usd(debt1)["ja"]}から{usd(debt0)["ja"]}になりました。',
+            f'Capital spending (purchases of property and equipment) was {usd(cap)["en"]} in the quarter, about {q(cap / r0, 1)} times revenue of {usd(r0)["en"]}. Total debt went from {usd(debt1)["en"]} at the end of last year to {usd(debt0)["en"]}.'),
+        sec('watch', (f'今期は約{usd(Decimal(conv.values[0]) * 1000)["ja"]}の転換社債を発行し、' if conv else '') + (f'最大{int(atm.values[0]) * 100:,}万株の新株を市場で売る枠も設けました。' if atm else '')
+            + '転換や新株の売り出しは、既存の株主の持ち分を薄めます。' if (conv or atm) else '借入や新株による資金調達は、既存の株主の負担になりえます。',
+            ((f'This quarter the company issued about ${conv.values[0]}B of convertible notes' if conv else '') + (f' and set up an at-the-market program for up to {atm.values[0]} million new shares' if atm else '')).strip()
+            + '. Conversions or new share sales dilute existing holders.' if (conv or atm) else 'Debt and new shares used for funding can weigh on existing holders.'),
+        sec('means', '先に設備にお金を使い、売上は後から入ります。' + (f'利息の負担も重く、会社は{ig.values[1]}年{ig.values[0][1]}四半期の支払利息を{usd(Decimal(ig.values[2]) * 1000)["ja"]}〜{usd(Decimal(ig.values[3]) * 1000)["ja"]}と見込んでいます。' if ig else ''),
+            'Money is spent on equipment first and revenue comes later.' + (f' The interest burden stays heavy: the company expects {ig.values[0]} interest expense of ${ig.values[2]}B to ${ig.values[3]}B.' if ig else '')),
+        sec('view', '大きな受注残も、資金を調達し続けられることが前提です。次の決算で、借入、利息、株式の発行を確かめます。',
+            'A large backlog still depends on continued access to financing. Check debt, interest and share issuance in the next report.')])
+    cg, pp = f.get('capexGuidance'), f.get('prepayments')
+    ev.add('summary.cards.next.sections[0]', g)
+    ev.add('summary.cards.next.sections[0]', nm)
+    if cg:
+        ev.add('summary.cards.next.sections[1]', cg)
+    if pp:
+        ev.add('summary.cards.next.sections[1]', pp)
+    nxt = card('通年の見通しから逆算した第4四半期', 'The last quarter implied by the full-year outlook', [
+        chip('gold', f'逆算した次期の売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Implied next-quarter revenue {usd(low)["en"]}–{usd(high)["en"]}'),
+        (chip('gold', f'通年の設備投資 {usd(Decimal(cg.values[0]) * 1000)["ja"]}〜{usd(Decimal(cg.values[1]) * 1000)["ja"]}', f'FY capex ${cg.values[0]}–{cg.values[1]}B') if cg else
+         chip('gold', f'通年の売上 {usd(Decimal(g.values[1]) * 1000)["ja"]}〜{usd(Decimal(g.values[2]) * 1000)["ja"]}', f'FY revenue ${g.values[1]}–{g.values[2]}B'))], [
+        sec('happened', f'会社は{g.values[0]}年の売上見通しを{usd(Decimal(g.values[1]) * 1000)["ja"]}〜{usd(Decimal(g.values[2]) * 1000)["ja"]}に引き上げました。年初からの売上は{usd(ytd)["ja"]}なので、残りの四半期は{usd(low)["ja"]}〜{usd(high)["ja"]}になり、今回の{usd(r0)["ja"]}より少なくとも約{q(change(low, r0), 0)}%多くなります。',
+            f"The company raised its {g.values[0]} revenue guidance to ${g.values[1]}B to ${g.values[2]}B. Year-to-date revenue was {usd(ytd)['en']}, which implies remaining-quarter revenue of {usd(low)['en']} to {usd(high)['en']}, at least about {q(change(low, r0), 0)}% above this quarter's {usd(r0)['en']}."),
+        sec('watch', (f'通年の設備投資の見通しは{usd(Decimal(cg.values[0]) * 1000)["ja"]}〜{usd(Decimal(cg.values[1]) * 1000)["ja"]}です。' if cg else '')
+            + (f'会社は今後3か月で約{usd(Decimal(pp.values[0]) * 1000)["ja"]}の前受け金・預かり金を見込んでいますが、支出は非常に大きいままです。' if pp else '支出は非常に大きいままです。'),
+            (f'Full-year capex guidance is ${cg.values[0]}B to ${cg.values[1]}B. ' if cg else '') + (f'The company expects about ${pp.values[0]}B in customer prepayments and deposits over the next three months, but the spending remains very large.' if pp else 'The spending remains very large.')),
+        sec('view', '次の決算で、売上がこの幅に入るか、支払利息と損失がどう動くかを確かめます。', 'In the next report, check whether revenue lands in this range and how interest expense and losses change.')])
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{q(r0 / r2, 1)}倍でした。受注残は約{usd(Decimal(bl.values[0]) * 1000)["ja"]}になりました。',
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {q(r0 / r2, 1)} times the year-ago level. Revenue backlog reached about ${bl.values[0]}B.'),
+        c(f'一方、純損失は{usd(-loss.values[0])["ja"]}でした。設備を借入で買っているため、支払利息{usd(-it.values[0])["ja"]}が営業利益{usd(oi.values[0])["ja"]}を大きく上回っています。',
+          f'Meanwhile, the net loss was {usd(-loss.values[0])["en"]}. Because equipment is bought with borrowed money, interest expense ({usd(-it.values[0])["en"]}) far exceeded operating income ({usd(oi.values[0])["en"]}).'),
+        c(f'通年の売上見通しから逆算すると、残りの四半期の売上は{usd(low)["ja"]}〜{usd(high)["ja"]}です。', f'The full-year revenue guidance implies remaining-quarter revenue of {usd(low)["en"]} to {usd(high)["en"]}.')]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
+WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv}
