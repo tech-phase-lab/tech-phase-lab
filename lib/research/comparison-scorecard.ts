@@ -93,7 +93,7 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   const pick = (standard: number | null | undefined, id: "financial" | "profitability" | "stability" | "growth" | "cash") =>
     standard !== null && standard !== undefined ? { value: standard } : finite(alt[id]) ? { value: alt[id]!, kind: altKind } : { value: null };
   const scores: ComparisonScore[] = [
-    // A bank, lender or insurer: its equity ratio, never cash against debt (sectorKind).
+    // A bank, lender, broker or insurer: its equity ratio, never cash against debt (sectorKind).
     {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},...(recent ? pick(c.sectorKind ? null : extra?.financial ?? financial, "financial") : { value: balanceOnly && !c.sectorKind ? financial : null })},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},...pick(profitability, "profitability")},
     // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.

@@ -68,9 +68,10 @@ export type Financials = {
   marginSign?: true;
   /** No growth is shown: the revenue line is only part of the revenue (marginPartial, or a bank's line below its operating income). */
   growthWithheld?: true;
-  /** A bank (SIC 6000-6099), a lender (6100-6198) or an insurer (6300-6411): financial strength is its equity ratio, never cash against debt
-   *  (its deposits, loans and policy reserves are its business; reviewer, Nov 26: KEY, TRV, FVCB were "debt exceeds cash"). */
-  sectorKind?: "bank" | "lender" | "insurer";
+  /** A bank (SIC 6000-6098), a lender or finance company (6100-6199), a broker, dealer or exchange (6200-6299) or an insurer (6300-6411),
+   *  payment processors (6099) and health insurers (6324) aside: financial strength is its equity ratio, never cash against debt (its
+   *  deposits, loans, customer balances and policy reserves are its business; reviewers, Nov 26: KEY, TRV, FVCB; OPRT, NAVI, GS). */
+  sectorKind?: "bank" | "lender" | "broker" | "insurer";
   /** The filer's SEC industry code is a bank's, broker's or insurer's (6000-6799, not a REIT): no free-cash-flow score from any source. */
   financeSic?: true;
   /** No free-cash-flow margin is scored: a bank, broker or insurer (finance), or cash flow above the revenue itself (aboveRevenue: an
@@ -141,14 +142,20 @@ export const LEASE_REVENUE = "TechPhaseLeaseRevenue";
 export const IFRS_BANK_REVENUE = "TechPhaseIfrsBankRevenue";
 /** A company's own (extension) capital-spending line in its inline XBRL, named plainly as payments for property and equipment. */
 export const EXTENSION_CAPEX = "TechPhaseExtensionCapex";
-/** Which financial firm the filer is, by its SEC industry code (see Financials.sectorKind). */
-export function sectorKindOf(sic?: string): "bank" | "lender" | "insurer" | undefined {
-  if (!/^\d{4}$/.test(sic ?? "")) return undefined;
+/** Codes inside the finance range whose companies run ordinary businesses (fourth review, Nov 26): payment processors (6099, "functions related
+ *  to depository banking": EEFT) and health insurers (6324, "hospital and medical service plans": UNH, CI, ELV), whose operating income,
+ *  free cash flow and cash against debt mean what they mean for any company. They are measured as ordinary companies. */
+const ordinarySic = (sic?: string) => sic === "6099" || sic === "6324";
+/** Which financial firm the filer is, by its SEC industry code (see Financials.sectorKind): a bank (6000-6098), a lender or finance company
+ *  (6100-6199: consumer lenders and card issuers such as OPRT, SYF, AXP), a broker, dealer or exchange (6200-6299: GS, MS, SCHW, NAVI's
+ *  6211) or an insurer (6300-6411). Not the ordinary businesses above. */
+export function sectorKindOf(sic?: string): "bank" | "lender" | "broker" | "insurer" | undefined {
+  if (!/^\d{4}$/.test(sic ?? "") || ordinarySic(sic)) return undefined;
   const n = Number(sic);
-  return n >= 6000 && n <= 6099 ? "bank" : n >= 6100 && n <= 6198 ? "lender" : n >= 6300 && n <= 6411 ? "insurer" : undefined;
+  return n >= 6000 && n <= 6099 ? "bank" : n >= 6100 && n <= 6199 ? "lender" : n >= 6200 && n <= 6299 ? "broker" : n >= 6300 && n <= 6411 ? "insurer" : undefined;
 }
 /** The SEC industry code of the filer (submissions "sic"), for the sector-only revenue lines above. */
-const financeSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6000 && Number(sic) <= 6799;
+const financeSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6000 && Number(sic) <= 6799 && !ordinarySic(sic);
 const realEstateSic = (sic?: string) => /^\d{4}$/.test(sic ?? "") && (Number(sic) === 6798 || (Number(sic) >= 6500 && Number(sic) <= 6599));
 /** Revenue lines used only when a period has no other revenue line: a bank's derived revenue; a business development company's total
  *  investment income (Ares Capital, Main Street); an IFRS filer's sales of goods (Novartis, Sanofi tag no total "Revenue"); an IFRS bank's
@@ -167,6 +174,32 @@ function roundedOnce<T extends { value: number }>(values: T[]): T[] {
   if (top === 0 || (Math.max(...amounts) - Math.min(...amounts)) / top > 0.0005) return values;
   const precision = (n: number) => { let p = 0; while (p < 15 && n % 10 ** (p + 1) === 0) p++; return p; };   // trailing zeros: fewer = more precise
   return [[...values].sort((a, b) => precision(a.value) - precision(b.value))[0]];
+}
+/** Borrowing lines whose names overlap (short-term borrowings, notes and loans payable, commercial paper, a bank's borrowed funds and
+ *  advances): lines that add up (within 0.5%) to a total filed beside them are its parts; a line marked as a part of a total that is filed
+ *  and at least as large is inside it; and an amount equal (within 0.1%) to one already kept is the same borrowing filed twice, except for a
+ *  line of its own kind (distinct: a credit line), which only ever counts as a part of a sum. The amounts to add are returned. */
+export function overlappingLines(lines: { value: number | null; total?: boolean; partOf?: (number | null)[]; distinct?: boolean }[]): number[] {
+  type Line = { value: number; total?: boolean; partOf?: (number | null)[]; distinct?: boolean };
+  let kept = lines.filter((l): l is Line => l.value !== null);
+  // Parts that add up to a total (CBAN: advances of $200.0m and other long-term debt of $63.2m beside borrowings of $263.2m; UFG: commercial
+  // paper and a credit line beside short-term borrowings of $4.2m).
+  for (const total of kept.filter(l => l.total && l.value > 0)) {
+    const others = kept.filter(l => l !== total && l.value > 0 && l.value < total.value);
+    let parts: Line[] | null = null;
+    const pick = (from: number, chosen: Line[], size: number): Line[] | null => {
+      if (chosen.length === size) return Math.abs(chosen.reduce((a, l) => a + l.value, 0) - total.value) <= 0.005 * total.value ? chosen : null;
+      for (let i = from; i < others.length; i++) { const found = pick(i + 1, [...chosen, others[i]], size); if (found) return found; }
+      return null;
+    };
+    for (let size = 2; size <= Math.min(3, others.length) && !parts; size++) parts = pick(0, [], size);
+    if (parts) kept = kept.filter(l => !parts!.includes(l));
+  }
+  kept = kept.filter(l => !(l.partOf ?? []).some(t => t !== null && t > 0 && l.value <= t * 1.001));
+  const same = (a: number, b: number) => Math.abs(a - b) <= 0.001 * Math.max(Math.abs(a), Math.abs(b));
+  const out: Line[] = [];
+  for (const l of kept) if (l.distinct || l.value === 0 || !out.some(o => !o.distinct && same(o.value, l.value))) out.push(l);
+  return out.map(l => l.value);
 }
 type RawFact = { val: number; end: string; start?: string; accn: string; filed: string; form: string };
 /** Adds figures the scorecard needs that a filing states in another form, period by period and filing by filing, never across filings:
@@ -210,13 +243,31 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
   const revenue = index(["Revenues", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", BANK_REVENUE, "GrossInvestmentIncomeOperating", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
   const gross = index(["GrossProfit"]), opex = index(["OperatingExpenses"]), cost = index(["CostOfRevenue", "CostOfGoodsAndServicesSold"]), costs = index(["CostsAndExpenses"]);
   const sga = index(["SellingGeneralAndAdministrativeExpense"]), rnd = index(["ResearchAndDevelopmentExpense"]), interestOperating = index(["InterestExpenseOperating"]);
-  const pretax = index(PRETAX_TAGS);
-  // No pre-tax line (Allstate, Principal tag only net income and the tax): net income plus income tax of the same period and filing.
+  const pretax = index(PRETAX_TAGS), investmentRevenue = index(["GrossInvestmentIncomeOperating"]);
+  // Items outside operations named in the filing, by period (their sizes added): derivative, investment and disposal gains or losses,
+  // impairments, debt extinguishment, other non-operating income and interest expense. Per-share and tax-effect lines are not counted.
+  const nonOperating = new Map<string, Map<string, number>>();
+  for (const tag of Object.keys(facts)) {
+    if (!/(?:Derivative|Hedg|Investment|Sale|Disposal|Divestiture|Extinguishment|FairValue|ForeignCurrency).*Gain|Gain.*(?:Derivative|Hedg|Investment|Sale|Disposal|Extinguishment|FairValue)|GainsLosses|Impairment|NonoperatingIncomeExpense|^InterestExpense(?:Nonoperating|Debt)?$/.test(tag)
+      || /PerShare|PerDiluted|PerBasic|Tax|Policy|TextBlock|Accumulated|Cumulative|Reclassification|Receivable|Payable|OtherComprehensive|Unrecognized|Deferred|Percentage|Assets?$|Liabilit/.test(tag)) continue;
+    for (const [unit, values] of list(tag)) for (const f of values) {
+      if (!f.start || typeof f.val !== "number") continue;
+      const u = nonOperating.get(unit) ?? new Map<string, number>(); u.set(key(f), (u.get(key(f)) ?? 0) + Math.abs(f.val)); nonOperating.set(unit, u);
+    }
+  }
+  // No pre-tax line (Allstate, Principal tag only net income and the tax): income from continuing operations plus income tax of the same
+  // period and filing. Net income stands in only for a period with no discontinued operations (fourth review, Nov 26: AFCG's net income held
+  // a $0.28-a-share gain on discontinued operations, a 79.5% "pre-tax margin"); net income attributable to the parent only when no
+  // non-controlling interest is filed for the period, since the tax line is the whole group's.
   {
-    const net = index(["ProfitLoss", "NetIncomeLoss"]), tax = index(["IncomeTaxExpenseBenefit"]);
-    for (const [unit, rows] of net) for (const [k, n] of rows) {
-      const t = tax.get(unit)?.get(k);
-      if (n.start && t && !pretax.get(unit)?.has(k)) { const u = pretax.get(unit) ?? new Map<string, RawFact>(); u.set(k, { ...n, val: n.val + t.val }); pretax.set(unit, u); }
+    const continuing = index(["IncomeLossFromContinuingOperations"]), profit = index(["ProfitLoss"]), parent = index(["NetIncomeLoss"]), tax = index(["IncomeTaxExpenseBenefit"]);
+    const keysOf = (pattern: RegExp) => new Set(Object.keys(facts).filter(tag => pattern.test(tag)).flatMap(tag => list(tag).flatMap(([, values]) => values.filter(f => f.start && typeof f.val === "number" && f.val !== 0).map(key))));
+    const discontinued = keysOf(/^(?:IncomeLossFromDiscontinuedOperation|DiscontinuedOperation(?:IncomeLoss|GainLoss))/), minority = keysOf(/^(?:NetIncomeLossAttributableToNoncontrollingInterest|NetIncomeLossAttributableToNonredeemableNoncontrollingInterest|NetIncomeLossAttributableToRedeemableNoncontrollingInterest|MinorityInterestInNetIncomeLossOfConsolidatedEntities)$/);
+    for (const [unit, rows] of tax) for (const [k, t] of rows) {
+      if (!t.start || pretax.get(unit)?.has(k)) continue;
+      const own = parent.get(unit)?.get(k), group = profit.get(unit)?.get(k);
+      const n = continuing.get(unit)?.get(k) ?? (discontinued.has(k) ? undefined : group ?? (own && !minority.has(k) ? own : undefined));
+      if (n) { const u = pretax.get(unit) ?? new Map<string, RawFact>(); u.set(k, { ...n, val: n.val + t.val }); pretax.set(unit, u); }
     }
   }
   const derived: Record<string, RawFact[]> = {}, pre: Record<string, RawFact[]> = {};
@@ -225,7 +276,7 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
   const others = index(["Revenues", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "SalesRevenueNet", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", BANK_REVENUE, "GrossInvestmentIncomeOperating", "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue"]);
   // An insurer's "operating income" line is often its non-GAAP adjusted earnings (reviewer, Nov 26: MET): insurers (SIC 6300-6411) are scored
   // on pre-tax income only.
-  const insurer = /^\d{4}$/.test(sic ?? "") && Number(sic) >= 6300 && Number(sic) <= 6411;
+  const insurer = sectorKindOf(sic) === "insurer";
   if (insurer) delete facts.OperatingIncomeLoss;
   for (const [unit, rows] of revenue) for (const [k, r] of rows) {
     if (!r.start || (!insurer && stated.get(unit)?.has(k))) continue;
@@ -237,13 +288,18 @@ function supplementFacts(usGaap: Record<string, unknown>, sic?: string): Record<
     const o = oRaw && oRaw.val >= part ? oRaw : undefined;
     // Interest classified inside the costs (Realty Income: InterestExpenseOperating, $334m in costs and expenses of $1,286m) is a financing
     // cost, not an operating one (reviewer, Nov 26): it is added back. Never for a finance company, whose interest is its cost of revenue.
-    const interest = !financeSic(sic) || realEstateSic(sic) ? interestOperating.get(unit)?.get(k)?.val ?? 0 : 0;
+    // Not for an investment company either (fourth review, Nov 26: SCM's borrowing cost added back made 69% of a 32% net investment margin).
+    const interest = (!financeSic(sic) || realEstateSic(sic)) && !investmentRevenue.get(unit)?.has(k) ? interestOperating.get(unit)?.get(k)?.val ?? 0 : 0;
     const base = g && o ? g.val - o.val : c && o ? r.val - c.val - o.val : t ? r.val - t.val : o && !c && !g ? r.val - o.val : null;
     const value = base === null ? null : base + interest;
     const p = pretax.get(unit)?.get(k);
     // A worked-out figure that disagrees with the same period's pre-tax income in sign, or by more than a quarter of revenue, was built from
     // a partial expense line (reviewer, Nov 26: AFL's 59.3% beside 15.3% pre-tax, NAVI's 76.3% beside 4.1%): the pre-tax income is used.
-    const implausible = value !== null && !!p && ((p.val !== 0 && Math.sign(value) !== Math.sign(p.val)) || Math.abs(value - p.val) > 0.25 * Math.abs(r.val));
+    // Always for a financial firm. For any other company only when the worked-out figure is the higher one and the filing names no
+    // non-operating item of that period that accounts for at least half the gap (fourth review, Nov 26: PROP's 49.4% operating margin
+    // beside hedging losses of $134m, SCM's net investment income beside unrealized losses, were replaced by a pre-tax loss).
+    const disagrees = value !== null && !!p && ((p.val !== 0 && Math.sign(value) !== Math.sign(p.val)) || Math.abs(value - p.val) > 0.25 * Math.abs(r.val));
+    const implausible = disagrees && (financeSic(sic) || (value! > p!.val && (nonOperating.get(unit)?.get(k) ?? 0) < 0.5 * (value! - p!.val)));
     if (value !== null && Number.isFinite(value) && !implausible) { (derived[unit] ??= []).push({ ...r, val: value }); continue; }
     if (p) (pre[unit] ??= []).push({ ...r, val: p.val });
   }
@@ -368,12 +424,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
      *  are used only when no instrument family is filed, and unsecured and senior notes are never added to each other. Null when none. */
     function borrowingLines(m: (name: string) => Fact | null): number | null {
       const family = (total: string, ...parts: string[]) => { const t = m(total); if (t) return t.value; const p = parts.map(m).filter((f): f is Fact => !!f); return p.length ? p.reduce((a, f) => a + f.value, 0) : null; };
-      // A bank's borrowings filed twice, as Federal Home Loan Bank advances and as other or short-term borrowings (reviewer, Nov 26: RJF, COLB,
-      // HNVR): within that one family, an amount already counted is not added again. Equal amounts in different families are both counted
-      // (reviewer, Nov 26: dedupe by value only inside one instrument family).
-      const counted: number[] = [], bankFamily: number[] = [];
+      const counted: number[] = [];
       const add = (value: number | null) => { if (value !== null) counted.push(value); };
-      const addBank = (value: number | null) => { if (value !== null && !bankFamily.includes(value)) { bankFamily.push(value); counted.push(value); } };
       const notes = family("NotesPayable", "NotesPayableCurrent", "LongTermNotesPayable"), debtCurrent = family("DebtCurrent");
       const senior = family("SeniorNotes", "SeniorNotesCurrent", "SeniorLongTermNotes"), seniorCurrent = m("SeniorNotesCurrent")?.value ?? null;
       // When the current debt is the current part of the senior notes (TEVA: SeniorNotesCurrent = DebtCurrent = $4.0bn), the senior notes'
@@ -386,13 +438,24 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       const loans = family("LoansPayable", "LoansPayableCurrent", "LongTermLoansPayable");
       const notesParts = notes !== null ? [] : [family("OtherNotesPayable", "OtherNotesPayableCurrent", "OtherLongTermNotesPayable"), family("NotesPayableToBank", "NotesPayableToBankCurrent", "NotesPayableToBankNoncurrent")];
       const loansParts = loans !== null ? [] : [family("OtherLoansPayable", "OtherLoansPayableCurrent", "OtherLoansPayableLongTerm"), family("LoansPayableToBank", "LoansPayableToBankCurrent", "LoansPayableToBankNoncurrent")];
-      for (const value of [notes, loans, family("LineOfCredit", "LongTermLineOfCredit"),
-        family("OtherLongTermDebt", "OtherLongTermDebtCurrent", "OtherLongTermDebtNoncurrent"), family("CommercialPaper", "CommercialPaperAtCarryingValue", "CommercialPaperNoncurrent"),
-        family("WarehouseAgreementBorrowings"), notes === null && loans === null ? family("NotesAndLoansPayable", "NotesAndLoansPayableCurrent") : null, ...notesParts, ...loansParts,
-        family("ShortTermNonBankLoansAndNotesPayable"), family("ConvertibleDebt", "ConvertibleDebtCurrent", "ConvertibleDebtNoncurrent"),
+      // Lines whose names overlap: one borrowing can be filed under several of them (fourth review, Nov 26: HYPD's notes payable and short-term
+      // bank loans, NRXS's short-term borrowings and current notes, LSE's loans and short-term borrowings, WAFD's advances and other long-term
+      // debt, each the same amount; XYF's and LZMH's short-term borrowings and their bank and non-bank parts; PFS's borrowed funds and the
+      // advances, short-term and long-term borrowings inside them). Among these lines, an amount equal to one already counted is counted once,
+      // and the parts of a total filed beside it are not added (see overlapping below).
+      const shortTotal = m("ShortTermBorrowings")?.value ?? null, borrowedFunds = family("OtherBorrowings");
+      const advances = family("AdvancesFromFederalHomeLoanBanks", "FederalHomeLoanBankAdvancesLongTerm", "FederalHomeLoanBankAdvancesShortTerm");
+      const overlapping = overlappingLines([
+        { value: notes }, { value: loans }, { value: shortTotal, total: true }, { value: borrowedFunds, total: true }, { value: advances, partOf: [borrowedFunds] },
+        { value: family("OtherShortTermBorrowings"), partOf: [shortTotal, borrowedFunds] }, { value: family("ShortTermBankLoansAndNotesPayable"), partOf: [shortTotal] },
+        { value: family("ShortTermNonBankLoansAndNotesPayable"), partOf: [shortTotal] },
+        { value: family("CommercialPaper", "CommercialPaperAtCarryingValue", "CommercialPaperNoncurrent"), partOf: [shortTotal] }, { value: family("OtherLongTermDebt", "OtherLongTermDebtCurrent", "OtherLongTermDebtNoncurrent"), partOf: [borrowedFunds] },
+        { value: family("LineOfCredit", "LongTermLineOfCredit"), distinct: true },
+        ...notesParts.map(value => ({ value })), ...loansParts.map(value => ({ value })), { value: notes === null && loans === null ? family("NotesAndLoansPayable", "NotesAndLoansPayableCurrent") : null },
+      ]);
+      for (const value of [...overlapping,
+        family("WarehouseAgreementBorrowings"), family("ConvertibleDebt", "ConvertibleDebtCurrent", "ConvertibleDebtNoncurrent"),
         currentIsSenior ? null : debtCurrent, family("FinanceLeaseLiability", "FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent")]) add(value);
-      for (const value of [family("OtherBorrowings"), family("AdvancesFromFederalHomeLoanBanks"), family("ShortTermBorrowings"), family("OtherShortTermBorrowings"),
-        family("ShortTermBankLoansAndNotesPayable")]) addBank(value);
       const instruments = counted.length;
       // Senior and subordinated notes are added (RJF's $3.5bn of senior notes beside its advances; COLB's and HNVR's subordinated debt) unless
       // a notes-payable or current-debt line already holds them (reviewer, Nov 26: PHM's $1.78bn of senior notes inside its $1.81bn of notes

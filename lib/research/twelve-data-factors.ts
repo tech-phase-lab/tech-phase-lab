@@ -26,7 +26,7 @@ export type TwelveFactorEvidence = {
   marginPeriod?: "annual";
   /** The margins are pre-tax (a bank or insurer files no operating line): said as such on screen. */
   marginBasis?: "pretax";
-  /** A bank, lender or insurer: no cash-against-debt score or point from these statistics (Financials.sectorKind). */
+  /** A bank, lender, broker or insurer: no cash-against-debt score or point from these statistics (Financials.sectorKind). */
   sectorFinancial?: true;
   momentum: null | {from:string;to:string;changePct:number};
 };
