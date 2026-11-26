@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "LQDT",
+    "name": "リクイディティ・サービシズ",
+    "cik": 1235468,
+    "name_en": "Liquidity Services"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SIERRAAUCTION",
+      "ticker": "SIERRAAUCTION",
+      "name": "シエラ・オークション",
+      "name_en": "Sierra Auction Management",
+      "sub": "競売",
+      "sub_en": "Auctions",
+      "sub_short": "競売",
+      "sub_short_en": "Auctions",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年1月に買収",
+          "text_en": "Acquired in January 2024",
+          "source": {
+            "label": "Liquidity Services 10-K(2026年9月期)",
+            "label_en": "Liquidity Services 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1235468/000119312526468147/lqdt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "On January 1, 2024, the Company acquired Sierra Auction Management, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUCTIONHOLD",
+      "ticker": "AUCTIONHOLD",
+      "name": "オークション・ホールディングス",
+      "name_en": "Auction Holdings",
+      "sub": "競売",
+      "sub_en": "Auctions",
+      "sub_short": "競売",
+      "sub_short_en": "Auctions",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年10月に合併で買収",
+          "text_en": "Acquired by merger in October 2026",
+          "source": {
+            "label": "Liquidity Services 10-K(2026年9月期)",
+            "label_en": "Liquidity Services 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1235468/000119312526468147/lqdt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Subsequent Events On October 1, 2026, the Company acquired all of the outstanding equity interests of Auction Holdings, Inc., a Delaware corporation, through a merger in which Auction Holdings survived as a wholly owned subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "name_en": "Amazon Web Services",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "sub_short": "EC",
+      "sub_short_en": "E-com",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "余剰品などの仕入れ契約を結ぶ",
+          "text_en": "Supplies goods under vendor contracts",
+          "source": {
+            "label": "Liquidity Services 10-K(2026年9月期)",
+            "label_en": "Liquidity Services 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1235468/000119312526468147/lqdt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our Vendor Contracts with Amazon.com, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLYW",
+      "ticker": "FLYW",
+      "name": "フライワイヤー",
+      "name_en": "Flywire",
+      "sub": "決済",
+      "sub_en": "Payment",
+      "sub_short": "決済",
+      "sub_short_en": "Payment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "国内外の支払いにFlywireを採用",
+          "text_en": "Uses Flywire for domestic and cross-border payments",
+          "source": {
+            "label": "Flywire 8-K(2026年11月)",
+            "label_en": "Flywire 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580560/000162828026069439/ex991-20260930xearningsrel.htm",
+            "level": "official",
+            "date": "2026-11-03",
+            "quote": "In EMEA, secured approval for a 24-property rollout with Kingfisher following a successful pilot, and won 23 Marriott Sign & Pay deals. -B2B Enterprise Scaling: Major B2B wins such as Liquidity Services Inc. deploying Flywire to power domestic and cross-border payments for its $1.5 billion global e-commerce marketplace. -Healthcare Expansion: Completed key upsells, including a major one with Endeavor Health for our Integrated Financing solution. -Asset acquisition of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Liquidity Services 10-K(2026年9月期)",
+            "label_en": "Liquidity Services 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1235468/000119312526468147/lqdt-20260930.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "We currently maintain a Credit Agreement with Wells Fargo Bank, National Association (the Credit Agreement)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

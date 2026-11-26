@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "KMT",
+    "name": "ケナメタル",
+    "cik": 55242,
+    "name_en": "Kennametal"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TOOLPATH",
+      "ticker": "TOOLPATH",
+      "name": "ツールパス・ラボ",
+      "name_en": "Toolpath Labs",
+      "sub": "製造ソフト",
+      "sub_en": "Manufacturing software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デジタル製造の戦略提携",
+          "text_en": "Strategic partnership in digital manufacturing",
+          "source": {
+            "label": "Kennametal 10-K(2026年6月期)",
+            "label_en": "Kennametal 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/kmt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Recent initiatives include our strategic partnerships with Toolpath Labs, Inc. during fiscal 2025 and ModuleWorks GmbH during fiscal 2024, which support our digital manufacturing and intelligent machining solutions strategy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MODULEWORKS",
+      "ticker": "MODULEWORKS",
+      "name": "モジュールワークス",
+      "name_en": "ModuleWorks",
+      "sub": "CAMソフト",
+      "sub_en": "CAM software",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デジタル製造の戦略提携",
+          "text_en": "Strategic partnership in digital manufacturing",
+          "source": {
+            "label": "Kennametal 10-K(2026年6月期)",
+            "label_en": "Kennametal 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/kmt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Recent initiatives include our strategic partnerships with Toolpath Labs, Inc. during fiscal 2025 and ModuleWorks GmbH during fiscal 2024, which support our digital manufacturing and intelligent machining solutions strategy."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Kennametal 10-K(2026年6月期)",
+            "label_en": "Kennametal 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/kmt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Term Loan Credit Agreement, dated as of May 28, 2026, among Kennametal Inc. (the \"Borrower\"), the several banks and other financial institutions or entities from time to time parties thereto (the \"Lenders\"), PNC Bank, National Association and U.S. Bank National Association, as co-syndication agents, and Bank of America, N.A., as administrative agent Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Kennametal 10-K(2026年6月期)",
+            "label_en": "Kennametal 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/kmt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Term Loan Credit Agreement, dated as of May 28, 2026, among Kennametal Inc. (the \"Borrower\"), the several banks and other financial institutions or entities from time to time parties thereto (the \"Lenders\"), PNC Bank, National Association and U.S. Bank National Association, as co-syndication agents, and Bank of America, N.A., as administrative agent Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Kennametal 10-K(2026年6月期)",
+            "label_en": "Kennametal 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/kmt-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Term Loan Credit Agreement, dated as of May 28, 2026, among Kennametal Inc. (the \"Borrower\"), the several banks and other financial institutions or entities from time to time parties thereto (the \"Lenders\"), PNC Bank, National Association and U.S. Bank National Association, as co-syndication agents, and Bank of America, N.A., as administrative agent Exhibit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNP",
+      "ticker": "BNP",
+      "name": "BNPパリバ",
+      "name_en": "BNP Paribas",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Kennametal 8-K(2026年6月)",
+            "label_en": "Kennametal 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/55242/000119312526253476/d136977d8k.htm",
+            "level": "official",
+            "date": "2026-06-02",
+            "quote": "liability company and wholly-owned foreign subsidiary of the Company (\"Kennametal Europe\"), entered into a First Amendment to Seventh Amended and Restated Credit Agreement and Commitment Increase Amendment (the \"First Amendment\") with the several banks and other financial institutions or entities from time to time parties thereto (the \"Revolving Lenders\"), Bank of America, N.A., London Branch, as euro swingline lender, PNC Bank, National Association, BNP Paribas and U.S."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
