@@ -66,6 +66,13 @@ export const LOW_VALUE = new RegExp([
   String.raw`|(?:^|[\s(\[])@[A-Za-z_][A-Za-z0-9_]{2,}|\bpodcast\b|\bwebinar\b|\bfireside chat\b|\bepisode \d+\b`,
   String.raw`|\bstock (?:price )?(?:prediction|forecast)\b|\bI.d (?:still |also |happily |gladly )?(?:buy|sell|hold|own)\b|\bdeserves? (?:your )?attention\b|\bbargain buys?\b|^\s*(?:opinion|social buzz)\s*[:|]`,
   String.raw`|^\s*don.t (?:worry|panic|forget)\b|\btips (?:and|&) tricks\b|\bhere.s how to\b|\bstep[- ]by[- ]step\b`,
+  // Owner, Nov 26 (速報 showed 「あなたのブースが待っています」：Denny'sがエヌビディアCEOジェンセン・フアンを歓迎): a restaurant or consumer brand's
+  // stunt that merely names another company's CEO is not company news.
+  String.raw`|\b(?:Denny.s|McDonald.s|Wendy.s|Burger King|Taco Bell|KFC|Starbucks|Chipotle|Domino.s|Pizza Hut|Subway|Popeyes|Krispy Kreme|Dunkin|IHOP|Waffle House`,
+  String.raw`|Applebee.s|Chick-fil-A|In-N-Out|Shake Shack|Panda Express|diner|restaurant chain|fast[- ]food chain|(?:burger|pizza|coffee|donut|doughnut) chain)\b`,
+  String.raw`.{0,60}\b(?:welcome[sd]?|congratulate[sd]?|celebrate[sd]?|honou?r(?:s|ed)?|salute[sd]?|toast(?:s|ed)?|troll(?:s|ed)?|roast(?:s|ed)?|thank(?:s|ed)?`,
+  String.raw`|invite[sd]?|pays? tribute|shouts? out|gives?|offers?)\b(?! (?:its |a |the )?new (?:CEO|chief))`,
+  String.raw`.{0,100}\b(?:CEO|founder|co-founder|chief executive|billionaire)\b`,
 ].join(""), "i");
 /** Nov 20 review: explainers, "- live", "here's the" and bull/bear-case wording drop a headline only when it reports no concrete event
  * (CONCRETE_EVENT: a company that launches, names, invests, buys, wins, raises, cuts, reports, files, sues, surges ..., or a price target or
@@ -82,6 +89,11 @@ export const LOW_VALUE_SOFT = new RegExp([
   String.raw`|\bwhat(?:.s| has)? changed\b|\bwhat.s (?:behind|going on|driving)\b|\bwhat (?:sent|lifted|drove|pushed)\b`,
   String.raw`|\binterview with\b|\binterview\s*[:|]|\|\s*interview\b|\bsits down with\b|\bin conversation with\b|\bchats with\b`,
   String.raw`|\b(?:vertical )?taskbars?\b|\bstart menu\b|\bfile explorer\b|\bcontext menu\b|\bsnipping tool\b|\bwallpapers?\b|\bdark mode\b`,
+  // Owner, Nov 26 (速報 showed 「中国関連企業幹部とエヌビディアのもう一つの関係」): "another connection" / "X's other relationship" teasers
+  // name no fact, and nor does celebrity trivia (leather jackets, autographs, selfies), unless a concrete event is reported.
+  String.raw`|\b(?:another|(?:the|his|her|its|their) other|one more|(?:a |the )?(?:hidden|secret|little-known|unexpected|surprising|curious|strange|odd))\s+`,
+  String.raw`(?:[\w'’-]+\s+){0,2}(?:connections?|links?|ties|relationships?|side)\b|.s other (?:[\w'’-]+ )?(?:connections?|links?|ties|relationships?)\b`,
+  String.raw`|\b(?:leather jackets?|autographs?|selfies?)\b`,
 ].join(""), "i");
 export const CONCRETE_EVENT = new RegExp([
   String.raw`\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired`,
@@ -91,7 +103,7 @@ export const CONCRETE_EVENT = new RegExp([
   String.raw`|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b`,
 ].join(""));
 /** The same kinds of headline in Japanese, for a translated title whose English wording differs (owner, Nov 20). */
-const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$|オプション[・･]?チェーン|(?:本日|今日)のチャート|ポッドキャスト|ウェビナー|何が変わった|タスクバー|(?:^|[\s。、])@[A-Za-z_][A-Za-z0-9_]{2,}/; // the last: teasers whose answer is in an article we do not carry (owner, Oct 26)
+const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$|オプション[・･]?チェーン|(?:本日|今日)のチャート|ポッドキャスト|ウェビナー|何が変わった|タスクバー|(?:^|[\s。、])@[A-Za-z_][A-Za-z0-9_]{2,}|もう一つの(?:関係|つながり|繋がり|接点|顔|側面)|(?:意外|隠れた|知られざる|秘密)(?:な|の)?(?:関係|つながり|繋がり|接点)|(?:デニーズ|Denny.s|マクドナルド|ウェンディーズ|バーガーキング|タコベル|ケンタッキー|KFC|スターバックス|チポトレ|ドミノ[・･]?ピザ|ピザハット|ダイナー|レストランチェーン|ファストフード)(?:が|は).{0,40}(?:CEO|創業者).{0,30}(?:歓迎|祝福|祝|称え|たたえ|感謝|招待)|革ジャン|レザージャケット|自撮り/; // @handles: teasers whose answer is in an article we do not carry (owner, Oct 26); もう一つの関係 teasers, brand stunts naming a CEO and celebrity trivia (owner, Nov 26)
 /** GuruFocus templates ("GF Score", "GF Value"), as they were translated (owner, Nov 21). */
 const GF_TEMPLATE_JA = /GF\s?(?:評価|スコア|バリュー|レーティング)/;
 const lowValueEn = (text: string) => LOW_VALUE.test(text) || (LOW_VALUE_SOFT.test(text) && !CONCRETE_EVENT.test(text));
