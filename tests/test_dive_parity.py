@@ -32,12 +32,13 @@ FILINGS = {
     'ASML': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm', 'ASML-992'),
                           ('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm', 'ASML-993')]},
     'AMD': {},   # the release alone carries every figure of the hand-made file
+    'ANET': {'report': ('https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm', 'ANET-10q-2026-09-30')},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
     'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
     'ASML': {'caution.chips[1]': 'the hand-made file showed free cash flow (−€2.61B in Q1 to €11.35B); the statements exhibit gives no quarterly '
                                  'free cash flow line, so the chip shows the contract liabilities the same section explains'},
-    'AMD': {},
+    'AMD': {}, 'ANET': {},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
@@ -59,6 +60,10 @@ def previous_file(dive):
                        'segments': [{**x, 'revenue': x['previous'], 'operatingMargin': x['previousOperatingMargin']} for x in segments] if segments else None}
     prev['evidence'] = [{**ev[f'history[{len(h) - 1}].value'], 'field': 'numbers.revenue.current'}] + \
         [{**ev[f'history[{i}].value'], 'field': f'history[{i + 1}].value'} for i in range(len(h) - 1)]
+    gm = dive['numbers'].get('grossMargin') or {}
+    if gm.get('previous') is not None:  # the previous file's own gross margin, quoted where the hand-made file quoted it
+        prev['numbers']['grossMargin'] = {'current': gm['previous'], 'previous': None}
+        prev['evidence'] += [{**e, 'field': 'numbers.grossMargin.current'} for e in dive['evidence'] if e['field'] == 'numbers.grossMargin.previous']
     for i, _ in enumerate(segments or []):
         for old, new in (('previous', 'revenue'), ('previousOperatingMargin', 'operatingMargin')):
             prev['evidence'] += [{**e, 'field': f'numbers.segments[{i}].{new}'} for e in dive['evidence'] if e['field'] == f'numbers.segments[{i}].{old}']

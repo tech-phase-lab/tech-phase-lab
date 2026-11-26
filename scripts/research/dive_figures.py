@@ -231,7 +231,31 @@ def amd(t):
     }
 
 
-SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd}
+def arista(t):
+    inc, rec = 'Condensed Consolidated Income Statements', 'Reconciliation of Selected GAAP to Non-GAAP Financial Measures'
+    bs, cf = 'Condensed Consolidated Balance Sheets', 'Condensed Consolidated Statements of Cash Flows'
+    eps = ('Non-GAAP diluted net income per share(1)', 'Non-GAAP diluted net income per share (1)', 'Non-GAAP diluted net income per share')
+    return {   # three months this year and last, then nine months: Arista prints no previous-quarter column (the previous file has it)
+        'revenue': row(t, 'Total revenue', 2, inc, 'Cost of revenue', width=4),
+        'product': row(t, 'Product', 2, inc, 'Service', width=4),
+        'service': row(t, 'Service', 2, inc, 'Total revenue', width=4),
+        'nineMonths': row(t, 'Total revenue', 4, inc, 'Cost of revenue'),
+        'gm': row(t, 'Non-GAAP gross margin', 2, rec, 'GAAP income from operations', unit='percent', width=4),
+        'opMargin': row(t, 'Non-GAAP operating margin', 2, rec, 'GAAP net income', unit='percent', width=4),
+        'eps': row(t, eps, 2, rec, 'Weighted-average shares used', unit='per-share', width=4),
+        'epsGaap': row(t, 'GAAP diluted net income per share', 2, rec, 'Non-GAAP adjustments to net income per share', unit='per-share', width=4),
+        'gains': row(t, '(Gains)/losses on strategic investments', 2, rec, 'Non-GAAP net income', width=4),
+        'inventories': row(t, 'Inventories', 2, bs, 'Prepaid expenses'),
+        'deferred': row(t, 'Deferred revenue', 2, bs, 'Other current liabilities'),
+        'deferredLong': row(t, 'Deferred revenue, non-current', 2, bs, 'Other long-term liabilities'),
+        'record': sentence(t, r'exceeding guidance of \$([\d.]+) billion while growing ([\d.]+)%, the highest year-over-year revenue growth since our IPO', (1, 2), unit='text'),
+        'guidanceRevenue': sentence(t, r'Revenue of \$([\d.]+) - \$([\d.]+) billion;', (1, 2), multipliers=[1000, 1000]),
+        'guidanceOpMargin': sentence(t, r'Non-GAAP operating margin of ([\d.]+) - ([\d.]+)%', (1, 2), unit='percent'),
+        'guidanceEps': sentence(t, r'Non-GAAP diluted net income per share of \$([\d.]+) - \$([\d.]+)\.', (1, 2), unit='per-share'),
+    }
+
+
+SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom, 'AMD': amd, 'ANET': arista}
 
 
 # ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
@@ -369,7 +393,17 @@ def broadcom_report(t):
     }
 
 
-REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report}
+def arista_report(t):
+    return {
+        'commitments': sentence(t, r'As of (' + MONTHS + r' \d{1,2}, 20\d\d), we had non-cancellable purchase commitments not recorded on our balance sheet of \$ ?([\d.]+) billion, '
+                                   r'of which \$ ?([\d.]+) billion have expected receipt dates within 12 months', (1, 2, 3), unit='text'),
+        'customers': sentence(t, r'Sales to one end customer represented (\d+)%, (\d+)%, and (\d+)% of our total revenue, and sales to the other end customer represented '
+                                 r'(\d+)%, (\d+)%, and (\d+)% of our total revenue for the years ended December 31, (20\d\d)', (1, 4, 7), unit='text'),
+        'inventoryRisk': sentence(t, r'we expect inventory and purchase commitments to remain (elevated) and subject to volatility as a result of', (1,), unit='text'),
+    }
+
+
+REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report, 'ANET': arista_report}
 
 
 def read_report(ticker, text):
