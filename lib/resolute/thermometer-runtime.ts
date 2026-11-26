@@ -2,6 +2,7 @@ import { usMarketSession } from '../research/us-market-session.ts';
 import { collectThermometer, type ThermometerProviderConfig } from './thermometer-provider.ts';
 import { THERMOMETER_VERSION, validSessionDate } from './thermometer.ts';
 import { gaugeReading, type DailyMoveReading, type ShockReadingView, type ThermometerSnapshot } from './thermometer-view.ts';
+import type { BigDrop, SimilarDay, SimilarHistory } from './similar-days.ts';
 
 /** The calendar is deliberately bounded; no weekday-only guesses beyond its coverage.
  * A close becomes eligible one hour after the regular/shortened session ends.
@@ -39,7 +40,8 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
   if (v?.status === 'ready' && v.asOf === expected && Number.isFinite(v.level) && v.level > 0 && Number.isFinite(v.percentile) && v.percentile >= 0 && v.percentile <= 100) empty.vix = {status:'ready',asOf:expected,level:v.level,percentile:v.percentile};
   else if (v?.status === 'unavailable') empty.vix = {status:'unavailable',reason:reasons.has(v.reason)?v.reason:'invalid-data'};
   const moves = safeMoves(source.moves, expected), shock = safeShock((source as {shock?: unknown}).shock, expected), trail = safeTrail(source.trail, expected);
-  return {...empty, ...(moves ? {moves} : {}), ...(shock ? {shock} : {}), ...(trail ? {trail} : {})};
+  const history = safePair(source.history, h => safeHistory(h, expected)), drops = safePair(source.drops, d => safeDrops(d, expected));
+  return {...empty, ...(moves ? {moves} : {}), ...(shock ? {shock} : {}), ...(trail ? {trail} : {}), ...(history ? {history} : {}), ...(drops ? {drops} : {})};
 }
 /** Only a move dated on the snapshot's own session, with a plausible earlier previous close, is kept. */
 function safeMove(raw: unknown, expected: string): DailyMoveReading | null {
@@ -148,4 +150,46 @@ export function safeShock(raw: unknown, expected: string): ThermometerSnapshot['
       fear: f && f.date === date && finite(f.level, 0.01, 1000) && finite(f.previousLevel, 0.01, 1000) ? {date, level: f.level, previousLevel: f.previousLevel} : null};
   }
   return Object.keys(out).length ? out : undefined;
+}
+
+function safePair<T>(raw: unknown, check: (v: unknown) => T | null): {nas100: T | null; sox: T | null} | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const v = raw as Record<string, unknown>, out = {nas100: check(v.nas100), sox: check(v.sox)};
+  return out.nas100 || out.sox ? out : undefined;
+}
+const dayCount = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0 && (v as number) <= 4000;
+const pct = (v: unknown, nullable = false): v is number | null => nullable && v === null || finite(v, -99.99, 1000);
+function safeSimilarDay(raw: unknown, session: string): SimilarDay | null {
+  const d = raw as SimilarDay;
+  if (!d || typeof d !== 'object' || !validSessionDate(d.date) || d.date >= session || !pct(d.changePercent) || !pct(d.monthAfterPercent, true)) return null;
+  if (d.recoveredOn === null ? d.days !== null : !(validSessionDate(d.recoveredOn) && d.recoveredOn > d.date && d.recoveredOn <= session && dayCount(d.days))) return null;
+  return {date: d.date, changePercent: d.changePercent, recoveredOn: d.recoveredOn, days: d.days, monthAfterPercent: d.monthAfterPercent};
+}
+/** 「今日と似た日」 for the snapshot's own session only; every count consistent with the others. */
+export function safeHistory(raw: unknown, expected: string): SimilarHistory | null {
+  const h = raw as SimilarHistory;
+  if (!h || typeof h !== 'object' || h.date !== expected || !validSessionDate(h.from) || h.from >= expected || !(h.direction === 'down' || h.direction === 'up') ||
+      !pct(h.changePercent) || (h.direction === 'down') !== (h.changePercent < 0) || !pct(h.low) || !pct(h.high) || h.low > h.high) return null;
+  const counts = [h.count, h.recovered, h.monthCount, h.higherAfterMonth];
+  if (!counts.every(c => Number.isInteger(c) && c >= 0 && c <= 3000) || h.recovered > h.count || h.monthCount > h.count || h.higherAfterMonth > h.monthCount) return null;
+  if ((h.recovered === 0) !== (h.minDays === null && h.maxDays === null) || h.recovered > 0 && !(dayCount(h.minDays) && dayCount(h.maxDays) && h.minDays <= h.maxDays)) return null;
+  if ((h.monthCount === 0) !== (h.monthMin === null && h.monthMax === null) || h.monthCount > 0 && !(pct(h.monthMin) && pct(h.monthMax) && h.monthMin! <= h.monthMax!)) return null;
+  if (!Array.isArray(h.recent) || h.recent.length > 3 || h.recent.length > h.count) return null;
+  const recent = h.recent.map(d => safeSimilarDay(d, expected));
+  if (recent.some(d => !d)) return null;
+  const {date, changePercent, direction, low, high, from, count, recovered, minDays, maxDays, monthCount, higherAfterMonth, monthMin, monthMax} = h;
+  return {date, changePercent, direction, low, high, from, count, recovered, minDays, maxDays, monthCount, higherAfterMonth, monthMin, monthMax, recent: recent as SimilarDay[]};
+}
+/** The past big falls: dated before the session, in order, each recovered after it began (or not yet). */
+export function safeDrops(raw: unknown, expected: string): BigDrop[] | null {
+  if (!Array.isArray(raw) || raw.length > 12) return null;
+  const out: BigDrop[] = [];
+  for (const item of raw) {
+    const d = item as BigDrop;
+    if (!d || typeof d !== 'object' || !validSessionDate(d.peak) || !validSessionDate(d.trough) || d.peak >= d.trough || d.trough > expected) return null;
+    if (d.recoveredOn === null ? d.days !== null : !(validSessionDate(d.recoveredOn) && d.recoveredOn > d.trough && d.recoveredOn <= expected && dayCount(d.days))) return null;
+    if (out.length && out[out.length - 1].peak >= d.peak) return null;
+    out.push({peak: d.peak, trough: d.trough, recoveredOn: d.recoveredOn, days: d.days});
+  }
+  return out;
 }
