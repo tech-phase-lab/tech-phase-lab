@@ -177,7 +177,7 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
     const alternative=alternativeMetric(c,id,lang,hasRecentQuarter(c,now),false);
     if(alternative) return alternative;
   }
-  if(id==="financial" && ownBalance && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
+  if(id==="financial" && ownBalance && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no debt") : ""}`;
   return missingReason(c,id,ja);
 }
 
@@ -187,6 +187,7 @@ function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
   const noRevenue=!c.quarterRevenue || c.quarterRevenue.value<=0;
   if(noRevenue && (id==="growth"||id==="profitability"||id==="cash"||id==="stability")) return r("売上がまだ無い会社です","No revenue yet");
   if(id==="growth") return r("前年同期の売上が未開示","Year-ago revenue not available");
+  if((id==="profitability" || id==="stability") && c.marginPartial) return ALTERNATIVE_LABELS.marginPartial[ja?"ja":"en"];
   if(id==="profitability" && (c.marginWithheld || (finite(c.quarterOperatingMargin) && c.quarterOperatingMargin > 100))) return ALTERNATIVE_LABELS.marginWithheld[ja?"ja":"en"];
   if(id==="profitability") return r("営業利益の記載なし","No operating income reported");
   if(id==="cash" && (c.fcfWithheld==="aboveRevenue" || (finite(c.quarterFcfMargin) && c.quarterFcfMargin > 100))) return ALTERNATIVE_LABELS.fcfAboveRevenue[ja?"ja":"en"];

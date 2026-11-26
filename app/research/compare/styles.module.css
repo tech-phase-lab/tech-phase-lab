@@ -342,3 +342,7 @@
 .sampleToolbar{flex-wrap:wrap-reverse;align-items:flex-start}
 /* Option A (comparison-value.ts VALUE_LABELS.traitLines = 2): an item may take two lines, the whole text, never cut. Last, so it wins. */
 .results .traitBox li[data-lines="2"],.traitBox li[data-lines="2"]{white-space:normal;text-overflow:clip;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* Owner, Nov 26: no hidden text. A long company name in a score card's heading (ALX ONCOLOGY HOLDINGS INC, BANCO BILBAO VIZCAYA ARGENTARIA)
+   wraps, and its ticker moves under it, instead of being cut at 360-390px. */
+.companyCards .companyHeading h3,.companyHeading h3{flex-wrap:wrap;white-space:normal;overflow:visible;text-overflow:clip;min-width:0}
+.companyHeading h3>span{white-space:normal;overflow-wrap:anywhere;min-width:0}

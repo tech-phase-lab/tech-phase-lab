@@ -6,29 +6,32 @@ const signed = (n: number, digits = 1) => `${n > 0 ? "+" : ""}${n.toFixed(digits
 export const ALTERNATIVE_LABELS = {
   runway: {
     months: (m: number): Copy => ({ ja: `資金の持ち期間 約${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)}か月`, en: `Cash runway ~${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)} months` }),
-    positive: { ja: "資金の持ち期間 営業キャッシュフロー黒字", en: "Cash runway: operating cash flow positive" } as Copy,
+    positive: { ja: "資金の持ち期間 営業CF黒字", en: "Cash runway: operating cash flow positive" } as Copy,
   },
   /** Net income now against a year earlier, said plainly (owner's review, Nov 26: 「純損益 前年比-24.5%」 did not say whether the loss grew). */
   lossTrend: (now: number, before: number, basis: "quarters" | "years"): Copy => {
-    const when = basis === "quarters" ? { ja: "直近4四半期の", en: " (last 4 quarters vs the 4 before)" } : { ja: "直近期の", en: " (fiscal year vs the year before)" };
+    const when = basis === "quarters" ? { ja: "直近4四半期の", en: " (4 qtrs)" } : { ja: "直近期の", en: " (fiscal yr)" };
     const pct = before !== 0 ? Math.abs((Math.abs(now) - Math.abs(before)) / Math.abs(before) * 100).toFixed(1) : "";
     if (now < 0 && before < 0) return Math.abs(now) > Math.abs(before)
-      ? { ja: `${when.ja}赤字が前年より${pct}%拡大`, en: `Loss ${pct}% larger than a year earlier${when.en}` }
-      : { ja: `${when.ja}赤字が前年より${pct}%縮小`, en: `Loss ${pct}% smaller than a year earlier${when.en}` };
+      ? { ja: `${when.ja}赤字が前年より${pct}%拡大`, en: `Loss up ${pct}% YoY${when.en}` }
+      : { ja: `${when.ja}赤字が前年より${pct}%縮小`, en: `Loss down ${pct}% YoY${when.en}` };
     if (now >= 0 && before < 0) return { ja: `${when.ja}損益が黒字に転換`, en: `Turned profitable${when.en}` };
     if (now < 0 && before >= 0) return { ja: `${when.ja}損益が赤字に転落`, en: `Turned to a loss${when.en}` };
-    return { ja: `${when.ja}純利益 前年比${signed((now - before) / Math.abs(before || 1) * 100)}%`, en: `Net income vs a year earlier ${signed((now - before) / Math.abs(before || 1) * 100)}%${when.en}` };
+    return { ja: `${when.ja}純利益 前年比${signed((now - before) / Math.abs(before || 1) * 100)}%`, en: `Net income ${signed((now - before) / Math.abs(before || 1) * 100)}% YoY${when.en}` };
   },
   /** Profitability of a company with no revenue: no margin exists, so no score; the line says so and gives the R&D share of spending as a
    *  fact (owner's review, Nov 26: R&D intensity scored as profitability was a stretch). */
-  noMargin: (share: number | null): Copy => share === null ? { ja: "売上が無く利益率は出せません", en: "No revenue: no margin" }
-    : { ja: `売上が無く利益率は出せません（研究開発費は費用の${share.toFixed(0)}%）`, en: `No revenue: no margin (R&D is ${share.toFixed(0)}% of spending)` },
+  // Short enough to show in full in a two-line snapshot cell at 360px with three companies (owner, Nov 26: no hidden text).
+  noMargin: (share: number | null): Copy => share === null ? { ja: "売上なし（利益率なし）", en: "No revenue: no margin" }
+    : { ja: `売上なし（研究開発費は費用の${share.toFixed(0)}%）`, en: `No revenue (R&D ${share.toFixed(0)}% of costs)` },
   /** A bank's, insurer's or broker's cash generation when no net income can be matched to its equity. */
-  noRoe: { ja: "ROEの計算に必要な純利益が未開示", en: "Net income for ROE not available" } as Copy,
+  noRoe: { ja: "ROE算出用の純利益が未開示", en: "Net income for ROE not available" } as Copy,
   /** An operating income above the revenue line: the margin is not scored. */
-  marginWithheld: { ja: "営業利益が売上を上回るため利益率を出しません", en: "Operating income exceeds revenue: margin not scored" } as Copy,
+  marginWithheld: { ja: "営業利益が売上を超え算出せず", en: "Op. income above revenue: not scored" } as Copy,
+  /** An IFRS bank whose readable revenue is net interest and fee income only, beside a profit that holds its other income too. */
+  marginPartial: { ja: "売上が利息・手数料のみで算出せず", en: "Revenue is interest and fees only: not scored" } as Copy,
   /** Free cash flow above the revenue itself (an upfront licence payment, customer deposits): not scored as cash generation. */
-  fcfAboveRevenue: { ja: "営業キャッシュフローが売上を上回る（前受金など）ため簡易FCF率を出しません", en: "Cash flow exceeds revenue (e.g. upfront payments): FCF margin not scored" } as Copy,
+  fcfAboveRevenue: { ja: "営業CFが売上を超え算出せず", en: "Cash flow above revenue: not scored" } as Copy,
   dilution: (pct: number): Copy => ({ ja: `株数の増加 前年比${signed(pct)}%`, en: `Share count vs a year earlier ${signed(pct)}%` }),
   capitalRatio: (pct: number): Copy => ({ ja: `自己資本比率 ${pct.toFixed(1)}%`, en: `Equity ÷ assets ${pct.toFixed(1)}%` }),
   roe: (pct: number): Copy => ({ ja: `ROE ${signed(pct)}%`, en: `Return on equity ${signed(pct)}%` }),
@@ -41,7 +44,7 @@ export const ALTERNATIVE_LABELS = {
   negativeEquity: { ja: "純資産がマイナスのため倍率なし", en: "No multiple: shareholders' equity is negative" } as Copy,
   /** Why a pre-revenue metric is missing (the filing has no such figure), instead of a bare "no revenue yet". */
   missing: {
-    cash: { ja: "営業キャッシュフローの記載なし", en: "No operating cash flow reported" } as Copy,
+    cash: { ja: "営業CFの記載なし", en: "No operating cash flow reported" } as Copy,
     growth: { ja: "比べる前年の純損益が未開示", en: "No year-earlier net income to compare" } as Copy,
     stability: { ja: "前年同期の株数が未開示", en: "No year-earlier share count" } as Copy,
   },

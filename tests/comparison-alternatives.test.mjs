@@ -52,7 +52,7 @@ test("a drug developer's runway, net-loss trend, R&D share and dilution, read fr
   assert.equal(comparisonMetric(c, "cash", "ja", now), "資金の持ち期間 約17か月");
   assert.equal(comparisonMetric(c, "growth", "ja", now), "直近4四半期の赤字が前年より24.5%拡大");
   // No revenue, no margin: profitability is not scored; the R&D share is shown as a fact (owner's review, Nov 26).
-  assert.equal(comparisonMetric(c, "profitability", "ja", now), "売上が無く利益率は出せません（研究開発費は費用の55%）");
+  assert.equal(comparisonMetric(c, "profitability", "ja", now), "売上なし（研究開発費は費用の55%）");
   assert.equal(comparisonMetric(c, "stability", "ja", now), "株数の増加 前年比+120.7%");
   assert.match(comparisonAvailability(c, "ja", now), /資金の持ち期間/);
 });

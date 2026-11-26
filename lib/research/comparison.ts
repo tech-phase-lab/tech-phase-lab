@@ -61,6 +61,9 @@ export type Financials = {
   gapReason?: { kind: "no-report" | "no-xbrl" | "stale" | "unreadable"; date?: string };
   /** The quarter's operating income exceeds its revenue line: the margin is withheld (a gain inside operating income, or a partial line). */
   marginWithheld?: true;
+  /** The revenue is an IFRS bank's net interest plus net fee income only (IFRS_BANK_REVENUE), while its operating profit also holds trading
+   *  and other income (HSBC: 70% "margin" for H1 2026): no margin and no margin series are scored, and the screen says why. */
+  marginPartial?: true;
   /** No free-cash-flow margin is scored: a bank, broker or insurer (finance), or cash flow above the revenue itself (aboveRevenue: an
    *  upfront licence payment or customer deposits, ROIV 1,692%, LEXX on $5k of revenue). The screen says why. */
   fcfWithheld?: "finance" | "aboveRevenue";
@@ -737,7 +740,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const annualMargins = quarterly ? null : annualMarginSeries();
   const series = quarterly ?? annualMargins;
   // A margin above 100% in the series (income above revenue) makes the series unusable for stability, as above.
-  const quarterMargins = series && series.every(m => m.value <= 100) ? series : null;
+  const partialRevenue = revenue.tag === IFRS_BANK_REVENUE || quarterRevenue?.tag === IFRS_BANK_REVENUE;
+  const quarterMargins = series && series.every(m => m.value <= 100) && !partialRevenue ? series : null;
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
   const balanceTags = basis === "us-gaap" ? ["CashAndCashEquivalentsAtCarryingValue", "AssetsCurrent", "LiabilitiesCurrent"] : ["CashAndCashEquivalents", "CurrentAssets", "CurrentLiabilities"];
@@ -765,8 +769,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     // An operating (or pre-tax) income above the revenue line (YUM, MSTR's bitcoin gains, a partial revenue line) is no margin to score: it
     // is withheld and the screen says why (marginWithheld).
-    quarterOperatingMargin: quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value <= quarterRevenue.value ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
-    ...(quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value > quarterRevenue.value ? { marginWithheld: true as const } : {}),
+    quarterOperatingMargin: !partialRevenue && quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value <= quarterRevenue.value ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
+    ...(partialRevenue ? { marginPartial: true as const } : quarterRevenue && quarterOperatingIncome && quarterOperatingIncome.value > quarterRevenue.value ? { marginWithheld: true as const } : {}),
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
     quarterFcfMargin: fcfWithheld ? null : fcfBasis,
     ...(fcfWithheld ? { fcfWithheld } : quarterFcf === null && annualFcf !== null ? { fcfPeriod: "annual" as const } : {}),

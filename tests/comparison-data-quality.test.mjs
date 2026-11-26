@@ -124,7 +124,7 @@ test("a bank's free cash flow is never scored, nor cash flow above revenue; a RE
   const reit = extractFinancials("REIT", "1", payload(facts()), NOW, undefined, undefined, undefined, "6798");
   assert.equal(reit.quarterFcfMargin, null);
   assert.equal(reit.fcfWithheld, "aboveRevenue");
-  assert.equal(comparisonMetric(reit, "cash", "ja", NOW), "営業キャッシュフローが売上を上回る（前受金など）ため簡易FCF率を出しません");
+  assert.equal(comparisonMetric(reit, "cash", "ja", NOW), "営業CFが売上を超え算出せず");
   const plain = facts(); plain.NetCashProvidedByUsedInOperatingActivities = usd([fact("2026-07-01", "2026-09-30", 30, Q3, "2026-11-05")]);
   assert.equal(extractFinancials("REIT", "1", payload(plain), NOW, undefined, undefined, undefined, "6798").quarterFcfMargin, 30);
   // The provider's same quarter never puts back what the filing withholds, nor gives a margin above 100%.
@@ -138,4 +138,18 @@ test("a bank's free cash flow is never scored, nor cash flow above revenue; a RE
   const scores = Object.fromEntries(comparisonScores({ ...plain, ...open, quarterOperatingMargin: 140, quarterFcfMargin: 150 }, NOW).map(x => [x.id, x.value]));
   assert.equal(scores.profitability, null);
   assert.equal(scores.cash, null);
+});
+
+test("an IFRS bank whose readable revenue is interest and fees only gets no margin beside a profit that holds its other income (HSBC)", () => {
+  const ifrs = (end, start, nii, fee, op, accn, filed, form) => ({ start, end, nii, fee, op, accn, filed, form });
+  const periods = [ifrs("2025-12-31", "2025-01-01", 32000, 13343, 27996, FY, "2026-02-25", "20-F"), ifrs("2024-12-31", "2024-01-01", 30000, 12301, 29397, FY, "2026-02-25", "20-F")];
+  const row = (p, key) => ({ start: p.start, end: p.end, val: p[key], accn: p.accn, filed: p.filed, form: p.form });
+  const usdRows = key => ({ units: { USD: periods.map(p => row(p, key)) } });
+  const c = extractFinancials("HSBC", "1", { cik: 1, facts: { "ifrs-full": {
+    InterestRevenueExpense: usdRows("nii"), FeeAndCommissionIncomeExpense: usdRows("fee"), ProfitLossFromOperatingActivities: usdRows("op"),
+  } } }, NOW, undefined, undefined, undefined, "6029");
+  assert.equal(c.revenue.tag, "TechPhaseIfrsBankRevenue");
+  assert.equal(c.quarterOperatingMargin, null);
+  assert.equal(c.marginPartial, true);
+  assert.equal(comparisonMetric(c, "profitability", "ja", NOW), "売上が利息・手数料のみで算出せず");
 });
