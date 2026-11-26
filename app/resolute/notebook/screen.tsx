@@ -13,8 +13,13 @@ import { deliveryLabel } from "@/lib/resolute/delivery-time";
 import { notebookResult,notebookEdits,adjustNotebook,notebookDocument,type NotebookEdits } from "@/lib/resolute/notebook";
 import styles from "../diagnosis.module.css";
 import { useRemembered } from "../features/use-remembered";
+import SpreadBook from "./spread";
+import pc from "../pc.module.css";
+import bp from "./book-pc.module.css";
+import { useDesktop } from "../use-desktop";
+import SectionHeading from "../section-heading";
 export default function NotebookScreen({identityReady=true}:{identityReady?:boolean}) {
- return <ToolShell identityReady={identityReady}>{(locale,deny)=><Notebook locale={locale} deny={deny}/>}</ToolShell>;
+ return <ToolShell identityReady={identityReady} pc>{(locale,deny)=><Notebook locale={locale} deny={deny}/>}</ToolShell>;
 }
 function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const requestPlan=usePlanClient(), requestNotifications=useNotificationClient(),en=locale==="en";
@@ -22,6 +27,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const knownPlan=useRemembered<PlanSnapshot>("plan"),knownNotifications=useRemembered<NotificationSnapshot>("notifications");
  const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(knownPlan??null),[notifications,setNotifications]=useState<NotificationSnapshot|null>(knownNotifications??null);
  const [edits,setEdits]=useState<NotebookEdits|null>(null),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[message,setMessage]=useState("");
+ const desktop=useDesktop();
  const [attempt,setAttempt]=useState(0), pending=useRef<AbortController|null>(null),mutex=useRef(false),denyRef=useRef(deny),editor=useRef<HTMLElement>(null);
  const notice:Record<string,string>={load:en?"We couldn’t load your saved rules. Please try again.":"保存済みのルールを読み込めませんでした。再確認してください。",invalid:en?"Check the numbers and text lengths. Use up to 10 conditions, 100 characters each.":"数字と文字数を確認してください。条件は1行100文字までで10行以内です。",saved:en?"Your rules are saved.":"マイルールを保存しました",conflict:en?"Your plan changed in another window. Your edits are still here. Load the saved version before editing again.":"別の画面で更新されています。入力は残しています。保存済みの内容を読み込んでから見直してください。",uncertain:en?"We couldn’t confirm your rules were saved. Load the saved version before trying again.":"保存を確認できませんでした。再送する前に保存済みの内容を読み込んでください。"};
  const editing=edits!==null;
@@ -53,10 +59,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const plan=snapshot.plan,result=notebookResult(plan,locale),settings=notifications?.settings;
  let preview:ReturnType<typeof notebookResult>|null=null;
  if(edits)try{preview=notebookResult(adjustNotebook(plan,edits),locale);}catch{/* Invalid edits remain editable. */}
- return <div className={styles.section}>
-  <div className={styles.notebookIntro}><h1>{en?"A book to return to":"迷った日に開く一冊"}</h1></div>
-  <Rulebook plan={plan} locale={locale}/>
-  <div className={styles.bookUtility}><button className={styles.secondary} disabled={busy||!!edits} onClick={()=>{setEdits(notebookEdits(plan));setMessage("");}}>{en?"Review my rules":"ルールを見直す"}</button></div>
+ const editorPanel=<>
   {edits?<section className={`${styles.card} ${styles.bookEditor}`} ref={editor} tabIndex={-1} aria-label={en?"Adjust my rules":"マイルールの最終調整"}><h2>{en?"Fine-tune my rules":"マイルールを整える"}</h2><p className={styles.muted}>{en?"Purchase levels, amounts and notification settings stay as saved. Review the updated figures below before saving.":"買い増しラインと金額 通知設定はそのまま残します。保存前に変更後の数字を確認してください。"}</p>
    {([['reserveMonths',en?'Cash cushion (months)':'手をつけずに置く月数'],['perStockCapPct',en?'Limit per stock (%)':'1銘柄の上限（%）']] as const).map(([key,label])=><label className={styles.field} key={key}>{label}<NumberInput decimal value={edits[key]} onValueChange={value=>setEdits({...edits,[key]:value})}/></label>)}
    <label className={styles.field}>{en?"My stop-loss level (%) · optional":"自分で決める損切りライン（%）任意"}<NumberInput decimal value={edits.stopLossPct??""} onValueChange={value=>setEdits({...edits,stopLossPct:value})}/><span className={styles.muted}>{en?"0.1–99.9%. Measured against the investment base in your plan, not an individual stock’s purchase price. Leave blank if undecided. No automatic selling.":"0.1〜99.9% 診断に入力した投資額全体に対する下落率です。銘柄ごとの買値からの下落率ではありません。未定なら空欄にできます。自動売却は行いません。"}</span></label>
@@ -70,6 +73,18 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   <details className={styles.bookSettings}><summary>{en?"My notifications":"いつものお知らせ"}</summary><div className={styles.bookNotifications}>
    {settings?<><div className={styles.bookSectionHead}><p>{settings.alertsEnabled?(en?"Closing-price alerts on":"終値アラート オン"):(en?"Closing-price alerts off":"終値アラート オフ")} · {deliveryLabel(settings.deliveryHourJst,locale)}</p><Link href="/resolute/alerts" className={styles.secondary}>{en?"Change":"変更"}</Link></div><div className={styles.bookSectionHead}><p>{settings.morningEnabled?(en?"Morning note on":"翌朝のひとこと オン"):(en?"Morning note off":"翌朝のひとこと オフ")}</p><Link href="/resolute/morning" className={styles.secondary}>{en?"Change":"変更"}</Link></div></>:<p>{en?"We couldn’t load your notification settings.":"通知設定を確認できませんでした"}</p>}
   </div></details>
+ </>;
+ if(desktop)return <div className={pc.content}>
+  <header className={pc.head}><div><p className={pc.eyebrow}><b>MY RULES</b>{en?"My rulebook":"マイルール"}</p><h1 className={pc.title}>{en?"A book to return to":"迷った日に開く一冊"}</h1><p className={pc.lead}>{en?"My rules, my resolve":"相場に揺れない私のルール"}</p></div></header>
+  <SpreadBook plan={plan} locale={locale} actions={<><button className={styles.primary} disabled={!!edits||busy} onClick={download}>{en?"Save this book":"この一冊を保存する"}</button><button className={styles.secondary} disabled={busy||!!edits} onClick={()=>{setEdits(notebookEdits(plan));setMessage("");}}>{en?"Review my rules":"ルールを見直す"}</button></>}
+   notes={<p className={bp.notes}><span>{en?"Read it anytime, even offline.":"通信なしで読み返せます。"}</span><span>{en?"Keep it somewhere only you can access.":"自分だけが開ける場所に保管してください。"}</span><span>{result.disclaimer}</span></p>}/>
+  <div className={bp.below}>{editorPanel}</div>
+ </div>;
+ return <div className={styles.section}>
+  <SectionHeading label="MY RULES" title={en?"A book to return to":"迷った日に開く一冊"} description={en?"My rules, my resolve":"相場に揺れない私のルール"}/>
+  <Rulebook plan={plan} locale={locale}/>
+  <div className={styles.bookUtility}><button className={styles.secondary} disabled={busy||!!edits} onClick={()=>{setEdits(notebookEdits(plan));setMessage("");}}>{en?"Review my rules":"ルールを見直す"}</button></div>
+  {editorPanel}
   <section className={styles.bookActions}><button className={styles.primary} disabled={!!edits||busy} onClick={download}>{en?"Save this book":"この一冊を保存する"}</button><p>{en?"Read it anytime, even offline.":"通信なしで読み返せます。"}<br/>{en?"Keep it somewhere only you can access.":"自分だけが開ける場所に保管してください。"}</p></section>
   <p className={styles.disclaimer}>{result.disclaimer}</p>
  </div>;
