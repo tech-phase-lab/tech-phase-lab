@@ -1,5 +1,6 @@
 "use client";
 import { UserProfile } from "@clerk/nextjs";
+import { useIdentityWordingReady } from "../../identity-provider";
 import Link from "next/link";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
@@ -8,11 +9,12 @@ import { useResearchLanguage } from "../../use-research-language";
 export default function SecurityScreen() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
+  const wordingReady = useIdentityWordingReady();
   return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "セキュリティ" : "Security"}
     description={ja ? "パスワードと2段階認証を管理します。" : "Manage your password and two-step verification."}>
     <Link href="/research/account" style={{ display: "inline-flex", alignItems: "center", gap: 6, margin: "0 0 14px", padding: "8px 14px", borderRadius: 999, border: "1px solid #2c4450", color: "#9bdec6", fontSize: 14, textDecoration: "none" }}>
       <span aria-hidden="true">‹</span>{ja ? "アカウントに戻る" : "Back to account"}
     </Link>
-    <UserProfile routing="hash" />
+    {wordingReady && <UserProfile routing="hash" />}
   </ResearchToolShell>;
 }

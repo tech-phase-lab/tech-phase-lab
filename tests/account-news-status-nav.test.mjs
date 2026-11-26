@@ -32,7 +32,7 @@ new Function("require", "module", "exports", compiled)(id => {
   if (id === "../research-tool-shell") return { default: ({ children }) => children };
   if (id === "../use-research-language") return { useResearchLanguage: () => [language, () => {}] };
   if (id === "@/lib/research/member-recovery") return { recoverMember: () => { throw Error("Unexpected effect during server render"); } };
-  if (id === "../identity-provider") return { useIdentityRefresh: () => async () => {} };
+  if (id === "../identity-provider") return { useIdentityRefresh: () => async () => {}, useIdentityWordingReady: () => true };
   if (id === "./account-data") return { prefetchAccountData() {} };
   if (id === "./account-view") return { default: ({ member }) => createElement("p", null, `account-view:${member.ownerMode}:${member.isAdmin}`) };
   return require(id);
