@@ -1,6 +1,6 @@
 import { validSyncToken } from "@/lib/membership/sync-auth";
 import { warmMinute } from "@/lib/research/comparison-warm";
-import { refreshBoardSnapshot, refreshLeveragedSnapshot } from "@/lib/research/market-data";
+import { refreshBoardSnapshot, refreshLeveragedSnapshot, refreshMonitoredFacts } from "@/lib/research/market-data";
 import { refreshFocusSnapshot } from "@/lib/research/search-focus-server";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -27,10 +27,14 @@ export async function GET(request: Request) {
   // trading day, at most 24 a minute, warm tier), through the same shared bar copies members' reads use.
   const focus = await refreshFocusSnapshot().catch(() => ({ spent: 0, read: 0, copies: 0, failed: -1 }));
   if (focus.spent || focus.copies || focus.failed) console.info(`search focus snapshot spent=${focus.spent} read=${focus.read} copies=${focus.copies} failed=${focus.failed}`);
+  // 監視22銘柄's quote cards (production, Nov 26: eight of them showed — for EPS, market cap and dividend yield): the statistics of at most
+  // one company without a current copy (none when the comparison's daily copy is stored) and one earnings list, warm tier; members only read.
+  const facts = await refreshMonitoredFacts().catch(() => ({ spent: 0, read: 0, failed: -1 }));
+  if (facts.spent || facts.read || facts.failed) console.info(`monitored facts spent=${facts.spent} read=${facts.read} failed=${facts.failed}`);
   try {
-    const report = await warmMinute(Date.now(), lev.spent + board.spent + focus.spent);
+    const report = await warmMinute(Date.now(), lev.spent + board.spent + focus.spent + facts.spent);
     console.info(`comparison warm ${report.minute} spent=${report.spent} filings=${report.filings ?? 0} tickers=${report.tickers.join(",")} skipped=${report.skipped.join(",") || "-"}`);
-    return Response.json({ ok: true, ...report, leveraged: lev, board, focus }, { headers });
+    return Response.json({ ok: true, ...report, leveraged: lev, board, focus, facts }, { headers });
   } catch (error) {
     console.warn(`comparison warm failed: ${error instanceof Error ? error.message : "error"}`);
     return Response.json({ ok: false }, { status: 503, headers });

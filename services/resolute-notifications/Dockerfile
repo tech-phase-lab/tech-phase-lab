@@ -15,5 +15,6 @@ USER node
 ENV NODE_ENV=production
 # Cron service for closing-price alerts and the morning note. Created DISABLED: with no flags set both steps print
 # {"enabled":false} and do nothing. Schedule (UTC 0 0,1,22,23 * * *) and flags are set only with the owner's approval.
-RUN node --experimental-strip-types services/resolute-api/notification-queue.mjs; node --experimental-strip-types services/resolute-api/mail-worker.mjs; true
+# Each run also prefetches the day's Twelve Data closes first and refreshes split histories last (twelve-prefetch.mjs; db/resolute/029).
+RUN node --experimental-strip-types services/resolute-api/twelve-prefetch.mjs; node --experimental-strip-types services/resolute-api/notification-queue.mjs; node --experimental-strip-types services/resolute-api/mail-worker.mjs; true
 CMD ["timeout", "--signal=TERM", "--kill-after=10s", "540s", "node", "--experimental-strip-types", "services/resolute-notifications/run.mjs"]
