@@ -27,7 +27,7 @@ test("provider responses reach the exact production radar/bar/JA/EN contract wit
   assert.deepEqual(scores.map(s=>s.value),[10,4,null,10,7,7,8]);
   assert.equal(comparisonMetric(c,"valuation","ja",now),"未取得");
   assert.ok(!c.preparedAnalysis.items.some(i=>i.id==="valuation"));
-  const [v]=applyValueCheck([{...c,ticker:"AAA"}],{values:{AAA:figure(20)}});
+  const [v]=applyValueCheck([{...c,ticker:"AAA"}],{values:{AAA:figure(20)}},now);
   assert.deepEqual(comparisonScores(v,now).map(s=>s.value),[10,4,7,10,7,7,8]);
   assert.ok(comparisonScores(v,now).every((s,i)=>radarPoint(s.value,i,7)!==null));
   assert.equal(comparisonMetric(v,"valuation","ja",now),"5年平均より20%安い");
@@ -81,7 +81,7 @@ test("unadjusted, stale or duplicated price history cannot create momentum",()=>
 });
 test("two/three-company leaders use the displayed score, and cannot win against missing data",()=>{
   const values={values:{AAA:figure(30),BBB:figure(10),CCC:figure(-10)}};
-  const [a,b,c]=applyValueCheck(["AAA","BBB","CCC"].map(t=>({...buildTwelveFinancials(bundle(t),now),ticker:t})),values);
+  const [a,b,c]=applyValueCheck(["AAA","BBB","CCC"].map(t=>({...buildTwelveFinancials(bundle(t),now),ticker:t})),values,now);
   assert.deepEqual(comparisonLeaders([a,b],"valuation",now),[true,false]);
   assert.deepEqual(comparisonLeaders([a,b,c],"valuation",now),[true,false,false]);
   c.valueCheck=null;assert.deepEqual(comparisonLeaders([a,b,c],"valuation",now),[false,false,false]);
@@ -94,12 +94,13 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
   const scoreURL=new URL("../lib/research/comparison-scorecard.ts",import.meta.url).href;
   const reactURL=pathToFileURL(require.resolve("react")).href;
   const input=`import React from ${JSON.stringify(reactURL)};
-    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentBalance,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    import {VALUE_LABELS,valueAsOfLine,valueCheckItem} from ${JSON.stringify(new URL("../lib/research/comparison-value.ts",import.meta.url).href)};
     const styles=new Proxy({}, {get:(_,key)=>String(key)});const companyColors=["#ddc38a","#9ed8c3","#a5badf"];const colorOf=(index,offset=0)=>companyColors[(index+offset)%companyColors.length];
     ${functions}\nexport {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay};`;
   const compiled=await transform(input,{filename:"comparison-render-check.tsx",jsc:{parser:{syntax:"typescript",tsx:true},transform:{react:{runtime:"classic"}},target:"es2022"},module:{type:"es6"}});
   const {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay}=await import(`data:text/javascript;base64,${Buffer.from(compiled.code).toString("base64")}`);
-  const companies=applyValueCheck(["AAA","BBB","CCC"].map((ticker,i)=>({...buildTwelveFinancials(bundle(ticker,10+i*10),now),ticker,name:`Example ${ticker}`,peer:"example",caution:{ja:"",en:""}})),{values:{AAA:figure(36),BBB:figure(-12),CCC:figure(0)}});
+  const companies=applyValueCheck(["AAA","BBB","CCC"].map((ticker,i)=>({...buildTwelveFinancials(bundle(ticker,10+i*10),now),ticker,name:`Example ${ticker}`,peer:"example",caution:{ja:"",en:""}})),{values:{AAA:figure(36),BBB:figure(-12),CCC:figure(0)}},now);
   for(const lang of ["ja","en"]){
     const card=renderToStaticMarkup(React.createElement(CompanyScoreCard,{company:companies[0],lang,now}));
     assert.equal((card.match(/<circle /g)||[]).length,7);

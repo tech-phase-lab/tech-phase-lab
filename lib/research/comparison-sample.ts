@@ -27,6 +27,6 @@ export function buildComparisonSample(): ComparisonResult {
   });
   // Valuation as on Treasure Hunt: fictional Value Scores against each company's own five-year average.
   const values:Record<string,ValueFigure>=Object.fromEntries(specs.map(d=>[d.ticker,{score:d.value,exact:d.value,pe:d.value,ps:d.value,peNow:d.pe,psNow:5,basis:"pe-ps",period:null,asOf:"2026-10-02"}]));
-  return {companies:applyValueCheck(companies,{values}),comparable:true,reasons:[],generatedAt:retrievedAt,
+  return {companies:applyValueCheck(companies,{values},now),comparable:true,reasons:[],generatedAt:retrievedAt,
     conclusion:{ja:"Atlasは収益性、Beaconは成長性で上回ります",en:"Atlas leads in profitability; Beacon leads in growth"}};
 }

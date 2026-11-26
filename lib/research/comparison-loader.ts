@@ -63,6 +63,12 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
     } catch { /* Keep retrieved figures with an explicit freshness warning below. */ }
   }));
   const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag);
+  // No revenue yet: only the balance sheet is read, so freshness is the balance sheet's against the newest periodic report.
+  if (result.preRevenue) {
+    const newest = [annual, quarter].filter((f): f is FinancialFiling => !!f).sort((a, b) => b.end.localeCompare(a.end))[0];
+    return { ...result, dataWarnings: newest && (!result.balance || result.balance.end < newest.end)
+      ? [warning(`${newest.end}期の四半期提出書類から数値を取得できていません。`, `Figures from the quarterly filing for ${newest.end} are unavailable.`)] : [] };
+  }
   const dataWarnings = [];
   if (annual && (!result.revenue || result.revenue.end < annual.end || (result.revenue.filed ?? "") < annual.filed)) dataWarnings.push(warning(`${annual.end}期の年次提出書類から数値を取得できていません。`, `Figures from the annual filing for ${annual.end} are unavailable.`));
   const latestQuarter = [quarter,tsmRelease,tsmStatement].filter((f): f is FinancialFiling=>!!f).sort((a,b)=>b.end.localeCompare(a.end)||b.filed.localeCompare(a.filed))[0];

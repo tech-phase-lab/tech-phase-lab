@@ -1,6 +1,7 @@
 "use client";
 import type { ComparisonResult } from "@/lib/research/comparison";
-import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentBalance, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
+import { VALUE_LABELS, valueAsOfLine, valueCheckItem } from "@/lib/research/comparison-value";
 import styles from "./styles.module.css";
 // The color of each company (owner, Nov 5): the first a yellowish gold, the second blue, the third a light purple.
 const companyColors = ["#ffc247", "#4cc9f0", "#ff7ac6"];
@@ -89,6 +90,7 @@ function ScoreOverview({companies,lang,now,missingNote=true}: {companies:Compari
           <small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></div>;})}</div>
     </div>)}
     {missingNote && <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— means data or a score isn't available. It doesn't mean zero."}</p>}
+    {valueAsOfLine(companies,lang,now) && <p className={styles.snapshotNote}>{valueAsOfLine(companies,lang,now)}</p>}
   </section>;
 }
 /** Bullets saved before Nov 15 used long forms; they are shown in the short form that fits one line at 360px. */
@@ -97,7 +99,11 @@ export const compactTrait=(text:string)=>text.replace(/^営業赤字（利益率
 /** One item is one line (owner, Nov 15: 「ここは1行固定」): 12px, or 11px when long for the 184px column; anything longer ends in "…". */
 const fitSize=(text:string)=>textWidth(text)*12>146 ? "small" : "normal";
 function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number;colorIndex?:number}) {
-  const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
+  // Without a current quarter (no revenue yet) the quarter's points are not shown; the valuation point, which does not depend on it, is.
+  const valuation=valueCheckItem(c.valueCheck);
+  // The valuation point is written from the figure at display time, so its wording (VALUE_LABELS) is the same wherever it was prepared.
+  const prepared=(hasRecentQuarter(c,now) || hasRecentBalance(c,now)) && c.preparedAnalysis ? c.preparedAnalysis.items : null;
+  const items=prepared ? prepared.flatMap(i=>i.id!=="valuation" ? [i] : valuation ? [valuation] : []) : valuation ? [valuation] : [], ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
   const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>compactTrait(i.short[lang])),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>compactTrait(i.short[lang]))};
   return <article className={styles.scoreCard}>
@@ -111,11 +117,11 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item} data-fit={fitSize(item)} data-lines={VALUE_LABELS.traitLines}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item} data-fit={fitSize(item)} data-lines={VALUE_LABELS.traitLines}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>

@@ -27,7 +27,7 @@ export function compareSample(tickers: readonly string[]): ComparisonResult | nu
   if (saved.some(c => !c)) return null;
   // Valuation as on Treasure Hunt (owner, Nov 26): each sample company's fictional figure against its own five-year average.
   const values = Object.fromEntries(saved.map(c => [c.ticker, c.valueCheck as ValueFigure]));
-  const companies = applyValueCheck(saved, { values });
+  const companies = applyValueCheck(saved, { values }, compareNow);
   return { companies, comparable: true, reasons: [], generatedAt: compare.snapshotAt, conclusion: { ja: "", en: "" } };
 }
 

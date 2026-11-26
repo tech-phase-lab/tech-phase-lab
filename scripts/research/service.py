@@ -63,6 +63,7 @@ import dart_watch
 import earnings_announce
 import earnings_history
 import value_check
+import compare_values
 import twelve_allocator
 import official_research
 import deep_analysis
@@ -890,6 +891,7 @@ class AutomaticMonitor:
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.price_alert_thread = threading.Thread(target=self.run_price_alerts, name="price-alerts", daemon=True)
         self.value_check_thread = threading.Thread(target=self.run_value_check, name="value-check", daemon=True)
+        self.compare_values_thread = threading.Thread(target=self.run_compare_values, name="compare-values", daemon=True)
         self.push_demo_thread = threading.Thread(target=self.run_push_demo, name="push-demo-target", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         # Several headline workers translate different articles at once. Each
@@ -1411,6 +1413,29 @@ class AutomaticMonitor:
                 print(json.dumps({"event": "value-check-failed", "error": type(error).__name__}), flush=True)
             self.stop_event.wait(300)
 
+    def run_compare_values(self, now=lambda: datetime.now(timezone.utc)):
+        """銘柄比較の割安性 for every comparable company (compare_values.py, owner Nov 26): one step about once a minute, in the
+        background tier through the allocator; on with Treasure Hunt (VALUE_CHECK_ENABLED) unless COMPARE_VALUES_ENABLED is "false"."""
+        if not value_check.enabled() or os.environ.get("COMPARE_VALUES_ENABLED", "true").strip().lower() == "false":
+            return
+        clock, last_log = {"at": 0}, 0.0
+        while not self.stop_event.is_set():
+            try:
+                db = value_check.connect(self.value_check_path())
+                try:
+                    report = compare_values.step(db, now=now(), should_stop=self.stop_event.is_set, last_statement=clock,
+                                                 sleep=lambda seconds: self.stop_event.wait(seconds))
+                    if any(report.get(k) for k in ("facts", "updated", "backfilled", "statements", "computed")):
+                        print(json.dumps({"event": "compare-values-step", **report}), flush=True)
+                    if time.time() - last_log > 3600:
+                        last_log = time.time()
+                        print(json.dumps({"event": "compare-values-coverage", **compare_values.coverage(db)}), flush=True)
+                finally:
+                    db.close()
+            except Exception as error:
+                print(json.dumps({"event": "compare-values-failed", "error": type(error).__name__}), flush=True)
+            self.stop_event.wait(60)
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1568,6 +1593,7 @@ class AutomaticMonitor:
         self.push_thread.start()
         self.price_alert_thread.start()
         self.value_check_thread.start()
+        self.compare_values_thread.start()
         self.push_demo_thread.start()
 
     def stop(self):
@@ -1605,6 +1631,7 @@ class AutomaticMonitor:
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
         self.value_check_thread.join(timeout=15)
+        self.compare_values_thread.join(timeout=15)
         self.push_demo_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -4396,6 +4423,20 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/value-check/want":
+            # The site's server: companies a member compared without a valuation figure go first in compare_values (order only, no call).
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                payload = self.read_json(4096)
+                tickers = payload.get("tickers") if isinstance(payload, dict) else None
+                compare_values.want(tickers[:10] if isinstance(tickers, list) else [])
+            except Exception:
+                self.send_json(400, {"ok": False})
+                return
+            self.send_json(200, {"ok": True})
+            return
         if path == "/twelve/lease":
             # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():

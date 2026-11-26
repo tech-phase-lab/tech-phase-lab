@@ -5,7 +5,7 @@ import providers from "./providers.json";
 import { COMPARISON_EXCLUSIONS, comparableEntries, comparisonExclusion, tickersByCik } from "./comparison-exclusions";
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
-import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
+import { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenueAnalysis } from "./comparison-analysis";
 import { appendEquityItem, appendFilingFinancialItems } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
 import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
@@ -13,7 +13,7 @@ import { releaseStatements } from "./twelve-store";
 import { freshEnough } from "./fresh-enough";
 import { buildSecMarketEvidence } from "./sec-market-evidence";
 import { appendMarketItems } from "./twelve-data-financials";
-import { comparisonScores, hasRecentQuarter } from "./comparison-scorecard";
+import { comparisonScores, hasRecentBalance, hasRecentQuarter } from "./comparison-scorecard";
 import { fillFromProvider } from "./comparison-fill";
 import type { Financials } from "./comparison";
 export async function secText(url: string, limit: number) {
@@ -84,10 +84,19 @@ async function loadFinancials(ticker: string) {
     const [weekly, afterRelease] = await Promise.all([loadTwelveComparisonState(ticker).then(r => r.data),
       releaseStatements(ticker, released).then(stored => stored ? loadTwelveComparisonState(ticker, stored).then(r => r.data) : null)]);
     const newer = [afterRelease, weekly].find(t => t?.financials.quarterRevenue && Date.parse(t.financials.quarterRevenue.end) > Date.parse(sec.quarterRevenue!.end) + 10 * 86400000);
-    if (newer) return newer.financials;
+    if (newer) {
+      // The provider's statistics can still describe the old quarter for a few days (twelve-data-factors.ts reads them only for the same
+      // quarter): financial strength then comes from the filing's balance sheet, said on screen as the previous quarter's (reviewer, Nov 26).
+      const own = comparisonScores(newer.financials, now).find(s => s.id === "financial")?.value;
+      if (own != null || !sec.balance || comparisonScores({ ...sec, dataWarnings: [] }, now).find(s => s.id === "financial")?.value == null) return newer.financials;
+      return { ...newer.financials, balance: sec.balance, balanceFromQuarter: sec.balance.end,
+        supplemented: [...new Set([...(newer.financials.supplemented ?? []), "financial"])], supplementedFromQuarter: sec.balance.end };
+    }
     return completeFromProvider(ticker, await withMarketFactors(ticker, { ...sec, dataWarnings: [] }, now, market), now, weekly?.financials ?? null);
   }
   if (sec.status === "ready" && hasRecentQuarter(sec, now)) return completeFromProvider(ticker, await withMarketFactors(ticker, sec, now, market), now);
+  // No revenue yet (owner, Nov 26): the filing's latest balance sheet and the share price, never the provider's statements (no sales either).
+  if (hasRecentBalance(sec, now)) return withMarketFactors(ticker, { ...sec, preparedAnalysis: sec.preparedAnalysis ?? preparePreRevenueAnalysis(sec, now) }, now, market);
   const { data: twelve } = await loadTwelveComparisonState(ticker);
   // No current figures from either source: the share price still gives momentum (the radar showed no point at all for such a company).
   if (!twelve) return withMarketFactors(ticker, sec, now, market);
@@ -163,8 +172,9 @@ async function withMarketFactors(ticker: string, sec: Financials, start: number,
 }
 
 function rebuildAnalysis(c: Financials, now: number): Financials {
-  const prepared = prepareComparisonAnalysis(c, now);
-  if (prepared && c.twelveData) appendMarketItems(prepared, c.twelveData, c.quarterRevenue!.end, c.quarterRevenue!.unit, now);
+  const prepared = c.preRevenue ? preparePreRevenueAnalysis(c, now) : prepareComparisonAnalysis(c, now);
+  const period = c.quarterRevenue ?? (c.preRevenue && c.balance ? { end: c.balance.end, unit: c.balance.cash?.unit ?? "USD" } : null);
+  if (prepared && c.twelveData && period) appendMarketItems(prepared, c.twelveData, period.end, period.unit, now);
   return { ...c, preparedAnalysis: prepared };
 }
 
@@ -201,6 +211,7 @@ export async function statementsNeeded(ticker: string): Promise<{ needs: boolean
   if (!comparisonCatalog.some(c => c.ticker === ticker) && (await excludedEntry(ticker)).excluded) return { needs: false, checkedAt };
   const sec = await loadSecFinancials(ticker);
   if (sec.status === "unavailable") throw new Error("sec-unavailable");
+  if (hasRecentBalance(sec, now)) return { needs: false, checkedAt }; // no revenue yet: the provider has no sales either
   if (sec.quarterRevenue?.basis === "ifrs-full" || sec.status !== "ready" || !hasRecentQuarter(sec, now)) return { needs: true, checkedAt };
   const evidence = buildSecMarketEvidence(sec, undefined, undefined, now);
   const scores = comparisonScores(evidence ? { ...sec, twelveData: evidence } : sec, now);

@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
 import { extractFinancials, emptyFinancials } from "../lib/research/comparison.ts";
-import { prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem } from "../lib/research/comparison-analysis.ts";
+import { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenueAnalysis, appendFilingFinancialItems, appendEquityItem } from "../lib/research/comparison-analysis.ts";
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
-import { hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
+import { hasRecentBalance, hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
 import { fillFromProvider } from "../lib/research/comparison-fill.ts";
 
 const NOW = Date.parse("2026-11-13T12:00:00Z");
@@ -22,7 +22,7 @@ async function server(stubs) {
     .replace(/import providers from[^;]*;/, 'const providers = [{ ticker: "MU", supplementalSources: [{ cik: "723125" }] }, { ticker: "ASML", supplementalSources: [{ cik: "937966" }] }];')
     .replace(/import \{ parseSecDirectory \}[^;]*;/, "const parseSecDirectory = () => [];")
     .replace(/import \{ emptyFinancials \}[^;]*;/, "const emptyFinancials = globalThis.__t.emptyFinancials;")
-    .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis } = globalThis.__t;")
+    .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenueAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis, preparePreRevenueAnalysis } = globalThis.__t;")
     .replace(/import \{ appendEquityItem, appendFilingFinancialItems \}[^;]*;/, "const { appendEquityItem, appendFilingFinancialItems } = globalThis.__t;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__t.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__t;")
@@ -30,11 +30,11 @@ async function server(stubs) {
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
-    .replace(/import \{ comparisonScores, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentQuarter } = globalThis.__t;")
+    .replace(/import \{ comparisonScores, hasRecentBalance, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentBalance, hasRecentQuarter } = globalThis.__t;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__t.fillFromProvider;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
-  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, comparisonScores, fillFromProvider, ...stubs };
+  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems, hasRecentBalance, hasRecentQuarter, comparisonScores, fillFromProvider, preparePreRevenueAnalysis, ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }
 const withClock = async fn => { const real = Date.now; Date.now = () => NOW; try { return await fn(); } finally { Date.now = real; } };
@@ -79,10 +79,12 @@ test("a company the SEC cannot serve falls back to the provider's statements; bu
 }));
 
 test("a newer earnings release without its quarterly report: the statements the job read after the release give the new quarter, and no pending sentence is set", () => withClock(async () => {
-  const filed = mu();
+  // The trimmed fixture has no balance figures: a balance as the filing gives it (cash, current ratio, debt) for this test.
+  const read = mu(), cash = { ...read.quarterRevenue, value: 9e9, tag: "CashAndCashEquivalentsAtCarryingValue", start: null };
+  const filed = { ...read, balance: { ...read.balance, cash, currentRatio: 2.5, debtTotal: { value: 1e9, source: "total" } } };
   // MU's filing ends 2026-09-03; an earnings 8-K of 2026-11-10 is out without its 10-Q (the NVDA case of Nov 26).
   const pending = { ...filed, dataWarnings: [{ ja: "2026-11-10の新しい決算発表は数値の反映が未確認です。", en: "Figures from the newer earnings release on 2026-11-10 are not verified." }] };
-  const newer = { ...filed, quarterRevenue: { ...filed.quarterRevenue, end: "2026-11-27", basis: "twelve-standardized" } };
+  const newer = { ...filed, balance: null, twelveData: undefined, quarterRevenue: { ...filed.quarterRevenue, end: "2026-11-01", basis: "twelve-standardized" } };
   const asked = [];
   const { loadComparisonFinancials, releaseDay } = await server({ loadSecComparison: async () => pending, loadMarketInputs: async () => ({}),
     releaseStatements: async (t, day) => { asked.push([t, day]); return { income: {}, cashFlow: null, retrievedAt: "2026-11-12T00:00:00Z", attempt: 0 }; },
@@ -90,8 +92,14 @@ test("a newer earnings release without its quarterly report: the statements the 
   assert.equal(releaseDay(pending, NOW), "2026-11-10");
   const c = await loadComparisonFinancials("MU");
   assert.deepEqual(asked, [["MU", "2026-11-10"]]);
-  assert.equal(c.quarterRevenue.end, "2026-11-27");
+  assert.equal(c.quarterRevenue.end, "2026-11-01");
   assert.equal(c.previousQuarterShown, undefined);
+  // The provider has no statistics for its new quarter yet: financial strength comes from the filing's balance (the previous quarter),
+  // said on screen, rather than "—" (reviewer, Nov 26).
+  const financial = comparisonScores(c, NOW).find(s => s.id === "financial").value;
+  assert.notEqual(financial, null);
+  assert.equal(c.balanceFromQuarter, filed.balance.end); assert.equal(c.supplementedFromQuarter, filed.balance.end);
+  assert.ok(c.supplemented.includes("financial"));
   // Nothing read after the release yet: the filing's previous quarter, without the old sentence either.
   const { loadComparisonFinancials: load2 } = await server({ loadSecComparison: async () => pending, loadMarketInputs: async () => ({}),
     loadTwelveComparisonState: async () => ({ data: null, busy: false }) });

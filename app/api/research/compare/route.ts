@@ -2,7 +2,8 @@ import { getMembership } from "@/lib/membership/server";
 import { buildComparison, comparisonAccess, comparisonExpiresAt, validateComparisonTickers } from "@/lib/research/comparison";
 import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";
 import { applyValueCheck } from "@/lib/research/comparison-value";
-import { loadValueSnapshot } from "@/lib/research/value-check-server";
+import { loadValueSnapshot, requestValueFigures } from "@/lib/research/value-check-server";
+import { after } from "next/server";
 import { buildReviewedTrial } from "@/lib/research/comparison-trial";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
@@ -34,6 +35,9 @@ export async function GET(request: Request) {
       const t = performance.now();
       try { return { ...company!, ...await loadComparisonFinancials(company!.ticker) }; } finally { each[i] = Math.round(performance.now() - t); }
     })), await values);
+    // A company without a figure yet goes first in the monitor's background work, after this answer is sent (no provider call).
+    const missing = companies.filter(c => !c.valueCheck && !c.referenceEvaluation).map(c => c.ticker);
+    if (missing.length) { try { after(() => requestValueFigures(missing)); } catch { /* outside a request */ } }
     // The entitlement may expire while upstream data is being fetched.
     if (comparisonAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     const total = Math.round(performance.now() - started), auth = Math.round(signedIn - started);

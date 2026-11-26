@@ -29,6 +29,11 @@ export type Financials = {
   supplementedFromQuarter?: string;
   /** False when the filing's own balance already scores financial strength: the provider's balance is then never used. */
   supplementedFinancialAllowed?: boolean;
+  /** The end of the filing's balance sheet used for financial strength when the figures come from a newer quarter the provider already has
+   *  but its statistics do not yet (comparison-server.ts): the previous quarter's balance, said on screen. */
+  balanceFromQuarter?: string;
+  /** True for a company with no revenue yet: only its latest balance sheet is read (financial strength), the revenue factors say so. */
+  preRevenue?: true;
   /** True when the company never tags a capital-spending line (AirBnB, AppLovin: immaterial, folded into "other"), so free cash flow
    *  is operating cash flow with capital spending counted as zero. Said on screen. */
   capexNotReported?: boolean;
@@ -200,6 +205,89 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }));
   }
   const tagged = (tag: string | undefined) => (f: Fact) => !tag || `${f.basis}:${f.tag}` === tag;
+  /** The balance sheet of one filing and date (`anchor`): cash, current assets and liabilities, debt in the first complete form the filing
+   *  uses, and shareholders' equity. Used for the latest period with revenue and, for a company with no revenue yet, for its latest balance
+   *  sheet alone (owner, Nov 26: financial strength must not depend on a revenue figure). */
+  function balanceSnapshot(basis: keyof typeof tags, anchor: Fact & { filed: string | null; accession: string | null }, balancePeriod: "annual" | "quarter" | "half"): BalanceSnapshot {
+    const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
+    const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
+    function balanceMetric(name: string): Fact | null {
+      const ifrsNames: Record<string, string> = { CashAndCashEquivalentsAtCarryingValue: "CashAndCashEquivalents", AssetsCurrent: "CurrentAssets", LiabilitiesCurrent: "CurrentLiabilities" };
+      const tag = basis === "us-gaap" ? name : ifrsNames[name] ?? (name.startsWith("ifrs:") ? name.slice(5) : undefined);
+      if (!tag) return null;
+      return unique(collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
+    }
+    const currentAssets = balanceMetric("AssetsCurrent"), currentLiabilities = balanceMetric("LiabilitiesCurrent");
+    // Financial strength was "—" for most companies (MU, ALAB, CRDO, SNDK, BE, HIMS..., owner Nov 14) because only the split current/noncurrent
+    // long-term debt pair counted. The first complete form the filing uses is taken; forms are never mixed.
+    function totalDebt(): BalanceSnapshot["debtTotal"] {
+      if (basis !== "us-gaap") return ifrsDebt();
+      const m = balanceMetric, short = m("ShortTermBorrowings")?.value ?? 0;
+      const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
+      if (current && noncurrent) return { value: current.value + noncurrent.value, source: "split" };   // the same figure as before
+      const total = m("LongTermDebt");
+      if (total) return { value: total.value + short, source: "total" };
+      if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
+      const carrying = m("DebtInstrumentCarryingAmount");
+      if (carrying) return { value: carrying.value + short, source: "carrying" };
+      // One line for all debt and finance leases, current maturities included (JPMorgan, ConocoPhillips, United Rentals).
+      const allDebt = m("LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities") ?? m("DebtAndCapitalLeaseObligations");
+      if (allDebt) return { value: allDebt.value + short, source: "total" };
+      const leaseCombined = m("LongTermDebtAndCapitalLeaseObligations");   // noncurrent debt and finance leases, with its current part (APH, LRCX)
+      if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? 0) + short, source: "total" };
+      const combined = m("DebtLongtermAndShorttermCombinedAmount");
+      if (combined) return { value: combined.value, source: "total" };
+      const convertibleCurrent = m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? null;
+      const convertible = m("ConvertibleDebtNoncurrent") ?? m("ConvertibleNotesPayable") ?? m("ConvertibleSeniorNotesPayable") ?? m("ConvertibleLongTermNotesPayable");
+      if (convertible) return { value: convertible.value + (convertibleCurrent ?? 0) + short, source: "convertible" };
+      if (convertibleCurrent !== null) return { value: convertibleCurrent + short, source: "convertible" };
+      // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
+      if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
+      // Debt tagged only by segment (GM: automotive and GM Financial, no consolidated line) leaves no borrowing tag at all. Large long-term
+      // liabilities then mean the debt is there but untagged, never "debt-free": over a quarter of assets is held as unknown.
+      const assets = m("Assets")?.value, equity = m("StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest")?.value ?? m("StockholdersEquity")?.value;
+      const sides = m("LiabilitiesAndStockholdersEquity")?.value;
+      const liabilities = m("Liabilities")?.value ?? (sides !== undefined && equity !== undefined ? sides - equity : undefined);   // MNST files no total
+      const longTermLiabilities = m("LiabilitiesNoncurrent")?.value ?? (liabilities !== undefined ? liabilities - currentLiabilities.value : undefined);
+      if (!assets || longTermLiabilities === undefined || longTermLiabilities > assets * 0.25) return null;
+      const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
+      const notBorrowing = /OtherThan|Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
+      const usGaap = obj(facts["us-gaap"]);
+      const mentioned = Object.keys(usGaap).some(tag => borrowing.test(tag) && !notBorrowing.test(tag)
+        && Object.values(obj(obj(usGaap[tag]).units)).some(values => Array.isArray(values) && values.some(raw => obj(raw).accn === anchor.accession)));
+      return mentioned ? null : { value: 0, source: "none" };
+    }
+    /** IFRS borrowings at the balance date (BTI): the total line, or its non-current and current parts from the same filing. Lease liabilities
+     *  stay out, as for US filers. No "debt-free" inference: an IFRS filing without a borrowing line is left unknown. */
+    function ifrsDebt(): BalanceSnapshot["debtTotal"] {
+      const m = (tag: string) => balanceMetric(`ifrs:${tag}`);
+      const total = m("Borrowings");
+      if (total) return { value: total.value, source: "total" };
+      const noncurrent = m("NoncurrentPortionOfNoncurrentBorrowings") ?? m("LongtermBorrowings");
+      const current = m("CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings") ?? m("ShorttermBorrowings");
+      if (noncurrent && current) return { value: noncurrent.value + current.value, source: "split" };
+      return null;
+    }
+    /** Shareholders' equity of the balance date, negative or not (balanceMetric keeps only values of zero or more, right for cash and debt). */
+    function shareholdersEquity(): Fact | null {
+      const names = basis === "us-gaap" ? ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"] : ["EquityAttributableToOwnersOfParent", "Equity"];
+      for (const tag of names) {
+        const found = collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit);
+        if (found.length) return unique(found);
+      }
+      return null;
+    }
+    const balance: BalanceSnapshot = {
+      end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
+      cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
+      currentRatio: currentAssets && currentLiabilities && currentLiabilities.value > 0 ? currentAssets.value / currentLiabilities.value : null,
+      debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
+      shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
+      debtTotal: totalDebt(),
+      equity: shareholdersEquity(),
+    };
+    return balance;
+  }
   // The statement's revenue line narrows the figures only while it carries the newest positive revenue (Denali's statement line is zero;
   // its collaboration revenue is tagged as contract revenue): otherwise it is not used, rather than falling back to an old year.
   const covers = (rows: Fact[], tag: string | undefined) => { const newest = rows.map(f => f.end).sort().at(-1); return !tag || !newest || rows.some(f => f.end === newest && tagged(tag)(f)); };
@@ -213,7 +301,20 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const revenues = quarterOnly ? (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => collect(b, tags[b].revenue, false, "quarter"))
     .filter(f => f.value > 0).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed)) : annualRevenues;
   const latest = revenues[0];
-  if (!latest) return result;
+  if (!latest) return preRevenue();
+  /** No revenue yet (a drug developer before its first sale): the latest balance sheet alone, so financial strength is still scored; the
+   *  revenue factors say "no revenue yet" (comparison-scorecard.ts). */
+  function preRevenue(): Financials {
+    const cashTags = { "us-gaap": ["CashAndCashEquivalentsAtCarryingValue"], "ifrs-full": ["CashAndCashEquivalents"] } as Record<string, string[]>;
+    const found = (Object.keys(tags) as (keyof typeof tags)[]).flatMap(b => [...collect(b, cashTags[b] ?? [], true, "quarter").map(f => ({ f, b, period: "quarter" as const })),
+      ...collect(b, cashTags[b] ?? [], true).map(f => ({ f, b, period: "annual" as const }))])
+      .filter(({ f }) => f.value >= 0 && (!reportingCurrency || f.unit === reportingCurrency))
+      .sort((x, y) => y.f.end.localeCompare(x.f.end) || y.f.filed.localeCompare(x.f.filed));
+    const newest = found[0];
+    if (!newest) return result;
+    const balance = balanceSnapshot(newest.b, newest.f, newest.period);
+    return { ...result, status: "ready", preRevenue: true, balance };
+  }
   // A verified reporting currency distinguishes native values from convenience
   // translations. Never fall back to an older year if the latest lacks it.
   // US GAAP "Revenues" (or, at banks and brokers, revenue net of interest expense) is the total line and contract revenue is a part of it
@@ -411,81 +512,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const quarterHasBalance = !annualPeriod && quarterRevenue && collect(basis,balanceTags,true,ip).some(f => f.end === quarterRevenue.end && f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.value >= 0);
   const anchor = quarterHasBalance ? quarterRevenue! : revenue;
   const balancePeriod = quarterHasBalance ? ip : "annual";
-  function balanceMetric(name: string): Fact | null {
-    const ifrsNames: Record<string, string> = { CashAndCashEquivalentsAtCarryingValue: "CashAndCashEquivalents", AssetsCurrent: "CurrentAssets", LiabilitiesCurrent: "CurrentLiabilities" };
-    const tag = basis === "us-gaap" ? name : ifrsNames[name] ?? (name.startsWith("ifrs:") ? name.slice(5) : undefined);
-    if (!tag) return null;
-    return unique(collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
-  }
-  const currentAssets = balanceMetric("AssetsCurrent"), currentLiabilities = balanceMetric("LiabilitiesCurrent");
-  // Financial strength was "—" for most companies (MU, ALAB, CRDO, SNDK, BE, HIMS..., owner Nov 14) because only the split current/noncurrent
-  // long-term debt pair counted. The first complete form the filing uses is taken; forms are never mixed.
-  function totalDebt(): BalanceSnapshot["debtTotal"] {
-    if (basis !== "us-gaap") return ifrsDebt();
-    const m = balanceMetric, short = m("ShortTermBorrowings")?.value ?? 0;
-    const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
-    if (current && noncurrent) return { value: current.value + noncurrent.value, source: "split" };   // the same figure as before
-    const total = m("LongTermDebt");
-    if (total) return { value: total.value + short, source: "total" };
-    if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
-    const carrying = m("DebtInstrumentCarryingAmount");
-    if (carrying) return { value: carrying.value + short, source: "carrying" };
-    // One line for all debt and finance leases, current maturities included (JPMorgan, ConocoPhillips, United Rentals).
-    const allDebt = m("LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities") ?? m("DebtAndCapitalLeaseObligations");
-    if (allDebt) return { value: allDebt.value + short, source: "total" };
-    const leaseCombined = m("LongTermDebtAndCapitalLeaseObligations");   // noncurrent debt and finance leases, with its current part (APH, LRCX)
-    if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? 0) + short, source: "total" };
-    const combined = m("DebtLongtermAndShorttermCombinedAmount");
-    if (combined) return { value: combined.value, source: "total" };
-    const convertibleCurrent = m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? null;
-    const convertible = m("ConvertibleDebtNoncurrent") ?? m("ConvertibleNotesPayable") ?? m("ConvertibleSeniorNotesPayable") ?? m("ConvertibleLongTermNotesPayable");
-    if (convertible) return { value: convertible.value + (convertibleCurrent ?? 0) + short, source: "convertible" };
-    if (convertibleCurrent !== null) return { value: convertibleCurrent + short, source: "convertible" };
-    // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
-    if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
-    // Debt tagged only by segment (GM: automotive and GM Financial, no consolidated line) leaves no borrowing tag at all. Large long-term
-    // liabilities then mean the debt is there but untagged, never "debt-free": over a quarter of assets is held as unknown.
-    const assets = m("Assets")?.value, equity = m("StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest")?.value ?? m("StockholdersEquity")?.value;
-    const sides = m("LiabilitiesAndStockholdersEquity")?.value;
-    const liabilities = m("Liabilities")?.value ?? (sides !== undefined && equity !== undefined ? sides - equity : undefined);   // MNST files no total
-    const longTermLiabilities = m("LiabilitiesNoncurrent")?.value ?? (liabilities !== undefined ? liabilities - currentLiabilities.value : undefined);
-    if (!assets || longTermLiabilities === undefined || longTermLiabilities > assets * 0.25) return null;
-    const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
-    const notBorrowing = /OtherThan|Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
-    const usGaap = obj(facts["us-gaap"]);
-    const mentioned = Object.keys(usGaap).some(tag => borrowing.test(tag) && !notBorrowing.test(tag)
-      && Object.values(obj(obj(usGaap[tag]).units)).some(values => Array.isArray(values) && values.some(raw => obj(raw).accn === anchor.accession)));
-    return mentioned ? null : { value: 0, source: "none" };
-  }
-  /** IFRS borrowings at the balance date (BTI): the total line, or its non-current and current parts from the same filing. Lease liabilities
-   *  stay out, as for US filers. No "debt-free" inference: an IFRS filing without a borrowing line is left unknown. */
-  function ifrsDebt(): BalanceSnapshot["debtTotal"] {
-    const m = (tag: string) => balanceMetric(`ifrs:${tag}`);
-    const total = m("Borrowings");
-    if (total) return { value: total.value, source: "total" };
-    const noncurrent = m("NoncurrentPortionOfNoncurrentBorrowings") ?? m("LongtermBorrowings");
-    const current = m("CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings") ?? m("ShorttermBorrowings");
-    if (noncurrent && current) return { value: noncurrent.value + current.value, source: "split" };
-    return null;
-  }
-  /** Shareholders' equity of the balance date, negative or not (balanceMetric keeps only values of zero or more, right for cash and debt). */
-  function shareholdersEquity(): Fact | null {
-    const names = basis === "us-gaap" ? ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"] : ["EquityAttributableToOwnersOfParent", "Equity"];
-    for (const tag of names) {
-      const found = collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit);
-      if (found.length) return unique(found);
-    }
-    return null;
-  }
-  const balance: BalanceSnapshot = {
-    end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
-    cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
-    currentRatio: currentAssets && currentLiabilities && currentLiabilities.value > 0 ? currentAssets.value / currentLiabilities.value : null,
-    debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
-    shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
-    debtTotal: totalDebt(),
-    equity: shareholdersEquity(),
-  };
+  const balance = balanceSnapshot(basis, anchor, balancePeriod);
   const out: Financials = { ...result, status: "ready", ...(capexNotReported ? { capexNotReported: true } : {}), ...(qp !== "quarter" ? { periodMonths: qp === "half" ? 6 as const : 12 as const } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,

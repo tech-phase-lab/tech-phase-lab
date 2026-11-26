@@ -102,15 +102,15 @@ const valuation = c => comparisonScores(c, NOW).find(s => s.id === "valuation").
 test("valuation: Treasure Hunt's figure for each company whatever its forward P/E or P/S; a company outside the list is 未取得 and the verdict uses the rest", () => {
   const figure = score => ({ score, exact: score, pe: score, ps: score, peNow: 20, psNow: 4, basis: "pe-ps", period: null, asOf: "2026-11-12" });
   const values = { A: figure(20), B: figure(-20) };
-  const both = applyValueCheck([company("A", 20, 4), company("B", 30, 8)], { values });
+  const both = applyValueCheck([company("A", 20, 4), company("B", 30, 8)], { values }, NOW);
   assert.deepEqual(both.map(valuation), [7, 3]);
   // No forward P/E for B (a loss-maker): nothing changes for A (before Nov 26 it switched every company to P/S).
-  const mixed = applyValueCheck([company("A", 20, 4), company("B", null, 8)], { values });
+  const mixed = applyValueCheck([company("A", 20, 4), company("B", null, 8)], { values }, NOW);
   assert.deepEqual(mixed.map(valuation), [7, 3]);
   assert.ok(!mixed[0].preparedAnalysis.items.some(i => i.short.ja.includes("予想PER")));   // the old fixed-scale bullet is gone
   assert.deepEqual(mixed[0].preparedAnalysis.items.filter(i => i.id === "valuation").map(i => [i.kind, i.short.ja]), [["strength", "5年平均より20%安い"]]);
   assert.deepEqual(mixed[1].preparedAnalysis.items.filter(i => i.id === "valuation").map(i => [i.kind, i.short.en]), [["weakness", "20% above its 5-year average"]]);
-  const missing = applyValueCheck([company("A", 20, 4), company("C", 30, 8)], { values });
+  const missing = applyValueCheck([company("A", 20, 4), company("C", 30, 8)], { values }, NOW);
   assert.deepEqual(missing.map(valuation), [7, null]);              // outside the list: 未取得, never zero
   const verdict = overallComparison(missing, "ja", NOW);
   assert.notEqual(verdict.title, "必要なデータが揃っていません");

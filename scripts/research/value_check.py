@@ -108,6 +108,12 @@ def schema(db):
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_state(key TEXT PRIMARY KEY, value TEXT NOT NULL)''')
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_statements(
       ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
+    # The Stock Comparison's list for every comparable company (compare_values.py): its own SEC records, the days a company could not be
+    # read, the companies to calculate again, and the results.
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_facts(ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_misses(ticker TEXT NOT NULL, kind TEXT NOT NULL, at REAL NOT NULL, PRIMARY KEY(ticker, kind))''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_dirty(ticker TEXT PRIMARY KEY)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS compare_values(ticker TEXT PRIMARY KEY, as_of TEXT NOT NULL, payload TEXT NOT NULL)''')
     db.commit()
 
 
@@ -625,11 +631,12 @@ def score_at(ratios, index):
     return {'exact': 100 * (parts['pe_part'] + parts['ps_part']) / 2, 'pe': pe, 'ps': ps, 'low': low, 'days': len(parts['ps_history'])}
 
 
-def value_parts(ratios, index):
+def value_parts(ratios, index, min_ps_days=MIN_PS_DAYS, min_pe_days=MIN_PE_DAYS):
     """The two halves of the Value Score on ratios[index], each 1 - today / the five-year trimmed mean (history days above PE_CAP /
     PS_CAP counted at the cap, loss days left out of the P/E mean). The P/E half is None without a P/E today or a year of profitable
     days. None when there is no P/S today or under a year of P/S days. score_at and the comparison's list (comparison_value) both read
-    this, so the two can never differ."""
+    this, so the two can never differ. min_ps_days / min_pe_days: the comparison's fallback for a listing younger than a year
+    (compare_values.py) asks with fewer days; Treasure Hunt always uses the defaults."""
     if index < 0 or index >= len(ratios):
         return None
     day, pe, ps = ratios[index]
@@ -638,11 +645,11 @@ def value_parts(ratios, index):
     window = [r for r in ratios[:index] if day - r[0] <= WINDOW_DAYS]
     ps_history = [r[2] for r in window if r[2] is not None]
     pe_history = [r[1] for r in window if r[1] is not None]
-    if len(ps_history) < MIN_PS_DAYS:
+    if len(ps_history) < min_ps_days:
         return None
     ps_part = 1 - ps / trimmed_mean([min(value, PS_CAP) for value in ps_history])
     pe_part = None
-    if pe is not None and len(pe_history) >= MIN_PE_DAYS:
+    if pe is not None and len(pe_history) >= min_pe_days:
         pe_part = 1 - pe / trimmed_mean([min(value, PE_CAP) for value in pe_history])
     return {'pe': pe, 'ps': ps, 'pe_part': pe_part, 'ps_part': ps_part, 'pe_history': pe_history, 'ps_history': ps_history}
 
@@ -957,11 +964,11 @@ def ensure_values(db, universe=None):
     if not data or 'values' in data or DERIVED.get('computedAt') == data.get('computedAt'):
         return False
     fresh = compute(db, universe or load_universe())
-    if fresh.get('asOf') != data.get('asOf'):
-        return False
+    # Tried once per stored snapshot, whatever the outcome (reviewer, Nov 26: a mismatch used to be recalculated every five minutes).
+    # The service calls this as soon as it starts, so a restart leaves no gap.
     DERIVED.clear()
-    DERIVED.update(computedAt=data.get('computedAt'), values=fresh['values'])
-    return True
+    DERIVED.update(computedAt=data.get('computedAt'), values=fresh['values'] if fresh.get('asOf') == data.get('asOf') else None)
+    return DERIVED['values'] is not None
 
 
 def public_payload(db):
@@ -971,9 +978,32 @@ def public_payload(db):
         return {'ok': False, 'error': 'not-ready'}
     data = dict(data)
     data.pop('credits', None)
-    if 'values' not in data and DERIVED.get('computedAt') == data.get('computedAt'):
+    if 'values' not in data and DERIVED.get('computedAt') == data.get('computedAt') and DERIVED.get('values') is not None:
         data['values'] = DERIVED['values']
+    data['values'] = compare_list(db, data)
     return data
+
+
+def compact(value):
+    """[score, exact, basis, period]: what the comparison shows and scores, small enough for every comparable company."""
+    return [value['score'], value['exact'], value['basis'], value.get('period')]
+
+
+def compare_list(db, data):
+    """Every comparable company's figure for the close of the snapshot (compare_values.py), Treasure Hunt's own figures first: a
+    company Treasure Hunt calculates shows exactly its number. Compact rows (compact())."""
+    out = {}
+    try:
+        for ticker, payload in db.execute('SELECT ticker, payload FROM compare_values WHERE as_of=?', (data.get('asOf'),)):
+            try:
+                out[ticker] = compact(json.loads(payload))
+            except (ValueError, KeyError, TypeError):
+                continue
+    except sqlite3.Error:
+        pass
+    for ticker, value in (data.get('values') or {}).items():
+        out[ticker] = compact(value)
+    return dict(sorted(out.items()))
 
 
 def due(now, last_day):

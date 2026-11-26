@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Financials } from "./comparison.ts";
-import { balanceDebt, comparisonMetric, comparisonScores, hasRecentQuarter } from "./comparison-scorecard.ts";
+import { balanceDebt, comparisonMetric, comparisonScores, hasRecentBalance, hasRecentQuarter } from "./comparison-scorecard.ts";
 import { twelveExtraFactors, twelveFactorMethods } from "./twelve-data-factors.ts";
 
 type Copy = { ja: string; en: string };
@@ -78,7 +78,7 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
  * 51.9 billion against cash 10.7 billion) gave no weakness at all while the provider's figures would have said it (all-ticker audit, Nov 19).
  * Also used when a provider-sourced company scores its balance from the filing (comparison-server.ts). */
 export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["items"],c:Financials,now=Date.now()) {
-  const q=c.quarterRevenue;
+  const q=balanceAnchor(c);
   const financial=comparisonScores(c,now).find(s=>s.id==="financial")?.value ?? null;
   const providerFinancial=c.twelveData ? twelveExtraFactors(c.twelveData,now).financial : null;
   if(!q || providerFinancial!==null || financial===null || items.some(i=>i.id==="financial" || i.id==="debt-cash")) return items;
@@ -90,12 +90,26 @@ export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["ite
 /** Negative shareholders' equity, read from the filing's balance for the very period shown (MO: liabilities above assets after years of
  * buybacks, Nov 20). Only a reported figure counts: equity that is missing, from another date or in another currency says nothing. */
 export function appendEquityItem(items:PreparedComparisonAnalysis["items"],c:Financials) {
-  const q=c.quarterRevenue, equity=c.balance?.equity;
+  const q=balanceAnchor(c), equity=c.balance?.equity;
   if(!q || !equity || c.balance!.end!==q.end || equity.end!==q.end || equity.unit!==q.unit || !(equity.value<0) || items.some(i=>i.id==="negative-equity")) return items;
   items.push({id:"negative-equity",kind:"weakness",short:copy("株主資本がマイナス","Negative shareholders' equity"),
     detail:copy(`${equity.end}時点の株主資本は${amount(equity.value,equity.unit)}で、負債が資産を上回っています。自社株買いや累積損失など、原因はこの数値だけでは特定できません。`,
       `Shareholders' equity was ${amount(equity.value,equity.unit)} as of ${equity.end}: liabilities exceed assets. This figure alone does not establish the cause, such as buybacks or accumulated losses.`)});
   return items;
+}
+/** The period a balance point is dated and priced in: the quarter shown, or for a company with no revenue yet its latest balance sheet. */
+function balanceAnchor(c:Financials):{end:string;unit:string}|null {
+  if(c.quarterRevenue) return c.quarterRevenue;
+  const unit=c.balance?.cash?.unit ?? c.balance?.equity?.unit;
+  return c.preRevenue && c.balance && unit ? {end:c.balance.end,unit} : null;
+}
+/** A company with no revenue yet (owner, Nov 26): the points its latest balance sheet gives (financial strength, debt against cash,
+ *  negative equity). The revenue factors have none to give. */
+export function preparePreRevenueAnalysis(c:Financials,now=Date.now()):PreparedComparisonAnalysis|undefined {
+  if(!c.preRevenue || !c.balance || !hasRecentBalance(c,now)) return undefined;
+  const items=appendEquityItem(appendFilingFinancialItems([],c,now),c);
+  return {version:1,method:"deterministic",sourceRevision:comparisonEvidenceRevision(c),preparedAt:new Date(now).toISOString(),processingMs:0,
+    periodEnd:c.balance.end,sourceUrl:c.balance.sourceUrl,items};
 }
 /** "Debt exceeds cash", from the provider's statistics or the filing's own balance, in the same words. */
 export function debtCashItem(periodEnd:string,cash:number,debt:number,currency:string):PreparedComparisonAnalysis["items"][number] {
@@ -106,7 +120,7 @@ export function debtCashItem(periodEnd:string,cash:number,debt:number,currency:s
 /** Reuse only the saved analysis matching this exact evidence and a usable quarter. */
 export function currentComparisonAnalysis(c: Financials, now=Date.now()) {
   const saved=c.preparedAnalysis;
-  if(!saved || !hasRecentQuarter(c,now) || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
+  if(!saved || !(hasRecentQuarter(c,now) || hasRecentBalance(c,now)) || saved.version!==1 || saved.sourceRevision!==comparisonEvidenceRevision(c)
     || !Number.isFinite(Date.parse(saved.preparedAt)) || Date.parse(saved.preparedAt)>now
     || !comparisonScores(c,now).some(s=>s.value!==null)) return undefined;
   if(c.twelveData) {

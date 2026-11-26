@@ -239,7 +239,7 @@ class Snapshot(unittest.TestCase):
             stored = {k: v for k, v in self.build().items() if k != 'values'}
             db.execute('INSERT INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(stored)))
             db.commit()
-            fresh = {**stored, 'values': {'UP': {'score': 55}}}
+            fresh = {**stored, 'values': {'UP': {'score': 55, 'exact': 54.6, 'basis': 'pe-ps', 'period': None}}}
             original = vc.compute
             vc.compute = lambda _db, _u: fresh
             vc.DERIVED.clear()
@@ -248,7 +248,7 @@ class Snapshot(unittest.TestCase):
                 self.assertFalse(vc.ensure_values(db, self.universe()))  # once per stored snapshot
             finally:
                 vc.compute = original
-            self.assertEqual(vc.public_payload(db)['values'], {'UP': {'score': 55}})
+            self.assertEqual(vc.public_payload(db)['values'], {'UP': [55, 54.6, 'pe-ps', None]})  # compact rows
             self.assertNotIn('values', vc.snapshot(db))  # nothing written
         finally:
             vc.DERIVED.clear()

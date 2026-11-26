@@ -121,7 +121,9 @@ test("the comparison's list: every calculated ticker is parsed; a bad entry is l
     NVDA: { score: 36, exact: 35.8, pe: 40.1, ps: 31.5, peNow: 42.5, psNow: 21.3, basis: "pe-ps", period: null },
     RIVN: { score: -20, exact: -19.6, pe: null, ps: -19.6, peNow: null, psNow: 2.1, basis: "ps", period: "listed" },
     BAD: { score: "x" }, "bad ticker": { score: 1, exact: 1, pe: null, ps: 1, peNow: null, psNow: 1, basis: "ps" },
-    HALF: { score: 5, exact: 5, pe: null, ps: 5, peNow: null, psNow: 1, basis: "pe-ps" } } });
-  assert.deepEqual(Object.keys(parsed.values), ["NVDA", "RIVN"]);
-  assert.deepEqual(parsed.values.RIVN, { score: -20, exact: -19.6, pe: null, ps: -19.6, peNow: null, psNow: 2.1, basis: "ps", period: "listed", asOf: "2026-11-25" });
+    ODD: { score: 5, exact: 5, basis: "pe" }, IMUX: [32, 31.6, "pb", null], FPS: [-15, -14.7, "pe-ps", "listed"], SHORT: [1, 1] } });
+  // Treasure Hunt's own rows and the compact rows of the whole list ([score, exact, basis, period]) both read the same way.
+  assert.deepEqual(Object.keys(parsed.values), ["NVDA", "RIVN", "IMUX", "FPS"]);
+  assert.deepEqual(parsed.values.RIVN, { score: -20, exact: -19.6, basis: "ps", period: "listed", asOf: "2026-11-25" });
+  assert.deepEqual(parsed.values.IMUX, { score: 32, exact: 31.6, basis: "pb", period: null, asOf: "2026-11-25" });
 });

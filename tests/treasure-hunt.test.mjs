@@ -346,8 +346,8 @@ test("Treasure Hunt opens with the day's ranking drawn by the server: no waiting
 test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidate), read only after the server confirms the member", () => {
   const server = read("../lib/research/value-check-server.ts");
   assert.match(server, /^import "server-only";/);
-  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v1"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
-  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v1"/, "a fixed key keeps the copy across deployments");
+  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v2"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
+  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v2"/, "a fixed key keeps the copy across deployments");
   assert.match(server, /VALUE_SNAPSHOT_REVALIDATE_SECONDS = 600;/);
   const route = read("../app/api/research/value-check/route.ts");
   assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueRanking\(\), \{ headers \}\);/);

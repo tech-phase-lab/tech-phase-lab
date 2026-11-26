@@ -1,5 +1,5 @@
 import { periodMaxAgeDays, twelveExtraFactors, twelveFactorMetric } from "./twelve-data-factors.ts";
-import { valueFigureScore, valueFigureText } from "./comparison-value.ts";
+import { valueFigureCurrent, valueFigureScore, valueFigureText } from "./comparison-value.ts";
 import type { Financials } from "./comparison.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
@@ -13,6 +13,12 @@ export function hasRecentQuarter(c: Financials, now = Date.now()): boolean {
   return c.status === "ready" && !!c.quarterRevenue && now-Date.parse(c.quarterRevenue.end)>=0
     && now-Date.parse(c.quarterRevenue.end)<=periodMaxAgeDays(c.periodMonths)*86400000
     && !c.dataWarnings?.some(w=>(!annual && w.en.includes("quarterly filing")) || w.en.includes("earnings release") || w.en.includes("could not be checked"));
+}
+/** A company with no revenue yet whose latest balance sheet is current: the same age limit and filing checks as a quarter. Its financial
+ *  strength is scored from that balance sheet (owner, Nov 26: requiring a revenue figure before reading the balance sheet was a bug). */
+export function hasRecentBalance(c: Financials, now = Date.now()): boolean {
+  return c.status === "ready" && !!c.preRevenue && !!c.balance && now-Date.parse(c.balance.end)>=0 && now-Date.parse(c.balance.end)<=periodMaxAgeDays()*86400000
+    && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
 }
 /** Shared comparison conditions for both the conclusion and highlighted scores. */
 export function comparableQuarters(companies: Financials[], now=Date.now()): boolean {
@@ -41,6 +47,7 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
   const ja=lang==="ja";
   if(c.busy) return ja ? "混み合っています。しばらくしてからもう一度お試しください。" : "The data service is busy right now. Please try again in a few minutes.";
   if(c.status==="unavailable") return ja ? "決算データを取得できませんでした。" : "Financial data could not be retrieved.";
+  if(hasRecentBalance(c,now) && !hasRecentQuarter(c,now)) return ja ? "売上がまだ無い会社です。財務と株価の項目で比べます。" : "No revenue yet: compared on its balance sheet and share price.";
   if(c.status==="unsupported" || !c.quarterRevenue) return ja ? "比較に使える四半期データが未取得です。" : "Comparable quarterly data is unavailable.";
   if(!hasRecentQuarter(c,now)) return ja ? "最新の四半期データを確認できていません。" : "The latest quarterly figures have not been verified.";
   if(!c.preparedAnalysis) return ja ? "長所・短所の要点は未作成です。" : "Strengths and weaknesses have not been prepared.";
@@ -51,7 +58,7 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
  * valuation stays unavailable until a licensed, timestamped feed is connected.
  */
 export function comparisonScores(c: Financials, now = Date.now()): ComparisonScore[] {
-  const recent = hasRecentQuarter(c, now);
+  const recent = hasRecentQuarter(c, now), balanceOnly = !recent && hasRecentBalance(c, now);
   // No revenue a year earlier (a new product line, ACHR): growth against the previous quarter, labelled as such.
   const growth = recent && finite(c.quarterRevenueGrowth) ? clamp(5+c.quarterRevenueGrowth/10) : recent && finite(c.quarterRevenueQoq) ? clamp(5+c.quarterRevenueQoq/10) : null;
   const profitability = recent && finite(c.quarterOperatingMargin) ? clamp(c.quarterOperatingMargin/5) : null;
@@ -59,17 +66,17 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   // Financial strength needs a current balance plus debt disclosures. Missing
   // debt is unknown, never zero; an annual snapshot cannot fill this score.
   const debt = balanceDebt(c);
-  const balanced = recent && balance && balance.end===c.quarterRevenue?.end && balance.cash && debt!==null;
+  const balanced = (recent && balance && (balance.end===c.quarterRevenue?.end || balance.end===c.balanceFromQuarter) || balanceOnly) && balance?.cash && debt!==null;
   // Banks and brokers have no current assets or liabilities: cash against debt alone, on the full ten-point scale, labelled as such.
   const financial = balanced && finite(balance!.currentRatio) ? clamp(5*Math.min(balance!.currentRatio,2)/2 + 5*Math.min(balance!.cash!.value/Math.max(debt!,1),1))
     : balanced ? clamp(10*Math.min(balance!.cash!.value/Math.max(debt!,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
   const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
   const scores: ComparisonScore[] = [
-    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : null},
+    {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : balanceOnly ? financial : null},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
     // Treasure Hunt's figure (comparison-value.ts): the price against the company's own history, independent of the latest quarter.
-    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck ? valueFigureScore(c.valueCheck) : null},
+    {id:"valuation",label:{ja:"割安性",en:"Valuation"},value:c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureScore(c.valueCheck) : null},
     {id:"stability",label:{ja:"安定性",en:"Stability"},value:recent ? extra?.stability ?? null : null},
     {id:"momentum",label:{ja:"株価モメンタム",en:"Price momentum"},value:extra?.momentum ?? null},
     {id:"growth",label:{ja:"成長性",en:"Growth"},value:growth},
@@ -92,8 +99,11 @@ export function balanceDebt(c: Financials): number | null {
 /** Display actual measurements beside the reference bars, including unscored factors. */
 export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
   const reference=c.referenceEvaluation?.factors.find(f=>f.id===id);
-  if(id==="valuation" && !reference) return c.valueCheck ? valueFigureText(c.valueCheck,lang) : missingReason(c,id,lang==="ja");
-  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  if(id==="valuation" && !reference) return c.valueCheck && valueFigureCurrent(c.valueCheck,now) ? valueFigureText(c.valueCheck,lang) : missingReason(c,id,lang==="ja");
+  // A company with no revenue yet: its balance sheet scores financial strength; the revenue factors say "no revenue yet", not "unverified".
+  const balanceOnly=!hasRecentQuarter(c,now) && hasRecentBalance(c,now);
+  if(balanceOnly && id!=="financial" && id!=="momentum") return missingReason(c,id,lang==="ja");
+  if(!hasRecentQuarter(c,now) && !balanceOnly && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
   const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
@@ -102,11 +112,12 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
   if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
-  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
+  const ownBalance=c.balance?.end===c.quarterRevenue?.end || (!!c.balance && c.balance.end===c.balanceFromQuarter) || balanceOnly;
+  if(id==="financial" && ownBalance && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
     const debt=balanceDebt(c)!;
     return debt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(c.balance.cash.value/debt).toFixed(2)}${ja?"倍":"×"}`;
   }
-  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
+  if(id==="financial" && ownBalance && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
   return missingReason(c,id,ja);
 }
 
@@ -209,7 +220,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
     return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?`${companies.length}社に共通する項目が3つ未満のため、総合順位は出していません。`:"Fewer than three factors are available for every company, so no overall ranking is given."};
   const count=common.ids.length;
   const note=count<7 ? (ja?`総合点は、全社にそろう${count}項目の平均です。`:`Overall scores average the ${count} factors every company has.`) : undefined;
-  const periods=comparableQuarters(companies,now) ? "" : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");
+  const periods=comparableQuarters(companies,now) ? "" : companies.some(c=>!hasRecentQuarter(c,now) && hasRecentBalance(c,now))
+    ? (ja?"売上がまだ無い会社を含みます。":"Includes a company with no revenue yet. ") : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");
   ranked.sort((a,b)=>b.total!-a.total!);
   const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
   const value=(r:typeof best,id:ScoreId)=>r.scores.find(s=>s.id===id)!.value!;
@@ -221,7 +233,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
     .filter(s=>s.lead>0).sort((a,b)=>b.lead-a.lead);
   const edges=(r:typeof best,others:typeof ranked)=>rawEdges(r,others).filter(s=>s.id!=="momentum" || rose(r)).slice(0,2);
   // When every company fell, the one that fell least is described as such (owner's words), only in this summary.
-  const allFell=ranked.every(o=>{const pct=change(o);return pct!==null && pct<=0;}) && common.ids.includes("momentum");
+  // A fall is at least 0.05% (reviewer, Nov 26: a flat price was written as 「0.0%の下落」).
+  const allFell=ranked.every(o=>{const pct=change(o);return pct!==null && pct<=-0.05;}) && common.ids.includes("momentum");
   const fellLess=(r:typeof best,others:typeof ranked)=>{
     if(!allFell || !rawEdges(r,others).some(s=>s.id==="momentum")) return "";
     const pct=Math.abs(change(r)!).toFixed(1), names=others.map(o=>o.c.ticker);
@@ -239,8 +252,10 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   const first=lead.length ? (ja?`${best.c.ticker}は${words(lead)}で${strongly?"大きく":""}上回ります。`:`${best.c.ticker} is ${strongly?"well ":""}ahead in ${words(lead)}.`)
     : (ja?`${best.c.ticker}は項目全体のバランスで上回ります。`:`${best.c.ticker} leads on the balance of the factors.`);
   // The runner-up: its own strength against the leader, and its weakness as the one caution; otherwise the leader's weakness.
-  const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next), bestWeak=weakness(best);
   const leaderFellLess=fellLess(best,ranked.slice(1)), nextFellLess=leaderFellLess ? "" : fellLess(next,[best]);
+  // A company whose smaller fall is already said never gets its fall again as the caution (reviewer, Nov 26: the sentence said it twice).
+  const caution=(r:typeof best,said:boolean)=>said ? r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness" && i.id!=="momentum") : weakness(r);
+  const counter=edges(next,[best]).slice(0,1), nextWeak=caution(next,!!nextFellLess), bestWeak=caution(best,!!leaderFellLess);
   let second="";
   if(nextFellLess && !counter.length) second=nextFellLess;
   else if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
