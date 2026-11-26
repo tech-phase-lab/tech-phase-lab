@@ -29,8 +29,8 @@ export async function loadLiveRelease(shown: Shown, now = Date.now()): Promise<L
 }
 
 let dives: { at: number; value: Promise<Record<string, unknown> | null> } | null = null;
-/** The monitor's checked drafts of a new quarter's deep dive (scripts/research/earnings_dive_generate.py; none unless the owner turned the
- * model on), shared for TTL_MS like the results. */
+/** The monitor's checked dives of a new quarter (scripts/research/earnings_dive_generate.py: no model call; built from the parsed
+ * figures and the release's existing deep analysis), shared for TTL_MS like the results. */
 function generatedDives(now: number): Promise<Record<string, unknown> | null> {
   if (dives && now - dives.at < TTL_MS) return dives.value;
   const value = readMonitor("company-dives", 2_000_000, 4_000)

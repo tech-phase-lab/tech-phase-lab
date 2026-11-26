@@ -131,6 +131,19 @@ class Production(unittest.TestCase):
         self.assertEqual(sections['NVDA']['period'], 'Q3 FY2027')
         self.assertEqual(sections['MU']['tiles'], [{'label': 'Revenue', 'value': '$54.229B'}])
         self.assertNotIn('AMD', sections)
+        self.assertNotIn(patrol.ROUTE_DOWN, sections)
+
+    def test_a_missing_route_is_one_site_problem_not_one_per_company(self):
+        def answers(url):
+            if url.endswith('/api/research/company-earnings'):
+                raise OSError('404')
+            if url.endswith('/api/research/watch-earnings'):
+                return {'snapshot': None}
+            return filings()  # SEC submissions
+        results, _ = patrol.patrol(NOW, tickers=['NVDA', 'AMD'], fetch_json=answers,
+                                   read_release=lambda t, f, n: None, sections=patrol.production_sections(fetch_json=answers))
+        self.assertEqual({k: v for k, v in results.items() if not k.endswith(':release')},
+                         {'NVDA': [], 'AMD': [], 'SITE': ['site-route-unavailable']})
 
 
 class Records(unittest.TestCase):
