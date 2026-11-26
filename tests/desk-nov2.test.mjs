@@ -67,12 +67,14 @@ test("the post box has the four attachment tiles, the 添付 button, the count a
   assert.match(composer, /disabled=\{busy \|\| mediaBusy \|\| !body\.trim\(\)\}/);
 });
 
-test("the owner's page header, timeline and NEW tag follow the design", async () => {
+test("the owner's page header and timeline follow the design; no NEW tag (owner, 11/26)", async () => {
   const columns = await read("../app/research/columns/columns.tsx");
   assert.match(columns, /PRO会員だけに、本音を。/);
   assert.match(columns, /fresh=\{item\.id === newNote\}/);
   const css = await read("../app/research/columns/styles.module.css");
-  assert.match(css, /\.newTag/);
+  assert.doesNotMatch(css, /\.newTag/);
+  assert.doesNotMatch(columns, />NEW</);
+  assert.match(columns, /data-fresh=\{\(item\.kind === "notes" && fresh\) \|\| undefined\}/);
   assert.match(css, /\.article\.note:last-of-type::before\{display:none\}/);
 });
 

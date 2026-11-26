@@ -88,6 +88,34 @@ export const rankPlaces = (values: { ticker: string; value: number }[]) => {
   const order = values.map((item, i) => ({ ...item, i })).sort((a, b) => a.value - b.value || a.i - b.i);
   return Object.fromEntries(order.map((item, rank) => [item.ticker, (rank + 0.5) / order.length])) as Record<string, number>;
 };
+/** PRO chart (owner, Nov 26): the same rank places as the FREE chart, plus what the tap shows. `earnRank` / `coverRank` count from the top
+ * (1 = highest) in the chart's own order; `zone` is the quarter the dot sits in on the chart (the middle lines are the middle ranks).
+ * The previous earnings are placed by rank among the genre's previous earnings only (never mixed with the latest); companies without
+ * previous earnings have no previous place. `earnMove` / `coverMove` are how many places a company moved up (negative: down) among the
+ * companies that have previous earnings. */
+export type ProRankPlace = { x: number; y: number; earnRank: number; coverRank: number; zone: Zone;
+  previous: { x: number; y: number; earnMove: number; coverMove: number } | null };
+/** The zone of a place on the rank chart: the right half earns, the upper half is protected (a dot on a middle line counts as the upper / right side). */
+export const zoneAt = (x: number, y: number): Zone => x >= 0.5 ? (y >= 0.5 ? "solid" : "lever") : (y >= 0.5 ? "guard" : "thin");
+/** 1 = the highest of n, read back from a place made by rankPlaces. */
+const rankFromTop = (place: number, n: number) => n - Math.round(place * n - 0.5);
+export function proRankPlaces(dots: { ticker: string; ocfMargin: number; cover: number; noRevenue?: boolean; previous: Point | null }[]): { count: number; places: Record<string, ProRankPlace> } {
+  const earning = (dot: { ocfMargin: number; noRevenue?: boolean }) => dot.noRevenue ? -Infinity : dot.ocfMargin;
+  const xs = rankPlaces(dots.map(dot => ({ ticker: dot.ticker, value: earning(dot) })));
+  const ys = rankPlaces(dots.map(dot => ({ ticker: dot.ticker, value: dot.cover })));
+  const before = dots.flatMap(dot => dot.previous ? [{ ticker: dot.ticker, now: dot, then: dot.previous }] : []);
+  const nowX = rankPlaces(before.map(item => ({ ticker: item.ticker, value: earning(item.now) })));
+  const nowY = rankPlaces(before.map(item => ({ ticker: item.ticker, value: item.now.cover })));
+  const thenX = rankPlaces(before.map(item => ({ ticker: item.ticker, value: item.then.ocfMargin })));
+  const thenY = rankPlaces(before.map(item => ({ ticker: item.ticker, value: item.then.cover })));
+  const n = dots.length, m = before.length;
+  const places = Object.fromEntries(dots.map(dot => {
+    const x = xs[dot.ticker], y = ys[dot.ticker], had = dot.ticker in thenX;
+    return [dot.ticker, { x, y, earnRank: rankFromTop(x, n), coverRank: rankFromTop(y, n), zone: zoneAt(x, y),
+      previous: had ? { x: thenX[dot.ticker], y: thenY[dot.ticker], earnMove: rankFromTop(thenX[dot.ticker], m) - rankFromTop(nowX[dot.ticker], m), coverMove: rankFromTop(thenY[dot.ticker], m) - rankFromTop(nowY[dot.ticker], m) } : null }];
+  })) as Record<string, ProRankPlace>;
+  return { count: n, places };
+}
 export type RadarPayload =
   | { tier: "free"; genre: RadarGenreId; dots: RadarRankDot[]; asOf: string | null }
   | { tier: "pro"; genre: RadarGenreId; dots: RadarDotPro[]; missing: string[]; asOf: string | null };

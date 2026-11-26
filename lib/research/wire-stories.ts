@@ -2,6 +2,7 @@ import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tidyJapanese } from "./ja-text.ts";
 import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
+import { CONTRIBUTOR_OPINION_EN } from "./contributor-opinion.ts";
 import { MARKETING_SHOWCASE_EN, MARKETING_SHOWCASE_JA } from "./marketing-showcase.ts";
 import { offSubject } from "./company-subjects.ts";
 
@@ -221,7 +222,9 @@ const OTC_NAMES: Record<string, { ja: string; en: string }> = {
 export const otcTicker = (ticker: string) => /^[A-Z]{4}F$/.test(ticker) || (/^[A-Z]{4}Y$/.test(ticker) && ticker in OTC_NAMES);
 export const otcName = (ticker: string, ja: boolean) => OTC_NAMES[ticker] ? (ja ? OTC_NAMES[ticker].ja : OTC_NAMES[ticker].en) : null;
 export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : otcName(ticker, ja) ?? ticker;
-export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english);
+/** A contributor's own rating call (": Buy", "(Rating Upgrade)", "So I'm Buying"), unless a brokerage is named (owner, Nov 26). */
+export const contributorOpinion = (text: string) => CONTRIBUTOR_OPINION_EN.test(text) && !BROKER.test(text);
+export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english) || contributorOpinion(english);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
  * Only a headline that announces results is judged, and only against a release date we know for that company. */

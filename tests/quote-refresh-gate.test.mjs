@@ -61,5 +61,5 @@ test("the watchlist and a stock's page ask with fast=1 every 15 seconds; other s
   const data = await read("lib/research/market-data.ts");
   // The shared one-minute copy for everyone; the 15-second refresh only under the "fast" tier (200, lib/research/twelve-budget.ts).
   assert.match(data, /sharedReader\.readMany<MarketQuote>\(spec, tickers/);
-  assert.match(data, /fetchQuotes\(older, "fast"\)/);
+  assert.match(data, /fastRefresh<MarketQuote>\(sharedReader, spec, got, group => fetchQuotes\(group, "fast"\)\)/);
 });

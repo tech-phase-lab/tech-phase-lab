@@ -292,4 +292,3 @@
   .tools { gap:4px; }
   .page .tools button { font-size:.63rem; padding:7px 5px; }
 }
-.updateBadge { display:inline-block; margin-left:8px; padding:2px 5px; border-radius:3px; color:#171120; background:#c6adff; font-size:.6rem; font-weight:800; letter-spacing:.04em; vertical-align:middle; }

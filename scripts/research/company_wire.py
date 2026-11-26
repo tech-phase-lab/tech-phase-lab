@@ -413,6 +413,7 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
+A rating or label tag after a colon or in brackets at the end of a headline (": Buy", ": Strong Sell", ": Hold", "(Rating Upgrade)", "(NASDAQ:NBIS)") is a separate label, not part of the sentence: never join it to the sentence (no ので/から/だから/ため/so-clauses such as 「〜ので買いだ」); translate the sentence on its own and, if the tag is kept, write it after a full-width colon (「〜：買い」). Such a contributor's own rating call, or a first-person "I'm buying/selling" piece, is kind "not-news" (opinion); a brokerage's rating or price-target change stays "news".
 Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
@@ -691,9 +692,9 @@ def low_value(title):
 
 def hidden_title(title):
     """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN,
-    low_value)."""
+    low_value, contributor_opinion)."""
     return (truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
-            or low_value(title))
+            or low_value(title) or contributor_opinion(title))
 
 
 # Owner, Nov 20 (「MRVLは同じの2つある」): "Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370" (TradingView)
@@ -715,6 +716,30 @@ ANY_TARGET = re.compile(r'(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?![.,]?\d)(?!\s?(?
 RATING_CHANGE = re.compile(r'\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|start(?:s|ed)?|resume[sd]?|reinstate[sd]?)\b.{0,80}?\b(?:to|at|with)\s+(?:an? )?'
                            r'(strong buy|buy|outperform|overweight|accumulate|add|neutral|hold|equal[- ]weight|market perform|sector perform|peer perform'
                            r'|in[- ]line|underperform|underweight|reduce|sell)\b', re.I)
+
+
+# Owner, Nov 26 (銘柄手帳 and 速報 showed the NBIS row 「ネビウスの設備投資は誤解されていたので買いだ」, from the Seeking Alpha contributor
+# article "Nebius' CapEx Was Misread, So I'm Buying"): a contributor's own rating call is opinion, not news. Matched: a rating tag ending the
+# headline (": Buy", ": Strong Sell", ": Hold", ": Upgrade To Buy"), "(Rating Upgrade)" / "(Rating Downgrade)", and the author's
+# first-person buying or selling ("So I'm Buying"). A brokerage's rating or price-target change is kept: a headline naming a known broker
+# (BROKER) is never matched. The same pattern is CONTRIBUTOR_OPINION_EN in lib/research/contributor-opinion.ts; keep the two in step (a
+# test compares them).
+CONTRIBUTOR_OPINION_EN = (
+    r"(?::\s*(?:(?:upgrad(?:e|ed|ing)|downgrad(?:e|ed|ing)|reiterat(?:e|ed|ing)|maintain(?:ed|ing)?)\s+(?:to\s+|at\s+|as\s+)?(?:an?\s+)?)?"
+    r"(?:(?:strong|speculative)\s+)?(?:buy|sell|hold)(?:\s+rating)?\s*[.!]?"
+    r"|\((?:rating\s+|double\s+)?(?:upgrade|downgrade|reiteration|reiterated)\))"
+    r"\s*(?:\((?:(?:NASDAQ|NYSE|NYSEARCA|NYSEAMERICAN|AMEX|OTC[A-Z]*|TSX|TSXV|LSE)\s*:\s*)?[A-Z.]{1,8}\)\s*)?(?:[-–—|]\s*Seeking Alpha\s*)?$"
+    r"|(?:^|[,;:.!]\s+|\b(?:so|and|but|why|how)\s+)I.m\s+(?:(?:still|now|also|finally|happily|aggressively|cautiously|not|done|\w+ly)\s+)?"
+    r"(?:buying|selling|adding|accumulating|loading up|doubling down|a buyer|a seller|staying long|staying away|bullish|bearish)\b"
+    r"|(?:^|\b(?:why|so|and|but)\s+)I\s+(?:just\s+|finally\s+)?(?:bought|sold|added|doubled down)\b"
+    r"|\bI (?:think|believe) (?:it.s|it is|this is|they.re|they are) an? (?:strong )?(?:buy|sell)\b|\bis an? strong (?:buy|sell)\b"
+)
+CONTRIBUTOR_OPINION = re.compile(CONTRIBUTOR_OPINION_EN, re.I)
+
+
+def contributor_opinion(title):
+    """True for a contributor's own rating call (CONTRIBUTOR_OPINION) that names no known broker."""
+    return bool(CONTRIBUTOR_OPINION.search(title or '')) and not BROKER.search(title or '')
 
 
 def analyst_actions(title):

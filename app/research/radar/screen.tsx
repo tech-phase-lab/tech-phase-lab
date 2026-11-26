@@ -3,8 +3,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { quarterOf } from "@/lib/research/radar-period";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import { arrow, radarGenres, zoneLabel, zoneOf, xPosition, yPosition, type RadarDotPro, type RadarGenreId, type RadarPayload } from "@/lib/research/radar";
-import RadarChart, { RankChart, fmtCover, fmtPercent } from "./chart";
+import { arrow, proRankPlaces, radarGenres, zoneLabel, zoneOf, xPosition, yPosition, type RadarDotPro, type RadarGenreId, type RadarPayload, type Zone } from "@/lib/research/radar";
+import RadarChart, { PickedDot, RankChart, fmtCover, fmtPercent } from "./chart";
 import GenrePicker from "./genre-picker";
 import styles from "./radar.module.css";
 
@@ -54,7 +54,8 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
       <p className={styles.lead}>{t("稼ぐ力と守る力を、ジャンルの中で比べます", "Compare earning power and financial cushion within each genre.")}</p>
       {/* Owner, Nov 25: the three notes and the disclaimer leave the page and open from the 「i」 beside the heading (FREE and PRO). */}
       {about && <div id="radar-about" className={styles.about} role="region" aria-label={t("計算方法と注意", "How it's calculated")}>
-        <p>{t("数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。", "Figures are calculated from U.S. SEC filings. Values outside the chart range appear at the edge. This is not a recommendation to buy or sell.")}</p>
+        {/* Owner, Nov 26: nothing is stopped at the chart's edge any more; dots are placed by rank. Only PRO can tap a dot for its figures. */}
+        <p>{t("数字は米SECの開示資料から計算しています。点はジャンルの中の順位で置いています。", "Figures are calculated from U.S. SEC filings. Dots are placed by rank within the genre.")}{pro && t("数字は点を押すと見られます。", " Tap a dot to see its figures.")}{t("売買をすすめるものではありません。", " This is not a recommendation to buy or sell.")}</p>
         <p>{t("前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。1年間に受け取った前受け金が1年分の売上を超える会社は、その分を除いた営業キャッシュフローで稼ぐ力を計算し、「前受け金除く」と表示します。請求したまま未回収の分は、除く額から差し引きます。", "Large customer prepayments can make operating cash flow look inflated. When the prepayments received in a year exceed a full year of revenue, cash generation is calculated without them and marked \"Excl. prepayments\" (amounts billed but not yet collected are not taken out).")}</p>
         <p>{t("稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。", "Cash generation is operating cash flow divided by revenue. Financial resilience compares cash (cash equivalents plus short-term investments) with debt (short- and long-term borrowings plus lease liabilities). Revenue and cash flow use the full year for annual reports and the latest four quarters otherwise.")}</p>
       </div>}
@@ -65,16 +66,13 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
         : !radar || (!confirmed && failed !== genre) ? <section className={styles.card} aria-hidden="true"><div className={styles.skeleton} /></section>
         : <>
           {pro ? <section className={styles.card}>
-            <p className={styles.axisY}>{t("↑ 守る力 ｜ 現金÷(借入+リース)", "↑ Financial resilience | Cash ÷ (debt + leases)")}</p>
+            {/* PRO (owner, Nov 26): placed by rank like FREE, with the same axis names and the same first legend line; PRO's two extras on a second line. */}
+            <p className={styles.axisY}>{t("↑ 守る力　借金に対する手元の現金", "↑ Financial cushion — cash vs. debt")}</p>
             <RadarChart dots={pro.dots} selected={selected} onSelect={setSelected} lang={lang} />
-            <p className={styles.axisX}>{t("稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "Cash generation | Operating cash flow as % of revenue →")}</p>
-            <ul className={styles.legend}>
-              <li><i style={{ background: "#59d6a6" }} />{t("売上が前年より増加", "Revenue up from a year earlier")}</li>
-              <li><i style={{ background: "#f08a8a" }} />{t("減少", "Down")}</li>
-              <li><i className={styles.hollow} style={{ borderColor: "#cfd8e3" }} />{t("大きさ=売上規模", "Size = revenue")}</li>
-              <li><i className={styles.hollow} style={{ borderColor: "#59d6a6" }} />{t("白抜き=売上の比較なし", "Hollow = no revenue comparison")}</li>
-              <li><b aria-hidden="true">┈</b>{t("点線=前の決算から", "Dotted = since the previous report")}</li>
-            </ul>
+            <p className={styles.axisRow}><span>{t("低い", "Low")}</span><span>{t("稼ぐ力　売上のうち現金で残る割合 →", "Cash earning power — cash kept from sales →")}</span><span>{t("高い", "High")}</span></p>
+            <PickedDot dots={pro.dots} selected={selected} lang={lang} />
+            <p className={styles.legendLine}><span><i style={{ background: "#59d6a6" }} />{t("売上が増加", "Revenue up")}</span><span><i style={{ background: "#f08a8a" }} />{t("売上が減少", "Revenue down")}</span><span>{t("点の大きさ＝売上の規模", "Dot size = revenue")}</span></p>
+            <p className={`${styles.legendLine} ${styles.legendMore}`}><span><i className={styles.hollow} style={{ borderColor: "#59d6a6" }} />{t("白抜き＝売上の比較なし", "Hollow = no revenue comparison")}</span><span><b aria-hidden="true">┈</b>{t("点線＝前の決算から", "Dotted = since the previous report")}</span></p>
           </section> : radar.tier === "free" && <section className={styles.card}>
             {/* FREE (owner, Nov 25): dots by rank inside the genre, so they spread over the whole chart; no figures, nothing to tap. */}
             <p className={styles.axisY}>{t("↑ 守る力　借金に対する手元の現金", "↑ Financial cushion — cash vs. debt")}</p>
@@ -115,10 +113,12 @@ export function StrengthRanking({ pro, lang }: { pro: ProRadar; lang: "ja" | "en
   const ranked = pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!);
   // Only a company without revenue is unranked (earning power cannot be worked out): one plain line, not a card (owner, Nov 24).
   const unranked = pro.dots.filter(dot => dot.rank === null);
+  // The zone tag is the zone the dot sits in on the (rank) chart (owner, Nov 26); the order of the cards is unchanged.
+  const zones = proRankPlaces(pro.dots).places;
   return <section className={styles.ranking}>
     <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{ja ? `最新の決算（${quarterOf(pro.asOf, true)}）・決算ごとに自動更新` : `Latest results (${quarterOf(pro.asOf, false)}) · updated with each report`}</small></header>
     <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
-    {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
+    {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} zone={zones[dot.ticker]?.zone} lang={lang} />)}
     {unranked.map(dot => <p key={dot.ticker} className={styles.unranked}><b>{dot.ticker}</b>{t(`売上がまだないため順位なし ・ 守る力 ${fmtCover(dot.cover, lang)}`, `Not ranked: no revenue yet · Resilience ${fmtCover(dot.cover, lang)}`)}</p>)}
     {pro.missing.length > 0
       ? <details className={styles.missing}><summary>{t("データが足りない銘柄 ・ ", "Stocks with missing data · ")}{pro.missing.length}{t("件", "")}</summary><p>{pro.missing.join("　")}</p></details>
@@ -127,9 +127,8 @@ export function StrengthRanking({ pro, lang }: { pro: ProRadar; lang: "ja" | "en
 }
 
 /** One stock's card in the ranking (also shown by the PRO feature tour's fixed sample). */
-export function RankCard({ dot, lang }: { dot: RadarDotPro; lang: "ja" | "en" }) {
+export function RankCard({ dot, zone = zoneOf(dot.ocfMargin, dot.cover), lang }: { dot: RadarDotPro; /** The zone on the chart; the blurred FREE samples keep the figures' zone. */ zone?: Zone; lang: "ja" | "en" }) {
   const ja = lang === "ja";
-  const zone = zoneOf(dot.ocfMargin, dot.cover);
   const g = dot.growth;
   return <article className={styles.rank}>
     <div className={styles.rankTop}>
