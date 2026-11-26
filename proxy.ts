@@ -1,18 +1,13 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest, type NextFetchEvent } from "next/server";
-import { companyFreeHref } from "./lib/research/company-href.ts";
+import { visitorCompanyRedirect } from "./lib/research/company-redirect.ts";
 
-/** The 監視22銘柄 pages are PRO only (lib/membership/pro-page.ts). A visitor with no session is sent to the stock's FREE page here, before the
- * page is rendered (speed, Nov 26): the page's own redirect arrives after the streamed shell, so the browser loaded the app twice. Signed-in
- * readers still get the page's check (their plan is looked up there). */
-const COMPANY_PAGE = /^\/research\/companies(?:\/([^/]+))?\/?$/;
+/** 監視22銘柄: a visitor with no session goes to the stock's FREE page before the PRO page renders (lib/research/company-redirect.ts). */
 const identity = clerkMiddleware(async (auth, request) => {
-  const company = COMPANY_PAGE.exec(request.nextUrl.pathname);
-  if (!company || request.method !== "GET") return;
+  if (!request.nextUrl.pathname.startsWith("/research/companies")) return;
   const { userId } = await auth();
-  if (userId) return;
-  const ticker = company[1] ? decodeURIComponent(company[1]) : undefined;
-  return NextResponse.redirect(new URL(companyFreeHref(ticker), request.url), 307);
+  const href = visitorCompanyRedirect({ method: request.method, pathname: request.nextUrl.pathname, headers: request.headers, cookies: request.cookies.getAll() }, userId);
+  if (href) return NextResponse.redirect(new URL(href, request.url), 307);
 });
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return NextResponse.next();
