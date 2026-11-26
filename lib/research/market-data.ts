@@ -2,7 +2,7 @@ import "server-only";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
 import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
-import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Tier } from "./twelve-budget.ts";
+import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
 import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
 import { BOARD_SNAPSHOT_PERIOD, boardDue, boardJobKey } from "./market-snapshot.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
@@ -122,7 +122,11 @@ export function intradayParams(symbol: string, interval: string): { prepost?: "t
 }
 /** One bar series from the shared copy of its slot (one provider credit for everyone), else the last good copy. `fetch` false: copies only;
  * a function: asked only when the provider would really be read (no fresh copy), and false keeps the last good copy. */
-async function bars(ticker: string, interval: string, size: number, { slotMs, fetch = true, tier = "user" }: { slotMs?: number; fetch?: boolean | (() => boolean); tier?: Tier } = {}): Promise<Bar[]> {
+async function bars(ticker: string, interval: string, size: number, options: { slotMs?: number; fetch?: boolean | (() => boolean); tier?: Tier } = {}): Promise<Bar[]> {
+  return (await barsEntry(ticker, interval, size, options)).value;
+}
+/** The same read, with the copy's time and whether it is this slot's (fresh) or a last good copy. */
+async function barsEntry(ticker: string, interval: string, size: number, { slotMs, fetch = true, tier = "user" }: { slotMs?: number; fetch?: boolean | (() => boolean); tier?: Tier } = {}): Promise<Result<Bar[]>> {
   const spec: ReadSpec = { name: "md-bars-v1", slotMs: slotMs ?? barSlotMs(ticker, interval, Date.now()), staleMs: STALE_LIMIT_MS };
   const got = await sharedReader.read<Bar[]>(spec, `${ticker}|${interval}|${size}`, fetch ? async () => {
     if (typeof fetch === "function" && !fetch()) throw new Error("no-read-allowance");
@@ -132,7 +136,7 @@ async function bars(ticker: string, interval: string, size: number, { slotMs, fe
       : await call("time_series", { symbol: ticker, ...base, ...intradayParams(ticker, interval) }, tier));
   } : null);
   if (!got) throw new Error("bars-unavailable");
-  return got.value;
+  return got;
 }
 /** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
 const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number; fetch?: boolean | (() => boolean) }) => { const spec = chartSpec(range); return bars(ticker, spec.interval, spec.size, options); };
@@ -141,6 +145,12 @@ const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number;
 export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] }> {
   const series = periodSeries(period);
   return shapePeriod(period, await bars(ticker, series.interval, series.size, isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }));
+}
+
+/** 銘柄検索「今日の注目」's daily bars (lib/research/search-focus-server.ts), read by the minute job the way refreshBoardSnapshot reads its
+ * charts: the shared bar copy members' reads use, on the "warm" tier; `spend` is called only when the provider is really asked. */
+export function loadSnapshotDailyBars(ticker: string, size: number, spend: () => void): Promise<Result<Bar[]>> {
+  return barsEntry(ticker, "1day", size, { fetch: () => { spend(); return true; }, tier: "warm" });
 }
 
 /** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); shared 30 minutes (one credit a read). */

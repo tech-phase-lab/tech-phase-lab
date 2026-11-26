@@ -23,9 +23,3 @@
 .disc { margin:12px 0 0; font-size:10px; line-height:1.6; color:var(--sub); opacity:.75; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 .status { text-align:center; color:var(--sub); margin:0; }
 .root :focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
-/* The member's own rule on each card, and 「今日やること」 (owner, Nov 25). */
-.rule { margin:4px 0 0; padding-top:8px; border-top:1px solid rgba(216,179,106,.18); color:#d7dde6; font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
-.rule small, .todo small { display:block; color:var(--gold); font-size:12px; letter-spacing:.08em; }
-.todo { display:flex; flex-direction:column; gap:4px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px; }
-.todo b { font-family:var(--serif); font-size:20px; font-weight:500; color:var(--gold2); line-height:1.5; }
-.todo p { margin:0; color:#d7dde6; font-size:15px; overflow-wrap:anywhere; }
