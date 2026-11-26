@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "SCI",
+    "name": "サービス・コーポレーション・インターナショナル",
+    "cik": 89089,
+    "name_en": "Service Corporation International"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ALDERWOODS",
+      "ticker": "ALDERWOODS",
+      "name": "オルダーウッズ・グループ",
+      "name_en": "Alderwoods Group",
+      "sub": "葬儀",
+      "sub_en": "Funeral services",
+      "sub_short": "葬儀",
+      "sub_short_en": "Funeral",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2006年以降の買収先",
+          "text_en": "Acquired after 2006",
+          "source": {
+            "label": "Service Corporation International 10-K(2025年度)",
+            "label_en": "Service Corporation International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89089/000162828026007695/sci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In late 2006, we began a series of strategic acquisitions through 2013 by acquiring Alderwoods Group, Keystone North America, The Neptune Society, Inc. (Neptune), also now known as SCI Direct, and Stewart Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEYSTONE",
+      "ticker": "KEYSTONE",
+      "name": "キーストーン・ノース・アメリカ",
+      "name_en": "Keystone North America",
+      "sub": "葬儀",
+      "sub_en": "Funeral services",
+      "sub_short": "葬儀",
+      "sub_short_en": "Funeral",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2006年以降の買収先",
+          "text_en": "Acquired after 2006",
+          "source": {
+            "label": "Service Corporation International 10-K(2025年度)",
+            "label_en": "Service Corporation International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89089/000162828026007695/sci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In late 2006, we began a series of strategic acquisitions through 2013 by acquiring Alderwoods Group, Keystone North America, The Neptune Society, Inc. (Neptune), also now known as SCI Direct, and Stewart Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEPTUNE",
+      "ticker": "NEPTUNE",
+      "name": "ネプチューン・ソサエティ",
+      "name_en": "Neptune Society",
+      "sub": "火葬",
+      "sub_en": "Cremation",
+      "sub_short": "火葬",
+      "sub_short_en": "Cremate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2006年以降の買収先",
+          "text_en": "Acquired after 2006",
+          "source": {
+            "label": "Service Corporation International 10-K(2025年度)",
+            "label_en": "Service Corporation International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89089/000162828026007695/sci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In late 2006, we began a series of strategic acquisitions through 2013 by acquiring Alderwoods Group, Keystone North America, The Neptune Society, Inc. (Neptune), also now known as SCI Direct, and Stewart Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STEWART",
+      "ticker": "STEWART",
+      "name": "スチュワート・エンタープライズ",
+      "name_en": "Stewart Enterprises",
+      "sub": "葬儀",
+      "sub_en": "Funeral services",
+      "sub_short": "葬儀",
+      "sub_short_en": "Funeral",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年までに買収",
+          "text_en": "Acquired by 2013",
+          "source": {
+            "label": "Service Corporation International 10-K(2025年度)",
+            "label_en": "Service Corporation International 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89089/000162828026007695/sci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In late 2006, we began a series of strategic acquisitions through 2013 by acquiring Alderwoods Group, Keystone North America, The Neptune Society, Inc. (Neptune), also now known as SCI Direct, and Stewart Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Service Corporation International 8-K(2025年11月)",
+            "label_en": "Service Corporation International 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/89089/000008908925000097/sci-20251120.htm",
+            "level": "official",
+            "date": "2025-11-21",
+            "quote": "On November 20, 2025, Service Corporation International (the \"Company\") entered into a new senior unsecured credit agreement with JPMorgan Chase Bank, N.A., as administrative agent, and certain other financial institutions, as lenders, providing for a $750 million senior term loan facility, maturing in November 2030 (the \"Term Loan A\"), and a revolving credit facility providing for borrowings of up to $1.75 billion, with commitments expiring and loans maturing in November"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "root": {
+    "ticker": "IOSP",
+    "name": "イノスペック",
+    "cik": 1054905,
+    "name_en": "Innospec"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "NEU"
+  ],
+  "companies": [
+    {
+      "id": "BIOTECHSOL",
+      "ticker": "BIOTECHSOL",
+      "name": "バイオテクノロジー・ソリューションズ",
+      "name_en": "Biotechnology Solutions",
+      "sub": "化学品",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に事業を買収",
+          "text_en": "Bought its business in July 2025",
+          "source": {
+            "label": "Innospec 10-K(2025年度)",
+            "label_en": "Innospec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1054905/000119312526056502/iosp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On July 31, 2025 the Company completed the acquisition of the trade and net assets of Biotechnology Solutions LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "QGP",
+      "ticker": "QGP",
+      "name": "QGP",
+      "name_en": "QGP",
+      "sub": "化学品",
+      "sub_en": "Chemicals",
+      "sub_short": "化学",
+      "sub_short_en": "Chemical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した化学品会社",
+          "text_en": "Acquired chemicals company",
+          "source": {
+            "label": "Innospec 10-K(2025年度)",
+            "label_en": "Innospec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1054905/000119312526056502/iosp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During the quarter ended September 30, 2025, the Company impaired the intangible assets arising from the acquisition of QGP, within its Performance Chemicals segment, and Independence Oilfield Chemicals LLC and Bachman Services LLC., within its Oilfield Services segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INDEPENDENCEOC",
+      "ticker": "INDEPENDENCEOC",
+      "name": "インディペンデンス・オイルフィールド・ケミカルズ",
+      "name_en": "Independence Oilfield Chemicals",
+      "sub": "油田薬品",
+      "sub_en": "Oilfield chemicals",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した油田薬品会社",
+          "text_en": "Acquired oilfield chemicals company",
+          "source": {
+            "label": "Innospec 10-K(2025年度)",
+            "label_en": "Innospec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1054905/000119312526056502/iosp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During the quarter ended September 30, 2025, the Company impaired the intangible assets arising from the acquisition of QGP, within its Performance Chemicals segment, and Independence Oilfield Chemicals LLC and Bachman Services LLC., within its Oilfield Services segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BACHMAN",
+      "ticker": "BACHMAN",
+      "name": "バックマン・サービシズ",
+      "name_en": "Bachman Services",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した油田サービス会社",
+          "text_en": "Acquired oilfield services company",
+          "source": {
+            "label": "Innospec 10-K(2025年度)",
+            "label_en": "Innospec 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1054905/000119312526056502/iosp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "During the quarter ended September 30, 2025, the Company impaired the intangible assets arising from the acquisition of QGP, within its Performance Chemicals segment, and Independence Oilfield Chemicals LLC and Bachman Services LLC., within its Oilfield Services segment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEU",
+      "ticker": "NEU",
+      "name": "ニューマーケット",
+      "name_en": "NewMarket",
+      "sub": "添加剤",
+      "sub_en": "Additives",
+      "sub_short": "添加剤",
+      "sub_short_en": "Additives",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Innospec as a competitor",
+          "source": {
+            "label": "Newmarket 10-K(2025年度)",
+            "label_en": "Newmarket 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1282637/000128263726000005/neu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the gasoline detergent market, we compete mainly against BASF, Chevron Oronite Company LLC, Innospec Inc., and The Lubrizol Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHX",
+      "ticker": "CHX",
+      "name": "チャンピオンX",
+      "name_en": "ChampionX",
+      "sub": "油田",
+      "sub_en": "Oil",
+      "sub_short": "油田",
+      "sub_short_en": "Oil",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names Innospec as a competitor",
+          "source": {
+            "label": "ChampionX 10-K(2024年度)",
+            "label_en": "ChampionX 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723089/000172308925000025/championx-20241231.htm",
+            "level": "official",
+            "date": "2025-02-05",
+            "quote": "Key competitors for our Production Chemical Technologies and Reservoir Chemical Technologies segments include Baker Hughes, Clariant AG, Multi-Chem (a Halliburton Service), M-I SWACO (a Schlumberger company), CES Energy Solutions Corp., SNF, Kemira, Innospec, and Rockwater."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
