@@ -146,6 +146,24 @@ class Production(unittest.TestCase):
                          {'NVDA': [], 'AMD': [], 'SITE': ['site-route-unavailable']})
 
 
+class QuarterFilings(unittest.TestCase):
+    def test_the_10q_after_the_release_and_the_deal_8ks_since_the_previous_release_are_read(self):
+        sub = filings(('10-Q', '2026-11-19T21:00:00.000Z', '', 'q-1', '2026-10-25'),
+                      ('8-K', '2026-11-18T13:00:00.000Z', '1.01,2.02,9.01', 'deal-1'),
+                      ('8-K', '2026-11-18T12:00:00.000Z', '5.02', 'officer-1'),
+                      NVDA_8K,
+                      ('8-K', '2026-08-20T13:00:00.000Z', '1.01', 'old-deal'),
+                      ('10-Q', '2026-08-27T21:00:00.000Z', '', 'q-0', '2026-07-26'))
+        release = nvda_release()
+        fetched = []
+        report, events = patrol.quarter_filings('NVDA', sub, release, {'releasedOn': '2026-08-15'},
+                                                fetch=lambda url: fetched.append(url) or 'report text',
+                                                exhibit=lambda cik, acc, numbers: (f'https://www.sec.gov/{acc}.htm', 'deal text'))
+        self.assertEqual(report['accession'], 'q-1')
+        self.assertEqual(report['text'], 'report text')
+        self.assertEqual([e['accession'] for e in events], ['old-deal', 'deal-1'])  # since the previous release, oldest first; never the release itself
+
+
 class Records(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
