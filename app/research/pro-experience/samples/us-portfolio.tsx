@@ -4,7 +4,6 @@ import { valueHoldings, weights } from "@/lib/portfolio/calc";
 import { PORTFOLIO_IMAGE, READING_STEPS_MS, portfolioHoldings, portfolioMarket } from "@/lib/research/pro-experience-sample-data";
 import { COLORS, List, Reading } from "../../portfolio/screen";
 import portfolioStyles from "../../portfolio/portfolio.module.css";
-import { useProOnly } from "./frame";
 import styles from "./samples.module.css";
 
 type Phase = "idle" | "preparing" | "reading" | "done";
@@ -13,7 +12,6 @@ type Phase = "idle" | "preparing" | "reading" | "done";
  * Nothing is uploaded and no reading service is called; there is no field for your own image. */
 export default function PortfolioSample({ lang }: { lang: "ja" | "en" }) {
   const ja = lang === "ja";
-  const proOnly = useProOnly();
   const [phase, setPhase] = useState<Phase>("idle");
   const [hide, setHide] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -36,7 +34,7 @@ export default function PortfolioSample({ lang }: { lang: "ja" | "en" }) {
         <button type="button" className={styles.tryButton} onClick={start} disabled={phase === "preparing" || phase === "reading"}>{ja ? "この画像で試す" : "Try this image"}</button>
       </div>
     </div>
-    {(phase === "preparing" || phase === "reading") && <div className={styles.portfolioStage}><Reading ja={ja} stage={phase} onCancel={() => { stop(); setPhase("idle"); }} onInfo={() => proOnly()} /></div>}
+    {(phase === "preparing" || phase === "reading") && <div className={styles.portfolioStage}><Reading ja={ja} stage={phase} onCancel={() => { stop(); setPhase("idle"); }} /></div>}
     {phase === "done" && <div className={styles.portfolioStage}>
       <List ja={ja} rows={rows} totals={totals} shares={shares} hide={hide} market={portfolioMarket} marketError={false} onRetry={() => {}} pick={() => {}} onManual={() => {}}
         colorOf={colorOf} onClear={() => {}} sample onToggleHide={() => setHide(value => !value)} />

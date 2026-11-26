@@ -1,6 +1,14 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse, type NextRequest, type NextFetchEvent } from "next/server";
-const identity = clerkMiddleware();
+import { visitorCompanyRedirect } from "./lib/research/company-redirect.ts";
+
+/** 監視22銘柄: a visitor with no session goes to the stock's FREE page before the PRO page renders (lib/research/company-redirect.ts). */
+const identity = clerkMiddleware(async (auth, request) => {
+  if (!request.nextUrl.pathname.startsWith("/research/companies")) return;
+  const { userId } = await auth();
+  const href = visitorCompanyRedirect({ method: request.method, pathname: request.nextUrl.pathname, headers: request.headers, cookies: request.cookies.getAll() }, userId);
+  if (href) return NextResponse.redirect(new URL(href, request.url), 307);
+});
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return NextResponse.next();
   return identity(request, event);

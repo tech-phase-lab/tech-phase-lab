@@ -52,7 +52,7 @@ test('the page has All / Earnings tabs only, shows one date heading per day (mon
   assert.match(source, /\$\{Number\(month\)\}\/\$\{Number\(day\)\}/);
   assert.doesNotMatch(source, /<time dateTime=\{row\.at\}><span>/);
   assert.doesNotMatch(source, /公式発表/);
-  const page = await readFile(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../app/research/news/screen.tsx', import.meta.url), 'utf8');
   assert.match(page, /"ハイテク速報" : "Tech Alerts"/);
 });
 

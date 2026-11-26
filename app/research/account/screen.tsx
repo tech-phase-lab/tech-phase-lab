@@ -5,7 +5,7 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { recoverMember } from "@/lib/research/member-recovery";
-import { useIdentityRefresh } from "../identity-provider";
+import { useIdentityRefresh, useIdentityWordingReady } from "../identity-provider";
 import { readAccountReturn } from "@/lib/research/account-return";
 import AccountView from "./account-view";
 import { prefetchAccountData } from "./account-data";
@@ -41,6 +41,7 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
     ? {status:"signed-out",plan:"free",isAdmin:false,ownerMode:false,canTest:false,testing:false}
     : verifiedMember;
   const refreshIdentity = useIdentityRefresh();
+  const wordingReady = useIdentityWordingReady();
   const [retry, setRetry] = useState(0);
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -87,7 +88,7 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
   const waiting = member.status !== "unavailable" && (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in";
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} eyebrow="MY ACCOUNT" title={ja ? "マイアカウント" : "My account"} description="">
     {waiting ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : <section className={styles.card}>
-      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : null}
+      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || !wordingReady || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : null}
     </section>}
   </ResearchToolShell>;
   return content;

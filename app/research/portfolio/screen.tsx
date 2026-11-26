@@ -85,7 +85,6 @@ export default function PortfolioScreen() {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [reason, setReason] = useState<string | null>(null);
   const [manual, setManual] = useState(false);
-  const [sheet, setSheet] = useState(false);
   const abort = useRef<AbortController | null>(null);
   // Stock splits (owner, Nov 11 APH; Nov 21 SNDK 8-for-1): a lot keeps the numbers of the day it was entered (checkedAt); splits after that
   // day are applied when the list is shown (shares × ratio, cost ÷ ratio). Saving writes the shown numbers on the basis they were brought to.
@@ -174,7 +173,7 @@ export default function PortfolioScreen() {
         : review ? <ReviewScreen ja={ja} review={review} setReview={setReview} existing={current.holdings} day={day} />
         : reading ? <>
           <Head ja={ja} />
-          <Reading ja={ja} stage={reading} onCancel={() => abort.current?.abort()} onInfo={() => setSheet(true)} />
+          <Reading ja={ja} stage={reading} onCancel={() => abort.current?.abort()} />
         </>
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
@@ -188,19 +187,12 @@ export default function PortfolioScreen() {
           </section>}
           {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{adjustedNote(recentSplits, ja)}</p>}
           {problem && <ErrorCard ja={ja} kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick} onClose={() => setProblem(null)} />}
-          {!problem && holdings.length === 0 && <Empty ja={ja} pick={pick} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
+          {!problem && holdings.length === 0 && <Empty ja={ja} pick={pick} onManual={() => setManual(true)} />}
           {holdings.length > 0 && <List ja={ja} rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}
             pick={pick} onManual={() => setManual(true)} colorOf={colorOf} onClear={() => { if (window.confirm(ja ? "この端末に保存した持ち株を、すべて消します。よろしいですか?" : "Delete all holdings saved on this device?")) writeHoldings([]); }} />}
         </>}
-      {!review && <p className={s.disclaimer}>{ja ? "投資助言ではありません。" : "Not investment advice."}</p>}
       <p className={s.back}><Link href="/research/account"><span className={s.backIcon}>{Icon.back}</span>{ja ? "マイアカウントに戻る" : "Back to My Account"}</Link></p>
     </div>
-    {sheet && <div className={s.sheetWrap} role="dialog" aria-modal="true" aria-label={ja ? "画像の扱い" : "How images are handled"}>
-      <button type="button" className={s.sheetBackdrop} aria-label={ja ? "閉じる" : "Close"} onClick={() => setSheet(false)} />
-      <div className={s.sheet}><h2>{ja ? "画像の扱いについて" : "How images are handled"}</h2>
-        <p>{ja ? "読み取りのため、画像を外部のAIサービスへ一時的に送ります。送った画像は、こちらでは保存しません。" : "To read it, the image is sent briefly to an external AI service. We do not store the images you send."}</p>
-        <button type="button" className={s.ghost} onClick={() => setSheet(false)}>{ja ? "閉じる" : "Close"}</button></div>
-    </div>}
   </ResearchToolShell>;
 }
 
@@ -212,7 +204,7 @@ function Head({ ja, sub = false }: { ja: boolean; sub?: boolean }) {
   </header>;
 }
 
-function Empty({ ja, pick, onManual, onInfo }: { ja: boolean; pick: (event: React.ChangeEvent<HTMLInputElement>) => void; onManual: () => void; onInfo: () => void }) {
+function Empty({ ja, pick, onManual }: { ja: boolean; pick: (event: React.ChangeEvent<HTMLInputElement>) => void; onManual: () => void }) {
   const t = pick2(ja);
   return <>
     <section className={s.drop}>
@@ -227,13 +219,12 @@ function Empty({ ja, pick, onManual, onInfo }: { ja: boolean; pick: (event: Reac
       <li><i>2</i>{t("スクリーンショットを撮って、ここで選ぶ", "Take a screenshot and pick it here")}</li>
       <li><i>3</i>{t("読み取った内容を確認して、登録する", "Check what was read, then save it")}</li>
     </ol>
-    <section className={s.lockNote}>{Icon.lock}<div><p>{ja ? <>持ち株は、この端末の中にだけ保存されます。<br />スクショは読み取りだけに使い、保存しません。</> : <>Your holdings are saved only on this device.<br />Screenshots are used only for reading and are not stored.</>}</p>
-      <button type="button" onClick={onInfo}>{t("くわしく ›", "Details ›")}</button></div></section>
+    <section className={s.lockNote}>{Icon.lock}<div><p>{ja ? <>持ち株は、この端末の中にだけ保存されます。<br />スクショは外部のAIで読み取るだけに使い、保存しません。</> : <>Your holdings are saved only on this device.<br />Screenshots are read by an external AI service only and are not stored.</>}</p></div></section>
   </>;
 }
 
 /** The reading animation (also played by the PRO feature tour's fixed sample, which calls no reading service). */
-export function Reading({ ja, stage, onCancel, onInfo }: { ja: boolean; stage: Stage; onCancel: () => void; onInfo: () => void }) {
+export function Reading({ ja, stage, onCancel }: { ja: boolean; stage: Stage; onCancel: () => void }) {
   return <>
     <section className={s.drop} role="status" aria-live="polite">
       <div className={s.scan} aria-hidden="true"><div className={s.phone}><i style={{ width: "46%" }} /><i style={{ width: "62%" }} /><i className={s.bar} /><div><i /><b /></div><div><i /><b /></div><div><i /><b /></div></div><span className={s.beam} /></div>
@@ -246,7 +237,7 @@ export function Reading({ ja, stage, onCancel, onInfo }: { ja: boolean; stage: S
       </ul>
       <button type="button" className={s.outline} onClick={onCancel}>{ja ? "やめる" : "Cancel"}</button>
     </section>
-    <section className={s.lockNote}>{Icon.lock}<div><p>{ja ? "読み取りには、外部のAIサービスを使います。画像は保存されません。" : "Reading uses an external AI service. Images are not stored."}</p><button type="button" onClick={onInfo}>{ja ? "くわしく ›" : "Details ›"}</button></div></section>
+    <section className={s.lockNote}>{Icon.lock}<div><p>{ja ? "読み取りには、外部のAIサービスを使います。画像は保存されません。" : "Reading uses an external AI service. Images are not stored."}</p></div></section>
   </>;
 }
 

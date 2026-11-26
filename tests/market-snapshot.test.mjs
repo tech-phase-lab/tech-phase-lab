@@ -38,7 +38,7 @@ test("members only read the snapshot; the warm job refreshes it on the warm tier
   assert.match(route, /await loadBoardSnapshot\(\)/);
   assert.doesNotMatch(route, /loadBoard\(|readMany|resolveFresh|getMembership|isPro/);
   const data = read("lib/research/market-data.ts");
-  assert.match(data, /sharedReader\.read<Board>\(boardSpec\(false\), job\.id, \(\) => \{ spent\+\+; return resolveFresh\(job\.id, "warm"\); \}\)/);
+  assert.match(data, /sharedReader\.read<Board>\(\{ \.\.\.boardSpec\(false\), swr: false \}, job\.id, \(\) => \{ spent\+\+; return resolveFresh\(job\.id, "warm"\); \}\)/);
   assert.match(data, /bars\(job\.id, series\.interval, series\.size, \{ fetch: \(\) => \{ spent\+\+; return true; \}, tier: "warm" \}\)/);
   assert.match(data, /if \(!snapshot\) \{ await refreshBoardSnapshot\(\); snapshot = await currentBoardSnapshot\(\); filled = true; \}/);
   const warm = read("app/api/research/compare/warm/route.ts");
