@@ -252,6 +252,17 @@ test('the public Capital Map returns actual reports without membership or a paid
   const one = await (await routeModule.exports.GET(new Request(`https://techphase.app/api/research/capital-map?ids=${result.props.portfolios[5].id}`))).json();
   assert.deepEqual(Object.keys(one.holdings), [result.props.portfolios[5].id]);
   assert.equal((await routeModule.exports.GET(new Request('https://techphase.app/api/research/capital-map?ids=nope'))).status, 404);
+  // Versioned by the data: the page's version is answered and kept; another one is refused (no-store) so no old answer is kept under it.
+  assert.match(result.props.version, /^[0-9a-f]{12}$/);
+  const current = await routeModule.exports.GET(new Request(`https://techphase.app/api/research/capital-map?ids=${result.props.portfolios[5].id}&v=${result.props.version}`));
+  assert.equal(current.status, 200);
+  const old = await routeModule.exports.GET(new Request(`https://techphase.app/api/research/capital-map?ids=${result.props.portfolios[5].id}&v=000000000000`));
+  assert.deepEqual([old.status, old.headers.get('cache-control')], [409, 'no-store']);
+  const loaderScreen = readFileSync(new URL('../app/research/capital-map/screen.tsx', import.meta.url), 'utf8');
+  assert.match(loaderScreen, /\$\{version \? `&v=\$\{encodeURIComponent\(version\)\}` : ""\}/);
+  // A failed read is asked again with growing waits, so an area never stays blank.
+  assert.match(loaderScreen, /const wait = Math\.min\(30_000, 1_000 \* 2 \*\* failures\.current\+\+\);/);
+  assert.match(loaderScreen, /retry\.current = setTimeout\(\(\) => ask\(missing\), wait\);/);
   const screen = readFileSync(new URL('../app/research/capital-map/screen.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(screen, /TECH PHASE PRO|Sign in \/ View plan/);
   const dashboard = readFileSync(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8');

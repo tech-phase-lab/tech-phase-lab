@@ -267,26 +267,38 @@ const askNothing = () => {};
 /** `loaded`: the portfolios whose holdings came with the page (lib/research/capital-map-data.ts); absent, all of them did (the sample).
  * The others are read from /api/research/capital-map when a view needs them and merged in; until then that part of the screen keeps its
  * place, empty (speed, Nov 26: the page had carried every holding of every portfolio, 5.8 MB). */
-function CapitalMapLoader({ portfolios = emptyPortfolios, loaded, mode }: { portfolios?: CapitalPortfolio[]; loaded?: string[]; mode?: "sample" | "reports" }) {
+function CapitalMapLoader({ portfolios = emptyPortfolios, loaded, version, mode }: { portfolios?: CapitalPortfolio[]; loaded?: string[]; version?: string; mode?: "sample" | "reports" }) {
   const [extra, setExtra] = useState<Record<string, CapitalHoldings>>({});
   const merged = useMemo(() => Object.keys(extra).length ? portfolios.map(item => extra[item.id] ? { ...item, ...extra[item.id] } : item) : portfolios, [portfolios, extra]);
   const ready = useMemo(() => loaded === undefined ? null : new Set([...loaded, ...Object.keys(extra)]), [loaded, extra]);
   const isLoaded = useCallback((id: string) => !ready || ready.has(id), [ready]);
   const asking = useRef(new Set<string>());
-  const request = useCallback((ids: string[]) => {
+  const failures = useRef(0);
+  const retry = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(retry.current), []);
+  const request = useCallback(function ask(ids: string[]) {
     const missing = ids.filter(id => !isLoaded(id) && !asking.current.has(id));
     if (!missing.length) return;
     missing.forEach(id => asking.current.add(id));
     const all = portfolios.every(item => isLoaded(item.id) || missing.includes(item.id));
-    fetch(`/api/research/capital-map?ids=${all ? "all" : missing.map(encodeURIComponent).join(",")}`)
-      .then(response => response.ok ? response.json() : Promise.reject(new Error("unavailable")))
-      .then((body: { holdings?: Record<string, CapitalHoldings> }) => { if (body.holdings) setExtra(old => ({ ...old, ...body.holdings })); })
-      .catch(() => { /* the part stays empty; choosing it again asks again */ })
+    fetch(`/api/research/capital-map?ids=${all ? "all" : missing.map(encodeURIComponent).join(",")}${version ? `&v=${encodeURIComponent(version)}` : ""}`)
+      .then(response => {
+        // The data changed with a deployment since this page was drawn: the page is drawn again with the new list.
+        if (response.status === 409) { window.location.reload(); return new Promise<never>(() => {}); }
+        return response.ok ? response.json() : Promise.reject(new Error("unavailable"));
+      })
+      .then((body: { holdings?: Record<string, CapitalHoldings> }) => { failures.current = 0; if (body.holdings) setExtra(old => ({ ...old, ...body.holdings })); })
+      .catch(() => {
+        // A failed read is asked again with growing waits (1, 2, 4 … 30 s), so an area never stays blank.
+        const wait = Math.min(30_000, 1_000 * 2 ** failures.current++);
+        clearTimeout(retry.current);
+        retry.current = setTimeout(() => ask(missing), wait);
+      })
       .finally(() => missing.forEach(id => asking.current.delete(id)));
-  }, [isLoaded, portfolios]);
+  }, [isLoaded, portfolios, version]);
   return <CapitalMapContent portfolios={merged} mode={mode} isLoaded={isLoaded} request={request} />;
 }
 
-export default function CapitalMap(props: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports"; loaded?: string[] }) {
+export default function CapitalMap(props: { portfolios?: CapitalPortfolio[]; mode?: "sample" | "reports"; loaded?: string[]; version?: string }) {
   return <Suspense fallback={<p>CAPITAL MAP</p>}><CapitalMapLoader {...props} /></Suspense>;
 }
