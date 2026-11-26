@@ -1,0 +1,18 @@
+{
+  "MU": ["Micron"], "SKHY": ["SK hynix", "SK Hynix", "SK HYNIX", "Hynix"], "SNDK": ["Sandisk", "SanDisk"], "NBIS": ["Nebius"],
+  "NVDA": ["Nvidia", "NVIDIA", "Jensen Huang", "GeForce", "Blackwell", "CUDA", "DGX", "Mellanox"],
+  "AMD": ["AMD", "Advanced Micro", "Lisa Su", "Ryzen", "Radeon", "Xilinx"], "AVGO": ["Broadcom", "VMware", "Hock Tan"],
+  "ARM": ["Arm", "ARM"], "TSM": ["TSMC", "Taiwan Semiconductor"], "ASML": ["ASML"], "MRVL": ["Marvell"], "ANET": ["Arista"],
+  "CRDO": ["Credo"], "CRWV": ["CoreWeave"], "VRT": ["Vertiv"], "GEV": ["GE Vernova", "Vernova"], "DELL": ["Dell"], "PLTR": ["Palantir"],
+  "MSFT": ["Microsoft", "Azure", "Copilot", "Xbox", "LinkedIn", "Nadella", "Bing", "Windows", "GitHub", "Activision", "OpenAI"],
+  "BE": ["Bloom Energy"],
+  "GOOGL": ["Alphabet", "Google", "Gemini", "YouTube", "Waymo", "DeepMind", "Android", "Pixel", "Chrome", "Pichai", "TPU", "TPUs", "Fitbit", "Gmail", "Wiz"],
+  "GOOG": ["Alphabet", "Google", "Gemini", "YouTube", "Waymo", "DeepMind", "Android", "Pixel", "Chrome", "Pichai", "TPU", "TPUs", "Fitbit", "Gmail", "Wiz"],
+  "ORCL": ["Oracle", "Larry Ellison"], "AAPL": ["Apple", "iPhone", "iPad", "Tim Cook"], "AMZN": ["Amazon", "AWS", "Alexa"],
+  "META": ["Meta", "Facebook", "Instagram", "WhatsApp", "Zuckerberg"], "TSLA": ["Tesla", "Cybertruck", "Robotaxi"], "IBM": ["IBM"],
+  "LITE": ["Lumentum"], "COHR": ["Coherent Corp"], "AAOI": ["Applied Optoelectronics"], "IREN": ["IREN"], "APH": ["Amphenol"],
+  "ALAB": ["Astera"], "VST": ["Vistra"], "SOFI": ["SoFi"], "IONQ": ["IonQ"], "STX": ["Seagate"], "CEG": ["Constellation Energy"],
+  "LRCX": ["Lam Research"], "NOW": ["ServiceNow"], "KLAC": ["KLA"], "INTC": ["Intel"], "NFLX": ["Netflix"], "ADBE": ["Adobe"],
+  "QCOM": ["Qualcomm", "Snapdragon"], "AMAT": ["Applied Materials"], "CRM": ["Salesforce"], "CRWD": ["CrowdStrike"],
+  "PANW": ["Palo Alto Networks"], "SNOW": ["Snowflake"]
+}

@@ -10,7 +10,7 @@ import { formatTargetTime } from "@/lib/research/price-target-time";
 import { publicPriceTargets, type PriceTarget as Target } from "@/lib/research/price-targets";
 import { publishPriceTargets } from "@/lib/research/price-target-snapshot";
 
-import FeedPagination from "./news/feed-pagination";
+import FeedPagination, { turnPageInPlace } from "./news/feed-pagination";
 import { useCalendarClock } from "./use-calendar-clock";
 import PriceTargetCard from "./price-target-card";
 import { withPriceTargetSample } from "@/lib/research/price-target-sample";
@@ -21,6 +21,7 @@ const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot
 /** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared. */
 export default function PriceTargetsPanel({ lang, sample = null }: { lang: Language; sample?: Target | null }) {
   const panelRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const now = useCalendarClock();
   const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(() => recent() ? "ready" : "loading");
@@ -174,10 +175,10 @@ export default function PriceTargetsPanel({ lang, sample = null }: { lang: Langu
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
-    {shown.length > 0 && <div className={styles.list}>{shown.slice((current - 1) * 4, current * 4).map(item =>
+    {shown.length > 0 && <div ref={listRef} className={styles.list}>{shown.slice((current - 1) * 4, current * 4).map(item =>
       <PriceTargetCard key={item === sample ? "sample" : item.id} item={item} lang={lang} now={now} earlier={shown} />
     )}</div>}
-    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { turnPageInPlace(panelRef.current, listRef.current); setPage(n); }} />
     <div className={styles.footer}>
       <div className={styles.syncMeta}>
         {updatedAt && <p className={styles.updated}>{t("表示データの取得日時", "Last updated")}: <time dateTime={updatedAt} title={time(updatedAt)}>{time(updatedAt)}</time></p>}

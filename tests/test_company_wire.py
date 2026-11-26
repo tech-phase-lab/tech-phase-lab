@@ -581,6 +581,46 @@ class LowValueTests(unittest.TestCase):
         self.assertEqual([t for t in self.STUNTS_AND_TEASERS if not company_wire.hidden_title(t)], [])
         self.assertEqual([t for t in self.KEPT_NEAR_MISSES if company_wire.hidden_title(t)], [])
 
+    # Owner, Nov 26: company-blog marketing and customer showcases are never translated; launches, partnerships and expansions are.
+    SHOWCASES = ('See what 5 builders are making with Gemini 4 Neon', '5 ways to use Gemini in Google Docs', 'Tips for holiday shopping with AI Mode',
+                 'How small businesses are using Gemini to grow', 'Meet the students building the future of AI',
+                 'Behind the scenes of the Pixel camera', 'Customer spotlight: Wayfair scales search with Vertex AI',
+                 'Indie filmmakers in India bring big-screen stories to life with Google Flow', 'Retailers build shopping agents with Gemini',
+                 # Owner, Nov 26 (audit of the served feed).
+                 'Dropbox to Present at the 2026 UBS Global Technology and AI Conference', 'CrowdStrike to Participate in Upcoming Investor Conferences',
+                 'Cango Inc. to Report Third Quarter 2026 Financial Results on November 30, 2026, Eastern Time',
+                 'Hydreight Technologies Announces Timing of Q3 2026 Financial Results and Earnings Call', 'Uniserve Announces Grant of Incentive Stock Options',
+                 'Options Now Available on ANUU, ANDD & ANSS: Leverage Shares by Themes 2X Long, 2X Short and 1X Short Anthropic (ANT) ETFs',
+                 'CDW Canada Named 2026 Cisco Partner of the Year for Cloud & AI and SMB', 'Anthropic Rebounds From 10% Drop as Markets Stage Dramatic Recovery | Closing Bell',
+                 'Freedom Gold Corp. Announces Extension and Amendment of FT Offering and Extension of Unit Offering',
+                 'A Man in Denver Has Been Throwing Eggs at Waymo Vehicles', "Former Tesla engineer says AI will create more 'fake jobs' — not mass unemployment",
+                 'Remedy says Microsoft decides whether Quantum Break gets a sequel', "Mulvaney: Trump ‘Reading the Room Wrong' on Huang",
+                 'Nvidia, Micron and Oracle Shares Fall as AI Sell-Off Continues; Key Reasons Behind the Decline')
+    SHOWCASE_NEAR_MISSES = ('Introducing Gemini 4 Neon', 'Meet the new Pixel 11', 'Google launches Gemini 4 Neon: 5 ways to try it',
+                            'Golden State Warriors and Google expand partnership, naming Gemini the official AI assistant partner',
+                            "Nvidia to expand King's Cross hub in London", 'Nvidia builds Taiwan AI supercomputer with Foxconn',
+                            'Palantir wins $480 million Army contract award', "Exclusive: Nvidia in talks to supply ‘Rubin' chips to Saudi venture",
+                            'Nvidia unveils Rubin Ultra at GTC conference', 'iQIYI Announces Receipt of Minimum Bid Price Notice from Nasdaq',
+                            'Amazon to launch Amazon Autos in UK in early 2027 in first expansion beyond US')
+
+    def test_marketing_showcases_are_dropped_and_launches_kept(self):
+        self.assertEqual([t for t in self.SHOWCASES if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.SHOWCASE_NEAR_MISSES if company_wire.hidden_title(t)], [])
+
+    def test_a_headline_filed_under_a_company_it_does_not_name_is_rejected_for_that_company(self):
+        row = lambda ticker, title: {'ticker': ticker, 'title': title, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}
+        kings = "Nvidia to expand King's Cross hub in London"
+        self.assertTrue(company_wire.locally_rejected(row('GOOGL', kings)))
+        self.assertFalse(company_wire.locally_rejected(row('NVDA', kings)))
+        self.assertFalse(company_wire.locally_rejected(row('GOOGL', 'Golden State Warriors expand Gemini partnership')))
+        self.assertFalse(company_wire.locally_rejected(row('GOOGL', 'Fed holds rates steady')))
+        self.assertFalse(company_wire.locally_rejected(row('KXHCF', 'Kioxia and NVIDIA Collaborate')))
+        # Without a ticker (the prefilter reads articles, not copies) the copy is not judged.
+        self.assertFalse(company_wire.locally_rejected({'title': kings, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}))
+        self.assertTrue(company_wire.locally_rejected({'title': kings, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}, 'GOOGL'))
+        # The Stock News API files a story under the companies it is about: its copies are not judged.
+        self.assertFalse(company_wire.locally_rejected({**row('GOOGL', kings), 'source': 'stocknews'}))
+
     def test_gurufocus_templates_links_and_outlet_are_dropped(self):
         self.assertEqual([t for t in self.GURUFOCUS if not company_wire.hidden_title(t)], [])
         # GF Securities is a broker, not a GuruFocus template.
