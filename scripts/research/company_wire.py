@@ -613,6 +613,13 @@ LOW_VALUE_EN = (
     r"|(?:^|[\s(\[])@[A-Za-z_][A-Za-z0-9_]{2,}|\bpodcast\b|\bwebinar\b|\bfireside chat\b|\bepisode \d+\b"
     r"|\bstock (?:price )?(?:prediction|forecast)\b|\bI.d (?:still |also |happily |gladly )?(?:buy|sell|hold|own)\b|\bdeserves? (?:your )?attention\b|\bbargain buys?\b|^\s*(?:opinion|social buzz)\s*[:|]"
     r"|^\s*don.t (?:worry|panic|forget)\b|\btips (?:and|&) tricks\b|\bhere.s how to\b|\bstep[- ]by[- ]step\b"
+    # Owner, Nov 26: a restaurant or consumer brand's stunt that merely names another company's CEO ("Denny's welcomes Jensen Huang back as
+    # Nvidia CEO").
+    r"|\b(?:Denny.s|McDonald.s|Wendy.s|Burger King|Taco Bell|KFC|Starbucks|Chipotle|Domino.s|Pizza Hut|Subway|Popeyes|Krispy Kreme|Dunkin|IHOP|Waffle House"
+    r"|Applebee.s|Chick-fil-A|In-N-Out|Shake Shack|Panda Express|diner|restaurant chain|fast[- ]food chain|(?:burger|pizza|coffee|donut|doughnut) chain)\b"
+    r".{0,60}\b(?:welcome[sd]?|congratulate[sd]?|celebrate[sd]?|honou?r(?:s|ed)?|salute[sd]?|toast(?:s|ed)?|troll(?:s|ed)?|roast(?:s|ed)?|thank(?:s|ed)?"
+    r"|invite[sd]?|pays? tribute|shouts? out|gives?|offers?)\b(?! (?:its |a |the )?new (?:CEO|chief))"
+    r".{0,100}\b(?:CEO|founder|co-founder|chief executive|billionaire)\b"
 )
 LOW_VALUE_SOFT_EN = (
     r"[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$"
@@ -624,6 +631,11 @@ LOW_VALUE_SOFT_EN = (
     r"|\bwhat(?:.s| has)? changed\b|\bwhat.s (?:behind|going on|driving)\b|\bwhat (?:sent|lifted|drove|pushed)\b"
     r"|\binterview with\b|\binterview\s*[:|]|\|\s*interview\b|\bsits down with\b|\bin conversation with\b|\bchats with\b"
     r"|\b(?:vertical )?taskbars?\b|\bstart menu\b|\bfile explorer\b|\bcontext menu\b|\bsnipping tool\b|\bwallpapers?\b|\bdark mode\b"
+    # Owner, Nov 26: "another connection" / "X's other relationship" teasers (「中国関連企業幹部とエヌビディアのもう一つの関係」).
+    # Celebrity trivia (leather jackets, autographs, selfies) too, unless a concrete event is reported.
+    r"|\b(?:another|(?:the|his|her|its|their) other|one more|(?:a |the )?(?:hidden|secret|little-known|unexpected|surprising|curious|strange|odd))\s+"
+    r"(?:[\w'’-]+\s+){0,2}(?:connections?|links?|ties|relationships?|side)\b|.s other (?:[\w'’-]+ )?(?:connections?|links?|ties|relationships?)\b"
+    r"|\b(?:leather jackets?|autographs?|selfies?)\b"
 )
 CONCRETE_EVENT_EN = (
     r"\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired"

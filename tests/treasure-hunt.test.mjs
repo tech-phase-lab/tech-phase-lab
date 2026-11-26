@@ -258,19 +258,20 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
     assert.match(text(c), ja ? /^サンプル ?PRO機能体験 ?WHALE TRACKS/ : /^Sample ?PRO feature tour ?WHALE TRACKS/);
     assert.equal(c.querySelector("h1").textContent, ja ? "クジラの足あと" : "Whale Tracks");
     const tabs = [...c.querySelectorAll('[role="tab"]')];
-    assert.deepEqual(tabs.map(t => t.textContent), ja ? ["機関", "空売り", "役員売買", "自社株買い"] : ["Institutions", "Short interest", "Insider trades", "Buybacks"]);
+    assert.deepEqual(tabs.map(t => t.textContent), ja ? ["役員売買", "自社株買い", "空売り", "機関"] : ["Insider trades", "Buybacks", "Short interest", "Institutions"]);
+    assert.deepEqual(tabs.map(t => t.getAttribute("aria-selected")), ["true", "false", "false", "false"], "insider trades open first (owner, Nov 26)");
     const order = () => [...c.querySelectorAll("[data-pro-only] [data-logo]")].map(el => el.getAttribute("data-logo"));
     const sorts = () => [...c.querySelectorAll('[role="tabpanel"] [role="group"] button')];
     const panel = () => text(c.querySelector('[role="tabpanel"]'));
     const expected = [
-      [ja ? "2034年12月末時点・13F（四半期ごとに更新）" : "As of end-Dec 2034 · 13F (updated quarterly)",
-        [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
-      [ja ? "2035年2月28日時点・FINRA（月2回更新）" : "As of Feb 28, 2035 · FINRA (updated twice a month)",
-        [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
       [ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days",
         [["MU", "AMD", "ORCL", "INTC", "NVDA"], ["MU", "INTC"], ["AMD", "ORCL", "NVDA"]]],
       [ja ? "10-Q・10-K・8-K（発表から自動で反映）" : "10-Q, 10-K, 8-K (added automatically when filed)",
         [["AAPL", "META", "NVDA", "QCOM", "AVGO"], ["AAPL", "META", "NVDA", "QCOM", "AVGO"]]],
+      [ja ? "2035年2月28日時点・FINRA（月2回更新）" : "As of Feb 28, 2035 · FINRA (updated twice a month)",
+        [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
+      [ja ? "2034年12月末時点・13F（四半期ごとに更新）" : "As of end-Dec 2034 · 13F (updated quarterly)",
+        [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
     ];
     for (const [index, [line, orders]] of expected.entries()) {
       await click(tabs[index]);
@@ -283,9 +284,9 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
         assert.deepEqual(order(), orders[s], `${lang} tab ${index} sort ${s}`);
       }
     }
-    await click(tabs[2]);
+    await click(tabs[0]);
     assert.match(panel(), ja ? /AMD ?CFO・計画売買/ : /AMD ?CFO · Planned/);
-    await click(tabs[3]);
+    await click(tabs[1]);
     assert.match(panel(), ja ? /AAPL ?3\/9・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Mar 9 · New authorization ?\$110B/);
     assert.match(panel(), ja ? /NVDA ?10〜12月・買い戻した金額 ?142億ドル/ : /NVDA ?Oct–Dec · Repurchased ?\$14B/);
     assert.equal(c.querySelectorAll("[class~=goldCard]").length, 2);

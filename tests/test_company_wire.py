@@ -563,6 +563,24 @@ class LowValueTests(unittest.TestCase):
         self.assertEqual([t for t in self.EVENT_NEWS if company_wire.hidden_title(t)], [])
         self.assertEqual([t for t in self.STILL_LOW_VALUE if not company_wire.hidden_title(t)], [])
 
+    # Owner, Nov 26: a consumer brand's stunt naming a CEO, "another connection" teasers and celebrity trivia are never translated;
+    # earnings, guidance, export controls, deals and broker actions are.
+    STUNTS_AND_TEASERS = ("‘Your booth is waiting': Denny's welcomes Jensen Huang back as Nvidia CEO",
+                          "Chinese-Linked Executive's Other Connection to Nvidia", 'Another Nvidia connection for China-linked executive',
+                          'The hidden link between Nvidia and a Chinese chip broker', "Wendy's trolls Elon Musk after Tesla CEO's tweet",
+                          "McDonald's offers free fries to celebrate Nvidia founder Jensen Huang",
+                          'Jensen Huang signs autographs and poses for selfies in Taipei', "Jensen Huang's leather jacket steals the show at Computex")
+    KEPT_NEAR_MISSES = ('Nvidia reports record third-quarter revenue of $57 billion', 'Nvidia raises fourth-quarter revenue guidance above estimates',
+                        'US tightens export controls on Nvidia H20 chips to China', 'Nvidia agrees to buy Run:ai for $700 million',
+                        'Bernstein raises Nvidia price target to $300', 'Morgan Stanley upgrades Micron to Overweight',
+                        "McDonald's to deploy Nvidia AI across 40,000 restaurants", 'Starbucks partners with Nvidia on drive-thru AI',
+                        'Intel cuts ties with Chinese distributor after export probe', 'Meta launches AI selfie feature for Instagram',
+                        'Nvidia names Jensen Huang chief executive again after board vote')
+
+    def test_brand_stunts_and_connection_teasers_are_dropped_and_material_news_kept(self):
+        self.assertEqual([t for t in self.STUNTS_AND_TEASERS if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.KEPT_NEAR_MISSES if company_wire.hidden_title(t)], [])
+
     def test_gurufocus_templates_links_and_outlet_are_dropped(self):
         self.assertEqual([t for t in self.GURUFOCUS if not company_wire.hidden_title(t)], [])
         # GF Securities is a broker, not a GuruFocus template.

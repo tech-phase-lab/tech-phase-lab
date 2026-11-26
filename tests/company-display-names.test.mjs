@@ -71,8 +71,9 @@ test("Japanese names come from the site's maps; Latin names in the map stay Lati
 });
 
 test("the API routes and both PRO samples carry the resolved names; scores and order stay as sent", () => {
-  for (const route of ["../app/api/research/value-check/route.ts", "../app/api/research/whales/route.ts"])
-    assert.match(read(route), /Response\.json\((?:valueSnapshotWithNames|whaleSnapshotWithNames)\(parse(?:Value|Whale)Snapshot\(JSON\.parse\(body\)\)\)/);
+  assert.match(read("../app/api/research/value-check/route.ts"), /Response\.json\(valueSnapshotWithNames\(parseValueSnapshot\(JSON\.parse\(body\)\)\)/);
+  // The whale route keeps one named copy per instance (fast open, Nov 26) and sends that copy.
+  assert.match(read("../app/api/research/whales/route.ts"), /const snapshot = whaleSnapshotWithNames\(parseWhaleSnapshot\(JSON\.parse\(body\)\)\)/);
   const snapshot = { ...treasureHuntSample, universes: { ...treasureHuntSample.universes, tech: { ...treasureHuntSample.universes.tech,
     items: [{ ...treasureHuntSample.universes.tech.items[0], ticker: "HUBS", ja: "HUBSPOT INC", en: "HUBSPOT INC" }, ...treasureHuntSample.universes.tech.items.slice(1)] } } };
   const named = valueSnapshotWithNames(snapshot);
