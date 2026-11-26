@@ -44,3 +44,11 @@ test("NWS (News Corp class B) is in the background job's universe: WS ends a war
   assert.ok(universe.includes("NWS"));
   assert.ok(!universe.includes("ACAH-WS")); assert.ok(!universe.includes("ABCWS"));
 });
+
+test("only exchange-listed stocks are offered (owner, Nov 26): an over-the-counter ticker or one with no exchange yet is not", () => {
+  const e = (ticker, exchange) => ({ ticker, cik: 999, name: "Example Co", exchange });
+  const one = entry => comparisonExclusion(entry, tickersByCik([entry]), lists);
+  for (const ex of ["Nasdaq", "NYSE", "CBOE", "TXSE"]) assert.equal(one(e("EXMP", ex)), null, ex);
+  assert.equal(one(e("EXMPF", "OTC")), "unlisted");
+  assert.equal(one(e("EXMP", "IPO")), "unlisted");   // parseSecDirectory's name for a ticker with no exchange yet
+});

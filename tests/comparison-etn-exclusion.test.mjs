@@ -32,14 +32,17 @@ const ETNS = ["AMUB", "BDCX", "BDCZ", "CEFD", "HDLB", "IFED", "MLPB", "MLPR", "M
   "OILD", "GDXU", "GDXD", "SPYU", "BRZL", "BRZD", "JPNU", "JPND", "TAWN", "TPEI", "SMHU", "SMHD", "AMJB", "VYLD", "GSCE"];
 // RYLBF was listed here as Royal Bank's OTC share; it is its first preferred (the provider's reference list, Nov 26: "ROYAL BK CDA 1ST
 // PFD BO"), now left out as a preferred (comparison-exclusions.json "instrument").
-const SHARES = ["DB", "BMO", "JPM", "GS", "MS", "C", "UBS", "BCS", "BCLYF", "RY", "HSBC", "NMR", "BAC"];
+// Over-the-counter tickers (BCLYF, and the OTC notes BWVTF, JJETF, ADZCF, DEENF, OLOXF, GSCE) are not offered at all since the owner's
+// decision of Nov 26 (exchange-listed company stocks only): they are "unlisted" before any ETN rule applies.
+const SHARES = ["DB", "BMO", "JPM", "GS", "MS", "C", "UBS", "BCS", "RY", "HSBC", "NMR", "BAC"];
+const OTC = new Set(["BWVTF", "JJETF", "ADZCF", "DEENF", "OLOXF", "GSCE", "BCLYF", "RYLBF"]);
 const kind = (entries, ticker) => comparisonExclusion(entries.find(e => e.ticker === ticker), tickersByCik(entries), lists);
 
 test("ETNs filed under the issuing bank are not offered; the banks' own shares and their parents' are", () => {
-  for (const t of ETNS) assert.equal(kind(directory, t), "etn", t);
+  for (const t of ETNS) assert.equal(kind(directory, t), OTC.has(t) ? "unlisted" : "etn", t);
+  for (const t of OTC) assert.equal(kind(directory, t), "unlisted", t);
   for (const t of SHARES) assert.equal(kind(directory, t), null, t);
   // Unchanged: a bank's preferred is a preferred, a Morgan Stanley crypto trust a fund.
-  assert.equal(kind(directory, "RYLBF"), "preferred");
   assert.equal(kind(directory, "JPM-PC"), "preferred"); assert.equal(kind(directory, "GS-PA"), "preferred"); assert.equal(kind(directory, "MSBT"), "fund");
   assert.deepEqual(comparableEntries(directory, lists).map(e => e.ticker), SHARES);
   // The list the app uses is this file.

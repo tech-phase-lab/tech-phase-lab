@@ -33,7 +33,7 @@ def cached(url):
 KINDS = {"Preferred Stock": "preferred", "Exchange-Traded Note": "etn", "Warrant": "warrant", "Unit": "unit", "Trust": "trust"}
 FUND_FORMS = re.compile(r"^(N-CSRS?|NPORT-P|N-CEN)$")
 FUND_NAME = re.compile(r"\bETF\b|\bETFs\b|\bTrust\b|\bFund\b|iShares|SPDR|ProShares|Grayscale", re.I)
-SPAC_NAME = re.compile(r"Acquisition|\bSPAC\b|Merger|Blank Check", re.I)
+SPAC_NAME = re.compile(r"Acquisitions?(?: [IVX0-9]+)? (?:Corp|Co\b|Company|Inc|Ltd|Holdings)|\bSPAC\b|Merger Corp|Blank Check", re.I)
 EXCHANGE = {"Nasdaq": "NASDAQ", "NYSE": "NYSE", "CBOE": "CBOE", "OTC": "OTC"}
 provider_symbol = lambda t: re.sub(r"^([A-Z]{1,6})-([A-OQ-Z])$", r"\1.\2", t)
 
@@ -72,6 +72,13 @@ for r in rows:
     if any(FUND_FORMS.match(f) for f in forms) and not periodic: fund[str(cik)] = name; continue
     if (sic == "6221" and re.search(r"\bL\.?P\.?$", name)) or sic in ("6221", "6199", "") and FUND_NAME.search(name) and (sic or not any(f.startswith("10-Q") for f in forms)):
         fund[str(cik)] = name; continue
+    # A blank-check company files the SIC code of the industry it hopes to buy into (BCCQ 3760, IPXG 7373): its name and its trust account
+    # (AssetsHeldInTrust...) or the absence of any revenue line identify it.
+    if SPAC_NAME.search(name):
+        facts = cached(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json") or {}
+        tags = facts.get("facts", {}).get("us-gaap") or {}
+        revenue = any(t.startswith(("Revenue", "Revenues", "SalesRevenue")) for t in tags)
+        if any(t.startswith("AssetsHeldInTrust") for t in tags) or not revenue: spac[str(cik)] = name; continue
     if sic == "6770":
         facts = cached(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json") or {}
         revenue = any(t.startswith(("Revenue", "Revenues", "SalesRevenue")) for t in (facts.get("facts", {}).get("us-gaap") or {}))

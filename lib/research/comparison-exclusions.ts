@@ -24,7 +24,10 @@ export type EtnIssuer = { name: string; shares: string[] };
  *  baby bond, an exchange-traded note, a warrant, a unit or a royalty/grantor trust that no ticker rule recognises (SOJD, KTN, OPENZ, PBT). */
 export type InstrumentKind = "preferred" | "etn" | "warrant" | "unit" | "trust";
 export type ExclusionLists = { spac: Record<string, string>; fund: Record<string, string>; etn: Record<string, EtnIssuer>; instrument?: Record<string, string> };
-export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | "unit" | "right" | "trust";
+export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | "unit" | "right" | "trust" | "unlisted";
+/** The exchanges the comparison offers (owner, Nov 26: individual company stocks listed on an exchange only; NYSE American is listed by
+ *  the SEC as NYSE). Over-the-counter tickers and a ticker with no exchange yet are not offered. */
+export const COMPARISON_EXCHANGES: readonly string[] = ["Nasdaq", "NYSE", "CBOE", "TXSE"];
 const INSTRUMENT_KINDS: readonly string[] = ["preferred", "etn", "warrant", "unit", "trust"];
 type Entry = { ticker: string; cik: number | string; name: string; exchange?: string };
 
@@ -44,6 +47,7 @@ export function tickersByCik(entries: Entry[]): Map<string, Set<string>> {
 
 export function comparisonExclusion(entry: Entry, siblings: Map<string, Set<string>>, lists: ExclusionLists): ExclusionKind | null {
   const ticker = entry.ticker.toUpperCase(), cik = String(Number(entry.cik));
+  if (entry.exchange !== undefined && !COMPARISON_EXCHANGES.includes(entry.exchange)) return "unlisted";
   for (const [pattern, kind] of SUFFIX) if (pattern.test(ticker)) return kind;
   const last = FIFTH[ticker.at(-1) ?? ""];
   if (/^[A-Z]{2,6}$/.test(ticker) && last && (entry.exchange === undefined || entry.exchange === "Nasdaq")
