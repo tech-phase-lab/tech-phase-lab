@@ -7,6 +7,7 @@ it needs was not read, and nothing is then published for that release (the patro
 """
 from datetime import datetime
 from decimal import Decimal
+import re
 
 from dive_writers import Evidence, amount_calc, c, change, growth_calc, money_tile, need, pc, ps, q, sign, usd
 
@@ -2026,5 +2027,152 @@ def googl(f, url, before_previous, report=None, events=None, previous=None):
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
 
+
+# ---- NVIDIA (NVDA): the release, the CFO commentary and the supplemental information (EX-99.1-99.3); leadership 8-Ks of the quarter ----
+
+def nvda(f, url, before_previous, report=None, events=None, previous=None):
+    need(f, 'revenue', 'gm', 'eps', 'opIncome', 'headline', 'dcHeadline', 'guidanceRevenue', 'guidanceGm', 'dataCenter', 'hyperscale', 'aiClouds')
+    ev = Evidence(url)
+    rev, gm, eps = f['revenue'], f['gm'], f['eps']
+    r0, r2 = rev.values
+    ev.add('numbers.revenue.current', rev)
+    ev.add('numbers.revenue.yearAgo', rev)
+    r1 = carried(ev, previous, 'numbers.revenue.current', 'numbers.revenue.previous')
+    ev.add('numbers.adjustedEPS', eps)
+    ev.add('numbers.grossMargin.current', gm)
+    ev.add('numbers.grossMargin.previous', gm)
+    g, ggm = f['guidanceRevenue'], f['guidanceGm']
+    low, high = band_guidance(ev, g)
+    gmid = (ggm.values[0] + ggm.values[1]) / 2
+    ev.add('numbers.guidance.grossMarginPercent', ggm, calc=f'({ggm.raws[0]} + {ggm.raws[1]}) / 2')
+    numbers = {'revenue': {'current': float(r0), 'previous': float(r1), 'yearAgo': float(r2)}, 'adjustedEPS': float(eps.values[0]), 'epsEstimate': None,
+               'grossMargin': {'current': float(gm.values[0]), 'previous': float(gm.values[1])},
+               'guidance': {'low': float(low), 'high': float(high), 'grossMarginPercent': float(gmid)}, 'segments': None}
+    hl, dh, dc, hs, ac = f['headline'], f['dcHeadline'], f['dataCenter'], f['hyperscale'], f['aiClouds']
+    gl, gh = (format(q(x, 0), 'f') if x == q(x, 0) else format(x, 'f') for x in ggm.values)
+    tiles = [text_tile('売上高', 'Revenue', usd(Decimal(hl.values[0]) * 1000)['ja'], f'${hl.values[0]}B', f'前年同期比 +{hl.values[1]}%', f'+{hl.values[1]}% YoY'),
+             text_tile('データセンター売上', 'Data Center revenue', usd(Decimal(dh.values[0]) * 1000)['ja'], f'${dh.values[0]}B', f'前年同期比 +{dh.values[1]}%', f'+{dh.values[1]}% YoY'),
+             text_tile('調整後(non-GAAP)粗利益率', 'Non-GAAP gross margin', pc(gm.values[0]), pc(gm.values[0]), f'次期の見通し {gl}〜{gh}%', f'Next-quarter outlook {gl}–{gh}%')]
+    for i, x in enumerate((hl, dh)):
+        ev.add(f'tiles[{i}].value', x)
+        ev.add(f'tiles[{i}].note', x)
+    ev.add('tiles[2].value', gm)
+    ev.add('tiles[2].note', ggm)
+    hop, cust, china = f.get('hopper'), f.get('customers'), f.get('china')
+    for x in (dc, hs, ac):
+        ev.add('summary.cards.growth.sections[0]', x)
+    if cust:
+        ev.add('summary.cards.growth.sections[2]', cust)
+    if hop:
+        ev.add('summary.cards.growth.sections[2]', hop)
+    if china:
+        ev.add('summary.cards.growth.sections[3]', china)
+    shares = re.findall(r'\d+', cust.values[1]) if cust else []
+    growth = card(f'データセンター売上が{usd(dc.values[0] * 1000)["ja"]}に', f'Data Center revenue reached ${dc.raws[0]}B', [
+        chip(tone(dc.values[0] - dc.values[2]), f'データセンター 前年同期比 {sign(change(dc.values[0], dc.values[2]), 0)}', f'Data Center {sign(change(dc.values[0], dc.values[2]), 0)} YoY'),
+        chip(tone(ac.values[0] - ac.values[2]), f'AIクラウド・産業・企業 前年同期比 {sign(change(ac.values[0], ac.values[2]), 0)}', f'AI Clouds, Industrial & Enterprise {sign(change(ac.values[0], ac.values[2]), 0)} YoY')], [
+        sec('happened', f'データセンター売上は前期の{usd(dc.values[1] * 1000)["ja"]}から{usd(dc.values[0] * 1000)["ja"]}になり、前年同期の{usd(dc.values[2] * 1000)["ja"]}の約{q(dc.values[0] / dc.values[2], 1)}倍です。売上全体の約{q(dc.values[0] * 1000 / r0 * 100, 0)}%を占めます。',
+            f'Data Center revenue went from ${dc.raws[1]}B last quarter to ${dc.raws[0]}B, about {q(dc.values[0] / dc.values[2], 1)} times the year-ago ${dc.raws[2]}B. It made up about {q(dc.values[0] * 1000 / r0 * 100, 0)}% of total revenue.'),
+        sec('good', f'大手クラウド(Hyperscale、{usd(hs.values[0] * 1000)["ja"]})だけでなく、AIクラウド・産業・企業向け({usd(ac.values[0] * 1000)["ja"]}、前年同期比{sign(change(ac.values[0], ac.values[2]), 0)})も伸び、顧客の層が広がっています。',
+            f'Not only Hyperscale (${hs.raws[0]}B) but also AI Clouds, Industrial & Enterprise (${ac.raws[0]}B, {sign(change(ac.values[0], ac.values[2]), 0)} YoY) grew, so the customer base is broadening.'),
+        sec('watch', (f'直接の顧客{len(shares)}社が、売上のそれぞれ' + '、'.join(x + '%' for x in shares) + 'を占めました。大口の買い手が投資を減らすと影響は大きくなります。' if shares else '少数の大口顧客への集中は高いままです。')
+            + (f'中国向けのHopper製品の出荷は{usd(Decimal(hop.values[0]) * 1000)["ja"]}でした。' if hop else ''),
+            (f'{cust.values[0].capitalize()} direct customers accounted for ' + ', '.join(x + '%' for x in shares[:-1]) + f' and {shares[-1]}% of revenue. If large buyers cut spending, the impact would be large.' if shares else 'Concentration in a few large customers remains high.')
+            + (f' Shipments of Hopper products to China were ${hop.values[0]}B.' if hop else '')),
+        sec('means', '見通しも、データセンターの伸びが続くことが前提です。' + ('会社は、中国向けのデータセンターの計算用製品の売上を見通しに含めていません。' if china else ''),
+            'The outlook also assumes continued Data Center growth.' + (' The company does not include any Data Center compute revenue from China in it.' if china else ''))])
+    oi, ar, inv, cfo, sup, gua = f['opIncome'], f.get('receivables'), f.get('inventory'), f.get('cfo'), f.get('supply'), f.get('guarantee')
+    d = r0 - r1
+    qoq = change(r0, r1)
+    ev.add('summary.cards.change.sections[1]', oi)
+    if cfo:
+        ev.add('summary.cards.change.sections[1]', cfo)
+    for x in (ar, inv, sup, gua):
+        if x:
+            ev.add('summary.cards.change.sections[2]', x)
+    flat = abs(gm.values[0] - gm.values[1]) < Decimal('0.5')
+    changes = card(f'売上は前期比 {sign(qoq)}、粗利益率は' + ('ほぼ横ばい' if flat else '上昇' if gm.values[0] > gm.values[1] else '低下'), f'Revenue {sign(qoq)} QoQ, gross margin ' + ('about flat' if flat else 'higher' if gm.values[0] > gm.values[1] else 'lower'), [
+        chip(tone(qoq), f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ'),
+        chip('gold' if flat else tone(gm.values[0] - gm.values[1]), f'調整後粗利益率 {pc(gm.values[1])} → {pc(gm.values[0])}', f'Non-GAAP gross margin {pc(gm.values[1])} → {pc(gm.values[0])}')], [
+        sec('happened', f'売上は{usd(r1)["ja"]}から{usd(r0)["ja"]}へ、{usd(abs(d))["ja"]}{rose(d, True)}ました。調整後粗利益率は{pc(gm.values[1])}から{pc(gm.values[0])}になりました。',
+            f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}. Non-GAAP gross margin went from {pc(gm.values[1])} to {pc(gm.values[0])}.'),
+        sec('good', f'調整後の営業利益は{usd(oi.values[1] * 1000)["ja"]}から{usd(oi.values[0] * 1000)["ja"]}へ{sign(change(oi.values[0], oi.values[1]), 0)}でした。'
+            + (f'営業キャッシュフローは{usd(Decimal(cfo.values[0]) * 1000)["ja"]}で、前期の{usd(Decimal(cfo.values[2]) * 1000)["ja"]}から増えました。' if cfo else ''),
+            f'Non-GAAP operating income went from ${oi.raws[1]}B to ${oi.raws[0]}B, {sign(change(oi.values[0], oi.values[1]), 0)}.' + (f' Operating cash flow was ${cfo.values[0]}B, up from ${cfo.values[2]}B last quarter.' if cfo else '')),
+        sec('watch', (f'売掛金は{usd(Decimal(ar.values[0]) * 1000)["ja"]}に増え、回収日数は{ar.values[2]}日から{ar.values[1]}日になりました。' if ar else '') + (f'在庫は{usd(Decimal(inv.values[1]) * 1000)["ja"]}から{usd(Decimal(inv.values[0]) * 1000)["ja"]}に増えました。' if inv else '')
+            + (f'供給の購入契約は{usd(Decimal(sup.values[0]) * 1000)["ja"]}から{usd(Decimal(sup.values[1]) * 1000)["ja"]}になり、' if sup else '') + (f'OpenAIのデータセンターに関わる信用保証は最大{usd(Decimal(gua.values[0]) * 1000)["ja"]}になりえます。' if gua else '')
+            or '売掛金と在庫の動きは、CFOのコメントで確かめます。',
+            ((f'Receivables rose to ${ar.values[0]}B and days sales outstanding went from {ar.values[2]} to {ar.values[1]}. ' if ar else '') + (f'Inventory grew from ${inv.values[1]}B to ${inv.values[0]}B. ' if inv else '')
+             + (f'Supply commitments rose from ${sup.values[0]}B to ${sup.values[1]}B' if sup else '') + (f', and a credit guarantee tied to OpenAI data centers can reach ${gua.values[0]}B.' if gua else '.' if sup else '')).strip()
+            or "Check receivables and inventory in the CFO's commentary."),
+        sec('view', '新製品の立ち上げ期に利益率をほぼ保ったのは強い結果です。ただ、代金の回収にかかる時間と将来の約束の大きさは、別に追う必要があります。' if flat else
+            '利益率の動きと、代金の回収にかかる時間、将来の約束の大きさを分けて追います。',
+            'Keeping the margin nearly flat during a new product ramp is a strong result. But the time it takes to collect cash and the size of future commitments need to be followed separately.' if flat else
+            'Follow the margin, the time it takes to collect cash and the size of future commitments separately.')])
+    figs = {}
+    for e in events or []:
+        for k, v in e['figures'].items():
+            figs[k] = (v, e)
+    res, itm, rei, inv_, tq = figs.get('resigned'), figs.get('interim'), figs.get('reinstated'), f.get('investigation'), f.get('tenQ')
+    if inv_:
+        ev.add('summary.cards.caution.sections[1]', inv_)
+    if tq:
+        ev.add('summary.cards.caution.sections[1]', tq)
+    if res or rei:
+        for x in (res, itm, rei):
+            if x:
+                ev.add('summary.cards.caution.sections[0]', x[0], url=x[0].url)
+        rd = datetime.strptime(res[0].values[0], '%B %d %Y') if res else None
+        nd = datetime.strptime(rei[0].values[0], '%B %d %Y') if rei else None
+        who = (res or rei)[0].values[1]
+        head_ja = f'CEOが辞任し、{(nd - rd).days}日後に復帰' if rd and nd else 'CEOが辞任' if rd else 'CEOが復帰'
+        head_en = f'CEO resigned and was reinstated {(nd - rd).days} days later' if rd and nd else 'CEO resigned' if rd else 'CEO reinstated'
+        caution = card(head_ja + ('、取締役会の調査が続く' if inv_ else ''), head_en + ('; a board investigation is ongoing' if inv_ else ''), [
+            chip('down', (f'CEO辞任 {rd.month}/{rd.day}' if rd else '') + (' → ' if rd and nd else '') + (f'復帰 {nd.month}/{nd.day}' if nd else ''),
+                 (f'CEO resigned {rd.strftime("%b")} {rd.day}' if rd else '') + (' → ' if rd and nd else '') + (f'reinstated {nd.strftime("%b")} {nd.day}' if nd else '')),
+            chip('gold', '10-Qは「今後数週間」で提出' if tq else '取締役会の調査が継続', '10-Q to be filed "in the coming weeks"' if tq else 'Board investigation ongoing')], [
+            sec('happened', (f'{rd.month}月{rd.day}日に{who}氏がCEOを辞任し、' if rd else '') + (f'{itm[0].values[0]}氏が暫定CEOになりました。' if itm else '') + (f'{nd.month}月{nd.day}日に{who}氏がCEOに復帰しました。' if nd else ''),
+                ((f'On {rd.strftime("%B")} {rd.day}, {who} resigned as CEO' if rd else '') + (f', and {itm[0].values[0]} became interim CEO' if itm else '') + ('. ' if rd else '')
+                 + (f'{who} was reinstated as CEO on {nd.strftime("%B")} {nd.day}.' if nd else '')).strip()),
+            sec('watch', ('決算発表には、取締役会の独立委員会による調査が続いていると書かれています。' if inv_ else '') + ('四半期報告書(10-Q)は決算と一緒には出ておらず、今後数週間で提出する予定です。' if tq else ''),
+                ('The release describes an ongoing investigation by an independent committee of the board. ' if inv_ else '') + ('The quarterly report (10-Q) was not filed with the results; the company plans to file it in the coming weeks.' if tq else '')),
+            sec('means', '数字が強くても、経営体制と調査の結果がはっきりするまでは、足りない情報があります。', "Even with strong numbers, some information is missing until the leadership situation and the investigation's outcome are clear."),
+            sec('view', '10-Qがいつ出るか、調査について何が書かれるかを確かめます。', 'Check when the 10-Q is filed and what it says about the investigation.')])
+    else:  # before the leadership 8-Ks are read
+        caution = card('取締役会の調査が続く' if inv_ else '10-Qの提出待ち', 'A board investigation is ongoing' if inv_ else 'The 10-Q is still to come', [
+            chip('gold', '取締役会の調査が継続' if inv_ else '調査の記載なし', 'Board investigation ongoing' if inv_ else 'No investigation noted'),
+            chip('gold', '10-Qは「今後数週間」で提出' if tq else '10-Qの提出待ち', '10-Q to be filed "in the coming weeks"' if tq else '10-Q pending')], [
+            sec('happened', '決算発表には、取締役会の独立委員会による調査が続いていると書かれています。' if inv_ else '決算は発表されましたが、10-Qはまだです。',
+                'The release describes an ongoing investigation by an independent committee of the board.' if inv_ else 'Results are out, but the 10-Q is not.'),
+            sec('watch', '四半期報告書(10-Q)は決算と一緒には出ておらず、今後数週間で提出する予定です。' if tq else '10-Qの提出を待ちます。',
+                'The quarterly report (10-Q) was not filed with the results; the company plans to file it in the coming weeks.' if tq else 'The 10-Q is still to come.'),
+            sec('means', '数字が強くても、調査の結果がはっきりするまでは、足りない情報があります。', "Even with strong numbers, some information is missing until the investigation's outcome is clear."),
+            sec('view', '10-Qがいつ出るか、調査について何が書かれるかを確かめます。', 'Check when the 10-Q is filed and what it says about the investigation.')])
+    wk = f.get('extraWeek')
+    if wk:
+        ev.add('summary.cards.next.sections[1]', wk)
+    lo_up = change(low, r0)
+    nxt = card('次期の会社見通しを追う', "Follow the company's outlook for next quarter", [
+        chip('gold', f'売上 {usd(low)["ja"]}〜{usd(high)["ja"]}', f'Revenue {usd(low)["en"]}–{usd(high)["en"]}'),
+        chip('gold', f'粗利益率 {gl}〜{gh}%', f'Gross margin {gl}–{gh}%')], [
+        sec('happened', f'会社は次期の売上を{usd(g.values[0])["ja"]}±{g.raws[1]}%、つまり{usd(low)["ja"]}〜{usd(high)["ja"]}と見込んでいます。下限でも今回の{usd(r0)["ja"]}より約{q(lo_up, 1)}%多くなります。',
+            f"The company expects next-quarter revenue of ${g.raws[0]}B plus or minus {g.raws[1]}%, or {usd(low)['en']} to {usd(high)['en']}. Even the low end is about {q(lo_up, 1)}% above this quarter's {usd(r0)['en']}."),
+        sec('watch', f'粗利益率の見通し{gl}〜{gh}%は、今回の{pc(gm.values[0])}より約{q(gm.values[0] - gmid, 0)}ポイント低くなります。' + ('次の四半期は1週間多く、それだけで売上が増えます。' if wk else ''),
+            f"The gross margin outlook of {gl}–{gh}% is about {q(gm.values[0] - gmid, 0)} points below this quarter's {pc(gm.values[0])}." + (' Next quarter also includes an additional week, which by itself lifts revenue.' if wk else '')),
+        sec('view', '次の決算で、売上がこの幅のどこに入るか、粗利益率がどこまで下がるかを確かめます。', 'In the next report, check where revenue lands in this range and how far the gross margin falls.')])
+    third = (c(f'決算の前後で、CEOが{rd.month}月{rd.day}日に辞任し、{nd.month}月{nd.day}日に復帰しました。取締役会の独立委員会による調査は続いています。',
+               f'Around the report, the CEO resigned ({rd.strftime("%b")} {rd.day}) and was reinstated ({nd.strftime("%b")} {nd.day}), and an investigation by an independent committee of the board is ongoing.')
+             if (res and rei) else
+             c('取締役会の独立委員会による調査が続いており、10-Qは今後数週間で提出される予定です。' if inv_ else '10-Qの提出を待ちます。',
+               'An investigation by an independent committee of the board is ongoing, and the 10-Q is due in the coming weeks.' if inv_ else 'The 10-Q is still to come.'))
+    conclusion = [
+        c(f'売上は{usd(r0)["ja"]}で、前期比約{q(qoq, 0)}%、前年同期の約{q(r0 / r2, 1)}倍でした。増加のほとんどはデータセンター({usd(dc.values[0] * 1000)["ja"]})です。',
+          f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {q(r0 / r2, 1)} times the year-ago quarter. Almost all of the increase came from Data Center (${dc.raws[0]}B).'),
+        c(f'一方、次期の粗利益率の見通し({gl}〜{gh}%)は、今回の{pc(gm.values[0])}を下回ります。' if gmid < gm.values[0] else f'次期の粗利益率の見通しは{gl}〜{gh}%です。',
+          f"Meanwhile, the gross margin outlook for next quarter ({gl}–{gh}%) is below this quarter's {pc(gm.values[0])}." if gmid < gm.values[0] else f'The gross margin outlook for next quarter is {gl}–{gh}%.'),
+        third]
+    return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
+
+
 WRITERS = {'AMD': amd, 'ANET': anet, 'PLTR': pltr, 'ALAB': alab, 'LITE': lite, 'SNDK': sndk, 'VRT': vrt, 'GEV': gev, 'BE': be, 'SKHY': skhy, 'ARM': arm, 'CRWV': crwv,
-           'NBIS': nbis, 'MSFT': msft, 'GOOGL': googl}
+           'NBIS': nbis, 'MSFT': msft, 'GOOGL': googl, 'NVDA': nvda}

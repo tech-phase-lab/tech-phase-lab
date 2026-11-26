@@ -788,7 +788,44 @@ def nebius(docs):
     return out
 
 
-DOC_SPECS = {'TSM': tsmc, 'ASML': asml, 'NBIS': nebius}
+def nvidia(docs):
+    u1, t1 = pick(docs, 'NVIDIA Announces Financial Results')
+    u2, t2 = pick(docs, 'Revenue by Market Platform')
+    u3, t3 = pick(docs, 'Supplemental Financial Information')
+    non = between(t1, 'Non-GAAP ($ in billions', 'Outlook')
+    out = located(u1, {
+        'revenue': row(t1, 'Revenue', 2, 'Nine Months Ended', 'Cost of revenue', width=4),      # this quarter, a year earlier, then nine months
+        'gm': row(t1, 'Non-GAAP gross margin*', 3, 'Non-GAAP gross profit', 'GAAP operating expenses', unit='percent', width=5),   # this, previous, a year earlier
+        'eps': row(non, 'Diluted earnings per share', 3, None, None, unit='per-share', width=5),
+        'opIncome': row(non, 'Operating income', 3, None, None, width=5),                        # in billions, as printed
+        'headline': sentence(t1, r'(?<!Center )Revenue of \$([\d.]+) billion, up (\d+)% from a year ago', (1, 2), unit='text'),
+        'dcHeadline': sentence(t1, r'Data Center revenue of \$([\d.]+) billion, up (\d+)% from a year ago', (1, 2), unit='text'),
+        'guidanceRevenue': sentence(t1, r'Revenue is expected to be \$([\d.]+) billion, plus or minus (\d+)%', (1, 2), multipliers=[1000, None]),
+        'guidanceGm': sentence(t1, r'GAAP and non-GAAP gross margins are expected to be between ([\d.]+)% and ([\d.]+)%', (1, 2), unit='percent'),
+        'extraWeek': sentence(t1, r'which includes an (additional week)', (1,), unit='text'),
+        'china': sentence(t1, r'not assuming any Data Center compute revenue from (China)', (1,), unit='text'),
+        'investigation': sentence(t1, r'ongoing (investigation by an independent committee)', (1,), unit='text'),
+    })
+    out.update(located(u2, {   # this quarter, the previous quarter, a year earlier (in billions), then the changes
+        'dataCenter': row(t2, 'Data Center', 3, 'Revenue by Market Platform', 'Hyperscale', width=5),
+        'hyperscale': row(t2, 'Hyperscale', 3, 'Revenue by Market Platform', 'AI Clouds', width=5),
+        'aiClouds': row(t2, 'AI Clouds, Industrial, & Enterprise', 3, 'Revenue by Market Platform', 'Edge Computing', width=5),
+        'hopper': sentence(t2, r'Shipments of Data Center Hopper products to China during the quarter were \$([\d.]+) billion', (1,), unit='text'),
+        'receivables': sentence(t2, r'Accounts receivable was \$([\d.]+) billion with (\d+) days sales outstanding \(DSO\), up from (\d+) days', (1, 2, 3), unit='text'),
+        'inventory': sentence(t2, r'Inventory was \$([\d.]+) billion, up from \$([\d.]+) billion sequentially', (1, 2), unit='text'),
+        'cfo': sentence(t2, r'Cash flow from operating activities was \$([\d.]+) billion, up from \$([\d.]+) billion a year ago and up from \$([\d.]+) billion a quarter ago', (1, 2, 3), unit='text'),
+        'supply': sentence(t2, r'supply commitments increased from \$(\d+) billion last quarter to \$(\d+) billion', (1, 2), unit='text'),
+        'guarantee': sentence(t2, r'up to a maximum of \$(\d+) billion, and then declines', (1,), unit='text'),
+        'tenQ': sentence(t2, r'We plan to file our (10-Q) in the coming weeks', (1,), unit='text'),
+    }))
+    out.update(located(u3, {
+        'customers': sentence(t3, r'For the (?:first|second|third|fourth) quarter of fiscal year 20\d\d, (two|three|four|five) direct customers represented ((?:\d+%, )*\d+%,? and \d+%) of total revenue',
+                              (1, 2), unit='text'),
+    }))
+    return out
+
+
+DOC_SPECS = {'TSM': tsmc, 'ASML': asml, 'NBIS': nebius, 'NVDA': nvidia}
 
 
 def read_docs(ticker, docs):
@@ -909,7 +946,18 @@ def skhynix_event(t):
     }
 
 
-EVENT_SPECS = {'SKHY': skhynix_event}
+def officers(t):
+    """A leadership 8-K (Item 5.02): a chief executive's resignation, an interim chief executive, a reinstatement."""
+    name = r'([A-Z][\w.-]+(?: [A-Z][\w.-]*)+)'
+    day = r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Board of Directors(?:, or the Board,)? of [A-Z][\w ]+? '
+    return {
+        'resigned': sentence(t, day + r'accepted the resignation of ' + name + r', as [^.]{0,80}?Chief Executive Officer', (1, 2), unit='text'),
+        'interim': sentence(t, r'([A-Z][a-z]+(?: [A-Z]\.)? [A-Z][a-z]+), age \d+, to serve as (interim) Chief Executive Officer', (1, 2), unit='text'),
+        'reinstated': sentence(t, day + r'reinstated ' + name + r' as [^.]{0,80}?Chief Executive Officer', (1, 2), unit='text'),
+    }
+
+
+EVENT_SPECS = {'SKHY': skhynix_event, 'NVDA': officers}
 
 
 def read_event(ticker, text):

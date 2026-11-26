@@ -420,9 +420,11 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         six_k = form == '6-K' and ticker in dive_figures.EVENT_SPECS and release.get('accepted') and abs(accepted - release['accepted']) <= timedelta(days=3)
         if (form != '8-K' and not six_k) or accession == release['accession'] or accepted < since:
             continue
-        if form == '8-K' and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
+        # a leadership change (Item 5.02) is read for a company whose dive reports one (NVIDIA, Nov 2026): its cover document holds the text
+        officer = form == '8-K' and ticker in dive_figures.EVENT_SPECS and re.search(r'\b5\.02\b', items)
+        if form == '8-K' and not officer and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items):
             continue
-        if six_k:
+        if six_k or (officer and not re.search(r'\b(?:1\.01|2\.01|2\.02)\b', items)):
             url = filing_url(ticker, accession, recent['primaryDocument'][i])
             try:
                 text = document(url)
