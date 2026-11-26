@@ -16,6 +16,19 @@ export function officialTime(item: OfficialUpdate) {
   if (item.publishedOn) return { at: item.publishedOn, kind: 'date' as const };
   return { at: item.observedAt, kind: 'observed' as const };
 }
+/** A release whose source states only its day, first seen by the monitor within that day: the first-seen instant, so the
+ * row can show an hour and minute and sort inside its day (owner, Nov 26: "何時に起きたのかさっぱり分からん"). The window
+ * allows for every time zone the stated day can be in (UTC+14 to UTC-12) and a short collection delay; a release found
+ * later than that (an old release found again) keeps just its date. Publication times stated by the feed or the article
+ * page are collected first (monitor publishedAt); this is only the fallback for sources that state no time at all. */
+const FIRST_SEEN_BEFORE_DAY_MS = 14 * 3_600_000;
+const FIRST_SEEN_AFTER_DAY_MS = 36 * 3_600_000;
+export function firstSeenOnDay(date: string, observedAt?: string | null): string | null {
+  if (!observedAt || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+  const day = Date.parse(`${date}T00:00:00Z`), seen = Date.parse(observedAt);
+  if (!Number.isFinite(day) || !Number.isFinite(seen)) return null;
+  return seen >= day - FIRST_SEEN_BEFORE_DAY_MS && seen <= day + FIRST_SEEN_AFTER_DAY_MS ? new Date(seen).toISOString() : null;
+}
 /** News older than three days is not picked up as new (owner, Oct 8). */
 export const NEWS_MAX_AGE_MS = 72 * 3_600_000;
 /** Found more than 30 minutes after it was published: shown with its real
@@ -44,7 +57,9 @@ export function usEasternTime(at: string, kind: string) {
  * for a date-only release just that date. The time this system first saw an
  * item is never shown as if it were the publication time (owner, Oct 10: a
  * story with no stated time was listed as 21:44, which was only when it was
- * found). Items with no source time at all are not listed (see officialTime). */
+ * found). Items with no source time at all are not listed (see officialTime).
+ * Exception (owner, Nov 26): the 速報 timeline gives a date-only release the time it was first seen on that day
+ * (firstSeenOnDay), because a row with no clock left readers unable to tell when it happened. */
 // The third argument is kept so existing callers need no change; it is ignored.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function clockTime(at: string, kind: string, _observedAt?: string) {

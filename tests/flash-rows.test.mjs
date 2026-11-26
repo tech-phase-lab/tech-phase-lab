@@ -77,3 +77,43 @@ test('conference session blogs and earnings "highlights" pages are not listed as
   assert.equal(isNotNews({ title: 'Washington bans DeepSeek', translationJa: 'ワシントン、DeepSeekを禁止：今週の主な動向' }), true);
   assert.equal(isNotNews({ title: 'Microsoft reports earnings this week' }), false);
 });
+
+test('a date-only release shows and sorts by when the monitor first saw it that day (owner, Nov 26: rows showed no time)', async () => {
+  const { flashInstant, flashAlerts } = await import('../lib/research/flash-rows.ts');
+  const [watched] = [...WATCH_TICKERS];
+  const row = (id, extra) => ({ ...base, id, tickers: [watched], title: `${watched} product ${id}`, translationJa: `製品 ${id}`, ...extra });
+  const feed = { officialUpdates: [
+    row('stated', { publishedAt: '2026-11-24T19:30:00Z', observedAt: '2026-11-24T19:31:00Z' }),
+    row('dated', { publishedOn: '2026-11-24', observedAt: '2026-11-24T21:05:00Z' }),
+    row('early', { publishedOn: '2026-11-24', observedAt: '2026-11-24T08:10:00Z' }),
+    row('late', { publishedOn: '2026-11-20', observedAt: '2026-11-24T10:00:00Z' }),
+    row('both', { publishedAt: '2026-11-24T16:00:00Z', publishedOn: '2026-11-24', observedAt: '2026-11-24T16:02:00Z' }),
+  ] };
+  const rows = flashRows(feed, {}, 'ja').filter(r => r.kind === 'news');
+  assert.deepEqual(rows.map(r => r.id), ['official:dated', 'official:stated', 'official:both', 'official:early', 'official:late']);
+  const byId = Object.fromEntries(rows.map(r => [r.id, r]));
+  assert.deepEqual([byId['official:dated'].at, byId['official:dated'].timeKind], ['2026-11-24T21:05:00.000Z', 'found']);
+  assert.equal(byId['official:both'].timeKind, 'published', 'a stated publication time wins over the date');
+  // Found later than its day allows (an old release found again): keeps just its date.
+  assert.deepEqual([byId['official:late'].at, byId['official:late'].timeKind], ['2026-11-20', 'date']);
+  assert.equal(flashInstant(byId['official:dated']), Date.parse('2026-11-24T21:05:00Z'));
+  // A first-seen time never raises the NEW dot as if it were a publication time.
+  const alerts = flashAlerts(feed, {}, Date.parse('2026-11-24T22:00:00Z')).map(a => a.id);
+  assert.ok(!alerts.includes('official:dated') && alerts.includes('official:stated'));
+});
+
+test('firstSeenOnDay allows every zone of the stated day and nothing later', async () => {
+  const { firstSeenOnDay } = await import('../lib/research/news-time.ts');
+  assert.equal(firstSeenOnDay('2026-11-24', '2026-11-23T10:00:00Z'), '2026-11-23T10:00:00.000Z'); // UTC+14 morning
+  assert.equal(firstSeenOnDay('2026-11-24', '2026-11-25T11:59:00Z'), '2026-11-25T11:59:00.000Z'); // UTC-12 evening
+  assert.equal(firstSeenOnDay('2026-11-24', '2026-11-23T09:59:00Z'), null);
+  assert.equal(firstSeenOnDay('2026-11-24', '2026-11-25T12:01:00Z'), null);
+  assert.equal(firstSeenOnDay('2026-11-24', undefined), null);
+  assert.equal(firstSeenOnDay('2026-11-24T10:00:00Z', '2026-11-24T10:00:00Z'), null);
+});
+
+test('the company timeline sorts a date-only source by when it was first seen that day', async () => {
+  const source = await readFile(new URL('../app/research/companies/company-activity.tsx', import.meta.url), 'utf8');
+  assert.match(source, /firstSeenOnDay\(row\.at, row\.observedAt\)/);
+  assert.match(source, /\.sort\(\(a, b\) => rowInstant\(b\) - rowInstant\(a\)\)/);
+});

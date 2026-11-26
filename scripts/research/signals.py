@@ -2485,6 +2485,11 @@ def public_official_updates(db, sources=SOURCES, reference=None, limit=20, *, re
                 publication['publishedOn'] = published_at.date().isoformat()
             else:
                 publication['publishedAt'] = published_at.isoformat()
+                # An issuer release keeps its stated calendar day beside the clock time the
+                # monitor now collects (owner, Nov 26), e.g. for the late-copy check.
+                if (row['source_id'].startswith('primary-ir-') and isinstance(row['published_on'], str)
+                        and re.fullmatch(r'\d{4}-\d{2}-\d{2}', row['published_on'])):
+                    publication['publishedOn'] = row['published_on']
         translated = db.execute('''SELECT headline_ja FROM signal_headline_translations
           WHERE source_id=? AND url=? AND sha=?''',
                                 (row['source_id'], row['url'], row['sha'])).fetchone()

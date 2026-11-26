@@ -5,7 +5,7 @@ import { earningsOnlyProviders, providers } from "./intake.ts";
 import { earningsResults, isEarningsRelated } from "./earnings-results.ts";
 import { analystNewsDisplay } from "./analyst-news.ts";
 import { isNotNews, officialNewsDisplay, shownInLanguage, socialChatter } from "./news-presentation.ts";
-import { NEWS_MAX_AGE_MS, officialTime } from "./news-time.ts";
+import { NEWS_MAX_AGE_MS, firstSeenOnDay, officialTime } from "./news-time.ts";
 import { wireStories } from "./wire-stories.ts";
 
 /** The 速報 page: one newest-first timeline of what each watched company's
@@ -16,8 +16,9 @@ export const FLASH_TICKERS: readonly string[] = [...WATCH_TICKERS, ...earningsOn
 export type FlashKind = "news" | "earnings";
 export type FlashRow = {
   id: string; kind: FlashKind; tickers: string[]; title: string; body?: string; url?: string; source?: string;
-  /** Publication instant, or a date for a source that states only the day. */
-  at: string; timeKind: "published" | "date"; observedAt?: string;
+  /** Publication instant; for a source that states only the day, the instant the monitor first saw it on that day
+   * ("found"), or just the date when it was found later than that. */
+  at: string; timeKind: "published" | "found" | "date"; observedAt?: string;
   /** Earnings rows: the figures of the release (e.g. "売上 $10.2B"), one per entry. */
   facts?: string[];
 };
@@ -39,8 +40,10 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
       // source time is never listed (owner, Oct 10).
       if (!tickers.length || isEarningsRelated(item) || isNotNews(item) || socialChatter(item) || time.kind === "observed" || !shownInLanguage(item, lang)) continue;
       const display = officialNewsDisplay(item, lang, briefs);
-      rows.push({ id: `official:${item.id}`, kind: "news", tickers, title: display.title, body: display.body ?? undefined, at: time.at,
-        timeKind: time.kind === "date" ? "date" : "published", observedAt: item.observedAt, source: item.publisher });
+      // A date-only source shows (and sorts by) when the monitor first saw it that day (owner, Nov 26).
+      const found = time.kind === "date" ? firstSeenOnDay(time.at, item.observedAt) : null;
+      rows.push({ id: `official:${item.id}`, kind: "news", tickers, title: display.title, body: display.body ?? undefined, at: found ?? time.at,
+        timeKind: found ? "found" : time.kind === "date" ? "date" : "published", observedAt: item.observedAt, source: item.publisher });
     } catch { /* One malformed row never hides the others. */ }
   }
   for (const item of Array.isArray(feed?.analystUpdates) ? feed.analystUpdates : []) {
