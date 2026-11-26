@@ -21,22 +21,42 @@ export const PLAN_ANSWER_OPTIONS = {
   q25: ["d5", "d10", "d15", "d20", "unknown", "custom"], q26: ["b5", "b10", "b20", "b30", "custom"],
   q27: ["equal", "heavier"], q28: ["cash_low", "income_unstable", "over_cap", "no_reason"],
   q29: ["over_tolerance", "cant_sleep", "thesis_broken"], q30: ["ignore", "yen3", "yen7", "custom"],
+  // Substitute questions (owner, Nov 25): asked in place of q21 / q25 / q26 / q27 when those are skipped, so every member
+  // answers exactly 30. Optional keys: plans saved before they existed stay valid and are read as "not answered".
+  q21alt: ["index", "high_dividend", "bond", "gold", "theme", "other"],
+  q25alt: ["continue", "pause", "no_plan"], q26alt: ["p20", "p30", "p50", "undecided"],
+  q27alt: ["d20", "d30", "d50", "never"],
 } as const;
 export type PlanQuestionId = keyof typeof PLAN_ANSWER_OPTIONS;
-type MultipleQuestionId = "q21" | "q28" | "q29";
-export type PlanAnswers = { [K in PlanQuestionId]: K extends MultipleQuestionId
-  ? (typeof PLAN_ANSWER_OPTIONS)[K][number][] | null : (typeof PLAN_ANSWER_OPTIONS)[K][number] | null };
+export const SUBSTITUTE_QUESTION_IDS = ["q21alt", "q25alt", "q26alt", "q27alt"] as const;
+export type SubstituteQuestionId = (typeof SUBSTITUTE_QUESTION_IDS)[number];
+type BaseQuestionId = Exclude<PlanQuestionId, SubstituteQuestionId>;
+type MultipleQuestionId = "q21" | "q28" | "q29" | "q21alt";
+type AnswerOf<K extends PlanQuestionId> = K extends MultipleQuestionId
+  ? (typeof PLAN_ANSWER_OPTIONS)[K][number][] | null : (typeof PLAN_ANSWER_OPTIONS)[K][number] | null;
+/** The 30 original answers are always present. A substitute answer is present only once it has been answered. */
+export type PlanAnswers = { [K in BaseQuestionId]: AnswerOf<K> } & { [K in SubstituteQuestionId]?: AnswerOf<K> };
 const ids = Object.keys(PLAN_ANSWER_OPTIONS) as PlanQuestionId[];
-const multiple = new Set<PlanQuestionId>(["q21", "q28", "q29"]);
+const substitutes = new Set<string>(SUBSTITUTE_QUESTION_IDS);
+const baseIds = ids.filter(id => !substitutes.has(id));
+const multiple = new Set<PlanQuestionId>(["q21", "q28", "q29", "q21alt"]);
 export function emptyPlanAnswers(): PlanAnswers {
-  return Object.fromEntries(ids.map(id => [id, null])) as PlanAnswers;
+  return Object.fromEntries(baseIds.map(id => [id, null])) as PlanAnswers;
 }
+/** Which of each original/substitute pair is asked. Exactly one of each pair is always shown. */
+export function substituteShown(id: SubstituteQuestionId, a: Partial<Record<PlanQuestionId, unknown>>): boolean {
+  if (id === "q21alt") return !(a.q20 === "stock" || a.q20 === "mixed");
+  if (id === "q27alt") return !["steps2", "steps3", "steps4"].includes(a.q24 as string);
+  return !["single", "steps2", "steps3", "steps4"].includes(a.q24 as string);
+}
+/** Returns a canonical copy: the 30 original keys, plus only the substitute answers that are not null. */
 export function parsePlanAnswers(value: unknown): PlanAnswers {
   const invalid = () => { throw new Error("INVALID_PLAN_ANSWERS"); };
   if (!value || typeof value !== "object" || Array.isArray(value)) return invalid();
   const v = value as Record<string, unknown>;
-  if (Object.keys(v).length !== ids.length || !ids.every(id => Object.hasOwn(v, id))) return invalid();
+  if (!Object.keys(v).every(id => Object.hasOwn(PLAN_ANSWER_OPTIONS, id)) || !baseIds.every(id => Object.hasOwn(v, id))) return invalid();
   for (const id of ids) {
+    if (!Object.hasOwn(v, id)) continue;
     const answer = v[id]; if (answer === null) continue;
     const allowed: readonly string[] = PLAN_ANSWER_OPTIONS[id];
     if (multiple.has(id)) {
@@ -48,7 +68,13 @@ export function parsePlanAnswers(value: unknown): PlanAnswers {
   const buying = ["single", "steps2", "steps3", "steps4"].includes(v.q24 as string);
   const steps = ["steps2", "steps3", "steps4"].includes(v.q24 as string);
   if (!buying && (v.q25 !== null || v.q26 !== null) || !steps && v.q27 !== null) return invalid();
-  return JSON.parse(JSON.stringify(v)) as PlanAnswers;
+  // A substitute is answered only after the question that decides it, and only when it replaces the original.
+  if ((v.q21alt ?? null) !== null && !["fund_etf", "bond", "gold"].includes(v.q20 as string) ||
+    ((v.q25alt ?? null) !== null || (v.q26alt ?? null) !== null) && v.q24 !== "none" ||
+    (v.q27alt ?? null) !== null && !["none", "single"].includes(v.q24 as string)) return invalid();
+  const out = JSON.parse(JSON.stringify(v)) as Record<string, unknown>;
+  for (const id of SUBSTITUTE_QUESTION_IDS) if (out[id] === null) delete out[id];
+  return out as PlanAnswers;
 }
 export type PlanFx = { thresholdYen: number | null; usdJpy: number | null; note: string };
 export function parsePlanFx(value: unknown): PlanFx {

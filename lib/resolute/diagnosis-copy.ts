@@ -1,4 +1,4 @@
-import type { Amounts, DiagnosisInput, DiagnosisResult, TypeId } from "./diagnosis.ts";
+import type { Amounts, DiagnosisInput, DiagnosisResult, ResultRow, TypeId } from "./diagnosis.ts";
 export type DiagnosisLocale = "ja" | "en";
 export const EN_QUESTIONS: Record<string, { text: string; options: string[]; note?: string }> = {
  q01: { text: "How long have you been investing?", options: ["Just starting", "1–3 years", "3–5 years", "5–7 years", "7–10 years", "10+ years"] },
@@ -30,6 +30,10 @@ export const EN_QUESTIONS: Record<string, { text: string; options: string[]; not
  q27: { text: "How will you split the money across those purchases?", options: ["The same amount each time", "More as the price falls further"] },
  q28: { text: "When will you hold off on buying?", note: "Select all that apply.", options: ["My savings are running low", "My income is unstable", "One stock is already above my limit", "I can’t explain why I’m buying"] },
  q29: { text: "When will you pause and reconsider?", note: "Select all that apply.", options: ["Losses exceed my limit", "I’m too worried to sleep", "My reason for buying no longer holds"] },
+ q21alt: { text: "What kinds of funds or assets make up most of your investments?", note: "Select all that apply.", options: ["Global or US index funds", "High-dividend ETFs", "Bonds", "Gold", "Theme funds, such as semiconductors", "Other"] },
+ q25alt: { text: "Will you keep investing regularly during a drop?", options: ["Keep going", "Pause for now", "I don’t invest regularly"] },
+ q26alt: { text: "After a big rise, at what gain would you consider taking profits?", options: ["+20%", "+30%", "+50%", "I haven’t decided"] },
+ q27alt: { text: "How far would prices need to fall before you’d consider selling?", options: ["−20%", "−30%", "−50%", "I won’t sell"] },
  q30: { text: "How will you respond to changes in USD/JPY?", options: ["No action based on exchange rates", "Review my rules after a ¥3 move either way", "Review my rules after a ¥7 move either way", "Enter a yen amount"] },
 };
 export const EN_TYPES: Record<TypeId, { name: string; detail: string }> = {
@@ -71,6 +75,19 @@ export const EN_ADVICE: Record<string, AdviceText> = {
  no_brakes: () => "‘Hold off’ conditions, such as low savings, mean no new purchases. ‘Pause’ conditions, such as losses exceeding your limit, mean stopping to rethink your rules. Even one of each can help you slow down on a stressful day.",
  default: () => "Your numbers and conditions fit together well. When the market moves, open this page first.",
 };
+const SUBSTITUTE_OPTION_IDS: Record<"q21alt"|"q25alt"|"q26alt"|"q27alt", readonly string[]> = {
+ q21alt: ["index","high_dividend","bond","gold","theme","other"], q25alt: ["continue","pause","no_plan"],
+ q26alt: ["p20","p30","p50","undecided"], q27alt: ["d20","d30","d50","never"] };
+const enOption = (id: keyof typeof SUBSTITUTE_OPTION_IDS, value: string) => EN_QUESTIONS[id].options[SUBSTITUTE_OPTION_IDS[id].indexOf(value)] ?? "";
+/** English My Rules lines for the substitute answers; mirrors substituteRows in diagnosis.ts. */
+export function substituteRowsEn(i: DiagnosisInput): ResultRow[] {
+ const a = i.answers, out: ResultRow[] = [];
+ if (Array.isArray(a.q21alt) && a.q21alt.length) out.push({ item: "Main kinds of investment", rule: a.q21alt.map(x => enOption("q21alt", x)).filter(Boolean).join(" / "), meaning: "The kinds of funds or assets at the centre of your investments." });
+ if (typeof a.q25alt === "string") out.push({ item: "Regular investing in a drop", rule: a.q25alt === "continue" ? "Keep investing regularly during a drop" : a.q25alt === "pause" ? "Pause regular investing during a drop" : "I don’t invest regularly", meaning: "What you decided to do with regular investing on down days." });
+ if (typeof a.q26alt === "string") out.push({ item: "Profit-taking guide", rule: a.q26alt === "undecided" ? "Not set yet" : `Consider taking profits after a ${a.q26alt.slice(1)}% rise`, meaning: "Your guide for considering selling some after a big rise." });
+ if (typeof a.q27alt === "string") out.push({ item: "Drop that prompts thoughts of selling", rule: a.q27alt === "never" ? "I won’t sell because of a drop" : `Consider selling after a ${a.q27alt.slice(1)}% drop`, meaning: a.q27alt === "never" ? "A fall in price alone is not your reason to sell." : "At this drop, check your rules before deciding whether to sell." });
+ return out;
+}
 export function localizeDiagnosis(r: DiagnosisResult, i: DiagnosisInput, locale: DiagnosisLocale): DiagnosisResult {
  if (locale === "ja") return r;
  const m = r.amounts, type = EN_TYPES[r.type];
@@ -90,6 +107,7 @@ export function localizeDiagnosis(r: DiagnosisResult, i: DiagnosisInput, locale:
    { item: "Hold off on buying", rule: conditions("q28", i.noBuyConditions), meaning: "Make no new purchases while these conditions apply." },
    { item: "Pause and reconsider", rule: conditions("q29", i.haltConditions), meaning: "Stop new purchases and review your rules." },
    { item: "Exchange rates", rule: i.fx?.thresholdYen != null ? `Review after a ¥${i.fx.thresholdYen} move in USD/JPY` : "No action based on exchange rates", meaning: i.fx?.thresholdYen != null ? "Exchange rates change the yen value of US stocks and other foreign assets. Reopen these rules after a large move." : "Exchange-rate moves won’t trigger a review." },
+   ...substituteRowsEn(i),
   ],
  };
 }
