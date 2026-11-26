@@ -1,8 +1,7 @@
 import "server-only";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
-import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
-import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
+import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, fastRefresh, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
 import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
 import { BOARD_SNAPSHOT_PERIOD, boardDue, boardJobKey } from "./market-snapshot.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
@@ -34,19 +33,12 @@ export async function loadMarketQuotes(tickers: string[], options: { fast?: bool
 export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean; stale: number }> {
   const spec = quoteSpec(Date.now());
   const got = await sharedReader.readMany<MarketQuote>(spec, tickers, group => fetchQuotes(group), { maxFetch: MAX_QUOTES_PER_REQUEST });
-  let granted = fast;
-  if (fast) {
-    const older = Object.keys(got).filter(t => got[t].fresh && got[t].value && Date.now() - got[t].at >= FAST_QUOTE_TTL_MS).slice(0, 12);
-    if (older.length) {
-      try {
-        const values = await fetchQuotes(older, "fast"), at = Date.now();
-        for (const t of older) { const quote = values.get(t); if (quote) { got[t] = { value: quote, at, fresh: true }; await sharedReader.save(spec, t, { value: quote, at }); } }
-      } catch { granted = false; }
-    }
-  }
+  let granted = fast, all = got;
+  // fast: one provider read per symbol and 15-second slot for everyone (twelve-budget.ts fastRefresh), under the "fast" tier (200).
+  if (fast) ({ got: all, granted } = await fastRefresh<MarketQuote>(sharedReader, spec, got, group => fetchQuotes(group, "fast")).catch(() => ({ got, granted: false })));
   const out: Record<string, MarketQuote> = {};
   let stale = 0;
-  for (const t of new Set(tickers)) { const hit = got[t]; if (hit?.value) { out[t] = hit.value; if (!hit.fresh) stale++; } }
+  for (const t of new Set(tickers)) { const hit = all[t]; if (hit?.value) { out[t] = hit.value; if (!hit.fresh) stale++; } }
   return { quotes: out, fast: granted, stale };
 }
 
