@@ -381,11 +381,21 @@ def run_once(path, now=None, trigger='schedule', lock=None, **kwargs):
     return line
 
 
+REPORT_MAX_CHARS = 3_000_000
+
+
+def report_text(content):
+    """Plain text of a 10-Q / 10-K, whole (bounded at REPORT_MAX_CHARS), in the form check_dives compares quotes in."""
+    import check_dives
+    return check_dives.html_text(content[:REPORT_MAX_CHARS * 4].decode('utf-8', 'replace'))[:REPORT_MAX_CHARS]
+
+
 def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None):
     """The filings a dive is deepened with: the quarter's 10-Q / 10-K once filed after the release (its main document), and the 8-Ks with
     a deal (Item 1.01 / 2.01) or a preliminary result (Item 2.02, not the release itself) filed since the previous dive's release."""
     import earnings_reconcile
-    fetch = fetch or (lambda url: ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split()))
+    # The whole 10-Q, not the monitor's 160,000-character article cut: a customer-concentration note can sit far into the document.
+    fetch = fetch or (lambda url: report_text(backtest.get(url, binary=True)))
     exhibit = exhibit or exhibit_with_url
     recent = filings['filings']['recent']
     report = None
@@ -414,6 +424,21 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
     return report, sorted(events, key=lambda e: e['accepted'])
 
 
+def filing_exhibits(ticker, accession, skip_url=None, numbers=('2', '3')):
+    """(url, text) of the other press exhibits of the results filing (EX-99.2, EX-99.3: a presentation, financial statements), for the
+    companies whose dive figures sit there (dive_figures.DOC_SPECS)."""
+    base = f"https://www.sec.gov/Archives/edgar/data/{int(cik(ticker))}/{accession.replace('-', '')}"
+    index = backtest.get(base + '/' + accession + '-index.html')
+    out = []
+    for n in numbers:
+        for m in re.finditer(r'<tr[^>]*>(?:(?!</tr>).)*?href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"(?:(?!</tr>).)*?>\s*EX-99\.' + n + r'\s*<', index, re.S):
+            url = 'https://www.sec.gov' + m[1]
+            if url != skip_url:
+                out.append((url, ' '.join(monitor.extract_text(backtest.get(url, binary=True), 'text/html').split())))
+            break
+    return out
+
+
 def prefetch_filings(results, filings_by_ticker, env=None):
     """The 10-Q and the deal 8-Ks of each company a dive is due for, read before the database is locked (network only)."""
     import earnings_dive_generate as dives
@@ -427,6 +452,13 @@ def prefetch_filings(results, filings_by_ticker, env=None):
                 out[ticker] = quarter_filings(ticker, filings, release, dives.previous_dive(ticker))
             except Exception:  # noqa: BLE001 - the dive is still built from the release; the filings are read again next time
                 out[ticker] = (None, [])
+            import dive_figures
+            if ticker in dive_figures.DOC_SPECS:
+                try:
+                    exhibits = [{'url': u, 'text': t} for u, t in filing_exhibits(ticker, release['accession'], release.get('url'))]
+                except Exception:  # noqa: BLE001
+                    exhibits = []
+                out[ticker] = out[ticker] + (exhibits,)
     return out
 
 
@@ -445,7 +477,9 @@ def draft_dives(db, results, now, env=None, extras=None):
         release['releasedOn'] = release_day(release['accepted']).isoformat()
         try:
             if extras and ticker in extras:
-                release['report'], release['events'] = extras[ticker]
+                release['report'], release['events'] = extras[ticker][:2]
+                if len(extras[ticker]) > 2:
+                    release['exhibits'] = extras[ticker][2]
             state = dives.generate(db, ticker, release, now)
         except Exception as exc:  # noqa: BLE001 - one company's failure never stops the others
             state = 'error-' + type(exc).__name__

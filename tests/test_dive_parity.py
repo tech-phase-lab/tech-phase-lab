@@ -28,9 +28,14 @@ FILINGS = {
     'MRVL': {'events': [('https://www.sec.gov/Archives/edgar/data/1835632/000119312526442714/d81187dex991.htm', 'MRVL-8k-2026-11-02',
                          datetime(2026, 11, 2, 13, 6, tzinfo=timezone.utc))]},
     'AVGO': {'report': ('https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm', 'AVGO-10q-2026-08-02')},
+    'TSM': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26presentatione.htm', 'TSM-992')]},
+    'ASML': {'exhibits': [('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/a2026_10x14xpresentation.htm', 'ASML-992'),
+                          ('https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/financial_statementsxusx.htm', 'ASML-993')]},
 }
 GAPS = {  # what is still different from the hand-made file with every filing in hand (none)
-    'CRDO': {}, 'MRVL': {}, 'AVGO': {},
+    'CRDO': {}, 'MRVL': {}, 'AVGO': {}, 'TSM': {},
+    'ASML': {'caution.chips[1]': 'the hand-made file showed free cash flow (−€2.61B in Q1 to €11.35B); the statements exhibit gives no quarterly '
+                                 'free cash flow line, so the chip shows the contract liabilities the same section explains'},
 }
 CHIP_GAPS = {}
 FILINGS_DIR = ROOT / 'tests/fixtures/dive-filings'
@@ -66,14 +71,15 @@ def generated(ticker, filings=True):
                                     'items': ['2.02'], 'accessionNumber': ['a-1'], 'primaryDocument': ['x']}}},
                                     datetime(2026, 11, 26, tzinfo=timezone.utc), exhibit=lambda *a: (url, text), primary=lambda *a: None)
     release['releasedOn'] = dive['releasedOn']
-    extra = FILINGS.get(ticker, {}) if filings else {}
+    extra = FILINGS.get(ticker, {}) if filings else {'exhibits': FILINGS.get(ticker, {}).get('exhibits', [])}  # exhibits are part of the release
     if 'report' in extra:
         release['report'] = {'url': extra['report'][0], 'text': filing_text(extra['report'][1]), 'form': '10-Q'}
     release['events'] = [{'url': u, 'text': filing_text(n), 'accepted': at} for u, n, at in extra.get('events', [])]
+    release['exhibits'] = [{'url': u, 'text': filing_text(n)} for u, n in extra.get('exhibits', [])]
     previous = previous_file(dive)
     fixture = check_dives.read_fixture(ROOT / f'tests/fixtures/dives/{ticker}-source.txt')
     texts = {url: check_dives.normalize(text)}
-    for other in [release.get('report')] + release['events']:
+    for other in [release.get('report')] + release['events'] + release['exhibits']:
         if other:
             texts[other['url']] = check_dives.normalize(other['text'])
     for e in previous['evidence']:
@@ -145,6 +151,15 @@ class DepthParity(unittest.TestCase):
         self.assertEqual(deal['exchangeRatio'].values, ['4.500', 'Marvell', 'Lumentum'])
         self.assertEqual(deal['preliminary'].values, ['third', '2027', '2'])
         self.assertEqual(dive_figures.deal('Marvell reports record revenue.'), {})
+
+    def test_without_its_other_exhibits_a_multi_exhibit_company_is_held(self):
+        import dive_figures
+        for ticker in ('TSM', 'ASML'):
+            dive = json.loads((ROOT / f'lib/research/dives/{ticker}.json').read_text(encoding='utf-8'))
+            text = gzip.open(ROOT / f'tests/fixtures/latest-releases/{ticker}.txt.gz', 'rt').read()
+            figures = dive_figures.read_docs(ticker, [(dive['sources'][0]['url'], text)])
+            with self.subTest(ticker=ticker), self.assertRaisesRegex(ValueError, 'missing:'):
+                dive_writers.WRITERS[ticker](figures, dive['sources'][0]['url'], None)
 
     def test_a_missing_figure_holds_the_dive(self):
         dive = json.loads((ROOT / 'lib/research/dives/CRDO.json').read_text(encoding='utf-8'))

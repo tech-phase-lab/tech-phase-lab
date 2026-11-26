@@ -167,6 +167,98 @@ def broadcom(t):
 SPECS = {'CRDO': credo, 'MRVL': marvell, 'AVGO': broadcom}
 
 
+# ---- foreign issuers whose results come as several exhibits of one 6-K (release, presentation, financial statements) ---------
+
+def pick(docs, marker):
+    """(url, flat text) of the first exhibit that contains `marker`; (None, '') when none does."""
+    for url, text in docs:
+        if marker in text:
+            return url, text
+    return None, ''
+
+
+def located(url, figures):
+    for fig in figures.values():
+        if fig is not None:
+            fig.url = url
+    return figures
+
+
+QUARTER = r'(?:first|second|third|fourth)'
+
+
+def tsmc(docs):
+    u1, t1 = pick(docs, 'consolidated results')
+    u2, t2 = pick(docs, 'Selected Items from Statements of Comprehensive Income')
+    out = located(u1, {
+        'revenue': row(t1, 'Net sales', 5, 'consolidated results', 'Gross profit'),   # this quarter, a year earlier, YoY %, previous quarter, QoQ %
+        'netIncome': row(t1, 'Net income', 5, 'Income before tax', 'EPS'),
+        'eps': sentence(t1, r'EPS \(NT\$\) ([\d.]+)', (1,), unit='per-share'),
+        'usd': sentence(t1, r'In US dollars, ' + QUARTER + r' quarter revenue was \$([\d.]+) billion, which increased ([\d.]+)% year-over-year and increased ([\d.]+)% from the previous quarter',
+                        (1, 2, 3), multipliers=[1000, None, None]),
+        'yoy': sentence(t1, r'Year-over-year, ' + QUARTER + r' quarter revenue increased ([\d.]+)%', (1,), unit='percent'),
+        'nodes': sentence(t1, r'shipments of 2-nanometer accounted for (\d+)% of total wafer revenue; 3-nanometer accounted for (\d+)%; 5-nanometer accounted for (\d+)%; and 7-nanometer accounted for (\d+)%',
+                          (1, 2, 3, 4), unit='percent'),
+        'advanced': sentence(t1, r'Advanced technologies, defined as 7-nanometer and more advanced technologies, accounted for (\d+)% of total wafer revenue', (1,), unit='percent'),
+        'guidance': sentence(t1, r'Revenue is expected to be between US\$([\d.]+) billion and US\$([\d.]+) billion; And, based on the exchange rate assumption of 1 US dollar to ([\d.]+) NT dollars,',
+                             (1, 2, 3), unit='text'),
+        'guidanceMargins': sentence(t1, r'Gross profit margin is expected to be between (\d+)% and (\d+)%; .?Operating profit margin is expected to be between ([\d.]+)% and ([\d.]+)%',
+                                    (1, 2, 3, 4), unit='percent'),
+    })
+    out.update(located(u2, {
+        'gm': sentence(t2, r'Gross Margin ([\d.]+)% ([\d.]+)%-([\d.]+)% ([\d.]+)% ([\d.]+)%', (1, 2, 3, 4, 5), unit='percent'),   # this, guidance low-high, previous, year ago
+        'om': sentence(t2, r'Operating Margin ([\d.]+)% ([\d.]+)%-([\d.]+)% ([\d.]+)% ([\d.]+)%', (1, 2, 3, 4, 5), unit='percent'),
+        'nonOperating': row(t2, 'Non-Operating Items', 3, 'Selected Items', 'Net Income'),
+        'netMargin': row(t2, 'Net Profit Margin', 3, 'Selected Items', 'EPS', unit='percent'),
+        'shipments': sentence(t2, r'Shipment \(Kpcs, 12"-equiv\. Wafer\) ([\d,]+) ([\d,]+) ([\d,]+) \+?(-?[\d.]+)%', (1, 2, 3, 4), unit='text'),
+        'ocf': row(t2, 'Cash from operating activities', 3, 'Beginning Balance', 'Ending Balance'),
+        'capex': row(t2, 'Capital expenditures', 3, 'Beginning Balance', 'Ending Balance'),
+        'fcf': row(t2, 'Free Cash Flow *', 3, 'Cash Flows', '4Q'),
+        'fullYear': sentence(t2, r'(20\d\d) revenue to increase by around (\d+)% in US dollar terms', (1, 2), unit='text'),
+    }))
+    return out
+
+
+def asml(docs):
+    u1, t1 = pick(docs, '(Figures in millions of euros')
+    u2, t2 = pick(docs, 'results Veldhoven')
+    u3, t3 = pick(docs, 'Quarterly Summary US GAAP Consolidated Statements of Operations Three months ended')
+    head = '(Figures in millions of euros'
+    out = located(u1, {
+        'revenue': row(t1, 'Total net sales', 2, head, 'Numbers have been rounded'),           # previous quarter, this quarter
+        'ibm': row(t1, 'Installed Base Management sales1', 2, head, 'Numbers have been rounded'),
+        'systems': row(t1, 'New lithography systems sold (units)', 2, head, 'Numbers have been rounded'),
+        'gm': row(t1, 'Gross margin (%)', 2, head, 'Numbers have been rounded', unit='million'),
+        'netIncome': row(t1, 'Net income', 2, head, 'Numbers have been rounded'),
+        'eps': row(t1, 'EPS (basic; in euros)', 2, head, 'Numbers have been rounded', unit='per-share'),
+        'guidance': sentence(t1, r'We expect ' + QUARTER + r'-quarter (20\d\d) total net sales between €([\d.]+) billion and €([\d.]+) billion, with a gross margin around (\d+)%',
+                             (1, 2, 3, 4), unit='text'),
+        'fullYear': sentence(t1, r'We expect total net sales for (20\d\d) to be between €(\d+) billion and €(\d+) billion, with a gross margin around (\d+)%', (1, 2, 3, 4), unit='text'),
+        'supply': sentence(t1, r'our supply as currently planned for both (20\d\d) and (20\d\d) will not fully meet the demand of our customers', (1, 2), unit='text'),
+        'capacity': sentence(t1, r'investigating ways to increase capacity for (20\d\d) beyond the (\d+)% increase we previously communicated', (1, 2), unit='text'),
+        'orders': sentence(t1, r'placing orders with us for (20\d\d) and even (20\d\d)', (1, 2), unit='text'),
+    })
+    out.update(located(u2, {'history': row(t2, 'Total net sales', 5, 'Total net sales', None)}))
+    out.update(located(u3, {
+        'om': row(t3, 'Income from operations as a percentage of net sales', 5, 'Quarterly Summary US GAAP Consolidated Statements of Operations Three months ended', 'Net income as a percentage', unit='percent'),
+        'equityGain': row(t3, 'Gain (loss) on equity investments', 4, 'Income from operations', 'Interest and other'),
+        'contractLiabilities': row(t3, 'Contract liabilities', 2, 'Summary US GAAP Consolidated Balance Sheets', 'Accrued and other liabilities'),
+    }))
+    return out
+
+
+DOC_SPECS = {'TSM': tsmc, 'ASML': asml}
+
+
+def read_docs(ticker, docs):
+    """Figures from all the exhibits of a results filing: [(url, text), ...]."""
+    spec = DOC_SPECS.get(ticker)
+    if not spec:
+        return {}
+    flat = [(u, ' '.join((t or '').split())) for u, t in docs]
+    return {k: v for k, v in spec(flat).items() if v is not None}
+
+
 # ---- the quarterly report (10-Q): figures only it carries, read when it is filed -------------------------------------------
 
 MONTHS = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)'
@@ -176,8 +268,8 @@ def credo_report(t):
     return {
         'customerA': row(t, 'Customer A', 2, 'Ended Revenue', 'Customer B', unit='percent'),
         'customerB': row(t, 'Customer B', 2, 'Ended Revenue', '*', unit='percent'),
-        'acquisition': sentence(t, r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Company acquired (?:100% of the equity interest of )?([A-Z][A-Za-z]+).{0,250}?'
-                                r'total purchase consideration of \$([\d.]+) (billion|million)', (1, 2, 3, 4), unit='text'),
+        'acquisition': sentence(t, r'On (' + MONTHS + r' \d{1,2}, 20\d\d), the Company acquired (?:100\s?% of the equity interest of )?([A-Z][A-Za-z]+).{0,250}?'
+                                r'total purchase consideration of \$\s?([\d.]+) (billion|million)', (1, 2, 3, 4), unit='text'),
     }
 
 
@@ -189,10 +281,10 @@ def broadcom_report(t):
         'semisOpIncome': row(t, 'Operating income', 2, 'Semiconductor solutions: Net revenue', 'Infrastructure software:'),
         'softwareReport': soft,
         'softwareOpIncome': row(t, 'Operating income', 2, 'Infrastructure software: Net revenue', 'Total:'),
-        'topFive': sentence(t, r'top five end customers, through all channels, accounted for approximately (\d+)% and (\d+)% of our net revenue for the fiscal quarter'
-                               r'[^.]{0,120}?approximately (\d+)%', (1, 2, 3), unit='percent'),
-        'distributor': sentence(t, r'which is a distributor, accounted for (\d+)% and (\d+)% of our net revenue for the fiscal quarter and three fiscal quarters ended '
-                                   + MONTHS + r' \d{1,2}, 20\d\d, respectively, and (\d+)% and (\d+)%', (1, 2, 3, 4), unit='percent'),
+        'topFive': sentence(t, r'top five end customers, through all channels, accounted for approximately (\d+)\s?% and (\d+)\s?% of our net revenue for the fiscal quarter'
+                               r'[^.]{0,120}?approximately (\d+)\s?%', (1, 2, 3), unit='percent'),
+        'distributor': sentence(t, r'which is a distributor, accounted for (\d+)\s?% and (\d+)\s?% of our net revenue for the fiscal quarter and three fiscal quarters ended '
+                                   + MONTHS + r' \d{1,2}, 20\d\d, respectively, and (\d+)\s?% and (\d+)\s?%', (1, 2, 3, 4), unit='percent'),
     }
 
 

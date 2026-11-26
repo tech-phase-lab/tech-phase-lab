@@ -406,7 +406,10 @@ def build(ticker, release, previous, note, today):
 def company_dive(ticker, release, previous, writer, text, url, period, end, today):
     """A company with its own writer (dive_writers): the hand-made file's cards and figure kinds, from the release's tables."""
     import dive_figures
-    figures = dive_figures.read(ticker, release['text'])
+    if ticker in dive_figures.DOC_SPECS:  # results in several exhibits of one 6-K (release, presentation, statements)
+        figures = dive_figures.read_docs(ticker, [(url, release['text'])] + [(e['url'], e['text']) for e in release.get('exhibits') or []])
+    else:
+        figures = dive_figures.read(ticker, release['text'])
     old = previous['history']
     extra_sources = []
     report = {}
@@ -633,7 +636,7 @@ def generate(db, ticker, release, now=None, previous=None, note=None):
         return 'passed'
     note = note if note is not None else stored_analysis(db, ticker, release['accepted'])
     texts = {release['url']: check_dives.normalize(release['text'])}
-    for other in [release.get('report')] + list(release.get('events') or []):  # the 10-Q and the quarter's other 8-Ks it may quote
+    for other in [release.get('report')] + list(release.get('events') or []) + list(release.get('exhibits') or []):  # 10-Q, other 8-Ks, other exhibits
         if other and other.get('url') and other.get('text'):
             texts[other['url']] = check_dives.normalize(other['text'])
     for e in (previous or {}).get('evidence') or []:  # the previous file's quoted passages, for the figures it carries forward
