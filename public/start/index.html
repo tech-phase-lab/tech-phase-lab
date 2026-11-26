@@ -24,14 +24,44 @@ a:hover{filter:brightness(1.1)}
 @keyframes tpshine{0%{transform:translateX(-120%)}60%,100%{transform:translateX(220%)}}
 .tp-shine{animation:tpshine 3.6s ease-in-out infinite}
 @media (prefers-reduced-motion: reduce){.tp-s{animation:none}.tp-d1{opacity:1}.tp-glow{animation:none}.tp-glowm{animation:none}.tp-shine{animation:none}}
+
+.tpc{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.tpc-stage{position:relative;height:372px;border-radius:14px;background:radial-gradient(240px 200px at 26% 52%,rgba(61,219,176,0.22),rgba(61,219,176,0) 70%),radial-gradient(260px 220px at 76% 50%,rgba(232,190,85,0.36),rgba(232,190,85,0) 70%),#090a11;border:1px solid rgba(232,190,85,0.3);overflow:hidden;touch-action:pan-y;cursor:pointer}
+.tpc-ph{position:absolute;width:136px;height:286px;border-radius:28px;padding:6px;box-sizing:border-box;background:linear-gradient(135deg,#6e6e73 0%,#2b2b2e 18%,#8a8a8f 35%,#3a3a3d 55%,#9a9aa0 80%,#4a4a4d 100%);box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8)}
+.tpc-ph:before{content:"";position:absolute;left:-2px;top:58px;width:2px;height:18px;background:#7a7a7e;border-radius:2px;box-shadow:0 28px 0 #7a7a7e,0 56px 0 #7a7a7e}
+.tpc-ph:after{content:"";position:absolute;right:-2px;top:84px;width:2px;height:40px;background:#7a7a7e;border-radius:2px}
+.tpc-l{left:9%;top:22px;transform:rotate(-6deg);z-index:1}
+.tpc-r{right:9%;top:34px;transform:rotate(5deg);z-index:2;box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8),0 0 34px rgba(232,190,85,.35)}
+.tpc-sc{position:relative;width:100%;height:100%;border-radius:22px;overflow:hidden;background:#0b0f16}
+.tpc-sb{position:absolute;top:0;left:0;right:0;height:18px;display:flex;justify-content:space-between;align-items:center;padding:0 7px 0 14px;font:600 7px -apple-system,"Helvetica Neue",sans-serif;color:#fff;z-index:2;background:#0b0f16}
+.tpc-sb>span:last-child{transform:scale(.5)!important}
+.tpc-di{position:absolute;top:5px;left:50%;width:38px;height:11px;margin-left:-19px;border-radius:7px;background:#000;z-index:3}
+.tpc-img{position:absolute;left:0;right:0;top:18px;width:100%;opacity:0;transition:opacity .45s ease}
+.tpc-img.on{opacity:1}
+.tpc-gl{position:absolute;inset:0;border-radius:22px;background:linear-gradient(115deg,rgba(255,255,255,.11) 0%,rgba(255,255,255,.02) 28%,rgba(255,255,255,0) 40%);pointer-events:none;z-index:4}
+.tpc-caps{position:absolute;left:0;right:0;bottom:12px;height:20px}
+.tpc-cap{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
+.tpc-cap.on{opacity:1}
+.tpc-cap span{position:absolute;width:150px;text-align:center;font-size:12px;font-weight:700;white-space:nowrap}
+.tpc-cap .c1{left:calc(9% - 7px);color:#3ddbb0}.tpc-cap .c2{right:calc(9% - 7px);color:#f6d675}
+.tpc-cap .one{left:0;right:0;width:auto;color:#fff1b8;font-size:13px}
+.tpc-ctl{display:flex;align-items:center;justify-content:center;gap:12px}
+.tpc-ar{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(232,190,85,0.45);background:#0f1017;color:#f6d675;font-size:17px;line-height:1;display:grid;place-items:center;cursor:pointer;padding:0}
+.tpc-dots{display:flex;gap:5px;align-items:center}
+.tpc-dots i{width:6px;height:6px;border-radius:3px;background:#2a2e3a;transition:all .3s}
+.tpc-dots i.on{width:16px;background:#e8be55}
+@media (prefers-reduced-motion: reduce){.tpc-img,.tpc-cap{transition:none}}
+.tp-ln{font-size:clamp(11.5px, calc((100vw - 130px) / 17.5), 15px)}.tp-ln span{display:inline-block;white-space:nowrap}
+/* Phones up to 413px: the figure's feet reached 「作りました！」 (owner spec: no overlap) */
+@media (max-width:413px){.rz-hero{height:184px!important}}
 </style>
 </head>
 <body>
 <div style="min-height: 100vh; background: radial-gradient(560px 440px at 0% 0%, rgba(232,190,85,0.24), rgba(232,190,85,0) 70%), radial-gradient(520px 440px at 100% 24%, rgba(232,190,85,0.16), rgba(232,190,85,0) 70%), radial-gradient(620px 520px at 50% 100%, rgba(232,190,85,0.12), rgba(232,190,85,0) 70%), #06070c; font-family: 'Noto Sans JP', sans-serif; color: #eef0f5">
 <div style="max-width: 440px; margin: 0 auto; box-sizing: border-box; padding: 40px 16px 56px; display: flex; flex-direction: column; gap: 40px">
 
-<section style="position: relative; display: flex; flex-direction: column; gap: 16px; padding-bottom: 150px">
-<svg viewBox="0 0 360 170" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -16px; right: -16px; bottom: 0; width: calc(100% + 32px); height: 170px">
+<section style="position: relative; display: flex; flex-direction: column; gap: 16px; padding-bottom: 70px">
+<svg viewBox="0 0 360 170" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -16px; right: -16px; bottom: 0; width: calc(100% + 32px); height: 90px">
 <defs>
 <linearGradient id="tpline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3ddbb0" stop-opacity="0.15"/><stop offset="0.55" stop-color="#3ddbb0"/><stop offset="1" stop-color="#f6d675"/></linearGradient>
 <linearGradient id="tparea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ddbb0" stop-opacity="0.22"/><stop offset="1" stop-color="#3ddbb0" stop-opacity="0"/></linearGradient>
@@ -39,12 +69,13 @@ a:hover{filter:brightness(1.1)}
 <path d="M0 150 C40 146 60 132 92 128 S140 112 172 104 S214 88 244 74 S300 40 352 14 L352 170 L0 170 Z" fill="url(#tparea)"/>
 <path d="M0 150 C40 146 60 132 92 128 S140 112 172 104 S214 88 244 74 S300 40 352 14" fill="none" stroke="url(#tpline)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
 </svg>
-<div style="position: absolute; right: 12px; bottom: 148px; width: 14px; height: 14px; border-radius: 50%; background: #f6d675; box-shadow: 0 0 18px 4px rgba(246,214,117,0.7)"></div>
+<div style="position: absolute; right: 12px; bottom: 76px; width: 14px; height: 14px; border-radius: 50%; background: #f6d675; box-shadow: 0 0 18px 4px rgba(246,214,117,0.7)"></div>
 
+<img class="rz-hero" src="/start/rizel-hero.webp" alt="" aria-hidden="true" style="position: absolute; right: 4px; top: -6px; height: 210px; width: auto; pointer-events: none">
 <div style="position: relative; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; color: #3ddbb0"><span style="display: block; width: 28px; height: 2px; background: #3ddbb0"></span>投資家わたがし改め、リゼル始動</div>
-<div style="position: relative; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.05; letter-spacing: 0.04em">
-<span style="font-size: 44px; background: linear-gradient(180deg, #ffffff, #e6dcc0); -webkit-background-clip: text; background-clip: text; color: transparent">TECH PHASE</span>
-<span style="font-size: 44px; background: linear-gradient(90deg, #fff1b8, #e8be55 45%, #c8932a); -webkit-background-clip: text; background-clip: text; color: transparent">RESEARCH</span>
+<div style="position: relative; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.05; letter-spacing: 0.01em">
+<span style="font-size: 44px; background: linear-gradient(180deg, #ffffff, #e6dcc0); -webkit-background-clip: text; background-clip: text; color: transparent">Tech Phase</span>
+<span style="font-size: 44px; background: linear-gradient(90deg, #fff1b8, #e8be55 45%, #c8932a); -webkit-background-clip: text; background-clip: text; color: transparent">Research</span>
 </div>
 <h1 style="position: relative; margin: 0; font-family: 'Shippori Mincho B1', serif; font-size: 27px; line-height: 1.55; font-weight: 800; color: #ffffff">米国ハイテク株<br>特化型サイト作りました！</h1>
 <div style="position: relative; font-family: 'Shippori Mincho B1', serif; font-size: 26px; font-weight: 800; letter-spacing: 0.04em; background: linear-gradient(90deg, #fff1b8, #e8be55 50%, #d09a2c); -webkit-background-clip: text; background-clip: text; color: transparent">ゼロから再び頂点へ</div>
@@ -102,60 +133,39 @@ a:hover{filter:brightness(1.1)}
 </div>
 </div>
 
-<div style="position: relative; height: 350px; border-radius: 14px; background: radial-gradient(240px 200px at 26% 60%, rgba(61,219,176,0.22), rgba(61,219,176,0) 70%), radial-gradient(260px 220px at 76% 58%, rgba(232,190,85,0.38), rgba(232,190,85,0) 70%), #090a11; border: 1px solid rgba(232,190,85,0.3); overflow: hidden">
-
-<div style="position: absolute; left: 12%; top: 20px; width: 130px; height: 270px; box-sizing: border-box; border-radius: 22px; border: 5px solid #2a4a6e; background: #0a1224; transform: rotate(-5deg); overflow: hidden; box-shadow: 0 0 26px rgba(61,219,176,0.28)">
-<div class="tp-s tp-d1" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">ニュース</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d2" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">株価</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d3" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">決算</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d4" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">目標株価</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d5" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">資本マップ</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d6" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">リサーチノート</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tpc" id="tpc" aria-roledescription="carousel" aria-label="Tech Phaseの画面">
+<div class="tpc-stage" id="tpc-sc"><div class="tpc-ph tpc-l"><div class="tpc-sc"><div class="tpc-di"></div><div class="tpc-sb"><span>9:41</span><span style="display:flex;gap:3px;align-items:center;transform:scale(.72);transform-origin:right center"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#fff"/><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#fff"/><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#fff"/><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#fff"/></svg><svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 2.2c2.3 0 4.4.9 5.9 2.4l1.1-1.1A9.9 9.9 0 0 0 7.5.6 9.9 9.9 0 0 0 .5 3.5l1.1 1.1A8.3 8.3 0 0 1 7.5 2.2zm0 3.2c1.4 0 2.7.5 3.6 1.4l1.1-1.1a6.7 6.7 0 0 0-9.4 0l1.1 1.1c.9-.9 2.2-1.4 3.6-1.4zm0 3.2c.5 0 1 .2 1.3.5L7.5 10.9 6.2 9.1c.3-.3.8-.5 1.3-.5z" fill="#fff"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" fill="none" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><rect x="22.5" y="4" width="1.5" height="4" rx=".7" fill="#fff" opacity=".4"/></svg></span></div><img class="tpc-img on" src="/start/screens/01.webp" alt="ハイテク速報の画面"><img class="tpc-img" src="/start/screens/03.webp" alt="銘柄検索の画面" loading="lazy"><img class="tpc-img" src="/start/screens/05.webp" alt="連関マップの画面" loading="lazy"><img class="tpc-img" src="/start/screens/06.webp" alt="決算・経済指標カレンダーの画面" loading="lazy"><img class="tpc-img" src="/start/screens/09.webp" alt="資本マップの画面" loading="lazy"><img class="tpc-img" src="/start/screens/11.webp" alt="米国株の資産管理の画面" loading="lazy"><img class="tpc-img" src="/start/screens/12.webp" alt="RIZEL'S DESKの画面" loading="lazy"><img class="tpc-img" src="/start/screens/14.webp" alt="リアルタイム監視の画面" loading="lazy"><img class="tpc-img" src="/start/screens/16.webp" alt="テーマランキングの画面" loading="lazy"><img class="tpc-img" src="/start/screens/19.webp" alt="クジラの足あとの画面" loading="lazy"><img class="tpc-img" src="/start/screens/21.webp" alt="銘柄比較の画面" loading="lazy"><div class="tpc-gl"></div></div></div><div class="tpc-ph tpc-r"><div class="tpc-sc"><div class="tpc-di"></div><div class="tpc-sb"><span>9:41</span><span style="display:flex;gap:3px;align-items:center;transform:scale(.72);transform-origin:right center"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#fff"/><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#fff"/><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#fff"/><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#fff"/></svg><svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 2.2c2.3 0 4.4.9 5.9 2.4l1.1-1.1A9.9 9.9 0 0 0 7.5.6 9.9 9.9 0 0 0 .5 3.5l1.1 1.1A8.3 8.3 0 0 1 7.5 2.2zm0 3.2c1.4 0 2.7.5 3.6 1.4l1.1-1.1a6.7 6.7 0 0 0-9.4 0l1.1 1.1c.9-.9 2.2-1.4 3.6-1.4zm0 3.2c.5 0 1 .2 1.3.5L7.5 10.9 6.2 9.1c.3-.3.8-.5 1.3-.5z" fill="#fff"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" fill="none" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><rect x="22.5" y="4" width="1.5" height="4" rx=".7" fill="#fff" opacity=".4"/></svg></span></div><img class="tpc-img on" src="/start/screens/02.webp" alt="マーケットの画面"><img class="tpc-img" src="/start/screens/04.webp" alt="銘柄検索の画面" loading="lazy"><img class="tpc-img" src="/start/screens/08.webp" alt="目標株価の画面" loading="lazy"><img class="tpc-img" src="/start/screens/07.webp" alt="決算・経済指標カレンダーの画面" loading="lazy"><img class="tpc-img" src="/start/screens/10.webp" alt="資本マップの画面" loading="lazy"><img class="tpc-img" src="/start/screens/18.webp" alt="トレジャーハントの画面" loading="lazy"><img class="tpc-img" src="/start/screens/13.webp" alt="RIZEL'S DESKの画面" loading="lazy"><img class="tpc-img" src="/start/screens/15.webp" alt="リアルタイム監視の画面" loading="lazy"><img class="tpc-img" src="/start/screens/17.webp" alt="テーマランキングの画面" loading="lazy"><img class="tpc-img" src="/start/screens/20.webp" alt="クジラの足あとの画面" loading="lazy"><img class="tpc-img" src="/start/screens/22.webp" alt="銘柄比較の画面" loading="lazy"><div class="tpc-gl"></div></div></div><div class="tpc-caps"><div class="tpc-cap on"><span class="c1">ハイテク速報</span><span class="c2">マーケット</span></div><div class="tpc-cap"><span class="c1 one">銘柄検索</span></div><div class="tpc-cap"><span class="c1">連関マップ</span><span class="c2">目標株価</span></div><div class="tpc-cap"><span class="c1 one">決算・経済指標カレンダー</span></div><div class="tpc-cap"><span class="c1 one">資本マップ</span></div><div class="tpc-cap"><span class="c1">米国株の資産管理</span><span class="c2">トレジャーハント</span></div><div class="tpc-cap"><span class="c1 one">RIZEL'S DESK</span></div><div class="tpc-cap"><span class="c1 one">リアルタイム監視</span></div><div class="tpc-cap"><span class="c1 one">テーマランキング</span></div><div class="tpc-cap"><span class="c1 one">クジラの足あと</span></div><div class="tpc-cap"><span class="c1 one">銘柄比較</span></div></div></div>
+<div class="tpc-ctl"><button class="tpc-ar" id="tpc-prev" type="button" aria-label="前の画面">‹</button><div class="tpc-dots" id="tpc-dots" aria-hidden="true"></div><button class="tpc-ar" id="tpc-next" type="button" aria-label="次の画面">›</button></div>
 </div>
-
-<div style="position: absolute; right: 12%; top: 36px; width: 130px; height: 270px; box-sizing: border-box; border-radius: 22px; border: 5px solid #d9a83a; background: #0a1224; transform: rotate(4deg); overflow: hidden; box-shadow: 0 0 38px rgba(232,190,85,0.6)">
-<div class="tp-s tp-d1" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">テーマランキング</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d2" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">財務レーダー</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d3" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">監視22銘柄リスト</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d4" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">連関マップ</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d5" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">銘柄比較</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-<div class="tp-s tp-d6" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">ひとりごと</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
-</div>
-
-<div style="position: absolute; left: 12%; bottom: 10px; width: 130px; height: 18px">
-<div class="tp-s tp-d1" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">ニュース</div>
-<div class="tp-s tp-d2" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">株価</div>
-<div class="tp-s tp-d3" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">決算</div>
-<div class="tp-s tp-d4" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">目標株価</div>
-<div class="tp-s tp-d5" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">資本マップ</div>
-<div class="tp-s tp-d6" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">リサーチノート</div>
-</div>
-<div style="position: absolute; right: 12%; bottom: 10px; width: 130px; height: 18px">
-<div class="tp-s tp-d1" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">テーマランキング</div>
-<div class="tp-s tp-d2" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">財務レーダー</div>
-<div class="tp-s tp-d3" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">監視22銘柄リスト</div>
-<div class="tp-s tp-d4" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">連関マップ</div>
-<div class="tp-s tp-d5" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">銘柄比較</div>
-<div class="tp-s tp-d6" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">ひとりごと</div>
-</div>
-
-</div>
+<script>
+(function(){var r=document.getElementById('tpc');if(!r)return;var L=r.querySelectorAll('.tpc-l .tpc-img'),R=r.querySelectorAll('.tpc-r .tpc-img'),C=r.querySelectorAll('.tpc-cap'),d=document.getElementById('tpc-dots'),i=0,tm=null,N=C.length,vis=true;
+for(var k=0;k<N;k++)d.appendChild(document.createElement('i'));var ds=d.children;
+function show(j){i=(j+N)%N;for(var k=0;k<N;k++){var on=k===i;L[k].classList.toggle('on',on);R[k].classList.toggle('on',on);C[k].classList.toggle('on',on);ds[k].classList.toggle('on',on)}var n=(i+1)%N;L[n].loading='eager';R[n].loading='eager';}
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function stop(){if(tm){clearInterval(tm);tm=null}}function start(){stop();if(!still&&!document.hidden&&vis)tm=setInterval(function(){show(i+1)},5000)}
+if('IntersectionObserver' in window){vis=false;new IntersectionObserver(function(e){vis=e[0].isIntersecting;vis?start():stop()}).observe(r)}
+document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
+document.getElementById('tpc-prev').onclick=function(){show(i-1);start()};document.getElementById('tpc-next').onclick=function(){show(i+1);start()};
+var sc=document.getElementById('tpc-sc'),x0=null;sc.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+sc.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>40){show(dx<0?i+1:i-1);start()}});
+sc.addEventListener('click',function(){show(i+1);start()});show(0);start();})();
+</script>
 
 <div style="display: flex; flex-direction: column; gap: 12px">
-<div style="display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 14px; background: rgba(61,219,176,0.07); border: 1px solid rgba(61,219,176,0.4)">
-<div style="flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start; padding: 14px 14px; border-radius: 14px; background: rgba(61,219,176,0.07); border: 1px solid rgba(61,219,176,0.4)">
+<div style="flex: none; display: flex; align-items: baseline; gap: 8px">
 <div style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; color: #3ddbb0">FREE</div>
 <div style="font-size: 12px; font-weight: 700; color: #3ddbb0">無料</div>
 </div>
-<div style="min-width: 0; font-size: 14px; line-height: 1.75; color: #d9e3f3"><span style="display: inline-block">米国ニュース、</span><span style="display: inline-block">決算・経済指標、</span><span style="display: inline-block">目標株価、</span><span style="display: inline-block">銘柄検索など</span></div>
+<div style="min-width: 0; font-size: 14px; line-height: 1.75; color: #d9e3f3"><div class="tp-ln"><span>注目トピック、</span><span>決算・経済指標、</span></div><div class="tp-ln"><span>目標株価、</span><span>資本マップ、</span><span>銘柄検索など</span></div></div>
 </div>
-<div style="position: relative; overflow: hidden; display: flex; gap: 14px; align-items: center; padding: 18px 16px; border-radius: 14px; background: linear-gradient(135deg, rgba(246,214,117,0.30), rgba(232,190,85,0.08) 60%, rgba(232,190,85,0.16)); border: 1.5px solid #f0c95f; box-shadow: 0 0 34px rgba(232,190,85,0.30)">
+<div style="position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; padding: 16px 14px; border-radius: 14px; background: linear-gradient(135deg, rgba(246,214,117,0.30), rgba(232,190,85,0.08) 60%, rgba(232,190,85,0.16)); border: 1.5px solid #f0c95f; box-shadow: 0 0 34px rgba(232,190,85,0.30)">
 <div class="tp-shine" style="position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,241,184,0.22), rgba(255,255,255,0)); pointer-events: none"></div>
-<div style="position: relative; flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="position: relative; flex: none; display: flex; align-items: baseline; gap: 8px">
 <div style="display: flex; align-items: center; gap: 4px; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 0.06em; color: #fff1b8"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/></svg>PRO</div>
 <div style="font-size: 12px; font-weight: 700; color: #f6d675">月額制</div>
 </div>
-<div style="position: relative; min-width: 0; font-size: 14px; line-height: 1.75; font-weight: 500; color: #fbf1cf"><span style="display: inline-block">ハイテク速報、</span><span style="display: inline-block">テーマランキング、</span><span style="display: inline-block">財務レーダー、</span><span style="display: inline-block">リアルタイム監視、</span><span style="display: inline-block">銘柄比較、</span><span style="display: inline-block">スマホ通知など</span></div>
+<div style="position: relative; min-width: 0; font-size: 14px; line-height: 1.75; font-weight: 500; color: #fbf1cf"><div class="tp-ln"><span>RIZEL'S DESK、</span><span>トレジャーハント、</span></div><div class="tp-ln"><span>クジラの足あと、</span><span>テーマランキング、</span></div><div class="tp-ln"><span>リアルタイム監視、</span><span>銘柄比較など</span></div></div>
 </div>
 </div>
 
