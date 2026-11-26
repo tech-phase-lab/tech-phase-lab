@@ -129,6 +129,84 @@
         }
       ],
       "name_en": "WhiteWater Midstream"
+    },
+    {
+      "id": "BKV",
+      "ticker": "BKV",
+      "name": "BKV",
+      "name_en": "BKV Corp",
+      "sub": "天然ガス",
+      "sub_en": "Natural gas",
+      "sub_short": "ガス",
+      "sub_short_en": "Gas",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "バーネットの生産分をONEOKの契約で集ガス・処理",
+          "text_en": "Its Barnett gas is gathered and processed mainly under an agreement with ONEOK",
+          "source": {
+            "label": "BKV 10-K(2025年度)",
+            "label_en": "BKV 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838406/000162828026015661/bkv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Our remaining Barnett production was gathered and processed primarily under an agreement with ONEOK (formerly EnLink)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DINO",
+      "ticker": "DINO",
+      "name": "HFシンクレア",
+      "name_en": "HF Sinclair",
+      "sub": "石油精製",
+      "sub_en": "Refining",
+      "sub_short": "石油精製",
+      "sub_short_en": "Refining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製油所がONEOKのパイプラインで原料拠点とつながる",
+          "text_en": "Its El Dorado refinery is connected to Conway via the ONEOK pipeline",
+          "source": {
+            "label": "HF Sinclair 10-K(2025年度)",
+            "label_en": "HF Sinclair 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The El Dorado Refinery is connected to Conway, Kansas, a major gas liquids trading and storage hub, via the ONEOK, Inc. (\"ONEOK\") Pipeline."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DTM",
+      "ticker": "DTM",
+      "name": "DTミッドストリーム",
+      "name_en": "DT Midstream",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipelines",
+      "sub_short": "ガス集送",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ONEOKから3つのパイプラインを買収",
+          "text_en": "Bought three pipelines from ONEOK",
+          "source": {
+            "label": "DT Midstream 10-K(2025年度)",
+            "label_en": "DT Midstream 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1842022/000184202226000003/dtm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The transaction with ONEOK, pursuant to which DTM Interstate Transportation acquired 100% of the equity interests in each of Guardian, Midwestern and Viking"
+          }
+        }
+      ]
     }
   ],
   "far": [],

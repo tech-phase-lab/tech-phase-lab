@@ -42,9 +42,9 @@
 .items{gap:0}
 .items>article{border-top:0;padding-top:0}
 
-/* New items blink green, fast and strong (owner, Oct 14). */
-.tlFresh .tlRail i{animation:newBlink .9s ease-out infinite}
-@keyframes newBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 10px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
+/* New items blink green, fast and strong (owner, Oct 14); the same pulse as new rows on 速報 (nodeFlash in company-activity.module.css, 11/26). */
+.tlFresh .tlRail i{animation:newBlink .9s infinite}
+@keyframes newBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.8),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 11px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
 @media(prefers-reduced-motion:reduce){.tlFresh .tlRail i{animation:none}}
 
 .tlFound{font-size:9.5px;color:#6f7b8c;letter-spacing:0}

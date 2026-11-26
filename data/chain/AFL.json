@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [],
@@ -103,6 +107,84 @@
         }
       ],
       "name_en": "Daido Life"
+    },
+    {
+      "id": "TRUP",
+      "ticker": "TRUP",
+      "name": "トゥルーパニオン",
+      "name_en": "Trupanion",
+      "sub": "ペット保険",
+      "sub_en": "Pet insurance",
+      "sub_short": "ペット",
+      "sub_short_en": "Pet ins",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Aflacと戦略提携契約・株主間契約を結ぶ",
+          "text_en": "Has a strategic alliance and shareholder agreement with Aflac",
+          "source": {
+            "label": "Trupanion 10-K(2025年度)",
+            "label_en": "Trupanion 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1371285/000137128526000018/trup-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Strategic Alliance Agreement, dated as of October 26, 2020 by and between Trupanion, Inc. and Aflac Incorporated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYA",
+      "ticker": "VOYA",
+      "name": "ボヤ・ファイナンシャル",
+      "name_en": "Voya Financial",
+      "sub": "保険・運用",
+      "sub_en": "Insurance & asset management",
+      "sub_short": "保険",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補助的な保険の競合にAflacを挙げる",
+          "text_en": "Names Aflac as a competitor in supplemental benefits",
+          "source": {
+            "label": "Voya Financial 10-K(2025年度)",
+            "label_en": "Voya Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1535929/000153592926000043/voya-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Supplemental Benefits Market is growing rapidly. Competitive drivers are price, claim servicing and product innovation. Cigna Aetna Aflac MetLife Unum"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEGON",
+      "ticker": "AEGON",
+      "name": "エイゴン",
+      "name_en": "Aegon",
+      "sub": "生命保険",
+      "sub_en": "Life insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "補助的な医療保険の競合にAflacを挙げる",
+          "text_en": "Names Aflac as a competitor in supplemental health insurance",
+          "source": {
+            "label": "Aegon 20-F(2025年度)",
+            "label_en": "Aegon 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/769218/000119312526124987/d29563d20f.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Competitors for supplemental health insurance include a wide range of companies and company types based on the nature of the coverage, including Aflac, MetLife, Colonial Life, Allstate, Unum, and Guardian Life."
+          }
+        }
+      ]
     }
   ],
   "far": [],

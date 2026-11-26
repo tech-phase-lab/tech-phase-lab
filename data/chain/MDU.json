@@ -121,6 +121,58 @@
         }
       ],
       "name_en": "Navajo Transitional Energy Company"
+    },
+    {
+      "id": "NC",
+      "ticker": "NC",
+      "name": "NACCOインダストリーズ",
+      "name_en": "NACCO Industries",
+      "sub": "石炭採掘",
+      "sub_en": "Coal mining",
+      "sub_short": "石炭",
+      "sub_short_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社が褐炭を供給する契約",
+          "text_en": "Its unit supplies lignite under a sales agreement",
+          "source": {
+            "label": "NACCO Industries 10-K(2025年度)",
+            "label_en": "NACCO Industries 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789933/000078993326000070/nacco-20251231.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Lignite Sales Agreement, dated as of January 30, 2014, between Coyote Creek Mining Company, L.L.C. and Otter Tail Power Company, Northern Municipal Power Agency, Montana-Dakota Utilities Co., a division of MDU Resources Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エヴェラス・コンストラクション",
+      "name_en": "Everus Construction Group",
+      "sub": "電気・設備工事",
+      "sub_en": "Electrical & mechanical contracting",
+      "sub_short": "電気工事",
+      "sub_short_en": "Electrical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MDUから分離した旧事業部門",
+          "text_en": "Spun off from MDU Resources",
+          "source": {
+            "label": "Everus 10-K(2025年度)",
+            "label_en": "Everus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2015845/000201584526000010/q42025-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We may not enjoy the same benefits that we did as a segment of MDU Resources"
+          }
+        }
+      ]
     }
   ],
   "far": [],

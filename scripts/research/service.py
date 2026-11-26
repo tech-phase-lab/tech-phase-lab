@@ -57,6 +57,9 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import earnings_patrol
+import earnings_dive_generate
+import earnings_reconcile
 import result_fallback
 import dart_api
 import dart_watch
@@ -910,6 +913,7 @@ class AutomaticMonitor:
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
+        self.earnings_patrol_thread = threading.Thread(target=self.run_earnings_patrol, name="earnings-patrol", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.channel_probe = official_channel_probe.Probe()
         self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
@@ -1203,6 +1207,27 @@ class AutomaticMonitor:
             except Exception:
                 print("watch-earnings-unavailable", flush=True)
             self.stop_event.wait(5)
+
+    def run_earnings_patrol(self):
+        """The 監視22銘柄 earnings patrol (earnings_patrol.py): every three hours, and a few minutes after each new results flash of a
+        roster company. Off with EARNINGS_PATROL=false. Its problems reach the owner as operational incidents."""
+        if not earnings_patrol.enabled():
+            print("earnings-patrol-disabled", flush=True)
+            return
+        schedule = earnings_patrol.Schedule()
+        if self.stop_event.wait(120):  # let the monitor open its database first
+            return
+        while not self.stop_event.is_set():
+            now = datetime.now(timezone.utc)
+            try:
+                with self.db_lock, monitor.connect(self.db_path) as db:
+                    newest = earnings_patrol.newest_flash(db)
+                trigger = schedule.tick(newest, now)
+                if trigger:
+                    earnings_patrol.run_once(self.db_path, now, trigger, lock=self.db_lock)
+            except Exception as exc:
+                print("earnings-patrol-failed " + type(exc).__name__, flush=True)
+            self.stop_event.wait(60)
 
     def run_event_results(self):
         """Big events (an election) and indicators without a reader of their own (ADP, ISM, FOMC, GDP, retail sales).
@@ -1562,6 +1587,7 @@ class AutomaticMonitor:
         self.ownership_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
+        self.earnings_patrol_thread.start()
         self.push_thread.start()
         self.price_alert_thread.start()
         self.value_check_thread.start()
@@ -1599,6 +1625,7 @@ class AutomaticMonitor:
         self.comparison_warm_thread.join(timeout=60)
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
+        self.earnings_patrol_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
         self.value_check_thread.join(timeout=15)
@@ -2495,6 +2522,7 @@ class AutomaticMonitor:
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
+            state["earningsPatrol"] = {**earnings_patrol.diagnostics(db), "reconcile": earnings_reconcile.diagnostics(db)}
             state["signalIntake"]["dart"] = dart_api.diagnostics()
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
@@ -4326,6 +4354,23 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
+            return
+        if path == "/company-dives":
+            # Nov 26 (owner): earnings deep dives built for a new quarter, without any model call (earnings_dive_generate.py: MU's
+            # template over the parsed figures and the release's existing deep analysis), that passed every check. Same token as
+            # /earnings-results; read only.
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                db = earnings_history.connect_read_only(self.app.db_path)
+                try:
+                    dives = earnings_dive_generate.published(db)
+                finally:
+                    db.close()
+                self.send_json(200, {"ok": True, "dives": dives})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "company-dives-unavailable"})
             return
         if path == "/earnings-results":
             # Nov 18 (owner): the calendar's results view reads every stored result of a month, not only the news feed's last

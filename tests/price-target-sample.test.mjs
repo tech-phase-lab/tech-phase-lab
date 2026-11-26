@@ -67,6 +67,22 @@ test("the panel puts the sample first, and shows nothing extra without it", asyn
   assert.ok(!fs.readFileSync(new URL("../app/research/news/news-feed.tsx", import.meta.url), "utf8").includes("sample"), "the news page never shows it");
 });
 
+test("the 目標株価 page shows one line under its title instead of the panel's own heading; home keeps the heading (owner, Nov 26)", async () => {
+  const { default: Panel } = await bundle("../app/research/price-targets-panel.tsx");
+  for (const lang of ["ja", "en"]) {
+    const home = renderToStaticMarkup(React.createElement(Panel, { lang }));
+    const page = renderToStaticMarkup(React.createElement(Panel, { lang, heading: false }));
+    for (const text of ["ANALYST", lang === "ja" ? "目標株価の変更" : "Price target changes", lang === "ja" ? "過去1週間" : "Past week"]) {
+      assert.ok(home.includes(text), text);
+      assert.ok(!page.includes(text), text);
+    }
+  }
+  const source = fs.readFileSync(new URL("../app/research/price-targets/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /description=\{lang === "ja" \? "アナリストによる変更・過去1週間" : "Analyst changes · past week"\}/);
+  assert.match(source, /<PriceTargetsPanel [^>]*heading=\{false\}/);
+  assert.doesNotMatch(fs.readFileSync(new URL("../app/research/news/news-feed.tsx", import.meta.url), "utf8"), /heading=/);
+});
+
 test("opened with ?demo=nvda the page hands over the row and removes the query (history.replaceState); a reload shows the normal page", async () => {
   const dom = new JSDOM("<!doctype html><html><body><div id=root></div></body></html>", { url: "https://techphase.app/research/price-targets?demo=nvda" });
   const keep = {};

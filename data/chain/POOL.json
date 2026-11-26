@@ -123,6 +123,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "LESL",
+      "ticker": "LESL",
+      "name": "レスリーズ",
+      "name_en": "Leslie's",
+      "sub": "プール用品小売",
+      "sub_en": "Pool supplies retail",
+      "sub_short": "プール",
+      "sub_short_en": "Pools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "卸の競合にPool Corporationを挙げる",
+          "text_en": "Names Pool Corporation among wholesale competitors",
+          "source": {
+            "label": "Leslie's 10-K(2025年9月期)",
+            "label_en": "Leslie's 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821806/000119312525323811/lesl-20251004.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Includes large wholesalers, such as Heritage Pool Supply Group, owned by Home Depot, and Pool Corporation."
+          }
+        }
+      ]
     }
   ],
   "far": [],
