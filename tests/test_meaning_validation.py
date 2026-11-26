@@ -176,3 +176,20 @@ class MeaningValidationTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class GlossaryNameTests(unittest.TestCase):
+    """Owner, Nov 26: "GE HealthCare advances total body PET/CT" was translated as 「GEベルノバ、…」."""
+
+    def test_a_listed_spelling_needs_the_company_in_the_english(self):
+        with self.assertRaisesRegex(ValueError, 'changed-names'):
+            validation.validate_names('GEベルノバ、全身用PET/CTのOmni 128cmを進展', 'GE HealthCare advances total body PET/CT innovation with Omni 128 cm')
+        with self.assertRaisesRegex(ValueError, 'changed-names'):
+            validation.validate_names('エヌビディアが新製品', 'Acme launches a new product')
+
+    def test_the_company_its_ticker_or_an_alias_is_enough(self):
+        for ja, en in (('GEベルノバ、受注を拡大', 'GE Vernova expands orders'), ('エヌビディア株が上昇', 'NVDA stock rises'),
+                       ('エヌビディア、新ラックを出荷', "Nvidia's new rack ships"), ('TSMC、2nm量産を開始', 'Taiwan Semiconductor starts 2nm production'),
+                       ('アルファベット傘下のグーグル', 'Google, an Alphabet unit'), ('新モデルを発表', 'Acme unveils a new model'),
+                       ('ロボットアームの新製品', 'A new robot arm product')):
+            validation.validate_names(ja, en)

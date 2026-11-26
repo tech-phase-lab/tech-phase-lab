@@ -32,7 +32,7 @@ def answering(seen, kinds, fail=False):
         items = json.loads(payload['input'])
         out = []
         for i in items:
-            item = {'id': i['id'], 'titleJa': 'クレドの見出し', 'shortJa': 'クレドの見出し', 'kind': kinds.get(i['title'], 'news')}
+            item = {'id': i['id'], 'titleJa': '企業の見出し', 'shortJa': '企業の見出し', 'kind': kinds.get(i['title'], 'news')}
             if item['kind'] is None:
                 del item['kind']
             out.append(item)
