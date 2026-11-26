@@ -26,34 +26,33 @@ a:hover{filter:brightness(1.1)}
 @media (prefers-reduced-motion: reduce){.tp-s{animation:none}.tp-d1{opacity:1}.tp-glow{animation:none}.tp-glowm{animation:none}.tp-shine{animation:none}}
 
 .tpc{display:flex;flex-direction:column;align-items:stretch;gap:12px}
-.tpc-stage{position:relative;height:372px;border-radius:14px;background:radial-gradient(240px 200px at 26% 52%,rgba(61,219,176,0.22),rgba(61,219,176,0) 70%),radial-gradient(260px 220px at 76% 50%,rgba(232,190,85,0.36),rgba(232,190,85,0) 70%),#090a11;border:1px solid rgba(232,190,85,0.3);overflow:hidden;touch-action:pan-y;cursor:pointer}
-.tpc-ph{position:absolute;width:136px;height:286px;border-radius:28px;padding:6px;box-sizing:border-box;background:linear-gradient(135deg,#6e6e73 0%,#2b2b2e 18%,#8a8a8f 35%,#3a3a3d 55%,#9a9aa0 80%,#4a4a4d 100%);box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8)}
-.tpc-ph:before{content:"";position:absolute;left:-2px;top:58px;width:2px;height:18px;background:#7a7a7e;border-radius:2px;box-shadow:0 28px 0 #7a7a7e,0 56px 0 #7a7a7e}
-.tpc-ph:after{content:"";position:absolute;right:-2px;top:84px;width:2px;height:40px;background:#7a7a7e;border-radius:2px}
-.tpc-l{left:9%;top:22px;transform:rotate(-6deg);z-index:1}
-.tpc-r{right:9%;top:34px;transform:rotate(5deg);z-index:2;box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8),0 0 34px rgba(232,190,85,.35)}
-.tpc-sc{position:relative;width:100%;height:100%;border-radius:22px;overflow:hidden;background:#0b0f16}
-.tpc-sb{position:absolute;top:0;left:0;right:0;height:18px;display:flex;justify-content:space-between;align-items:center;padding:0 7px 0 14px;font:600 7px -apple-system,"Helvetica Neue",sans-serif;color:#fff;z-index:2;background:#0b0f16}
-.tpc-sb>span:last-child{transform:scale(.5)!important}
-.tpc-di{position:absolute;top:5px;left:50%;width:38px;height:11px;margin-left:-19px;border-radius:7px;background:#000;z-index:3}
-.tpc-img{position:absolute;left:0;right:0;top:18px;width:100%;opacity:0;transition:opacity .45s ease}
+.tpc-stage{position:relative;container-type:inline-size;height:calc(var(--w,300px)*1);border-radius:14px;background:radial-gradient(60% 55% at 26% 48%,rgba(61,219,176,0.22),rgba(61,219,176,0) 70%),radial-gradient(60% 55% at 76% 48%,rgba(232,190,85,0.36),rgba(232,190,85,0) 70%),#090a11;border:1px solid rgba(232,190,85,0.3);overflow:hidden;touch-action:pan-y;cursor:pointer;aspect-ratio:1/1.22;height:auto}
+.tpc-ph{position:absolute;width:47cqw;aspect-ratio:136/286;border-radius:7.8cqw;padding:1.7cqw;box-sizing:border-box;background:linear-gradient(135deg,#6e6e73 0%,#2b2b2e 18%,#8a8a8f 35%,#3a3a3d 55%,#9a9aa0 80%,#4a4a4d 100%);box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8)}
+.tpc-ph:before{content:"";position:absolute;left:-2px;top:20%;width:2px;height:6%;background:#7a7a7e;border-radius:2px;box-shadow:0 9cqw 0 #7a7a7e}
+.tpc-ph:after{content:"";position:absolute;right:-2px;top:29%;width:2px;height:14%;background:#7a7a7e;border-radius:2px}
+.tpc-l{left:4cqw;top:5cqw;transform:rotate(-6deg);z-index:1}
+.tpc-r{right:4cqw;top:8cqw;transform:rotate(5deg);z-index:2;box-shadow:inset 0 0 0 1px #1c1c1e,inset 0 0 0 2px rgba(168,168,173,.33),0 22px 36px rgba(0,0,0,.8),0 0 34px rgba(232,190,85,.35)}
+.tpc-sc{position:relative;width:100%;height:100%;border-radius:6.2cqw;overflow:hidden;background:#0b0f16}
+.tpc-sb{position:absolute;top:0;left:0;right:0;height:5cqw;display:flex;justify-content:space-between;align-items:center;padding:0 2cqw 0 4cqw;font:600 2cqw -apple-system,"Helvetica Neue",sans-serif;color:#fff;z-index:2;background:#0b0f16}
+.tpc-sb>span:last-child{transform:scale(.14cqw)!important;transform:scale(.5)!important}
+.tpc-di{position:absolute;top:1.4cqw;left:50%;width:10.5cqw;height:3cqw;margin-left:-5.25cqw;border-radius:2cqw;background:#000;z-index:3}
+.tpc-img{position:absolute;left:0;right:0;top:5cqw;width:100%;opacity:0;transition:opacity .3s ease}
 .tpc-img.on{opacity:1}
-.tpc-gl{position:absolute;inset:0;border-radius:22px;background:linear-gradient(115deg,rgba(255,255,255,.11) 0%,rgba(255,255,255,.02) 28%,rgba(255,255,255,0) 40%);pointer-events:none;z-index:4}
-.tpc-caps{position:absolute;left:0;right:0;bottom:12px;height:20px}
-.tpc-cap{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
-.tpc-cap.on{opacity:1}
-.tpc-cap span{position:absolute;width:150px;text-align:center;font-size:12px;font-weight:700;white-space:nowrap}
-.tpc-cap .c1{left:calc(9% - 7px);color:#3ddbb0}.tpc-cap .c2{right:calc(9% - 7px);color:#f6d675}
-.tpc-cap .one{left:0;right:0;width:auto;color:#fff1b8;font-size:13px}
+.tpc-gl{position:absolute;inset:0;border-radius:6.2cqw;background:linear-gradient(115deg,rgba(255,255,255,.11) 0%,rgba(255,255,255,.02) 28%,rgba(255,255,255,0) 40%);pointer-events:none;z-index:4}
+.tpc-caps{position:absolute;left:0;right:0;bottom:4cqw;height:20px}
+.tpc-cap{position:absolute;inset:0;display:none}
+.tpc-cap.on{display:block;animation:tpcin .35s ease}
+@keyframes tpcin{from{opacity:0}to{opacity:1}}
+.tpc-cap span{position:absolute;width:44cqw;text-align:center;font-size:clamp(10.5px,3.6cqw,13px);font-weight:700;white-space:nowrap}
+.tpc-cap .c1{left:4cqw;color:#3ddbb0}.tpc-cap .c2{right:4cqw;color:#f6d675}
+.tpc-cap .one{left:0;right:0;width:auto;color:#fff1b8;font-size:clamp(11.5px,4cqw,14px)}
 .tpc-ctl{display:flex;align-items:center;justify-content:center;gap:12px}
 .tpc-ar{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(232,190,85,0.45);background:#0f1017;color:#f6d675;font-size:17px;line-height:1;display:grid;place-items:center;cursor:pointer;padding:0}
 .tpc-dots{display:flex;gap:5px;align-items:center}
 .tpc-dots i{width:6px;height:6px;border-radius:3px;background:#2a2e3a;transition:all .3s}
 .tpc-dots i.on{width:16px;background:#e8be55}
-@media (prefers-reduced-motion: reduce){.tpc-img,.tpc-cap{transition:none}}
+@media (prefers-reduced-motion: reduce){.tpc-img{transition:none}.tpc-cap.on{animation:none}}
 .tp-ln{font-size:clamp(11.5px, calc((100vw - 130px) / 17.5), 15px)}.tp-ln span{display:inline-block;white-space:nowrap}
-/* Phones up to 413px: the figure's feet reached 「作りました！」 (owner spec: no overlap) */
-@media (max-width:413px){.rz-hero{height:184px!important}}
 </style>
 </head>
 <body>
@@ -71,14 +70,14 @@ a:hover{filter:brightness(1.1)}
 </svg>
 <div style="position: absolute; right: 12px; bottom: 76px; width: 14px; height: 14px; border-radius: 50%; background: #f6d675; box-shadow: 0 0 18px 4px rgba(246,214,117,0.7)"></div>
 
-<img class="rz-hero" src="/start/rizel-hero.webp" alt="" aria-hidden="true" style="position: absolute; right: 4px; top: -6px; height: 210px; width: auto; pointer-events: none">
+<img src="/start/rizel-hero.webp" alt="" aria-hidden="true" style="position: absolute; right: -4px; top: -10px; height: clamp(150px, calc(100vw - 210px), 210px); width: auto; pointer-events: none">
 <div style="position: relative; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; color: #3ddbb0"><span style="display: block; width: 28px; height: 2px; background: #3ddbb0"></span>投資家わたがし改め、リゼル始動</div>
 <div style="position: relative; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.05; letter-spacing: 0.01em">
 <span style="font-size: 44px; background: linear-gradient(180deg, #ffffff, #e6dcc0); -webkit-background-clip: text; background-clip: text; color: transparent">Tech Phase</span>
 <span style="font-size: 44px; background: linear-gradient(90deg, #fff1b8, #e8be55 45%, #c8932a); -webkit-background-clip: text; background-clip: text; color: transparent">Research</span>
 </div>
-<h1 style="position: relative; margin: 0; font-family: 'Shippori Mincho B1', serif; font-size: 27px; line-height: 1.55; font-weight: 800; color: #ffffff">米国ハイテク株<br>特化型サイト作りました！</h1>
-<div style="position: relative; font-family: 'Shippori Mincho B1', serif; font-size: 26px; font-weight: 800; letter-spacing: 0.04em; background: linear-gradient(90deg, #fff1b8, #e8be55 50%, #d09a2c); -webkit-background-clip: text; background-clip: text; color: transparent">ゼロから再び頂点へ</div>
+<h1 style="position: relative; margin: 0; font-family: 'Shippori Mincho B1', serif; font-size: 20px; line-height: 1.6; font-weight: 800; color: #ffffff">米国ハイテク株<br>特化型サイト作りました！</h1>
+<div style="position: relative; overflow: hidden; display: inline-block; align-self: flex-start; font-family: 'Shippori Mincho B1', serif; font-weight: 800; font-size: clamp(21px, 6.6vw, 26px); letter-spacing: 0.08em; white-space: nowrap; padding: 2px 0 6px; border-bottom: 2px solid; border-image: linear-gradient(90deg,#e8be55,rgba(232,190,85,0)) 1"><span style="background: linear-gradient(180deg, #fff6cf 0%, #f3cf6a 45%, #b9842a 55%, #f0c860 100%); -webkit-background-clip: text; background-clip: text; color: transparent">ゼロから再び頂点へ</span><span class="tp-shine" style="position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,248,214,.45),rgba(255,255,255,0));pointer-events:none"></span></div>
 </section>
 
 <div style="margin-left: 6px; border-left: 2px solid rgba(232,190,85,0.4); padding-left: 20px; display: flex; flex-direction: column; gap: 44px">
@@ -128,8 +127,8 @@ a:hover{filter:brightness(1.1)}
 <div style="display: flex; align-items: center; gap: 14px">
 <img src="/start/logo.png" alt="Tech Phase Researchのロゴ" style="flex: none; width: 60px; height: 60px; border-radius: 14px; display: block">
 <div style="min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #eef0f5">Tech Phase <span style="color: #e8be55">Research</span></div>
-<div style="font-family: 'Shippori Mincho B1', serif; font-size: 18px; line-height: 1.5; font-weight: 800; color: #ffffff"><span style="display: inline-block">米国株の変化を、</span><span style="display: inline-block">先読みする。</span></div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(15px, calc((100vw - 172px) / 10.8), 22px); font-weight: 700; color: #eef0f5; white-space: nowrap">Tech Phase <span style="color: #e8be55">Research</span></div>
+<div style="font-family: 'Shippori Mincho B1', serif; font-size: clamp(12px, calc((100vw - 172px) / 14), 18px); line-height: 1.5; font-weight: 800; color: #ffffff; white-space: nowrap">米国株の変化を、先読みする。</div>
 </div>
 </div>
 
