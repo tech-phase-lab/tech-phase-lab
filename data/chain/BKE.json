@@ -1,0 +1,209 @@
+{
+  "root": {
+    "ticker": "BKE",
+    "name": "バックル",
+    "cik": 885245,
+    "name_en": "Buckle"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "AEO",
+    "ANF",
+    "URBN",
+    "GAP"
+  ],
+  "companies": [
+    {
+      "id": "ANF",
+      "ticker": "ANF",
+      "name": "アバクロンビー&フィッチ",
+      "name_en": "Abercrombie & Fitch",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "アパレル",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AEO",
+      "ticker": "AEO",
+      "name": "アメリカン・イーグル・アウトフィッターズ",
+      "name_en": "American Eagle Outfitters",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOOT",
+      "ticker": "BOOT",
+      "name": "ブート・バーン",
+      "name_en": "Boot Barn",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "URBN",
+      "ticker": "URBN",
+      "name": "アーバン・アウトフィッターズ",
+      "name_en": "Urban Outfitters",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GAP",
+      "ticker": "GAP",
+      "name": "ギャップ",
+      "name_en": "Gap Inc.",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TLYS",
+      "ticker": "TLYS",
+      "name": "ティリーズ",
+      "name_en": "Tilly's",
+      "sub": "衣料小売",
+      "sub_en": "Apparel retail",
+      "sub_short": "衣料小売",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HM",
+      "ticker": "HM",
+      "name": "H&M",
+      "name_en": "H&M",
+      "sub": "衣料",
+      "sub_en": "Apparel",
+      "sub_short": "衣料",
+      "sub_short_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "婦人服の主な競合",
+          "text_en": "A primary competitor in women's apparel",
+          "source": {
+            "label": "Buckle 10-K(2026年1月期)",
+            "label_en": "Buckle 10-K (FY ended Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/885245/000088524526000012/bke-20260131.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "In the women's merchandise area, the Company competes primarily with specialty retailers such as Abercrombie & Fitch, Altar'd State, American Eagle Outfitters, Boot Barn, Free People, Garage, H&M, Hollister, Journey's, Lulus, Madewell, Maurices, PacSun, Scheels, Tilly's, Urban Outfitters, Zara, and Gap."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
