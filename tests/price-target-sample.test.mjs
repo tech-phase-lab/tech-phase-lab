@@ -77,7 +77,7 @@ test("the 目標株価 page shows one line under its title instead of the panel'
       assert.ok(!page.includes(text), text);
     }
   }
-  const source = fs.readFileSync(new URL("../app/research/price-targets/page.tsx", import.meta.url), "utf8");
+  const source = fs.readFileSync(new URL("../app/research/price-targets/screen.tsx", import.meta.url), "utf8");
   assert.match(source, /description=\{lang === "ja" \? "アナリストによる変更・過去1週間" : "Analyst changes · past week"\}/);
   assert.match(source, /<PriceTargetsPanel [^>]*heading=\{false\}/);
   assert.doesNotMatch(fs.readFileSync(new URL("../app/research/news/news-feed.tsx", import.meta.url), "utf8"), /heading=/);

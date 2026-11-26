@@ -128,7 +128,7 @@ function renderAccount({owner=false,profile={state:'loading'},contract={state:'l
   'next/link':{default:({children,...props})=>createElement('a',props,children)},
   'next/navigation':{useRouter:()=>({replace:()=>{}})},
   '@clerk/nextjs':{useClerk:()=>({})},
-  '../identity-provider':{useIdentityRefresh:()=>()=>{}},
+  '../identity-provider':{useIdentityRefresh:()=>()=>{},useIdentityWordingReady:()=>true},
   '../member-display-provider':{forgetMemberHint:()=>{}},
   './crown':{default:()=>null},'./avatars':avatars,'./account-sheets':sheets,'./account-data':data,
   '../pro-offer-card':{default:({children,notice})=>createElement('div',null,'PayPalで申し込む',notice,children)},'../plan-cards':{ProFeatures:()=>createElement('span',null,'米国株の資産管理')},

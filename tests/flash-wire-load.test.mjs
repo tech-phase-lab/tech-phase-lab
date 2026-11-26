@@ -26,6 +26,7 @@ test("a quiet loading line stands in for the company news until it arrives, and 
   assert.match(page, /wireSettled && !wireLoaded && view === "all" && <p className=\{timeline\.fine\} role="status">\{ja \? "ニュースを読み込んでいます" : "Loading news…"\}<\/p>/);
   assert.match(page, /setWire\(items\); setWireLoaded\(true\);/);
   // FREE / PRO handling and owner access stay as they were.
+  // Speed, Nov 26: the server draws only a visitor's FREE view, so PRO is the browser's check alone.
   assert.match(page, /const full = memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
   assert.match(page, /const rows = full \? allRows : freeFlashRows\(allRows/);
 });

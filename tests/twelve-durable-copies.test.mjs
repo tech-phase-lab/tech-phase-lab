@@ -77,7 +77,7 @@ test("wiring: the facts specs are durable, the shared reader uses the monitor, a
   assert.match(data, /name: "md-facts-stats-v2", slotMs: 6 \* 3600_000, staleMs: 14 \* 86_400_000, durable: true/);
   assert.match(data, /name: "md-facts-next-earnings-v2", slotMs: 24 \* 3600_000, staleMs: 7 \* 86_400_000, durable: true/);
   const gateway = read("lib/research/twelve-gateway.ts");
-  assert.match(gateway, /export const sharedReader = createReader\(dataCache, Date\.now, durableCopies\);/);
+  assert.match(gateway, /export const sharedReader = createReader\(dataCache, Date\.now, durableCopies, keepRunning\);/);
   assert.match(gateway, /monitorEndpoint\("\/twelve\/lease"\)/);
   const store = read("lib/research/twelve-store.ts");
   assert.match(store, /await durablePut\("compare-statistics", ticker, \{ at: Date\.parse\(raw\.retrievedAt\), value: raw\.payload \}\)/);

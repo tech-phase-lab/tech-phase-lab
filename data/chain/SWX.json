@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "SWX",
+    "name": "サウスウエスト・ガス・ホールディングス",
+    "cik": 1692115,
+    "name_en": "Southwest Gas Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・株主",
+      "en": "Partners & shareholders"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "name_en": "Centuri Holdings",
+      "sub": "公益工事",
+      "sub_en": "Utility services",
+      "sub_short": "工事",
+      "sub_short_en": "Services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に分離契約を結んだ旧子会社",
+          "text_en": "Former subsidiary; separation agreement signed in 2024",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "That certain Separation Agreement, dated as of April 11, 2024, by and between the Company and Centuri"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELPASONG",
+      "ticker": "ELPASONG",
+      "name": "エルパソ・ナチュラル・ガス",
+      "name_en": "El Paso Natural Gas",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大口需要家向けで競合するパイプライン",
+          "text_en": "A pipeline that competes to serve large end-users",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southwest Gas competes with interstate transmission pipeline companies, such as El Paso, Kern River, Transwestern, Tuscarora, and Ruby to provide service to certain large end-users."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KERNRIVER",
+      "ticker": "KERNRIVER",
+      "name": "カーンリバー・ガス・トランスミッション",
+      "name_en": "Kern River Gas Transmission",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大口需要家向けで競合するパイプライン",
+          "text_en": "A pipeline that competes to serve large end-users",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southwest Gas competes with interstate transmission pipeline companies, such as El Paso, Kern River, Transwestern, Tuscarora, and Ruby to provide service to certain large end-users."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRANSWESTERN",
+      "ticker": "TRANSWESTERN",
+      "name": "トランスウエスタン・パイプライン",
+      "name_en": "Transwestern Pipeline",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大口需要家向けで競合するパイプライン",
+          "text_en": "A pipeline that competes to serve large end-users",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southwest Gas competes with interstate transmission pipeline companies, such as El Paso, Kern River, Transwestern, Tuscarora, and Ruby to provide service to certain large end-users."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TUSCARORA",
+      "ticker": "TUSCARORA",
+      "name": "タスカローラ・ガス・トランスミッション",
+      "name_en": "Tuscarora Gas Transmission",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大口需要家向けで競合するパイプライン",
+          "text_en": "A pipeline that competes to serve large end-users",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southwest Gas competes with interstate transmission pipeline companies, such as El Paso, Kern River, Transwestern, Tuscarora, and Ruby to provide service to certain large end-users."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RUBYPIPELINE",
+      "ticker": "RUBYPIPELINE",
+      "name": "ルビー・パイプライン",
+      "name_en": "Ruby Pipeline",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "sub_short": "導管",
+      "sub_short_en": "Pipeline",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大口需要家向けで競合するパイプライン",
+          "text_en": "A pipeline that competes to serve large end-users",
+          "source": {
+            "label": "Southwest Gas Holdings 10-K(2025年度)",
+            "label_en": "Southwest Gas Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southwest Gas competes with interstate transmission pipeline companies, such as El Paso, Kern River, Transwestern, Tuscarora, and Ruby to provide service to certain large end-users."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

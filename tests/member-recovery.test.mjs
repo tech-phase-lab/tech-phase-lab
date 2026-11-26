@@ -27,3 +27,14 @@ test("failed renewal and cancelled resume cannot issue a membership request", as
   const c=new AbortController();c.abort();
   await assert.rejects(recoverMember(async()=>{},c.signal));assert.equal(calls,0);
 });
+test("a signed-out visitor the identity SDK has loaded is read once (speed, Nov 26)", async t => {
+  let calls=0; t.mock.method(globalThis,"fetch",async()=>{calls++;return Response.json({status:"signed-out",plan:"free"});});
+  const refreshes=[];
+  const {member}=await recoverMember(async force=>{refreshes.push(force);return false;},new AbortController().signal);
+  assert.equal(calls,1);assert.deepEqual(refreshes,[false]);assert.equal(member.status,"signed-out");
+});
+test("a session the SDK renewed still gets the second read when the first answer was signed-out", async t => {
+  let calls=0; t.mock.method(globalThis,"fetch",async()=>Response.json(++calls===1?{status:"signed-out",plan:"free"}:{status:"signed-in",plan:"pro",isAdmin:false}));
+  const {member}=await recoverMember(async()=>true,new AbortController().signal);
+  assert.equal(calls,2);assert.equal(member.status,"signed-in");
+});

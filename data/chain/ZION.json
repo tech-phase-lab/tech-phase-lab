@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "ZION",
+    "name": "ザイオンズ・バンコーポレーション",
+    "cik": 109380,
+    "name_en": "Zions Bancorporation"
+  },
+  "rows": [
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SYY",
+      "ticker": "SYY",
+      "name": "シスコ(食品卸)",
+      "name_en": "Sysco",
+      "sub": "業務用食品卸",
+      "sub_en": "Foodservice distribution",
+      "sub_short": "食品卸",
+      "sub_short_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手",
+          "text_en": "Zions is a lender under its credit agreement",
+          "source": {
+            "label": "Sysco 10-K付属の契約(2025年6月期)",
+            "label_en": "Sysco credit amendment filed with its 10-K (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/96021/000009602125000099/exhibit103sysco2025amendme.htm",
+            "level": "official",
+            "date": "2025-08-22",
+            "quote": "ZIONS BANCORPORATION, N.A. DBA ZIONS FIRST NATIONAL BANK, as Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LION",
+      "ticker": "LION",
+      "name": "ライオンズゲート・スタジオ",
+      "name_en": "Lionsgate Studios",
+      "sub": "映画・テレビ制作",
+      "sub_en": "Film & TV studio",
+      "sub_short": "映画",
+      "sub_short_en": "Studio",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手",
+          "text_en": "Zions is a lender under its credit agreement",
+          "source": {
+            "label": "Lionsgate Studios 10-K付属の契約(2026年3月期)",
+            "label_en": "Lionsgate Studios credit amendment filed with its 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2052959/000205295926000049/exhibit1027amendmentno5.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "ZIONS BANCORPORATION, N.A. dba CALIFORNIA BANK AND TRUST, as a Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NRP",
+      "ticker": "NRP",
+      "name": "ナチュラル・リソース・パートナーズ",
+      "name_en": "Natural Resource Partners",
+      "sub": "鉱業権益",
+      "sub_en": "Mineral rights",
+      "sub_short": "鉱業権",
+      "sub_short_en": "Minerals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の幹事行(Amegy Bank)",
+          "text_en": "Zions (as Amegy Bank) is administrative agent on its credit agreement",
+          "source": {
+            "label": "Natural Resource Partners 10-K(2025年度)",
+            "label_en": "Natural Resource Partners 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1171486/000143774926006147/nrp20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Zions Bancorporation, N.A. dba Amegy Bank, as administrative agent for the Lenders, as Swingline Lender, and as an Issuing Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VREX",
+      "ticker": "VREX",
+      "name": "バレックス・イメージング",
+      "name_en": "Varex Imaging",
+      "sub": "X線部品",
+      "sub_en": "X-ray components",
+      "sub_short": "X線",
+      "sub_short_en": "X-ray",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の幹事行",
+          "text_en": "Zions is administrative and collateral agent on its credit agreement",
+          "source": {
+            "label": "Varex Imaging 10-K(2025年9月期)",
+            "label_en": "Varex Imaging 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1681622/000168162225000108/var-20251003.htm",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "Zions Bancorporation, N.A. DBA Zions First National bank, as administrative and collateral agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PACS",
+      "ticker": "PACS",
+      "name": "PACSグループ",
+      "name_en": "PACS Group",
+      "sub": "介護施設運営",
+      "sub_en": "Skilled nursing",
+      "sub_short": "介護",
+      "sub_short_en": "Nursing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手",
+          "text_en": "Zions is a lender under its credit agreement",
+          "source": {
+            "label": "PACS Group 10-K付属の契約(2024年度)",
+            "label_en": "PACS Group credit amendment filed with its 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2001184/000200118425000068/exhibit1013-truist_pacsxfi.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "ZIONS BANCORPORATION, N.A. DBA CALIFORNIA BANK & TRUST, as a Lender"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
