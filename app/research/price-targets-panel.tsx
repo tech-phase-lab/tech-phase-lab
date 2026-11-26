@@ -20,14 +20,15 @@ const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot
 
 /** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared.
  * heading: the ANALYST / 目標株価の変更 / 過去1週間 block. The 目標株価 page turns it off (owner, Nov 26): its page title carries
- * 「アナリストによる変更・過去1週間」 instead, and the pager then brings that page title back into view. */
-export default function PriceTargetsPanel({ lang, sample = null, heading = true }: { lang: Language; sample?: Target | null; heading?: boolean }) {
+ * 「アナリストによる変更・過去1週間」 instead, and the pager then brings that page title back into view.
+ * `initial`: the feed the server drew into the first HTML (app/research/price-targets/page.tsx; the same for every visitor). */
+export default function PriceTargetsPanel({ lang, sample = null, heading = true, initial = null }: { lang: Language; sample?: Target | null; heading?: boolean; initial?: { items: Target[]; at: string } | null }) {
   const panelRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const now = useCalendarClock();
-  const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">(() => recent() ? "ready" : "loading");
-  const [updatedAt, setUpdatedAt] = useState<string | null>(() => recent()?.at ?? null);
+  const [items, setItems] = useState<Target[]>(() => initial?.items ?? recent()?.items ?? []);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(() => initial || recent() ? "ready" : "loading");
+  const [updatedAt, setUpdatedAt] = useState<string | null>(() => initial?.at ?? recent()?.at ?? null);
   const [delivery, setDelivery] = useState<"connecting" | "live" | "polling">("connecting");
   const [page, setPage] = useState(1);
   useEffect(() => {

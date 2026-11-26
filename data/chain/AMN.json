@@ -1,0 +1,180 @@
+{
+  "root": {
+    "ticker": "AMN",
+    "name": "AMNヘルスケア・サービシズ",
+    "cik": 1142750,
+    "name_en": "AMN Healthcare Services"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CCRN"
+  ],
+  "companies": [
+    {
+      "id": "CCRN",
+      "ticker": "CCRN",
+      "name": "クロス・カントリー・ヘルスケア",
+      "name_en": "Cross Country Healthcare",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "医療人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療人材サービスの主な競合",
+          "text_en": "A leading competitor in healthcare staffing",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AYA",
+      "ticker": "AYA",
+      "name": "アヤ・ヘルスケア",
+      "name_en": "Aya Healthcare",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "医療人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療人材サービスの主な競合",
+          "text_en": "A leading competitor in healthcare staffing",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CHGHEALTH",
+      "ticker": "CHGHEALTH",
+      "name": "CHGヘルスケア",
+      "name_en": "CHG Healthcare Services",
+      "sub": "医師の派遣",
+      "sub_en": "Physician staffing",
+      "sub_short": "医師派遣",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医師派遣などの主な競合",
+          "text_en": "A leading competitor in physician staffing",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMERGIS",
+      "ticker": "AMERGIS",
+      "name": "アマージス",
+      "name_en": "Amergis",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "医療人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療人材サービスの主な競合",
+          "text_en": "A leading competitor in healthcare staffing",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JACKSONHC",
+      "ticker": "JACKSONHC",
+      "name": "ジャクソン・ヘルスケア",
+      "name_en": "Jackson Healthcare",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "医療人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療人材サービスの主な競合",
+          "text_en": "A leading competitor in healthcare staffing",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LANGUAGELINE",
+      "ticker": "LANGUAGELINE",
+      "name": "ランゲージライン・ソリューションズ",
+      "name_en": "LanguageLine Solutions",
+      "sub": "医療通訳",
+      "sub_en": "Interpretation services",
+      "sub_short": "通訳",
+      "sub_short_en": "Interpret",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療通訳サービスの主な競合",
+          "text_en": "A leading competitor in interpretation services",
+          "source": {
+            "label": "AMN Healthcare 10-K(2025年度)",
+            "label_en": "AMN Healthcare 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142750/000162828026009918/amn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our leading competitors vary by segment and include Amergis, Aya Healthcare, CHG Healthcare Services, Cross Country Healthcare, HealthTrust Workforce Solutions, Ingenovis Health, Jackson Healthcare, LanguageLine Solutions, Medical Solutions and Proprio."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

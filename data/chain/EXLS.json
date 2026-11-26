@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "EXLS",
+    "name": "EXLサービス",
+    "cik": 1297989,
+    "name_en": "ExlService Holdings"
+  },
+  "rows": [
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in its 10-K)"
+    }
+  ],
+  "rivals": [
+    "CTSH",
+    "G",
+    "INFY"
+  ],
+  "companies": [
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "name_en": "Cognizant",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ・AIを使う業務改革の主な競合",
+          "text_en": "A primary competitor in data- and AI-led services",
+          "source": {
+            "label": "EXL 10-K(2025年度)",
+            "label_en": "EXL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Cognizant Technology Solutions, Genpact Limited, Infosys, NTT DATA, and Tata Consultancy Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "ticker": "G",
+      "name": "Genpact",
+      "name_en": "Genpact",
+      "sub": "業務受託",
+      "sub_en": "Business process services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ・AIを使う業務改革の主な競合",
+          "text_en": "A primary competitor in data- and AI-led services",
+          "source": {
+            "label": "EXL 10-K(2025年度)",
+            "label_en": "EXL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Cognizant Technology Solutions, Genpact Limited, Infosys, NTT DATA, and Tata Consultancy Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INFY",
+      "ticker": "INFY",
+      "name": "インフォシス",
+      "name_en": "Infosys",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ・AIを使う業務改革の主な競合",
+          "text_en": "A primary competitor in data- and AI-led services",
+          "source": {
+            "label": "EXL 10-K(2025年度)",
+            "label_en": "EXL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Cognizant Technology Solutions, Genpact Limited, Infosys, NTT DATA, and Tata Consultancy Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTTDATA",
+      "ticker": "NTTDATA",
+      "name": "NTT DATA",
+      "name_en": "NTT DATA",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "sub_short": "DC",
+      "sub_short_en": "DCs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ・AIを使う業務改革の主な競合",
+          "text_en": "A primary competitor in data- and AI-led services",
+          "source": {
+            "label": "EXL 10-K(2025年度)",
+            "label_en": "EXL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Cognizant Technology Solutions, Genpact Limited, Infosys, NTT DATA, and Tata Consultancy Services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TCS",
+      "ticker": "TCS",
+      "name": "タタ・コンサルタンシー・サービシズ",
+      "name_en": "Tata Consultancy Services",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "sub_short": "IT",
+      "sub_short_en": "IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "データ・AIを使う業務改革の主な競合",
+          "text_en": "A primary competitor in data- and AI-led services",
+          "source": {
+            "label": "EXL 10-K(2025年度)",
+            "label_en": "EXL 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1297989/000129798926000008/exls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "such as Cognizant Technology Solutions, Genpact Limited, Infosys, NTT DATA, and Tata Consultancy Services"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
