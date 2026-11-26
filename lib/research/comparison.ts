@@ -378,8 +378,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   /** Any positive revenue-like duration fact (a sales, revenue, premiums, fees or interest-income line other than interest on the company's
    *  own cash) ending after `since` (a day number), in any standard taxonomy. */
   function revenueLikeSince(since: number): boolean {
-    const like = /Revenue|Sales|Premiums(?:Earned|Written)|FeeAndCommissionIncome|InterestAndDividendIncomeOperating|InterestIncomeOperating|InterestAndFeeIncome/;
-    const not = /Cost|Deferred|Receivable|Unbilled|Remaining|Liabilit|Tax|ProForma|DisposalGroup|Payment|Proceeds|Expense|Gain|Loss|Percent|Unrealized|Investment/;
+    // Interest income counts only for a finance company: a drug developer's interest on its cash is tagged the same way (AARD, ALIS).
+    const like = financeSic(sic) ? /Revenue|Sales|Premiums(?:Earned|Written)|FeeAndCommissionIncome|InterestAndDividendIncomeOperating|InterestIncomeOperating|InterestAndFeeIncome/ : /Revenue|Sales|Premiums(?:Earned|Written)|FeeAndCommissionIncome/;
+    const not = financeSic(sic) ? /Cost|Deferred|Receivable|Unbilled|Remaining|Liabilit|Tax|ProForma|DisposalGroup|Payment|Proceeds|Expense|Gain|Loss|Percent|Unrealized|Investment|Milestone|Agreement|Arrangement|Shares|Stock/
+      : /Cost|Deferred|Receivable|Unbilled|Remaining|Liabilit|Tax|ProForma|DisposalGroup|Payment|Proceeds|Expense|Gain|Loss|Percent|Unrealized|Investment|Milestone|Agreement|Arrangement|Shares|Stock|Interest|Credit|NotFromContract/;
     for (const b of ["us-gaap", "ifrs-full"]) for (const [tag, body] of Object.entries(obj(facts[b]))) {
       if (!like.test(tag.replace("AssessedTax", "")) || not.test(tag.replace("AssessedTax", ""))) continue;
       for (const values of Object.values(obj(obj(body).units))) if (Array.isArray(values) && values.some(v => { const f = obj(v); return typeof f.val === "number" && f.val > 0 && typeof f.start === "string" && typeof f.end === "string" && day(f.end) > since; })) return true;

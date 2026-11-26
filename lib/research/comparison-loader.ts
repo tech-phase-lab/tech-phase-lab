@@ -86,7 +86,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
     if (newest?.inline) {
       try {
         const html = await fetchText(newest.url, 20_000_000);
-        if (companyRevenueTagged(html)) {
+        if (companyRevenueTagged(html, newest.end)) {
           revenueFiled = true;
           // Its standard revenue lines are read from the filing itself (APA: us-gaap Revenues in the 10-Q, absent from company facts).
           const inline = inlineFinancialFacts(html, cik, newest);
@@ -131,16 +131,26 @@ export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
 
 /** A positive revenue or sales fact in a filing's inline XBRL outside any dimensional context, under a standard or the company's own
  *  name (company facts leave extension names out, and can lag the filing). */
-export function companyRevenueTagged(html: string): boolean {
-  const segmented = new Set<string>();
-  for (const m of html.matchAll(/<xbrli:context[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/xbrli:context>/gi)) if (/<xbrli:segment/i.test(m[2])) segmented.add(m[1]);
+export function companyRevenueTagged(html: string, periodEnd: string): boolean {
+  // Only the filing's own latest twelve months count: a revenue column for an earlier year (a drug developer's comparative period from
+  // before its sales stopped) is not current revenue.
+  const recent = new Set<string>(), since = Date.parse(periodEnd) - 380 * 86400000;
+  for (const m of html.matchAll(/<xbrli:context[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/xbrli:context>/gi)) {
+    if (/<xbrli:segment/i.test(m[2])) continue;
+    const end = /<xbrli:endDate>\s*([0-9-]{10})/i.exec(m[2])?.[1];
+    if (end && /<xbrli:startDate>/i.test(m[2]) && Date.parse(end) >= since) recent.add(m[1]);
+  }
   for (const m of html.matchAll(/<ix:nonFraction([^>]*)>([^<]*)</gi)) {
     const attrs = m[1], name = /name="([^"]+)"/i.exec(attrs)?.[1] ?? "", context = /contextRef="([^"]+)"/i.exec(attrs)?.[1] ?? "";
     const [prefix, local] = name.split(":");
-    if (!local || prefix === "dei" || segmented.has(context)) continue;
-    if (!/Revenue|Sales/.test(local) || /Cost|Deferred|Unearned|Receivable|Tax|Percent|Expense|Gain|Loss|Proceeds|Investment|Interest|ProForma|Remaining|Liabilit|Unbilled/.test(local)) continue;
+    if (!local || prefix === "dei" || !recent.has(context)) continue;
+    // A revenue or sales line itself (Revenues, RevenuesAndOther, OilAndGasRevenue, NetSales, RevenueFromContractWithCustomer...), not a
+    // share sales agreement, a milestone or any other figure that merely names sales.
+    if (!/(?:Revenues?|Sales)(?:Net|Total)?$|^Revenues?(?:And|From|Net)|^(?:Net|Total)(?:Revenues?|Sales)/.test(local)
+      || /Cost|Deferred|Unearned|Receivable|Tax|Percent|Expense|Gain|Loss|Proceeds|Investment|Interest|ProForma|Remaining|Liabilit|Unbilled|Share|Stock|Agreement|Milestone|Payment|Arrangement|Commission/.test(local)) continue;
     if (/sign="-"/.test(attrs)) continue;
-    if (Number(m[2].replace(/[^0-9.]/g, "")) > 0) return true;
+    // The displayed figure without HTML entities (a nil revenue is shown as "&#8212;", a dash).
+    if (Number(m[2].replace(/&#?\w+;/g, "").replace(/[^0-9.]/g, "")) > 0) return true;
   }
   return false;
 }
