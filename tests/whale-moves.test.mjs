@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { ABOUT, asOfLine, filterInsiders, money, parseWhaleSnapshot, quarterLabel, roleLabel, signedPoints, sortBuybacks, sortInstitutions, sortShort,
-  whaleMovesAccess, whaleMovesEnabled, monthDay, dateStack, SORTS, WHALE_TABS } from "../lib/research/whale-moves.ts";
+  whaleMovesAccess, whaleMovesEnabled, monthDay, dateStack, SORTS, WHALE_TABS, DEFAULT_WHALE_TAB } from "../lib/research/whale-moves.ts";
 
 const now = Date.UTC(2026, 10, 22);
 const pro = { status: "signed-in", plan: "pro", accessExpiresAt: now + 60_000 };
@@ -129,4 +129,31 @@ test("insider dates stay narrow: the month over the day, the year only across Ne
   assert.match(css, /\.timeline li \{[^}]*grid-template-columns:26px minmax\(0,1fr\)/);
   const screen = readFileSync(new URL("../app/research/whales/screen.tsx", import.meta.url), "utf8");
   assert.match(screen, /dateStack\(row\.date, ja, newestYear\)/);
+});
+
+test("tab order: insider trades, buybacks, short interest, institutions; insider trades open first (owner, Nov 26)", () => {
+  assert.deepEqual(WHALE_TABS.map(item => item.ja), ["役員売買", "自社株買い", "空売り", "機関"]);
+  assert.deepEqual(WHALE_TABS.map(item => item.en), ["Insider trades", "Buybacks", "Short interest", "Institutions"]);
+  assert.equal(DEFAULT_WHALE_TAB, "insiders");
+  for (const file of ["../app/research/whales/screen.tsx", "../app/research/pro-experience/samples/whale-tracks.tsx"]) {
+    const source = read(file);
+    assert.match(source, /useState<\w+>\(DEFAULT_WHALE_TAB\)/, file);
+    assert.doesNotMatch(source, /useState<\w+>\("institutions"\)/, file);
+  }
+});
+
+test("fast open (owner, Nov 26): one shared server copy behind the membership check, and this browser's last copy on screen at once", () => {
+  const route = read("../app/api/research/whales/route.ts");
+  // Every request is still checked; the copy is sent only after the check passes.
+  const body = route.slice(route.indexOf("export async function GET"));
+  assert.ok(body.indexOf("whaleMovesAccess(") < body.indexOf("Response.json(loaded.snapshot"));
+  assert.match(body, /if \(access !== 200\) return fail\(/);
+  assert.match(route, /FRESH_MS = 5 \* 60_000/);
+  assert.match(route, /loading \?\?= loadFromMonitor\(\)/, "one monitor request at a time");
+  assert.match(route, /"Cache-Control": "private, no-store"/);
+  const screen = read("../app/research/whales/screen.tsx");
+  assert.match(screen, /useSyncExternalStore\(noSubscribe, readRaw, \(\) => null\)/, "hydration sees no copy; the next render does");
+  assert.match(screen, /if \(plan === "free"\) store\(null\)/, "a FREE answer drops the copy");
+  assert.match(screen, /const shown = plan === "free" \? null :/);
+  assert.match(screen, /useWhaleMoves\(plan\)/);
 });
