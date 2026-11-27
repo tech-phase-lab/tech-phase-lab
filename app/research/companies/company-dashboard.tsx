@@ -110,7 +110,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
       </section>
 
       <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した資料", "Sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title} <span aria-hidden="true">↗</span></strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
-      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("株価・速報の配信は未接続。後日の訂正や新しい発表は自動反映していません。", "Live prices and news are not connected. Subsequent corrections and releases are not incorporated automatically.")}</p></footer>
+      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("後日の訂正や新しい発表は自動反映していません。", "Subsequent corrections and releases are not incorporated automatically.")}</p></footer>
     </main>
   </div>;
 }
