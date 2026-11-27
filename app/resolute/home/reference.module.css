@@ -196,6 +196,14 @@
 .panelSay small { font-size:12px; color:var(--gold); letter-spacing:.1em; }
 .panelSay p { margin:4px 0; font-size:14px; }
 .panelSay ul { margin:0; padding-left:1.2em; font-size:13px; color:var(--sub); line-height:1.75; }
+/* あなたのルール and 記事を読む in the くわしく panel (owner, Nov 27 trial): the same small gold label and quiet body as リゼルの一言. */
+.panelRules small { font-size:12px; color:var(--gold); letter-spacing:.1em; }
+.panelRules dl { display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 16px; margin:6px 0 0; font-size:13px; line-height:1.7; }
+.panelRules dl>div { display:contents; }
+.panelRules dt { font-size:13px; color:var(--sub); letter-spacing:0; white-space:nowrap; }
+.panelRules dd { margin:0; }
+.shockPanel .panelLink { align-self:flex-start; font-size:14px; color:var(--gold); text-decoration:none; }
+.shockPanel .panelLink:hover { text-decoration:underline; }
 .pcRoot .ruleGrid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
 .pcRoot .pic { height:140px; }
 .pcRoot .ruleTile { padding:16px 22px 20px; }

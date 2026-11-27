@@ -5,6 +5,9 @@ import {storyImpact,type ImpactMember} from '@/lib/resolute/impact';
 import {ShockBadge,ImpactGauge,ShockTableView,starColor} from '../features/shock-card';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {FirstLineMeter,useFirstLine} from '../news/first-line-meter';
+import {useRemembered} from '../features/use-remembered';
+import {shortRules,articleLink} from '@/lib/resolute/plan-short-rules';
+import type {PlanSnapshot} from '@/lib/resolute/plan-data';
 import s from './reference.module.css';
 
 /** The RIZEL line the feed assigned to a story. The frontend proxy passes approved lines to members only once
@@ -41,6 +44,8 @@ export function ShockCards({feed,locale,sample,member}:{feed:RiskFeed;locale:'ja
  const en=locale==='en',[open,setOpen]=useState<string|null>(null);
  const article=feed.articles.find(a=>a.id===open)??null,quote=article?assignedQuote(feed,article,sample):undefined;
  const firstLine=useFirstLine(!!article&&!sample);
+ // あなたのルール (owner, Nov 27 trial): the member's own saved rules, shortest form, from the plan this tab already loaded (no new read).
+ const plan=useRemembered<PlanSnapshot>('plan'),rules=sample?[]:shortRules(plan,locale),link=article&&!sample?articleLink(article.url):null;
  return <>
   <div className={s.shockGrid}>{feed.articles.slice(0,3).map(a=>{
    const q=assignedQuote(feed,a,sample),isOpen=a.id===open;
@@ -57,6 +62,8 @@ export function ShockCards({feed,locale,sample,member}:{feed:RiskFeed;locale:'ja
    <dl>{[[en?'Source':'出どころ',article[locale].source],[en?'Date':'日付',article[locale].date],[en?'What happened':'内容',article[locale].content]].map(([k,v],i)=><div key={k} className={i===2?s.wideCell:undefined}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
    {firstLine?<div className={s.panelMeter}><FirstLineMeter view={firstLine} locale={locale}/></div>:null}
    {quote?.[locale].reasons.length?<div className={s.panelSay}><small>{en?'A word from RIZEL':'リゼルの一言'}</small><p style={{whiteSpace:'pre-line'}}>{quote[locale].title}</p><ul>{quote[locale].reasons.slice(0,3).map((t,i)=><li key={i}>{t}</li>)}</ul></div>:null}
+   {rules.length?<div className={s.panelRules}><small>{en?'Your rules':'あなたのルール'}</small><dl>{rules.map(r=><div key={r.key}><dt>{r.label}</dt><dd>{r.text}</dd></div>)}</dl></div>:null}
+   {link?<a className={s.panelLink} href={link} target="_blank" rel="noopener noreferrer">{en?'Read the article →':'記事を読む →'}</a>:null}
   </div>:null}
  </>;
 }
