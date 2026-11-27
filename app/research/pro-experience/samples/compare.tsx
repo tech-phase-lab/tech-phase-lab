@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState, type PointerEvent } from "react";
-import { overallComparison } from "@/lib/research/comparison-scorecard";
+import { detailTraits, overallComparison } from "@/lib/research/comparison-scorecard";
 import { COMPARE_TICKERS, compareNow, compareSample, nextPicks } from "@/lib/research/pro-experience-sample-data";
 import { CompanyScoreCard, ScoreHeadline, VerdictHeading, ScoreOverview, StatusOverlay } from "../../compare/comparison-visuals";
 import DetailPanels from "../../compare/detail-panels";
@@ -72,7 +72,7 @@ export default function CompareSample({ lang }: { lang: "ja" | "en" }) {
           {result.companies.filter(c => c.preparedAnalysis?.items.length).map(c => <section key={c.ticker}>
             <h3>{c.name}（{c.ticker}）</h3>
             <small>{ja ? "決算期末" : "Period ended"} {c.preparedAnalysis!.periodEnd}</small>
-            <ul>{c.preparedAnalysis!.items.map(item => <li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
+            <ul>{detailTraits(c, now).map(item => <li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
           </section>)}
         </DetailPanels>
       </div>}

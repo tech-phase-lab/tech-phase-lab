@@ -31,12 +31,12 @@ export async function loadMarketQuotes(tickers: string[], options: { fast?: bool
 }
 /** Quotes from the shared one-minute copy (fifteen minutes while stocks do not trade). At most MAX_QUOTES_PER_REQUEST symbols are read from
  * the provider for one request, never-read and oldest first; the others keep their last good copy, whose own time the screen shows.
- * `fast` (the watchlist and a stock's page): a copy older than 15 seconds is read again only on a quiet minute (the "fast" tier, 200). */
+ * `fast` (the watchlist and a stock's page): a copy older than 15 seconds is read again under the "fast" tier (450, at most FAST_PER_MINUTE credits a minute). */
 export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean; stale: number }> {
   const spec = quoteSpec(Date.now());
   const got = await sharedReader.readMany<MarketQuote>(spec, tickers, group => fetchQuotes(group), { maxFetch: MAX_QUOTES_PER_REQUEST });
   let granted = fast, all = got;
-  // fast: one provider read per symbol and 15-second slot for everyone (twelve-budget.ts fastRefresh), under the "fast" tier (200).
+  // fast: one provider read per symbol and 15-second slot for everyone (twelve-budget.ts fastRefresh), under the "fast" tier (450; twelve-budget.ts FAST_PER_MINUTE).
   if (fast) ({ got: all, granted } = await fastRefresh<MarketQuote>(sharedReader, spec, got, group => fetchQuotes(group, "fast")).catch(() => ({ got, granted: false })));
   const out: Record<string, MarketQuote> = {};
   let stale = 0;

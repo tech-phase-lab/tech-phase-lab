@@ -94,7 +94,7 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
   const scoreURL=new URL("../lib/research/comparison-scorecard.ts",import.meta.url).href;
   const reactURL=pathToFileURL(require.resolve("react")).href;
   const input=`import React from ${JSON.stringify(reactURL)};
-    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentBalance,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    import {comparisonScores,comparisonMetric,listedTraits,comparisonLeaders,comparisonAvailability,hasRecentBalance,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
     import {VALUE_LABELS,valueAsOfLine,valueCheckItem} from ${JSON.stringify(new URL("../lib/research/comparison-value.ts",import.meta.url).href)};
     const styles=new Proxy({}, {get:(_,key)=>String(key)});const companyColors=["#ddc38a","#9ed8c3","#a5badf"];const colorOf=(index,offset=0)=>companyColors[(index+offset)%companyColors.length];
     ${functions}\nexport {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay};`;
@@ -123,7 +123,8 @@ test("sample and production summaries use complete seven-factor scores and groun
   assert.ok(companies[0].preparedAnalysis.items.some(i=>i.id==="margin-decline" && i.short.ja.includes("38.0→32.0")));
   assert.ok(companies[1].preparedAnalysis.items.some(i=>i.id==="cash-generation" && i.kind==="weakness"));
   assert.ok(companies[1].preparedAnalysis.items.some(i=>i.id==="debt-cash"));
-  assert.ok(companies[2].preparedAnalysis.items.some(i=>i.id==="momentum" && i.kind==="weakness"));
+  // A three-month price fall is scored, never listed as a weakness (owner, Nov 27).
+  assert.ok(companies.every(c=>!c.preparedAnalysis.items.some(i=>i.id==="momentum")));
   for(const count of [2,3])for(const lang of ["ja","en"]){
     const result=overallComparison(companies.slice(0,count),lang,now);
     assert.match(result.title,/DEMO-A/);

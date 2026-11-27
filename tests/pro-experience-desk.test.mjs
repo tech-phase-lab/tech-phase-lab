@@ -70,7 +70,7 @@ const noteIds = ui => ui.all("[data-note]").map(note => note.getAttribute("data-
 const badge = (ui, id) => ui.all(`[data-note="${id}"] .badgeItem`).map(item => `${item.textContent}${item.hasAttribute("data-mine") ? "*" : ""}`);
 const tabNamed = (ui, name) => tabs(ui).find(tab => tab.textContent === name);
 
-test("desk sample: ひとりごと first; the banner comes down after 1 s with the new note (the only NEW), and goes up 3 s later", async () => {
+test("desk sample: ひとりごと first; the list opens as it is, the banner comes down after 5 s, the new note goes in on top 1 s later, the banner goes up 3 s after it came", async () => {
   const ui = await mount("ja");
   try {
     assert.deepEqual(tabs(ui).map(tab => tab.textContent), ["ひとりごと", "リゼルに聞く", "週刊PRO"]);
@@ -78,21 +78,34 @@ test("desk sample: ひとりごと first; the banner comes down after 1 s with t
     assert.equal(hint(ui), "☺を押して、リアクションしてみましょう");
     assert.equal(ui.q(".banner"), null);
     assert.deepEqual(noteIds(ui), ["sample-note-n2", "sample-note-n3"], "the new note is not there yet");
-    await ui.tick(999);
-    assert.equal(ui.q(".banner"), null, "not before 1 s");
+    await ui.tick(4999);
+    assert.equal(ui.q(".banner"), null, "not before 5 s (owner, Nov 27: no notice the moment the page opens)");
+    assert.deepEqual(noteIds(ui), ["sample-note-n2", "sample-note-n3"]);
     await ui.tick(1);
     const banner = ui.q(".banner");
-    assert.ok(banner, "the banner after 1 s");
+    assert.ok(banner, "the banner after 5 s");
     assert.equal(banner.getAttribute("data-state"), "in");
     assert.match(banner.textContent, /リゼルのひとりごと.*新しいひとりごとが届きました/);
-    assert.deepEqual(noteIds(ui), ["sample-note-n1", "sample-note-n2", "sample-note-n3"], "N1 on top, at the same moment");
+    assert.deepEqual(noteIds(ui), ["sample-note-n2", "sample-note-n3"], "the note is not added together with the banner");
+    await ui.tick(999);
+    assert.deepEqual(noteIds(ui), ["sample-note-n2", "sample-note-n3"]);
+    await ui.tick(1);
+    assert.deepEqual(noteIds(ui), ["sample-note-n1", "sample-note-n2", "sample-note-n3"], "N1 on top, 1 s after the banner");
     assert.equal(ui.all(".newTag").length, 0, "no NEW tag (owner, 11/26)");
     assert.equal(ui.all("[data-fresh]").length, 1, "only N1 is marked fresh");
-    assert.ok(ui.q('[data-note="sample-note-n1"]').hasAttribute("data-fresh"), "N1 comes in with the entrance animation");
+    assert.ok(ui.q('[data-note="sample-note-n1"]').hasAttribute("data-fresh"));
+    assert.ok(ui.q('[data-note="sample-note-n1"]').closest(".arrive").hasAttribute("data-entering"), "N1 comes in with the entrance animation");
+    assert.equal(ui.all("[data-entering]").length, 1);
+    await ui.tick(600);
+    assert.equal(ui.all("[data-entering]").length, 0, "the entrance plays once and its mark is taken off");
+    await ui.click(tabNamed(ui, "リゼルに聞く"));
+    await ui.click(tabNamed(ui, "ひとりごと"));
+    assert.equal(ui.all("[data-entering]").length, 0, "coming back to the notes does not play it again");
+    assert.deepEqual(noteIds(ui), ["sample-note-n1", "sample-note-n2", "sample-note-n3"]);
+    await ui.tick(1399);
     const dates = ui.all("[data-note] time").map(time => time.textContent);
     assert.deepEqual(dates, ["2035/03/12 08:52", "2035/03/11 22:15", "2035/03/10 06:32"]);
     assert.deepEqual(ui.all("[data-note] .zone").map(zone => zone.textContent.trim()), ["JST", "JST", "JST"]);
-    await ui.tick(2999);
     assert.equal(ui.q(".banner").getAttribute("data-state"), "in", "still there before 3 s");
     await ui.tick(1);
     assert.equal(ui.q(".banner").getAttribute("data-state"), "out", "goes up after 3 s");
@@ -106,7 +119,7 @@ test("desk sample: ひとりごと first; the banner comes down after 1 s with t
 test("desk sample: a tap on the banner closes it at once", async () => {
   const ui = await mount("ja");
   try {
-    await ui.tick(1000);
+    await ui.tick(5000);
     await ui.click(ui.q(".banner"));
     assert.equal(ui.q(".banner").getAttribute("data-state"), "out");
     await ui.tick(400);
@@ -119,7 +132,7 @@ test("desk sample: a tap on the banner closes it at once", async () => {
 test("desk sample: the notes' text keeps the real markup (red, marker, bold) through the real DeskBody", async () => {
   const ui = await mount("ja");
   try {
-    await ui.tick(1000);
+    await ui.tick(5000); await ui.tick(1000);
     const n2 = ui.q('[data-note="sample-note-n2"]');
     assert.deepEqual([...n2.querySelectorAll(".red")].map(span => span.textContent), ["・次の四半期の見通し", "・それを聞いた後の時間外の反応"]);
     assert.equal(n2.querySelectorAll(".red strong").length, 2, "red and bold");
@@ -134,7 +147,7 @@ test("desk sample: the notes' text keeps the real markup (red, marker, bold) thr
 test("desk sample: ☺ opens the five real emoji; choosing one adds it (+1, gold border, toast 1.8 s); choosing it again takes it back", async () => {
   const ui = await mount("ja");
   try {
-    await ui.tick(1000);
+    await ui.tick(5000); await ui.tick(1000);
     const face = () => ui.q('[data-note="sample-note-n1"] .faceButton');
     const choice = label => ui.all('[data-note="sample-note-n1"] .reactionChoice').find(button => button.getAttribute("aria-label").startsWith(label));
     await ui.click(face());
@@ -261,7 +274,7 @@ test("desk sample: English texts and dates as in the spec", async () => {
   try {
     assert.deepEqual(tabs(ui).map(tab => tab.textContent), ["Notes", "Ask Rizel", "Weekly"]);
     assert.equal(hint(ui), "Tap ☺ to react to a note");
-    await ui.tick(1000);
+    await ui.tick(5000); await ui.tick(1000);
     assert.match(ui.q(".banner").textContent, /RIZEL's Notes.*A new note just arrived/);
     assert.deepEqual(ui.all("[data-note] time").map(time => time.textContent), ["Mar 12, 2035 at 08:52", "Mar 11, 2035 at 22:15", "Mar 10, 2035 at 06:32"]);
     assert.match(ui.q('[data-note="sample-note-n1"]').textContent, /It's a day when semiconductors all drop together\. Before selling, I want to at least check which company and what caused it\./);
@@ -288,6 +301,17 @@ test("desk sample: English texts and dates as in the spec", async () => {
   } finally { await ui.unmount(); }
 });
 
+test("desk sample: with reduced motion the new note is still added after the delay, with no entrance animation", async () => {
+  const ui = await mount("ja", { reduced: true });
+  try {
+    await ui.tick(5000); await ui.tick(999);
+    assert.deepEqual(noteIds(ui), ["sample-note-n2", "sample-note-n3"]);
+    await ui.tick(1);
+    assert.deepEqual(noteIds(ui), ["sample-note-n1", "sample-note-n2", "sample-note-n3"]);
+    assert.equal(ui.all("[data-entering]").length, 0);
+  } finally { await ui.unmount(); }
+});
+
 test("desk sample: with reduced motion the question is filled at once (no typing animation)", async () => {
   const ui = await mount("ja", { reduced: true });
   try {
@@ -298,7 +322,7 @@ test("desk sample: with reduced motion the question is filled at once (no typing
   } finally { await ui.unmount(); }
   const css = read("../app/research/pro-experience/samples/rizels-desk.module.css");
   const reduced = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
-  for (const part of [".desk .banner", ".notes .note[data-fresh]", ".notes .bubble [data-mine]", ".send.send[data-ready]", ".answer[data-reveal]>p", ".dots i"])
+  for (const part of [".desk .banner", ".arrive[data-entering]", ".arrive[data-entering] .note", ".notes .bubble [data-mine]", ".send.send[data-ready]", ".answer[data-reveal]>p", ".dots i"])
     assert.ok(reduced.includes(part), `no animation with reduced motion: ${part}`);
 });
 

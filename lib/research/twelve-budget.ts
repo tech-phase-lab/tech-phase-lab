@@ -9,13 +9,18 @@
  * Tiers (the minute's total usage, everyone included, plus the call must stay at or under the tier's ceiling):
  *   critical 600  the monitor's price alerts (a member's notice must not be starved by page views: 480 + its 100 symbols fit, with room for the meter's lag)
  *   user     480  a member's page: quotes, charts, a stock's facts, the comparison's one-credit series
+ *   fast     450  the 15-second quote refresh of a viewed stock (the watchlist, a stock's page), at most FAST_PER_MINUTE credits a minute
  *   warm     420  the comparison's daily job (lib/research/comparison-warm.ts)
  *   background 400 the monitor's value check and ownership, the comparison's background fills: they yield first
- *   fast     200  the optional 15-second quote refresh, taken only on a quiet minute
  * Members first (Nov 25 production log: the daily job took ~455 credits at the start of every minute, leaving members ~25): the warm and
  * background ceilings are further lowered by a member reserve, at least MEMBER_RESERVE_MIN and otherwise twice the most credits members asked
- * for in any of the last five minutes, and the whole user tier after a minute in which a member was refused (memberReserve below; the
- * allocator applies it).
+ * for in any of the last five minutes plus the most the 15-second refresh asked for (at most FAST_PER_MINUTE), and the whole user tier after
+ * a minute in which a member was refused (memberReserve below; the allocator applies it).
+ * The 15-second refresh (production, Nov 27: under the old fast ceiling of 200 it was refused on 4 of 5 calls during the session, because the
+ * jobs alone use more than 200 credits a minute): it costs one credit per distinct symbol viewed and 15-second slot, whatever the number of
+ * viewers (fastRefresh below), so at most 4 credits a minute per symbol; FAST_PER_MINUTE (160) covers 40 distinct symbols viewed at once.
+ * Beyond that, or when the minute is past 450, a symbol keeps its one-minute copy (X-Quote-Refresh: 60s): the refresh degrades first,
+ * then the warm and background jobs yield, members' own reads keep 480 and the price alerts 600, all under the plan's 610.
  * Strict (owner, Nov 23): every website instance asks the Railway monitor for each call's credits (scripts/research/twelve_allocator.py,
  * POST /twelve/lease); the monitor is the one place that sees every credit, whatever the number of instances. Only when it cannot be
  * reached does an instance fall back to a tiny emergency allowance under the shared meter (createLeaseGovernor).
@@ -23,15 +28,19 @@
  * the last good copy is shown with its own time instead of an error. */
 
 export const PLAN_CREDITS_PER_MINUTE = 610;
-export const CEILING = { critical: 600, user: 480, warm: 420, background: 400, fast: 200 } as const;
+export const CEILING = { critical: 600, user: 480, fast: 450, warm: 420, background: 400 } as const;
+/** The 15-second refresh's own cap: credits granted to the fast tier in one minute (40 distinct symbols at 4 slots a minute). The allocator
+ * applies it (scripts/research/twelve_allocator.py FAST_PER_MINUTE; a test keeps them equal). */
+export const FAST_PER_MINUTE = 160;
 /** The allocator's member reserve (scripts/research/twelve_allocator.py, the same constants; a test keeps them equal). */
 export const MEMBER_RESERVE_MIN = 60, MEMBER_RESERVE_FACTOR = 2, MEMBER_WINDOW = 5;
 const YIELDING: readonly Tier[] = ["warm", "background"];
-/** Credits kept free for members above the warm and background jobs, from members' asks (granted or refused) and refusals by minute. */
-export function memberReserve(asks: Map<number, number>, refused: Map<number, number>, minute: number): number {
+/** Credits kept free for members above the warm and background jobs, from members' asks (granted or refused), refusals and the 15-second
+ * refresh's asks by minute. A refused fast read is not a member's need: it never stops the jobs, it only keeps its own room. */
+export function memberReserve(asks: Map<number, number>, refused: Map<number, number>, minute: number, fastAsks: Map<number, number> = new Map()): number {
   const recent = (book: Map<number, number>) => [...book].filter(([m]) => minute - MEMBER_WINDOW < m && m <= minute).map(([, c]) => c);
   if (recent(refused).some(c => c > 0)) return CEILING.user;
-  return Math.max(MEMBER_RESERVE_MIN, MEMBER_RESERVE_FACTOR * Math.max(0, ...recent(asks)));
+  return Math.max(MEMBER_RESERVE_MIN, MEMBER_RESERVE_FACTOR * Math.max(0, ...recent(asks)) + Math.min(FAST_PER_MINUTE, Math.max(0, ...recent(fastAsks))));
 }
 /** A tier's ceiling now: the warm and background jobs' is lowered by the member reserve. */
 export const tierCeiling = (tier: Tier, reserve: number) => YIELDING.includes(tier) ? Math.max(0, Math.min(CEILING[tier], CEILING.user - reserve)) : CEILING[tier];
@@ -188,15 +197,18 @@ export function createAllocatorModel({ readMeter, now }: { readMeter: () => numb
     const same = minuteOf(meter.at) === minuteOf(t), since = same ? Math.max(meter.at - overlapMs, start) : start;
     return (same ? meter.used : 0) + events.reduce((sum, e) => e.at >= since ? sum + e.cost : sum, 0);
   };
-  const asks = new Map<number, number>(), refused = new Map<number, number>();
+  const asks = new Map<number, number>(), refused = new Map<number, number>(), fastAsks = new Map<number, number>(), fastGranted = new Map<number, number>();
   const add = (book: Map<number, number>, m: number, cost: number) => book.set(m, (book.get(m) ?? 0) + cost);
   return {
     usage,
     grant(cost: number, tier: Tier) {
       const used = usage(), m = minuteOf(now());
       if (tier === "user") add(asks, m, cost);
-      const ok = used !== null && used + cost <= tierCeiling(tier, memberReserve(asks, refused, m));
+      if (tier === "fast") add(fastAsks, m, cost);
+      const ok = used !== null && used + cost <= tierCeiling(tier, memberReserve(asks, refused, m, fastAsks))
+        && (tier !== "fast" || (fastGranted.get(m) ?? 0) + cost <= FAST_PER_MINUTE);
       if (!ok) { if (tier === "user") add(refused, m, cost); return false; }
+      if (tier === "fast") add(fastGranted, m, cost);
       events.push({ at: now(), cost }); return true;
     },
     record(cost: number) { events.push({ at: now(), cost }); },
