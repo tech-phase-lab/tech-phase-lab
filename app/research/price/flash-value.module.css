@@ -3,4 +3,11 @@
 .down { animation: flashDown 1.3s ease-out 1; }
 @keyframes flashUp { from { color: #5fe0aa; } }
 @keyframes flashDown { from { color: #ff7a7a; } }
+/* A stock page's live price and day change (quick, owner Nov 27): the number's own text colour only (no frame, background or border),
+ * the same mint / red, back to its own colour in 0.7 seconds. */
+.quickUp { animation: flashUp .7s ease-out 1; }
+.quickDown { animation: flashDown .7s ease-out 1; }
+/* The day-change line: its chip and amount set their own colour, so they take the same flash. */
+.quickUp > *, .quickDown > * { animation: inherit; }
 @media (prefers-reduced-motion: reduce) { .up, .down { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .quickUp, .quickDown { animation: none; } }

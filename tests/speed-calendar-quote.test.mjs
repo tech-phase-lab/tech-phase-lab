@@ -90,7 +90,7 @@ test("stock page: the server's period is the page's default, and the screen show
   assert.match(read("app/research/price/period-buttons.tsx"), /export const DETAIL_DEFAULT_PERIOD: DetailPeriod = "15m";/);
   assert.match(read("app/research/quote/[ticker]/page.tsx"), /firstQuoteWithin\(ticker, "15m"\)/);
   const detail = read("app/research/price/quote-detail.tsx");
-  assert.match(detail, /useQuotes\(\[ticker\], false, true, false, initial\)/);
+  assert.match(detail, /useLiveQuote\(ticker, initial\)/);
   assert.match(detail, /useChartStore\(key, initial\?\.chart \?/);
   // The same answer shape as /api/research/market/quotes.
   assert.match(read("app/api/research/market/quotes/route.ts"), /quotes: quoteAnswer\(quotes, history\)/);
