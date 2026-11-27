@@ -1,11 +1,14 @@
 "use client";
 import {useEffect,useState,type ReactNode} from 'react';
 import {SUMMARY_QUESTION} from '@/lib/resolute/risk';
-import {candidateNumbers,editedPicks,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
+import {candidateNumbers,editedPicks,pickLine,typedLine,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
 import s from '../../diagnosis.module.css';
 /** The day's owner pick as the owner API returns it (risk-store.mjs ownerShockDay). */
-export type ShockDay={day:string;state:string;candidates:ShockCandidate[];planned:{id:string;stars:number;rizel?:{ja:string;en:string}}[];added:AddedStory[];picks:OwnerPick[]|null;pickedAt:string|null;revision:number;publishedSource:string|null;publishedAt:string|null;open:boolean;answerUntil:string;publishAt:string;maxStories:number;maxAdded:number};
-type Choice={stars:number;rizel:string;rizelEn?:string};
+export type ShockDay={day:string;state:string;candidates:ShockCandidate[];planned:{id:string;stars:number;rizel?:{ja:string;en:string;reasons?:{ja:string[];en:string[]}}}[];added:AddedStory[];picks:OwnerPick[]|null;pickedAt:string|null;revision:number;publishedSource:string|null;publishedAt:string|null;open:boolean;answerUntil:string;publishAt:string;maxStories:number;maxAdded:number};
+type Choice={stars:number;rizel:string;bullets:string[]};
+const EMPTY3=['','',''];
+/** A stored line as the page's fields: the title and three bullet inputs. */
+const fieldsOf=(v:unknown)=>{const l=pickLine(v);return {rizel:l?.ja??'',bullets:[0,1,2].map(i=>l?.reasons?.[i]??'')};};
 const strip=(t:string)=>{const q=SUMMARY_QUESTION.ja,x=t.trim();return (x.endsWith(q)?x.slice(0,-q.length):x).trim();};
 const newId=()=>'o'+Array.from(crypto.getRandomValues(new Uint8Array(10)),b=>b.toString(16).padStart(2,'0')).join('');
 /** Shrinks a screenshot in the browser (longest side 1600 px, JPEG) so several fit in one request. Nothing is stored. */
@@ -14,6 +17,11 @@ async function shrink(file:File):Promise<string>{
  try{const img=await new Promise<HTMLImageElement>((ok,ng)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ng;i.src=url;});
   const k=Math.min(1,1600/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
   c.getContext('2d')!.drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',0.85);}finally{URL.revokeObjectURL(url);}
+}
+/** リゼルの一言: one 一言 input and three 箇条書き inputs (owner, Nov 27: the shape members see). Written text is published as written. */
+function LineFields({title,bullets,onChange,disabled}:{title:string;bullets:string[];onChange:(title:string,bullets:string[])=>void;disabled:boolean}){
+ return <><label>リゼルの一言（空欄ならAIが書きます）<input value={title} maxLength={80} onChange={e=>onChange(e.target.value,bullets)} disabled={disabled}/></label>
+  {[0,1,2].map(i=><label key={i}>箇条書き{i+1}<input value={bullets[i]??''} maxLength={120} onChange={e=>onChange(title,bullets.map((b,j)=>j===i?e.target.value:b))} disabled={disabled}/></label>)}</>;
 }
 function Stars({value,onChange,label}:{value:number;onChange:(n:number)=>void;label:string}){
  return <span role="radiogroup" aria-label={label} style={{display:'flex',gap:6,margin:'6px 0 10px'}}>{[1,2,3,4,5].map(n=><button key={n} type="button" role="radio" aria-checked={value===n} className={value===n?s.primary:s.secondary} onClick={()=>onChange(n)} style={{flex:1,minWidth:0,padding:'10px 0'}}>★{n}</button>)}</span>;
@@ -24,12 +32,12 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
  const [files,setFiles]=useState<File[]>([]),[text,setText]=useState(''),[url,setUrl]=useState(''),[draftNote,setDraftNote]=useState('');
  // Before the owner answers, the service's 3 planned stories are ticked with their ★ and RIZEL line (owner, Nov 27): a correction is a small edit.
  useEffect(()=>{if(!day)return;const picks=day.picks??day.planned.map(p=>({id:p.id,stars:p.stars,rizel:p.rizel}));setOrder(picks.map(p=>p.id));
-  setChoice(Object.fromEntries(picks.map(p=>[p.id,{stars:p.stars,rizel:p.rizel?.ja??'',...(p.rizel?.en?{rizelEn:p.rizel.en}:{})}])));setAdded(day.added);},[day]);
+  setChoice(Object.fromEntries(picks.map(p=>[p.id,{stars:p.stars,...fieldsOf(p.rizel)}])));setAdded(day.added);},[day]);
  if(!day)return <section className={s.card}><h2>今日の候補</h2><p>候補の保存先がまだ用意されていません。データベースの準備が必要です。</p></section>;
  const max=day.maxStories,closed=!day.open;
  const starsOf=(id:string,suggested:number)=>choice[id]?.stars??suggested;
- function toggle(id:string,suggested:number){setOrder(o=>o.includes(id)?o.filter(x=>x!==id):o.length>=max?o:[...o,id]);setChoice(c=>c[id]?c:{...c,[id]:{stars:suggested,rizel:''}});}
- const set=(id:string,patch:Partial<Choice>)=>setChoice(c=>({...c,[id]:{stars:c[id]?.stars??1,rizel:c[id]?.rizel??'',...patch}}));
+ function toggle(id:string,suggested:number){setOrder(o=>o.includes(id)?o.filter(x=>x!==id):o.length>=max?o:[...o,id]);setChoice(c=>c[id]?c:{...c,[id]:{stars:suggested,rizel:'',bullets:EMPTY3}});}
+ const set=(id:string,patch:Partial<Choice>)=>setChoice(c=>({...c,[id]:{stars:c[id]?.stars??1,rizel:c[id]?.rizel??'',bullets:c[id]?.bullets??EMPTY3,...patch}}));
  async function draft(){
   if(busy)return;setBusy(true);setDraftNote('');
   try{const images=await Promise.all(files.map(shrink));
@@ -42,15 +50,16 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
   }catch{setDraftNote('下書きを作れませんでした。もう一度お試しください');}finally{setBusy(false);}
  }
  // A new item is ticked at once when there is room, so its ★ and RIZEL line can be set right away.
- function add(item:AddedStory){setAdded(a=>[...a,item]);setOrder(o=>o.length<max?[...o,item.id]:o);setChoice(c=>({...c,[item.id]:{stars:item.stars,rizel:''}}));}
+ function add(item:AddedStory){setAdded(a=>[...a,item]);setOrder(o=>o.length<max?[...o,item.id]:o);setChoice(c=>({...c,[item.id]:{stars:item.stars,rizel:'',bullets:EMPTY3}}));}
  function blank(){add({id:newId(),url:url.trim()||null,publisher:null,ja:{title:'',summary:''},en:{title:'',summary:''},stars:3,addedAt:new Date().toISOString()});}
  const editAdded=(id:string,patch:(a:AddedStory)=>AddedStory)=>setAdded(list=>list.map(a=>a.id===id?patch(a):a));
  async function submit(){
   if(!day||busy||!order.length)return;setBusy(true);setMessage('');
   try{
    const ready=added.filter(a=>a.ja.title.trim()&&a.ja.summary.trim()).map(a=>({...a,en:{title:a.en.title.trim()||a.ja.title,summary:a.en.summary.trim()||a.ja.summary},stars:starsOf(a.id,a.stars)}));
-   const plannedLine=(id:string)=>day.planned.find(p=>p.id===id)?.rizel;
-   const picks=order.filter(id=>day.candidates.some(c=>c.id===id&&!c.withheld)||ready.some(a=>a.id===id)).map(id=>{const c=choice[id],line=c?.rizel.trim(),pl=plannedLine(id);return {id,stars:c?.stars??3,...(line?{rizel:pl&&pl.ja===line?{ja:line,en:pl.en}:{ja:line}}:{})};});
+   // A line left as stored keeps its English (the planned AI note or the earlier answer).
+   const storedLine=(id:string)=>pickLine((day.picks??[]).find(p=>p.id===id)?.rizel??day.planned.find(p=>p.id===id)?.rizel);
+   const picks=order.filter(id=>day.candidates.some(c=>c.id===id&&!c.withheld)||ready.some(a=>a.id===id)).map(id=>{const c=choice[id],line=typedLine(c?.rizel??'',c?.bullets??[],storedLine(id));return {id,stars:c?.stars??3,...(line?{rizel:line}:{})};});
    if(!picks.length){setMessage('タイトルと要約が入ったニュースを選んでください');return;}
    const r=await fetch('/api/resolute/risk/owner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'picks',day:day.day,baseRevision:day.revision,picks,added:ready}),redirect:'error'});
    if(r.status===409){setMessage(`受付は${day.answerUntil}までです。締め切りを過ぎたか、ほかの画面で保存されました。再読み込みしてください`);return;}
@@ -63,7 +72,7 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
    <label><input type="checkbox" checked={on} disabled={closed||locked||!on&&order.length>=max} onChange={()=>toggle(id,suggested)}/> {on?`${n+1}番目 `:''}<b>{title}</b></label>
    {body}
    {on?<div><div>衝撃度 <Stars value={starsOf(id,suggested)} onChange={v=>set(id,{stars:v})} label={`${title}の★`}/></div>
-    <label>リゼルの一言（空欄ならAIが書きます。書いた文はそのまま載ります）<input value={choice[id]?.rizel??''} maxLength={80} onChange={e=>set(id,{rizel:e.target.value})} disabled={closed}/></label></div>:null}
+    <LineFields title={choice[id]?.rizel??''} bullets={choice[id]?.bullets??EMPTY3} onChange={(rizel,bullets)=>set(id,{rizel,bullets})} disabled={closed}/></div>:null}
   </li>;};
  const group=(g:'market'|'company',head:string)=>{const list=day.candidates.filter(c=>c.group===g);return <><h3>{head}（{list.length}件）</h3><ol style={{padding:0}}>{list.map(c=>story(c.id,c.ja.title,<>
   <p>{c.withheld?`${strip(c.ja.content)}。載せるときは「ニュースを追加」から本文を入れてください`:strip(c.ja.content)}</p>
@@ -96,12 +105,12 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
  * whole pick set with only this story changed, so the other planned stories stay as they are. */
 export function OwnerEditOne({day,id,onSaved}:{day:ShockDay|null;id:string;onSaved:()=>Promise<void>}){
  const base=day?(day.picks??day.planned):[],current=base.find(p=>p.id===id);
- const [stars,setStars]=useState(current?.stars??3),[line,setLine]=useState(current?.rizel?.ja??''),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
- useEffect(()=>{if(current){setStars(current.stars);setLine(current.rizel?.ja??'');}},[current]);
+ const [stars,setStars]=useState(current?.stars??3),[line,setLine]=useState(()=>fieldsOf(current?.rizel)),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ useEffect(()=>{if(current){setStars(current.stars);setLine(fieldsOf(current.rizel));}},[current]);
  const story=day?.candidates.find(c=>c.id===id)??null,added=day?.added.find(a=>a.id===id)??null,title=story?.ja.title??added?.ja.title??'';
- if(!day||!current||!title)return <section className={s.card}><p>このニュースは、今日の公開予定にありません。</p><a href="/resolute/news/owner">すべての候補を見る</a></section>;
+ if(!day||!current||!title)return null;
  async function save(){
-  if(!day||busy)return;const picks=editedPicks(day,id,stars,line);if(!picks)return;setBusy(true);setMessage('');
+  if(!day||busy)return;const picks=editedPicks(day,id,stars,line.rizel,line.bullets);if(!picks)return;setBusy(true);setMessage('');
   try{const r=await fetch('/api/resolute/risk/owner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'picks',day:day.day,baseRevision:day.revision,picks,added:day.added}),redirect:'error'});
    if(r.status===409){setMessage(`受付は${day.answerUntil}までです。締め切りを過ぎたか、ほかの画面で保存されました。再読み込みしてください`);return;}
    if(!r.ok)throw Error();await onSaved();setMessage(`保存しました。${day.publishAt}に公開します`);
@@ -111,7 +120,7 @@ export function OwnerEditOne({day,id,onSaved}:{day:ShockDay|null;id:string;onSav
   <h2>{title}</h2>
   {story?<p>{strip(story.ja.content)}</p>:null}
   <div className={s.field}><div>衝撃度 <Stars value={stars} onChange={setStars} label={`${title}の★`}/></div>
-   <label>リゼルの一言（空欄ならAIが書きます。書いた文はそのまま載ります）<input value={line} maxLength={80} onChange={e=>setLine(e.target.value)} disabled={!day.open}/></label></div>
+   <LineFields title={line.rizel} bullets={line.bullets} onChange={(rizel,bullets)=>setLine({rizel,bullets})} disabled={!day.open}/></div>
   <button className={s.primary} type="button" disabled={busy||!day.open} onClick={()=>void save()}>保存</button>
   <p role="status">{message}</p>
   <a href="/resolute/news/owner">すべての候補を見る</a>
