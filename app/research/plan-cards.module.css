@@ -32,9 +32,6 @@
 /* Owner, Nov 22: more room above (about 32px from the PayPal button), and close to 「読み解く」 below (about 14px), as its lead-in. */
 .includes { margin:32px 0 0; font-size:14px; color:#8d8a7f; }
 .proCard .includes + .group { margin-top:14px; }
-.note { margin:16px auto 0; max-width:420px; padding:0 20px; box-sizing:border-box; font-size:11px; line-height:1.8; color:#6f6c63; text-align:center; grid-column:1 / -1; }
-.note a { color:#a9a597; text-decoration:underline; }
-.note a:hover { color:#f6e2ae; }
 .notice { margin:12px 0 0; font-size:12px; line-height:1.6; color:#c9c3b3; }
 .notice a { color:#f0d79a; }
 .freeCard h3 { margin:20px 0 4px; font-size:19px; font-weight:700; color:#f1f4f9; line-height:1.5; }
