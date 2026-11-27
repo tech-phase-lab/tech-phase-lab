@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { ALLOCATOR_RETRY_MS, CEILING, MEMBER_RESERVE_FACTOR, MEMBER_RESERVE_MIN, MEMBER_WINDOW, PLAN_CREDITS_PER_MINUTE, createAllocatorModel, memberReserve, tierCeiling, STALE_LIMIT_MS, createGovernor, createLeaseGovernor, createReader, creditCost, quoteSlotMs, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
+import { ALLOCATOR_RETRY_MS, CEILING, FAST_PER_MINUTE, MEMBER_RESERVE_FACTOR, MEMBER_RESERVE_MIN, MEMBER_WINDOW, PLAN_CREDITS_PER_MINUTE, createAllocatorModel, memberReserve, tierCeiling, STALE_LIMIT_MS, createGovernor, createLeaseGovernor, createReader, creditCost, quoteSlotMs, FAST_SLOT_MS, MAX_QUOTES_PER_REQUEST, barSlotMs, stocksTrading } from "../lib/research/twelve-budget.ts";
 import { T0, clockAt, memoryStore, simulate } from "./support/twelve-load-sim.mjs";
 
 
@@ -15,7 +15,7 @@ test("credit costs: batched quotes and series cost one credit per symbol; fundam
 });
 
 test("tiers: background yields first, then members' pages; price alerts keep room above both, all inside the plan", () => {
-  assert.ok(CEILING.fast < CEILING.background && CEILING.background < CEILING.warm && CEILING.warm < CEILING.user && CEILING.user < CEILING.critical && CEILING.critical <= PLAN_CREDITS_PER_MINUTE);
+  assert.ok(CEILING.background < CEILING.warm && CEILING.warm < CEILING.fast && CEILING.fast < CEILING.user && CEILING.user < CEILING.critical && CEILING.critical <= PLAN_CREDITS_PER_MINUTE);
   // The monitor's allocator uses the same table.
   const allocator = readFileSync(new URL("../scripts/research/twelve_allocator.py", import.meta.url), "utf8");
   const table = Object.fromEntries([...(/^CEILING = \{([^}]*)\}/m.exec(allocator)[1]).matchAll(/'(\w+)': (\d+)/g)].map(m => [m[1], Number(m[2])]));
@@ -47,6 +47,37 @@ test("members first: the warm and background jobs yield to what members asked fo
   for (let i = 0; i < 10; i++) assert.equal(model.grant(12, "user"), true);
   t += 60_000;
   assert.equal(model.grant(200, "warm"), true); assert.equal(model.grant(50, "warm"), false);
+});
+
+test("the 15-second refresh (production, Nov 27: refused on 4 of 5 calls under the old ceiling of 200): 450 and its own cap a minute, members and alerts kept above it", () => {
+  const allocator = readFileSync(new URL("../scripts/research/twelve_allocator.py", import.meta.url), "utf8");
+  assert.equal(Number(/^FAST_PER_MINUTE = (\d+)/m.exec(allocator)[1]), FAST_PER_MINUTE);
+  assert.equal(CEILING.fast, 450); assert.equal(FAST_PER_MINUTE, 160);
+  // 40 distinct symbols viewed at once, one read per symbol and 15-second slot whatever the number of viewers.
+  assert.equal(FAST_PER_MINUTE / (60_000 / FAST_SLOT_MS), 40);
+  assert.ok(CEILING.fast + MAX_QUOTES_PER_REQUEST <= CEILING.user); // a member request's full quote read (24) still fits;' own reads keep room above a saturated fast tier
+  assert.ok(CEILING.user + 100 <= CEILING.critical && CEILING.critical + 10 <= PLAN_CREDITS_PER_MINUTE);
+  // The jobs yield to what the refresh asked for (at most FAST_PER_MINUTE), on top of members' own asks; a refused fast read never stops them.
+  const none = new Map();
+  assert.equal(memberReserve(none, none, 100, new Map([[100, 80]])), 80);
+  assert.equal(memberReserve(new Map([[99, 50]]), none, 100, new Map([[100, 80]])), 180);
+  assert.equal(memberReserve(none, none, 100, new Map([[100, 999]])), FAST_PER_MINUTE);
+  assert.equal(memberReserve(none, none, 100, new Map([[90, 80]])), MEMBER_RESERVE_MIN); // older than the window
+  // The allocator model: a busy minute (the jobs took 300 credits) still grants the refresh up to its cap, never past 450 or the cap.
+  let t = Date.UTC(2026, 10, 27, 16, 11, 1), meter = 300;
+  const model = createAllocatorModel({ readMeter: () => meter, now: () => t });
+  let granted = 0;
+  for (let i = 0; i < 20; i++) { if (model.grant(12, "fast")) granted += 12; t += 1_000; }
+  assert.equal(granted, 156); // 13 reads of 12 symbols; the 14th would pass 160
+  assert.equal(model.grant(4, "fast"), true); assert.equal(model.grant(1, "fast"), false); // exactly 160, then nothing more this minute
+  assert.equal(model.grant(20, "user"), true); // members are not refused by the refresh
+  t = Date.UTC(2026, 10, 27, 16, 12, 1); meter = 440;
+  assert.equal(model.grant(12, "fast"), false); // 441 + 12 > 450: the one-minute copy stays
+  assert.equal(model.grant(12, "user"), true);  // members' reads still fit under 480
+  t = Date.UTC(2026, 10, 27, 16, 13, 1); meter = 0;
+  assert.equal(model.grant(12, "fast"), true); // a new minute: the cap starts again
+  // The warm job now leaves the refresh its room: reserve = 2 x 20 (members) + 160 (the refresh's busiest minute) = 200.
+  assert.equal(model.grant(281, "warm"), false); assert.equal(model.grant(260, "warm"), true);
 });
 
 test("slots: a minute while stocks trade (4:00-20:00 New York, weekdays), fifteen minutes otherwise; currencies always a minute", () => {

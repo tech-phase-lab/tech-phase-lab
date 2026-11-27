@@ -128,13 +128,44 @@ class MembersFirst(unittest.TestCase):
         clock.t += 60 * ta.MEMBER_WINDOW
         self.assertGreater(a.ceiling('warm'), 0)
 
-    def test_the_optional_fast_refresh_is_not_counted_as_members_need(self):
+    def test_the_fast_refresh_is_capped_a_minute_and_never_stops_the_jobs(self):
         clock = Clock()
         a = ta.Allocator(read_meter=lambda: 0, clock=clock)
         self.assertTrue(a.grant(100, 'fast'))
-        self.assertFalse(a.grant(100, 'fast'))
+        self.assertFalse(a.grant(100, 'fast'))     # 200 > FAST_PER_MINUTE (160)
+        self.assertTrue(a.grant(60, 'fast'))       # exactly 160
+        self.assertFalse(a.grant(1, 'fast'))
         clock.t += 60
+        # The refused fast asks are not a member's refusal: the jobs keep a ceiling, lowered only by the refresh's (capped) asks.
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['user'] - ta.FAST_PER_MINUTE)
+        self.assertTrue(a.grant(12, 'fast'))       # a new minute: the cap starts again
+        clock.t += 60 * ta.MEMBER_WINDOW
         self.assertEqual(a.ceiling('warm'), ta.CEILING['warm'])
+
+    def test_a_viewed_stocks_refresh_goes_through_on_a_busy_session_minute(self):
+        # Production, Nov 27 16:11 UTC: the minute's usage was past the old fast ceiling (200), so 4 of 5 refreshes were refused.
+        clock = Clock()
+        used = {'n': 300}
+        a = ta.Allocator(read_meter=lambda: used['n'], clock=clock)
+        self.assertTrue(a.grant(1, 'fast'))        # 301 + 1 <= 450
+        self.assertEqual(ta.CEILING['fast'], 450)
+        self.assertLess(ta.CEILING['fast'], ta.CEILING['user'])
+        self.assertLessEqual(ta.CEILING['critical'] + 10, ta.PLAN_CREDITS_PER_MINUTE)
+        used['n'] = 445
+        clock.t += 60
+        self.assertFalse(a.grant(12, 'fast'))      # past 450: the one-minute copy stays
+        self.assertTrue(a.grant(12, 'user'))       # members' own reads still fit under 480
+
+    def test_the_jobs_leave_room_for_the_fast_refresh_and_members(self):
+        clock = Clock()
+        a = ta.Allocator(read_meter=lambda: 0, clock=clock)
+        for _ in range(4):
+            self.assertTrue(a.grant(12, 'fast'))   # 48 asked for the 15-second refresh
+        for _ in range(5):
+            self.assertTrue(a.grant(10, 'user'))   # 50 asked by members
+        clock.t += 60
+        self.assertEqual(a.ceiling('warm'), ta.CEILING['user'] - (2 * 50 + 48))
+        self.assertEqual(a.ceiling('background'), ta.CEILING['user'] - (2 * 50 + 48))
 
     def test_the_monitors_background_jobs_see_the_lowered_ceiling(self):
         clock = Clock()
