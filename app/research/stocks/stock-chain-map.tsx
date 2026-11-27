@@ -38,7 +38,7 @@ function Card({ company, lang, root, anchor = true }: { company: ChainCompany; l
 }
 
 /** The one footer line under every relationship map (owner, Nov 25). */
-export const CHAIN_NOTE = { ja: "公式資料で確認できた関係のみ。投資判断を勧めるものではありません。", en: "Only relationships confirmed in official materials. Not investment advice." } as const;
+export const CHAIN_NOTE = { ja: "公式資料で確認できた関係のみ", en: "Only relationships confirmed in official materials" } as const;
 
 /** Every relation's and far link's source as blocks: one per document and quote, listing each company it backs (owner, Nov 25). */
 export function chainSourceBlocks(data: ChainMapData, lang: "ja" | "en"): SourceBlock[] {

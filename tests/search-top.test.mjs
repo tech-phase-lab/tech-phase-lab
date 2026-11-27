@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { FOCUS_BARS, closeLabel, earningsOn, flashOn, focusDue, focusSession, focusStat, rankFocus, settledSession } from "../lib/research/search-focus.ts";
+import { FOCUS_BARS, FOCUS_LIVE_AGE_MS, FOCUS_LIVE_PER_MINUTE, closeLabel, earningsOn, flashOn, focusDue, focusLabel, focusSession, focusStat, liveDue, liveSession, liveStats, rankFocus, regularSession, settledSession } from "../lib/research/search-focus.ts";
 import { SEARCH_THEMES, THEME_TICKERS } from "../lib/research/search-themes.ts";
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -144,4 +144,79 @@ test("owner accounts keep full access: the first screen has no membership gate",
   for (const path of ["app/research/stocks/stock-theme-discovery.tsx", "app/research/stocks/stock-search-history.tsx", "app/research/stocks/page.tsx"]) {
     assert.doesNotMatch(read(path), /isPro|getMembership|useMembership|PRO_ONLY|locked/);
   }
+});
+
+// ---- Live during the U.S. regular session (owner, Nov 27) ----
+const candidates = Array.from({ length: 85 }, (_, i) => `T${String(i).padStart(2, "0")}`);
+
+test("live: only during the NYSE regular session (holidays and the early close included); the early close settles at 13:15 ET", () => {
+  assert.equal(regularSession(Date.parse("2026-11-25T15:00:00Z")), true); // Wed 10:00 ET
+  assert.equal(regularSession(Date.parse("2026-11-25T21:05:00Z")), false); // 16:05 ET
+  assert.equal(regularSession(Date.parse("2026-11-26T16:00:00Z")), false); // Thanksgiving
+  assert.equal(regularSession(Date.parse("2026-11-27T17:30:00Z")), true); // 12:30 ET, early-close day
+  assert.equal(regularSession(Date.parse("2026-11-27T18:05:00Z")), false); // 13:05 ET after the early close
+  assert.equal(regularSession(Date.parse("2026-11-28T16:00:00Z")), false); // Saturday
+  assert.equal(settledSession(Date.parse("2026-11-27T18:20:00Z")), "2026-11-27");
+  assert.deepEqual(liveDue(candidates, {}, Date.parse("2026-11-26T16:00:00Z")), []);
+  assert.deepEqual(liveDue(candidates, {}, Date.parse("2026-11-25T21:05:00Z")), []);
+});
+
+test("live: at most FOCUS_LIVE_PER_MINUTE quotes a minute, each stock about every 5 minutes, oldest first", () => {
+  assert.equal(FOCUS_LIVE_PER_MINUTE, 20);
+  assert.equal(FOCUS_LIVE_AGE_MS, 5 * 60_000);
+  const start = Date.parse("2026-11-25T14:30:00Z"), live = {}, perMinute = [];
+  for (let minute = 0; minute < 120; minute++) {
+    const now = start + minute * 60_000, due = liveDue(candidates, live, now);
+    assert.ok(due.length <= FOCUS_LIVE_PER_MINUTE);
+    for (const ticker of due) live[ticker] = { date: "2026-11-25", price: 1, change: 0, volume: 1, at: now };
+    perMinute.push(due.length);
+    if (minute >= 10) for (const ticker of candidates) assert.ok(now - live[ticker].at <= 6 * 60_000, `${ticker} at minute ${minute}`);
+  }
+  const steady = perMinute.slice(10), average = steady.reduce((a, b) => a + b, 0) / steady.length;
+  assert.equal(perMinute[0], 20);
+  assert.ok(average > 14 && average <= 18, `average ${average}`);
+  // Fresh quotes are not due; yesterday's quote and a recent failed attempt are handled.
+  const now = start + 3 * 60_000;
+  const due = liveDue(["A", "B", "C", "D"], { A: { date: "2026-11-25", price: 1, change: 0, volume: 1, at: now - 60_000 },
+    B: { date: "2026-11-24", price: 1, change: 0, volume: 1, at: now - 60_000 }, C: { date: "2026-11-25", price: 1, change: 0, volume: 1, at: now - 6 * 60_000 } }, now, 20, { D: now - 60_000 });
+  assert.deepEqual(due, ["B", "C"]);
+});
+
+test("live: ranked on today's moves while half the candidates have them; the settled close once it catches up", () => {
+  const settled = { AAA: focusStat(series("2026-11-24"), "2026-11-24"), BBB: focusStat(series("2026-11-24", { volume: 900_000 }), "2026-11-24") };
+  const at = Date.parse("2026-11-25T16:00:00Z");
+  const live = { AAA: { date: "2026-11-25", price: 99, change: -1, volume: 500_000, at }, BBB: { date: "2026-11-25", price: 112, change: 12, volume: 2_500_000, at } };
+  assert.equal(liveSession(live, ["AAA", "BBB"], "2026-11-24", at), "2026-11-25");
+  assert.equal(liveSession({ AAA: live.AAA }, ["AAA", "BBB", "CCC"], "2026-11-24", at), null); // a third only: the settled close stays
+  assert.equal(liveSession(live, ["AAA", "BBB"], "2026-11-25", Date.parse("2026-11-25T21:20:00Z")), null); // settled caught up
+  assert.equal(liveSession(live, ["AAA", "BBB"], "2026-11-24", Date.parse("2026-11-26T14:00:00Z")), null); // next morning: yesterday's quotes
+  const stats = liveStats(settled, live, "2026-11-25");
+  assert.deepEqual(stats.BBB, { date: "2026-11-25", close: 112, change: 12, volume: 2_500_000, average: 1_000_000, multiple: 2.5 });
+  const rows = rankFocus(stats, { earnings: [], flash: [] }, "2026-11-25", t => t);
+  assert.deepEqual(rows.map(row => [row.ticker, row.change]), [["BBB", 12], ["AAA", -1]]);
+  // The settled ranking is unchanged: AAA had the larger multiple on the 24th.
+  assert.equal(rankFocus(settled, { earnings: [], flash: [] }, "2026-11-24", t => t)[0].ticker, "AAA");
+});
+
+test("live: the label is the market page's 「取引中 ・ HH:MM JST」 in the session, 「MM/DD 終値」 after it settles", () => {
+  const at = Date.parse("2026-11-27T14:45:00Z");
+  assert.equal(focusLabel({ session: "2026-11-27", live: { at, open: true } }, "ja"), "取引中 ・ 23:45 JST");
+  assert.equal(focusLabel({ session: "2026-11-27", live: { at, open: true } }, "en"), "Open · 09:45 ET");
+  assert.equal(focusLabel({ session: "2026-11-27", live: { at, open: false } }, "ja"), "11/27 23:45 JST 時点");
+  assert.equal(focusLabel({ session: "2026-11-25", live: null }, "ja"), "11/25 終値");
+  assert.equal(focusLabel({ session: "2026-11-25" }, "en"), "Nov 25 close");
+  assert.equal(focusLabel({ session: null }, "ja"), null);
+});
+
+test("live: members only read the snapshot; the minute job asks for quotes through the shared copy on the warm tier, capped", () => {
+  const server = read("lib/research/search-focus-server.ts"), market = read("lib/research/market-data.ts"), themes = read("app/research/stocks/stock-theme-discovery.tsx");
+  const view = server.slice(server.indexOf("export async function loadFocusView"));
+  assert.doesNotMatch(view, /loadSnapshotQuotes|loadSnapshotDailyBars|twelveCall|refreshFocusSnapshot|readMany/);
+  assert.match(server, /liveDue\(candidates, live, now, FOCUS_LIVE_PER_MINUTE, liveTried\)/);
+  assert.match(server, /loadSnapshotQuotes\(dueLive, FOCUS_LIVE_PER_MINUTE, /);
+  const fn = market.slice(market.indexOf("export function loadSnapshotQuotes"), market.indexOf("export async function loadDailyCloses"));
+  assert.match(fn, /sharedReader\.readMany<MarketQuote>/);
+  assert.match(fn, /fetchQuotes\(group, "warm"\)/);
+  assert.match(fn, /\{ chunk: 10, maxFetch \}/);
+  assert.match(themes, /focusLabel\(focus, lang\)/);
 });

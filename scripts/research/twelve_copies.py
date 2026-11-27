@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 
 # The kinds of copies the site keeps durable (lib/research/twelve-copies.ts DURABLE_KINDS; a test keeps them equal).
-KINDS = ('compare-statistics', 'compare-statements', 'md-facts-stats-v2', 'md-facts-next-earnings-v2', 'portfolio-splits')
+KINDS = ('compare-statistics', 'compare-statements', 'compare-series', 'md-facts-stats-v2', 'md-facts-next-earnings-v2', 'portfolio-splits')
 KEY = re.compile(r'[A-Za-z0-9.\-|:/]{1,80}')
 MAX_VALUE_BYTES = 48 * 1024   # one request's value or part (a /statistics answer is about 2 KB); the gateway takes 64 KB bodies
 MAX_PARTS = 32                # a value in parts is at most MAX_PARTS * MAX_VALUE_BYTES (1.5 MB) once put together

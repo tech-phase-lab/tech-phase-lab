@@ -8,6 +8,9 @@
  * - A stock qualifies when it reported earnings that day, appeared in 速報 that day, or traded at least 2× its average volume.
  * - The six largest multiples among those; fewer than six are filled with the largest absolute day changes. */
 import type { Bar } from "./market-quote.ts";
+import { displayClock, zoneLabel } from "./display-time.ts";
+import { leveragedAsOf } from "./leveraged-etfs.ts";
+import { marketBanner, marketPhase, regularCloseMinutes } from "./us-market-session.ts";
 
 export const FOCUS_ROWS = 6;
 export const FOCUS_MIN_MULTIPLE = 2;
@@ -15,8 +18,10 @@ export const FOCUS_AVERAGE_SESSIONS = 20;
 /** Daily bars asked per stock: the session, the 20 before it, and the close before those (= its previous close when the session's own
  * bar is still missing). */
 export const FOCUS_BARS = FOCUS_AVERAGE_SESSIONS + 2;
-/** A session's daily bar is taken as final this long after the 16:00 ET close (the closing auction's prints are in by then). */
-export const CLOSE_SETTLED_MINUTES = 16 * 60 + 15;
+/** A session's daily bar is taken as final this long after the regular close (16:00 ET, 13:00 on an early-close day of
+ * lib/research/us-market-session.ts): the closing auction's prints are in by then. */
+export const SETTLE_DELAY_MINUTES = 15;
+export const CLOSE_SETTLED_MINUTES = 16 * 60 + SETTLE_DELAY_MINUTES;
 
 /** One stock's figures for its last completed session. */
 export type FocusStat = { date: string; close: number; change: number | null; volume: number | null; average: number | null; multiple: number | null };
@@ -41,7 +46,7 @@ const weekend = (date: string) => { const d = new Date(`${date}T12:00:00Z`).getU
  * the session before, and the snapshot is not read again until the next session settles. */
 export function settledSession(now: number): string {
   const { date, minutes } = etParts(now);
-  let day = minutes >= CLOSE_SETTLED_MINUTES ? date : shiftDay(date, -1);
+  let day = minutes >= regularCloseMinutes(date) + SETTLE_DELAY_MINUTES ? date : shiftDay(date, -1);
   while (weekend(day)) day = shiftDay(day, -1);
   return day;
 }
@@ -123,4 +128,64 @@ export function closeLabel(session: string, lang: "ja" | "en"): string {
   const [, month, day] = session.split("-").map(Number);
   if (lang === "ja") return `${month}/${day} 終値`;
   return `${new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" }).format(new Date(`${session}T12:00:00Z`))} ${day} close`;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+// Live during the U.S. regular session (owner, Nov 27: 「今日の注目」 showed the last settled close while the market was open).
+// The minute job reads the candidates' quotes into the same snapshot, about every FOCUS_LIVE_AGE_MS per stock and never more than
+// FOCUS_LIVE_PER_MINUTE symbols a minute; members still only read the snapshot.
+
+/** At most this many quote symbols a minute (one credit each), whatever the number of candidates: ~85 candidates every 5 minutes is ~17. */
+export const FOCUS_LIVE_PER_MINUTE = 20;
+/** A stock's live quote is read again once this old. */
+export const FOCUS_LIVE_AGE_MS = 5 * 60_000;
+/** One stock's live figures: the quote's day change against the previous close, its price, volume so far, and when it was read. */
+export type FocusLive = { date: string; price: number; change: number | null; volume: number | null; at: number };
+
+/** The U.S. regular session (NYSE holidays and early closes from lib/research/us-market-session.ts) is open at `now`. */
+export const regularSession = (now: number) => marketPhase(new Date(now)) === "regular";
+
+/** The stocks whose live quote is due at `now` (none outside the regular session): never read today first, then the oldest, at most `cap`.
+ * `tried`: the last attempt that brought no quote of today (a refused batch, a symbol the provider does not serve), waited out the same way. */
+export function liveDue(candidates: readonly string[], live: Record<string, FocusLive>, now: number, cap = FOCUS_LIVE_PER_MINUTE, tried: Record<string, number> = {}): string[] {
+  if (!regularSession(now)) return [];
+  const today = etDate(now);
+  const age = (ticker: string) => {
+    const entry = live[ticker], read = entry && entry.date === today ? now - entry.at : Infinity;
+    return Math.min(read, tried[ticker] === undefined ? Infinity : now - tried[ticker]);
+  };
+  return candidates.filter(ticker => age(ticker) >= FOCUS_LIVE_AGE_MS)
+    .sort((a, b) => age(b) - age(a) || a.localeCompare(b)).slice(0, Math.max(0, cap));
+}
+
+/** The session the live figures show: today (New York) once at least half the candidates have today's quote and today is newer than the
+ * settled session; null otherwise (before the first reads, and once the settled session has caught up after the close). */
+export function liveSession(live: Record<string, FocusLive>, candidates: readonly string[], settled: string | null, now: number): string | null {
+  const today = etDate(now);
+  if (settled && today <= settled) return null;
+  const count = candidates.filter(ticker => live[ticker]?.date === today).length;
+  return count > 0 && count * 2 >= candidates.length ? today : null;
+}
+
+/** The figures rankFocus reads, from the live quotes of `session`: the day change so far and the volume so far over the 20-session average
+ * of the settled figures. */
+export function liveStats(stats: Record<string, FocusStat>, live: Record<string, FocusLive>, session: string): Record<string, FocusStat> {
+  const out: Record<string, FocusStat> = {};
+  for (const [ticker, entry] of Object.entries(live)) {
+    if (entry.date !== session) continue;
+    const average = stats[ticker]?.average ?? null;
+    out[ticker] = { date: session, close: entry.price, change: entry.change, volume: entry.volume, average,
+      multiple: entry.volume !== null && average ? Math.round((entry.volume / average) * 100) / 100 : null };
+  }
+  return out;
+}
+
+/** The label beside 「今日の注目」: while the regular session is open the market page's wording with the read time (「取引中 ・ 23:45 JST」 /
+ * "Open · 10:45 ET", lib/research/us-market-session.ts marketBanner); live figures after the close, before the settled session is read,
+ * the レバETF list's 「11/27 05:58 JST 時点」; the settled session 「11/25 終値」. */
+export function focusLabel(view: { session: string | null; live?: { at: number; open: boolean } | null }, lang: "ja" | "en"): string | null {
+  if (!view.session) return null;
+  if (!view.live) return closeLabel(view.session, lang);
+  if (!view.live.open) return leveragedAsOf(view.live.at, lang === "ja");
+  return `${marketBanner("regular")[lang]}${lang === "ja" ? " ・ " : " · "}${displayClock(view.live.at, lang)} ${zoneLabel(lang)}`;
 }

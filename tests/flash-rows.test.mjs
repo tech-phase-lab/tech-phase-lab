@@ -43,7 +43,8 @@ test('the page has All / Earnings tabs only, shows one date heading per day (mon
   const source = await readFile(new URL('../app/research/news/flash-page.tsx', import.meta.url), 'utf8');
   assert.match(source, /\["all", "earnings"\] as const/);
   assert.doesNotMatch(source, /銘柄で絞る|<select/);
-  assert.match(source, /ニュース取得リスト/);
+  assert.match(source, /"対象銘柄" : "Stocks covered"/);
+  assert.doesNotMatch(source, /ニュース取得リスト|前回取得した内容/);
   // Earnings rows of stocks outside the 22 (Tesla, Meta, Lam Research) must survive the page filter (owner, Oct 22).
   assert.match(source, /row\.kind === "earnings" \|\| row\.tickers\.some\(ticker => WATCH_TICKERS\.has\(ticker\)\)/);
   assert.match(source, /className=\{styles\.day\}/);

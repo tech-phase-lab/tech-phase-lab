@@ -19,7 +19,8 @@ import { isChangePeriod, type ChangePeriod, type PeriodBase } from "@/lib/resear
 import PeriodButtons, { DETAIL_DEFAULT_PERIOD, type DetailPeriod } from "./period-buttons";
 import PeriodChangeLine from "./period-change-line";
 import { Status, Tile, toneOf, type DetailOrigin } from "./quote-card";
-import { shortName, useFacts, useQuotes } from "./use-market";
+import { shortName, useFacts } from "./use-market";
+import { useLiveQuote } from "./use-live-quote";
 import PriceChart from "./price-chart";
 import { useMinute } from "./use-minute";
 import { useChartStore } from "./use-chart-store";
@@ -83,8 +84,8 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const router = useRouter();
   const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
   const origin = ORIGINS[from];
-  const { data: quotes, loaded, failed, at: receivedAt } = useQuotes([ticker], false, true, false, initial);
-  const quote = quotes?.[ticker];
+  // Live while U.S. stocks trade: every 15 seconds from the shared copy, paused while the tab is hidden; once outside those hours (owner, Nov 27).
+  const { quote, loaded, failed, at: receivedAt } = useLiveQuote(ticker, initial);
   const facts = useFacts(ticker).data;
   const [range, setRange] = useState<DetailPeriod>(DETAIL_DEFAULT_PERIOD);
   const [bases, setBases] = useState<{ ticker: string; today: string; bases: Partial<Record<ChangePeriod, PeriodBase>> } | null>(null);
@@ -147,6 +148,8 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const tone = toneOf(quote?.percentChange ?? null), arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
   const interval = shownRange === "ytd" ? "daily" : periodInterval(shownRange);
   const intraday = shownRange !== "ytd" && isIntradayPeriod(shownRange);
+  // Owner, Nov 27: when the map is part of the company introduction, no separate 「連関マップ」 heading or pointer sentence.
+  const mapInCompany = !!(profile?.network && profile.introduction);
   const periodBases = bases?.ticker === ticker ? bases : null;
   const tag = quote ? { price: quote.price, text: plain(quote.price), tone } : undefined;
   return <ResearchToolShell lang={lang} setLang={setLang} title={`${title}${bare ? "" : ` ${ticker}`}`} description="" showTools={false} showHeading={false}>
@@ -154,7 +157,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
       <button type="button" className={styles.back} onClick={() => window.history.length > 1 ? router.back() : router.push(origin.href)}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>{origin[lang]}</button>
       {!bare && <nav className={styles.tabs} aria-label={t("ページ内の移動", "On this page")}>
-        {([["price", "株価", "Price"], ["company", "企業情報", "Company"], ["map", "連関マップ", "Relationship map"]] as const).map(([id, a, b]) =>
+        {([["price", "株価", "Price"], ["company", "企業情報", "Company"], ["map", "連関マップ", "Relationship map"]] as const).filter(([id]) => id !== "map" || !mapInCompany).map(([id, a, b]) =>
           <a key={id} href={`#${id}`} aria-current={tab === id} onClick={() => setTab(id)}>{t(a, b)}</a>)}
       </nav>}
       <div className={styles.head}>{!bare && <Tile ticker={ticker} size="detail" />}<div className={styles.who}><h1>{title}</h1></div>
@@ -162,8 +165,8 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <svg viewBox="0 0 24 24" fill={registered ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" /></svg>{registered ? t("登録済み", "Saved") : t("登録", "Save")}</button>}</div>
       <section id="price" style={{ display: "contents" }}>
         {quote ? <div className={styles.priceBlock}>
-          <div className={styles.priceLine}><FlashValue scope={ticker} value={quote.price} className={styles.price}>{plain(quote.price)}</FlashValue><span className={styles.usd}>{quote.currency}</span></div>
-          <span className={`${styles.changeLine} ${styles[tone]}`}><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span><span className={styles.amount}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></span>
+          <div className={styles.priceLine}><FlashValue scope={ticker} value={quote.price} className={styles.price} quick>{plain(quote.price)}</FlashValue><span className={styles.usd}>{quote.currency}</span></div>
+          <FlashValue scope={ticker} value={quote.change} className={`${styles.changeLine} ${styles[tone]}`} quick><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span><span className={styles.amount}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></FlashValue>
           <div className={styles.stateRow}><span><Status quote={quote} ja={ja} update updatedAt={receivedAt} /></span>
             <span className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></span></div>
         </div> : <div className={styles.priceHold}><p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p></div>}
@@ -189,10 +192,10 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <h2>{t("企業情報", "Company")}</h2>
           {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.introduction ? <CompanyIntroductionPanel introduction={profile.introduction} network={profile.network} lang={lang} /> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の企業情報は準備中です。", "Company information is not available yet.")}</p>}
         </section>
-        <section id="map" className={styles.section}>
+        {!mapInCompany && <section id="map" className={styles.section}>
           <h2>{t("連関マップ", "Relationship map")}</h2>
-          {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.network && !profile.introduction ? <CompanyNetworkMap key={profile.network.root} graph={profile.network} lang={lang} /> : profile.network ? <p className={styles.error} style={{ padding: 0 }}>{t("連関マップは上の企業情報の中にあります。", "The relationship map is part of the company information above.")}</p> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の連関マップは準備中です。", "A relationship map is not available yet.")}</p>}
-        </section></>}
+          {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.network && !profile.introduction ? <CompanyNetworkMap key={profile.network.root} graph={profile.network} lang={lang} /> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の連関マップは準備中です。", "A relationship map is not available yet.")}</p>}
+        </section>}</>}
       <p className={styles.credit}>{t("提供：Twelve Data", "Data: Twelve Data")}</p>
       {alertOpen && <AlertSheet ticker={ticker} currency={quote?.currency ?? "USD"} ja={ja} onClose={() => setAlertOpen(false)} />}
     </div>

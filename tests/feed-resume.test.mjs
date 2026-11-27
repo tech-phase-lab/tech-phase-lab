@@ -95,7 +95,7 @@ test('news current refresh failure clears invalidated display and old initial se
   try {
     panel.render(); panel.mount(); await timer.run(); assert.match(panel.render(), /Crude oil holds steady/);
     env.hide(); env.show(); await timer.run();
-    assert.match(panel.render(), /News is unavailable/); assert.doesNotMatch(panel.render(), /Crude oil holds steady/);
+    assert.match(panel.render(), /News can(?:'|&#x27;)t be loaded/); assert.doesNotMatch(panel.render(), /Crude oil holds steady/);
     panel.unmount(); assert.match(panel.render({ initialNews: { data: feed([analyst]), checkedAt: Date.now() - 1000 } }), /Fetching news/);
     panel.mount(); await timer.run(); assert.match(panel.render(), /Crude oil holds steady/);
   } finally { panel.unmount(); env.restore(); }
@@ -135,7 +135,7 @@ test('price-target current failure warns about retained items and invalidates re
   try {
     panel.render(); panel.mount(); await flush();
     env.hide(); env.show(); await flush();
-    assert.match(panel.render(), /ASTS/); assert.match(panel.render(), /Displayed items may be stale/);
+    assert.match(panel.render(), /ASTS/); assert.match(panel.render(), /Price targets aren(?:'|&#x27;)t updating/);
     panel.unmount(); assert.match(panel.render(), /Fetching price targets/); assert.doesNotMatch(panel.render(), /ASTS/);
   } finally { panel.unmount(); env.restore(); }
 });

@@ -69,7 +69,7 @@ test("relationship maps: one closed 「出典」 at the bottom, short footer, no
     assert.match(source, /<SourceList /);
   }
   assert.doesNotMatch(stock, /3段先以降/);
-  assert.match(stock, /ja: "公式資料で確認できた関係のみ。投資判断を勧めるものではありません。"/);
+  assert.match(stock, /ja: "公式資料で確認できた関係のみ", en: "Only relationships confirmed in official materials"/);
   assert.ok(stock.indexOf("<SourceList") > stock.indexOf("CHAIN_NOTE.ja, CHAIN_NOTE.en"));
   assert.match(network, /t\(CHAIN_NOTE\.ja,CHAIN_NOTE\.en\)/);
   // The 無料サンプル box no longer pulls up over the footer line above it.
