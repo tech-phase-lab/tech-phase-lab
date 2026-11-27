@@ -38,8 +38,14 @@
 .notes .note.note .bubble .text{margin:6px 0 0;font-size:14px;line-height:1.85;color:#ece8df}
 .notes .note.note .bubble button[aria-expanded]{width:26px;height:26px}
 .notes .note.note .bubble button[aria-expanded] svg{width:16px;height:16px}
-/* The newest note comes in softly (a little from above, fading in) together with the banner. */
-.notes .note[data-fresh]{animation:note-in .5s ease-out both}
+/* The newest note comes in softly about 1 s after the banner (owner, Nov 27): its room opens from nothing, so the notes below slide down
+ * instead of jumping, and the note fades in a little from above. Once: the mark (data-entering) is taken off when it ends. */
+.arrive{display:grid;grid-template-rows:1fr}
+.arriveInner{min-width:0;min-height:0}
+.arrive[data-entering]{animation:arrive-open .6s cubic-bezier(.2,.8,.2,1) both}
+.arrive[data-entering]>.arriveInner{overflow:hidden}
+.arrive[data-entering] .note{animation:note-in .6s ease-out both}
+@keyframes arrive-open{from{grid-template-rows:0fr}to{grid-template-rows:1fr}}
 @keyframes note-in{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
 /* My own reaction: a gold border, and it bounces a little when it appears (the count itself rises by one, as on the real page). */
 .notes .bubble [data-mine]{margin:-3px -4px;padding:2px 4px;border:1px solid #d9b56a;border-radius:999px;background:rgba(217,181,106,.14);animation:pill-pop .42s cubic-bezier(.3,1.6,.5,1) both}
@@ -91,7 +97,7 @@
 .weekly .issueTag.issueTag{min-height:36px;padding:0 14px;font-size:13px;cursor:default}
 
 @media (prefers-reduced-motion: reduce){
-  .desk .banner,.desk .banner[data-state="out"],.notes .note[data-fresh],.notes .bubble [data-mine],.sendRow .send.send[data-ready],.list .q.q .answer[data-reveal]>p,.dots i{animation:none}
+  .desk .banner,.desk .banner[data-state="out"],.arrive[data-entering],.arrive[data-entering] .note,.notes .bubble [data-mine],.sendRow .send.send[data-ready],.list .q.q .answer[data-reveal]>p,.dots i{animation:none}
   .list.list{transition:none}
   .desk .banner[data-state="out"]{opacity:0}
 }

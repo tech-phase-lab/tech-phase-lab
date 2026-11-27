@@ -69,6 +69,11 @@ export const MARKET = {
  * the three quarters before the latest one (newest first) and the quarter's free cash flow margin and four-quarter revenue. */
 const ARM_FILL = { earlierMargins: [16.8, 18.1, 20.4], fcfMargin: 17.6, revenueTtm: 5_236_000_000 };
 
+/** AMD's quarter carried no weakness once the price fall was no longer listed (owner, Nov 27: a 3-month price move is not a business weakness).
+ * Made up: a larger diluted average share count for the latest quarter (an acquisition paid partly in stock), so its one weakness is a
+ * fundamentals point the real code writes from the figure (平均株式数 +6.3%). The year-earlier count is the one the saved growth implies. */
+const AMD_FILL = { quarterDilutedShares: 1_745_000_000 };
+
 const quarterBefore = (iso, n) => { const [y, m] = iso.split("-").map(Number); const t = y * 12 + (m - 1) - 3 * n; return `${Math.floor(t / 12)}-${pad(t % 12 + 1)}-${pad(lastDay(Math.floor(t / 12), t % 12 + 1))}`; };
 
 /** One comparison company, already on the sample timeline: every one of the seven factors gets a value, then the strengths and weaknesses
@@ -79,6 +84,11 @@ export function fillCompany(company) {
     c.quarterMargins = [{ periodEnd: q.end, value: c.quarterOperatingMargin }, ...ARM_FILL.earlierMargins.map((value, i) => ({ periodEnd: quarterBefore(q.end, i + 1), value }))];
     c.quarterFcfMargin = ARM_FILL.fcfMargin;
     c.quarterRevenueTtm = ARM_FILL.revenueTtm;
+  }
+  if (c.ticker === "AMD" && c.quarterDilutedShares !== AMD_FILL.quarterDilutedShares) {
+    const yearEarlier = c.quarterDilutedShares / (1 + c.quarterDilutedSharesGrowth / 100);
+    c.quarterDilutedShares = AMD_FILL.quarterDilutedShares;
+    c.quarterDilutedSharesGrowth = (AMD_FILL.quarterDilutedShares / yearEarlier - 1) * 100;
   }
   const market = MARKET[c.ticker];
   c.retrievedAt = SAMPLE_NOW;

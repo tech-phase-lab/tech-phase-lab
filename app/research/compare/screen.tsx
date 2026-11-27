@@ -12,7 +12,7 @@ import { CompanyScoreCard, ScoreHeadline, VerdictHeading, ScoreOverview, StatusO
 import ProTag from "../pro-experience/pro-tag";
 import PageHeading from "../page-heading";
 import TickerSearch from "./ticker-search";
-import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, detailTraits, overallComparison } from "@/lib/research/comparison-scorecard";
 import { periodMaxAgeDays } from "@/lib/research/twelve-data-factors";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
 import DetailPanels from "./detail-panels";
@@ -182,7 +182,7 @@ export default function ComparisonScreen() {
           {result.companies.filter(c=>c.preparedAnalysis?.items.length).map(c=><section key={c.ticker}>
             <h3>{c.name}（{c.ticker}）</h3>
             <small>{t("決算期末", "Period ended")} {c.preparedAnalysis!.periodEnd}</small>
-            <ul>{c.preparedAnalysis!.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
+            <ul>{detailTraits(c,Date.parse(result.generatedAt)).map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
             <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{c.quarterSourceUrl === "https://twelvedata.com/" ? "Twelve Data" : t("SEC提出書類", "SEC filing")}</a>
           </section>)}
         </DetailPanels>

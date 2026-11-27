@@ -19,3 +19,9 @@
 .tiles a:has(.freshTag){border-color:rgba(255,255,255,.10);box-shadow:inset 3px 0 0 rgba(93,255,180,.75)}
 
 .tiles strong .freshTag{font-size:9px;line-height:15px;overflow:visible}
+
+/* Live price + day change on each tile (owner, Nov 27). Overrides the generic `.tiles span` look. */
+.tiles .quote{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-top:2px;font:500 12px "IBM Plex Mono",ui-monospace,monospace;color:#e7ebe8;font-variant-numeric:tabular-nums}
+.tiles .quote .price{font:inherit;color:#e7ebe8}
+.tiles .quote .change{font:inherit;font-size:11px}
+.tiles .quote .up{color:#4fe3a6}.tiles .quote .down{color:#ff7b7b}.tiles .quote .flat{color:#8c98ab}

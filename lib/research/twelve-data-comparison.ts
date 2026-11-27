@@ -168,7 +168,8 @@ export function prepareTwelveComparison(snapshot: TwelveComparisonSnapshot,
       detail: pre ? { ja: `${period}期の四半期税引前利益率は${v}。`, en: `Pre-tax margin for the quarter ended ${period} was ${v}.` }
         : { ja: `${period}期の四半期営業利益率は${v}。`, en: `Operating margin for the quarter ended ${period} was ${v}.` } });
   }
-  if (snapshot.freeCashFlowMarginPct !== null && snapshot.freeCashFlowMarginPct !== 0) {
+  // A strength only from 10% of revenue (the cash score's 7), a weakness when negative: as comparison-analysis.ts (owner, Nov 27: 4.1% was a strength).
+  if (snapshot.freeCashFlowMarginPct !== null && (snapshot.freeCashFlowMarginPct >= 10 || snapshot.freeCashFlowMarginPct < 0)) {
     const n = snapshot.freeCashFlowMarginPct, v = `${n.toFixed(1)}%`;
     items.push({ id: "cash-generation", kind: n > 0 ? "strength" : "weakness",
       short: { ja: `簡易FCF率 ${v}`, en: `Simple FCF margin ${v}` },

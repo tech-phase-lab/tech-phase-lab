@@ -1,6 +1,6 @@
 "use client";
 import type { ComparisonResult } from "@/lib/research/comparison";
-import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentBalance, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, listedTraits, comparisonLeaders, comparisonAvailability, hasRecentBalance, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
 import { VALUE_LABELS, valueAsOfLine, valueCheckItem } from "@/lib/research/comparison-value";
 import styles from "./styles.module.css";
 // The color of each company (owner, Nov 5): the first a yellowish gold, the second blue, the third a light purple.
@@ -101,7 +101,7 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
   const valuation=valueCheckItem(c.valueCheck);
   // The valuation point is written from the figure at display time, so its wording (VALUE_LABELS) is the same wherever it was prepared.
   const prepared=(hasRecentQuarter(c,now) || hasRecentBalance(c,now)) && c.preparedAnalysis ? c.preparedAnalysis.items : null;
-  const items=prepared ? prepared.flatMap(i=>i.id!=="valuation" ? [i] : valuation ? [valuation] : []) : valuation ? [valuation] : [], ja=lang==="ja";
+  const items=listedTraits(c,prepared ? prepared.flatMap(i=>i.id!=="valuation" ? [i] : valuation ? [valuation] : []) : valuation ? [valuation] : [],now), ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
   const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>compactTrait(i.short[lang])),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>compactTrait(i.short[lang]))};
   return <article className={styles.scoreCard}>
