@@ -8,8 +8,8 @@ test('budget configuration and request bounds fail closed',()=>{
  for(const value of [undefined,'','NaN','-1','0','5.01','10','5e0'])assert.throws(()=>monthlyAiLimit(value));
  assert.equal(monthlyAiLimit('5.00'),5);
  const request={model:'gpt-5.4-mini',max_output_tokens:1800,input:'news'};
- assert.ok(serializeBudgetedRequest(request));
- for(const change of [{model:'other'},{max_output_tokens:1801},{tools:[{type:'web_search'}]},{input:'あ'.repeat(22000)},{service_tier:'priority'}])assert.throws(()=>serializeBudgetedRequest({...request,...change}));
+ assert.ok(serializeBudgetedRequest(request));assert.ok(serializeBudgetedRequest({...request,max_output_tokens:4000}),'Nov 28: up to 4000 output tokens (worst case $0.066 < the $0.10 reservation)');
+ for(const change of [{model:'other'},{max_output_tokens:4001},{tools:[{type:'web_search'}]},{input:'あ'.repeat(22000)},{service_tier:'priority'}])assert.throws(()=>serializeBudgetedRequest({...request,...change}));
 });
 test('concurrent summaries and selections share five dollars; failures stay charged; settlement is once only',async()=>{
  const saved=process.env.RESOLUTE_AI_MONTHLY_LIMIT_USD;process.env.RESOLUTE_AI_MONTHLY_LIMIT_USD='5.00';

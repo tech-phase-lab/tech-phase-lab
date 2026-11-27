@@ -151,13 +151,17 @@ test('owner pick: candidates are ranked by the AI (validated), summarised, and m
  const rank=async({stories})=>({by:'ai',attempts:1,ranking:{market:[{key:'s1',stars:4,reason:{ja:'利下げのペースが市場全体に響く',en:'Rate path moves the whole market.'}}],
   company:[{key:`s${stories.findIndex(s=>s.title.startsWith('Apple'))+1}`,stars:4,reason:{ja:'巨大企業の経営トップの交代',en:'A mega-cap CEO exit.'}},{key:`s${stories.findIndex(s=>s.title.startsWith('Sandisk'))+1}`,stars:2,reason:{ja:'メモリー価格の下落',en:'Memory prices fell.'}}]}});
  const summarize=async(c,_p,_n,_f,{why})=>{if(c.title.startsWith('Sandisk')){why.reason='not-publishable';return null;}return parseRiskArticle({id:c.id,url:c.url,publishedAt:c.publishedAt,market:{index:'nas100',session:null,reading:null},stars:null,quoteId:null,...copy(c.title,`${c.title}と報じられました。理由として記事は需要の変化を挙げています。`)});};
- const built=await buildCandidates({feed,now:run,moves:nov25,rank,summarize});
- assert.deepEqual(built.candidates.map(c=>[c.group,c.rank,c.suggested.stars]),[['market',1,4],['company',1,4]]);
- assert.deepEqual(built.withheld,[{title:'Sandisk shares slide 6% as memory prices fall',reason:'not-publishable'}]);
+ const translate=async({titles})=>titles.map(t=>t.startsWith('Sandisk')?'サンディスク株が6%下落、メモリー価格の下落で':null);
+ const built=await buildCandidates({feed,now:run,moves:nov25,rank,summarize,translate});
+ // The story without a summary stays in the list after the summarised ones (withheld, never pickable), with its Japanese headline.
+ assert.deepEqual(built.candidates.map(c=>[c.group,c.rank,c.suggested.stars,!!c.withheld]),[['market',1,4,false],['company',1,4,false],['company',8,2,true]]);
+ assert.equal(built.candidates[2].ja.title,'サンディスク株が6%下落、メモリー価格の下落で');assert.equal(built.candidates[2].source.title,'Sandisk shares slide 6% as memory prices fall');
+ assert.deepEqual(built.withheld,[{title:'Sandisk shares slide 6% as memory prices fall',titleJa:'サンディスク株が6%下落、メモリー価格の下落で',url:built.candidates[2].url,reason:'not-publishable'}]);
  // The morning mail lists only the 3 the service plans to publish, then the correction link (owner, Nov 27).
  const planned=[{id:built.candidates[0].id,stars:4,rizel:{ja:'まず自分のルールを確かめます。\n見出しより先に、決めた手順を見ます。',en:'Check your own rules first.\nLook at your steps before the headline.',by:'ai'}},{id:built.candidates[1].id,stars:4}];
  const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,planned,withheld:built.withheld});
- for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。\n  見出しより先に、決めた手順を見ます。','リゼルの一言: なし',`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[0].id}`,`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[1].id}`,'訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','・サンディスク株が6%下落、メモリー価格の下落で','リゼルの一言: まず自分のルールを確かめます。\n  見出しより先に、決めた手順を見ます。','リゼルの一言: なし',`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[0].id}`,`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[1].id}`,'訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ assert.ok(!text.includes('Sandisk shares'),'Japanese headlines only');
  assert.ok(!text.includes('■'),'the 14 candidates are on the owner page only');assert.ok(!text.includes('・見出し'),'no bullets');
 });
 
@@ -168,9 +172,9 @@ test('owner pick: the RIZEL note is one note of 1–3 short sentences, checked (
  assert.ok(rizelIssues({ja:'3つのルールを確かめます。',en:'Check 3 rules.'}).includes('number'));
  assert.deepEqual(rizelIssues({ja:'あ'.repeat(121),en:'x'}),['shape']);
  assert.ok(RIZEL_INSTRUCTIONS.includes('買い時')&&/no bullets/.test(RIZEL_INSTRUCTIONS));
- const article=parseRiskArticle({id:sid(9),url:'https://news.example/9',publishedAt:'2026-11-25T13:00:00.000Z',stars:3,quoteId:null,market:{index:'nas100',session:null,reading:null},pick:{source:'auto'},...copy('米国株が下落')});
- let calls=0;const call=async()=>(++calls===1?{ja:'今が買い時です。',en:'A buying opportunity.'}:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'});
- assert.deepEqual(await writeRizelLine({article,stars:3,call}),{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'});
+ const article=parseRiskArticle({id:sid(9),url:'https://news.example/9',publishedAt:'2026-11-25T13:00:00.000Z',stars:3,quoteId:null,market:{index:'nas100',session:null,reading:null},pick:{source:'auto'},...copy('エヌビディア株が下落')});
+ let calls=0;const call=async()=>(++calls===1?{ja:'今が買い時です。',en:'A buying opportunity.'}:{ja:'エヌビディア株の下落か。気になるのは自分の持ち高のほう。',en:'U.S. stocks fell. What matters is my own position size.'});
+ assert.deepEqual(await writeRizelLine({article,stars:3,call}),{ja:'エヌビディア株の下落か。気になるのは自分の持ち高のほう。',en:'U.S. stocks fell. What matters is my own position size.',by:'ai'});
  assert.equal(await writeRizelLine({article,stars:3,call:async()=>({ja:'一時的な下げです。',en:'Temporary.'})}),null);
  // The owner's note: as written, its line breaks kept; English translated line for line (or the Japanese when that fails).
  const {ownerLine}=await import('../services/resolute-api/shock-candidates.mjs');
