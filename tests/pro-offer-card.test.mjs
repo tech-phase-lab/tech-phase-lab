@@ -47,12 +47,11 @@ test('the PayPal button goes straight to PayPal: a real button when a handler is
   assert.match(html(true, { href: "/research/account?upgrade=1" }), />PayPalで申し込む<\/a>/);
   assert.match(html(true, { href: undefined, onSubscribe: () => {}, busy: true }), /disabled=""[^>]*>PayPalへ移動しています/);
 });
-test('the FREE card shows 0円 / 月 with the same price classes as PRO; the note sits outside the cards', () => {
+test('the FREE card shows 0円 / 月 with the same price classes as PRO; no note under the cards', () => {
   const src = readFileSync(new URL('../app/research/plan-cards.tsx', import.meta.url), 'utf8');
   assert.match(src, /styles\.priceRow\}><span className=\{styles\.priceN\}>\{t\("0円", "¥0"\)\}<\/span><span className=\{styles\.priceU\}>\{t\("\/ 月", "\/ month"\)\}/);
-  assert.match(src, /PROプランは自動更新です。解約はマイアカウントからいつでも可能です。/);
-  assert.match(src, /PRO renews automatically\. Cancel anytime from My Account\./);
-  assert.match(src, /Terms.*Legal Notice/s);
+  // Nov 27 (owner): the note under the cards is gone; the footer has the legal links and the billing screen keeps its own disclosure.
+  assert.doesNotMatch(src, /PROプランは自動更新です|PRO renews automatically|Legal Notice|styles\.note/);
   assert.doesNotMatch(readFileSync(new URL('../app/research/account/account-view.tsx', import.meta.url), 'utf8'), /料金と規約を確認してから/);
 });
 test('price figures use Noto Serif JP 700 on both cards, loaded lazily (not preloaded)', () => {
