@@ -9,6 +9,7 @@ import {formatDisplay} from '@/lib/research/display-time';
 import s from './reference.module.css';
 import MarketChartCard,{NeedleCard} from './market-chart-card';
 import TodayCard,{useTodayMember} from './today-card';
+import MarketClosedNote from './market-closed-note';
 import ds from '../diagnosis.module.css';
 import {ShockCards,ShockList} from './shock-section';
 import {useImpactMember} from '../features/use-impact-member';
@@ -82,12 +83,15 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section>;
  if(pc)return <div className={`${s.root} ${s.pcRoot}`}><div className={s.pcWrap}>
   <div className={s.pcToday}><b>TODAY</b><span>{date??'—'}</span></div>
+  <MarketClosedNote locale={locale}/>
   <div className={`${s.pcTop} ${today?'':s.pcTopSolo}`}>{today}<NeedleCard locale={locale} snapshot={thermometerSnapshot} sample={displaySample}/></div>
   {shock}{rules}{alerts}{foot}
  </div></div>;
  return <div className={s.root}><div className={s.wrap}>
   <div className={`${s.hero} ${ds.starsBand}`}><h1><svg className={s.anc} viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4"/><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4"/></svg><span>RESOLUTE</span></h1>
    <div className={s.date}>{date??'—'}</div></div>
+  {/* Directly under the RESOLUTE title: the U.S. market is closed today (owner, Nov 27). */}
+  <MarketClosedNote locale={locale}/>
   <MarketChartCard locale={locale} snapshot={thermometerSnapshot} sample={displaySample}/>
   <section className={s.sec}><div className={s.lab}>TODAY</div>{today}{shock}</section>
   {rules}{alerts}{foot}

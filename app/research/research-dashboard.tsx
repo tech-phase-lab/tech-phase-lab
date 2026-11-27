@@ -19,7 +19,6 @@ import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
 import ResoluteBar from "./resolute-bar";
-import MarketClosedNote from "./market-closed-note";
 import Deferred from "./deferred";
 import PlanCards, { TOKUSHOHO_HREF } from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
@@ -238,8 +237,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <FreshnessNotice lang={lang} />
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
           <ResoluteBar />
-          {/* Under RESOLUTE on phones (the side menu carries it on wide screens): the U.S. market is closed today (owner, Nov 27). */}
-          <MarketClosedNote lang={lang === "ja" ? "ja" : "en"} place="page" />
           <Deferred fallback={<div aria-busy="true" style={{ minHeight: 420 }} />}><NewsFeed lang={lang} initialNews={initialNews} /></Deferred>
           <HomeHelp lang={lang} />
         </>}

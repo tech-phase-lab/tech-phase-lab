@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {editionAt,inEdition,editionSession,isRecapHeadline,percentMismatch,latestClosedSession} from '../lib/resolute/risk-edition.ts';
 import {sameEvent} from '../lib/resolute/risk-scope.ts';
-import {parsePicks,autoPicks,answerOpen,earningsAfterClose,candidateRunTime,isCandidateRun,parseCandidate,rizelIssues} from '../lib/resolute/shock-picks.ts';
+import {parsePicks,autoPicks,answerOpen,earningsAfterClose,candidateRunTime,isCandidateRun,parseCandidate,rizelIssues,editedPicks,editTarget} from '../lib/resolute/shock-picks.ts';
 import {parseRiskArticle,parseRiskFeed,isShownStory,SUMMARY_QUESTION} from '../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 import {editionIntake,buildCandidates,publishPicks,candidatesMailText,validateRanking,rankInput,writeRizelLine,RIZEL_INSTRUCTIONS,withPriority,runCandidates} from '../services/resolute-api/shock-candidates.mjs';
@@ -157,7 +157,7 @@ test('owner pick: candidates are ranked by the AI (validated), summarised, and m
  // The morning mail lists only the 3 the service plans to publish, then the correction link (owner, Nov 27).
  const planned=[{id:built.candidates[0].id,stars:4,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}},{id:built.candidates[1].id,stars:4}];
  const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,planned,withheld:built.withheld});
- for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。','リゼルの一言: なし','訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。','リゼルの一言: なし',`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[0].id}`,`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[1].id}`,'訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
  assert.ok(!text.includes('■'),'the 14 candidates are on the owner page only');
 });
 
@@ -323,13 +323,34 @@ test('home notice: weekends and NYSE holidays by the U.S. Eastern date, one cons
  assert.equal(marketClosedNotice(new Date('2027-12-24T15:00:00Z'),'ja'),'本日はクリスマスのため、米国市場はお休みです。');
  // Every NYSE holiday of the calendar has a name, and every named day is a holiday of the calendar.
  assert.equal(Object.keys(US_MARKET_HOLIDAYS).length,20);for(const d of Object.keys(US_MARKET_HOLIDAYS))assert.equal(usMarketSession(new Date(d+'T15:00:00Z')),'holiday',d);
- for(const [d,name] of [['2026-01-01','元日'],['2026-01-19','キング牧師記念日'],['2026-02-16','大統領の日'],['2026-04-03','聖金曜日'],['2026-05-25','戦没将兵追悼記念日'],['2026-06-19','ジューンティーンス'],['2026-09-07','労働者の日'],['2026-12-25','クリスマス']])
+ // Memorial Day (owner, Nov 27): no name, the plain line.
+ assert.equal(marketClosedNotice(new Date('2026-05-25T15:00:00Z'),'ja'),'本日の米国市場はお休みです。');assert.equal(marketClosedNotice(new Date('2027-05-31T15:00:00Z'),'en'),'U.S. markets are closed today.');
+ for(const [d,name] of [['2026-01-01','元日'],['2026-01-19','キング牧師記念日'],['2026-02-16','大統領の日'],['2026-04-03','聖金曜日'],['2026-06-19','ジューンティーンス'],['2026-09-07','労働者の日'],['2026-12-25','クリスマス']])
   assert.ok(marketClosedNotice(new Date(d+'T15:00:00Z'),'ja').includes(name),d);
 });
 test('home notice: one line on phones (nowrap, a font that fits the longest holiday name at 360px; measured with Playwright)',async()=>{
- const css=await readFile(new URL('../app/research/market-closed-note.module.css',import.meta.url),'utf8');
- assert.match(css,/\.note\{[^}]*white-space:nowrap/);assert.match(css,/\.page\{[^}]*font-size:min\(12\.5px,2\.85vw\)/);
+ const css=await readFile(new URL('../app/resolute/home/market-closed-note.module.css',import.meta.url),'utf8');
+ assert.match(css,/\.note\{[^}]*white-space:nowrap/);assert.match(css,/\.note\{[^}]*font-size:min\(12\.5px,2\.85vw\)/);
  // At 360px the box is 320px wide: 2.85vw = 10.26px per character; the longest line (27 characters) + icon, gap, padding and border fit.
- const longest=Math.max(...Object.values(US_MARKET_HOLIDAYS).map(h=>[...MARKET_CLOSED_NOTICE.holiday.ja.replace('{name}',h.ja)].length));
- assert.equal(longest,27);assert.ok(longest*0.0285*360+2+16+14+5<=320);
+ const longest=Math.max(...Object.keys(US_MARKET_HOLIDAYS).map(d=>[...marketClosedNotice(new Date(d+'T15:00:00Z'),'ja')].length));
+ assert.equal(longest,27,'ジューンティーンス (Memorial Day shows no name)');assert.ok(longest*0.0285*360+2+16+14+5<=320);
+});
+
+test('one story from the morning mail: only its ★ and RIZEL line change; the other planned stories stay as they are (owner only)',async()=>{
+ assert.equal(editTarget(sid(1)),sid(1));assert.equal(editTarget('o'+'c'.repeat(20)),'o'+'c'.repeat(20));assert.equal(editTarget('../x'),null);assert.equal(editTarget(['a']),null);
+ const planned=[{id:sid(2),stars:3,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}},{id:sid(1),stars:4},{id:sid(3),stars:2,rizel:{ja:'手順を見直します。',en:'Review the steps.',by:'ai'}}];
+ const day={picks:null,planned};
+ assert.deepEqual(editedPicks(day,sid(1),5,'自分のルールを先に。'),[{id:sid(2),stars:3,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'}},{id:sid(1),stars:5,rizel:{ja:'自分のルールを先に。'}},{id:sid(3),stars:2,rizel:{ja:'手順を見直します。',en:'Review the steps.'}}]);
+ // The AI line left as it is keeps its English; emptied, the AI writes one at publish time.
+ assert.deepEqual(editedPicks(day,sid(2),1,'まず自分のルールを確かめます。')[0],{id:sid(2),stars:1,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'}});
+ assert.deepEqual(editedPicks(day,sid(2),1,'  ')[0],{id:sid(2),stars:1});
+ // After an owner answer, that answer is the set.
+ assert.deepEqual(editedPicks({picks:[{id:sid(4),stars:2}],planned},sid(4),4,''),[{id:sid(4),stars:4}]);
+ assert.equal(editedPicks(day,sid(9),3,''),null);assert.equal(editedPicks(day,sid(1),6,''),null);
+ // The saved set passes the pick checks against the day's candidates.
+ const list=[cand(1,'company',1,4),cand(2,'market',1,3),cand(3,'market',2,2)];
+ assert.equal(parsePicks(editedPicks(day,sid(1),5,'x'),list).length,3);
+ // Saving goes through the owner-only pick API: every other account gets 403.
+ const r=await riskRequest(req({action:'picks',day:'2026-11-27',baseRevision:0,picks:editedPicks(day,sid(1),5,'x')}),'user_member',async()=>({canReceiveNotifications:true}),{query:async()=>{throw Error('must not be read');}});
+ assert.equal(r.status,403);
 });
