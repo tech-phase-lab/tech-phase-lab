@@ -46,7 +46,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map">{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks">{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics">{t("決算・指標", "Financials")}</Link></nav>} />
     <main className={styles.main} id="company-main">
       <CompanySwitcher ticker={profile.ticker} companies={companies} lang={lang} />
-      <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate} · {t("自動更新なし", "No automatic updates")}</span></div>
+      <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate}</span></div>
       <header className={styles.companyHeading}>
         <div><p className={styles.eyebrow}>{profile.sector[lang]}</p><h1>{profile.ticker} <span>{profile.name}</span></h1><p className={styles.focus}>{profile.focus[lang]}</p></div>
         <div className={styles.reviewed}><span>{t("資料照合日", "Sources last reviewed")}</span><time dateTime={profile.reviewedOn}>{profile.reviewedOn}</time></div>
@@ -110,7 +110,6 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
       </section>
 
       <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した資料", "Sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title} <span aria-hidden="true">↗</span></strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
-      <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("後日の訂正や新しい発表は自動反映していません。", "Subsequent corrections and releases are not incorporated automatically.")}</p></footer>
     </main>
   </div>;
 }

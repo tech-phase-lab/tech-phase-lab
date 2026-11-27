@@ -40,10 +40,11 @@ test("each 監視22銘柄 page header: the gauge card is live and flashes; the s
   for (const page of ["company-watch.tsx", "mu-watch.tsx"]) assert.match(read(`app/research/companies/${page}`), /<QuoteCard ticker=(\{[^}]+\}|"[A-Z]+") variant="gauge"/);
 });
 
-test("footer: the 'not connected' sentence is gone, the rest stays", () => {
-  const dashboard = read("app/research/companies/company-dashboard.tsx");
-  assert.doesNotMatch(dashboard, /株価・速報の配信は未接続|Live prices and news are not connected/);
-  assert.match(dashboard, /<footer className=\{styles\.footer\}><span>TECH PHASE RESEARCH<\/span><p>\{t\("後日の訂正や新しい発表は自動反映していません。", "Subsequent corrections and releases are not incorporated automatically\."\)\}<\/p><\/footer>/);
+test("no 'not connected / not auto-updated' copy on the 監視22銘柄 pages (owner, Nov 27: untrue now)", () => {
+  const dashboard = read("app/research/companies/company-dashboard.tsx"), watch = read("app/research/companies/company-watch.tsx");
+  assert.doesNotMatch(dashboard, /株価・速報の配信は未接続|Live prices and news are not connected|自動反映していません|not incorporated automatically|自動更新なし|<footer/);
+  assert.doesNotMatch(watch, /自動反映は未接続|doesn't automatically include newer results/);
+  assert.match(watch, /リアルタイム監視は配信済みの記事を自動更新します。/);
 });
 
 test("owner accounts keep full access: the 監視22銘柄 pages open and every live quote is readable, also as FREE", () => {
