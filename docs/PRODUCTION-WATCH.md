@@ -15,6 +15,16 @@
 | `compareSearch` | `/api/research/stocks?scope=compare&q=NVDA`（銘柄比較の検索） | `ok`、NVDAが見つかる | 5秒 |
 | `monitorHealth` | 研究モニター `https://research-monitor-staging-research-staging.up.railway.app/health` | `ready`、`health.status:"ready"`、`issues`なし、最終巡回10分以内 | 15秒 |
 
+| `proCompare`（11/27追加） | `/api/research/internal/pro-check`（PRO限定の銘柄比較を固定6組 BRK-B/ORCL・NVDA/AMD・JPM/GS・PG/KO・MET/PRU・AAPL/MSFT で実行） | 全12社が `ready`、7項目（財務・収益性・割安性・安定性・株価モメンタム・成長性・資金創出）がすべて揃い、不正な数値（NaN・無限大・利益率±100%超・負の負債や現金・0以下の売上・0〜10外のスコアなど）がない | 60秒 |
+
+`proCompare` だけは匿名ではありません。監視サービスが比較のバックグラウンド更新にすでに送っている `COMPARISON_WARM_SECRET` を
+`Authorization: Bearer` で、サイトのホストにだけ（https）送ります。サイト側のルートはこの値と定数時間で照合し、違えば・無ければ・ブラウザーからの
+リクエスト（Origin / Sec-Fetch ヘッダーあり）なら中身のない404を返します。CORSヘッダーなし、会員情報は読まず返しません。比較は会員の比較と同じ
+共有ストアから組み立て（リクエストからデータ提供元は呼びません）、割安性の未取得分を監視に依頼することもしません（読み取りのみ）。
+earnings-selfcheck に `COMPARISON_WARM_SECRET`（監視サービスと同じ値）が無い間は `"proCompare":{"ok":true,"skipped":"no-token"}` と出て、不合格にはしません。
+会社ごとの詳細は2行目 `{"check":"pro-compare","ok":...,"companies":{"NVDA":{"missing":[],"invalid":[],"strengths":3,"weaknesses":1},...}}`
+（項目名・フィールド名・件数のみ）。長所・短所の文言そのものはルートの応答で確認できます。
+
 出力は1行のJSONで、真偽値・件数・HTTPステータス・ミリ秒・固定の失敗コード（`timeout` など）だけです。タイトル・URL・数値・環境変数の値は出しません。
 
 ```
