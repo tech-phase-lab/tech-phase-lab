@@ -7,7 +7,9 @@ import {sameEvent} from '../lib/resolute/risk-scope.ts';
 import {parsePicks,autoPicks,answerOpen,earningsAfterClose,candidateRunTime,isCandidateRun,parseCandidate,rizelIssues} from '../lib/resolute/shock-picks.ts';
 import {parseRiskArticle,parseRiskFeed,isShownStory,SUMMARY_QUESTION} from '../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
-import {editionIntake,buildCandidates,publishPicks,candidatesMailText,validateRanking,rankInput,writeRizelLine,RIZEL_INSTRUCTIONS} from '../services/resolute-api/shock-candidates.mjs';
+import {editionIntake,buildCandidates,publishPicks,candidatesMailText,validateRanking,rankInput,writeRizelLine,RIZEL_INSTRUCTIONS,withPriority,runCandidates} from '../services/resolute-api/shock-candidates.mjs';
+import {PRIORITY_TOPICS,priorityTopics} from '../lib/resolute/shock-priority.ts';
+import {marketClosedNotice,MARKET_CLOSED_NOTICE,US_MARKET_HOLIDAYS,usMarketSession} from '../lib/research/us-market-session.ts';
 import {selectDailyCandidates,repeatsTaken} from '../services/resolute-api/rizel-daily-review.mjs';
 import {generate,NUMBER_RETRY} from '../services/resolute-api/risk-job.mjs';
 import {ownerShockMailText,WITHHELD_REASON_JA} from '../services/resolute-api/shock-owner-mail.mjs';
@@ -152,8 +154,11 @@ test('owner pick: candidates are ranked by the AI (validated), summarised, and m
  const built=await buildCandidates({feed,now:run,moves:nov25,rank,summarize});
  assert.deepEqual(built.candidates.map(c=>[c.group,c.rank,c.suggested.stars]),[['market',1,4],['company',1,4]]);
  assert.deepEqual(built.withheld,[{title:'Sandisk shares slide 6% as memory prices fall',reason:'not-publishable'}]);
- const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,withheld:built.withheld});
- for(const s of ['衝撃度チェッカー 2026-11-26 の候補','08:00までにこのページで選んでください: https://techphase.app/resolute/news/owner','■ 市場全体のニュース（1件）','■ 個別企業のニュース（1件）','おすすめの★: ★4','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ // The morning mail lists only the 3 the service plans to publish, then the correction link (owner, Nov 27).
+ const planned=[{id:built.candidates[0].id,stars:4,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}},{id:built.candidates[1].id,stars:4}];
+ const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,planned,withheld:built.withheld});
+ for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。','リゼルの一言: なし','訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ assert.ok(!text.includes('■'),'the 14 candidates are on the owner page only');
 });
 
 test('owner pick: the RIZEL line is checked (AI) — banned wording rewritten once, else no line',async()=>{
@@ -256,4 +261,75 @@ test('migration 030 (written, not applied by this change): the answer and the pu
   assert.deepEqual(day.map(a=>[a.ja.title,a.stars]),[['Story 2',5]]);
   assert.equal((await saveOwnerPicks(db,{day:'2026-11-27',baseRevision:1,picks:[{id:sid(1),stars:5}]},new Date('2026-11-26T22:59:00Z'))).status,409,'published: closed');
  }finally{await db.close();}
+});
+
+test('must-capture topics: every listed topic is recognised, never dropped by the screens, and ranked first (market-wide first)',()=>{
+ const samples={crash:['Nasdaq plunges as AI stocks crash','日経平均が暴落'],recession:['Recession fears grip Wall Street','世界恐慌以来の下げ'],downgrade:['S&P puts Nvidia on CreditWatch negative','Moody\'s downgrades Intel'],
+  resign:['Apple CEO Tim Cook to step down','Intel CFO resigns','インテルCEOが辞任'],tariff:['Trump announces new chip tariffs','China slaps duties on U.S. goods'],retaliation:['Beijing vows retaliation','EU prepares countermeasures'],
+  hormuz:['Tankers halt in Strait of Hormuz','ホルムズ海峡で緊張'],rates:['Fed holds rates steady','Treasury yields jump','日銀が利上げ'],oil:['Oil prices jump','Brent crude tops $90','OPEC+ cuts output']};
+ assert.deepEqual(PRIORITY_TOPICS.map(t=>t.key),Object.keys(samples));
+ for(const [key,list] of Object.entries(samples))for(const t of list)assert.ok(priorityTopics(t).some(x=>x.key===key),`${key}: ${t}`);
+ for(const t of ['Nvidia unveils new chip','Apple exits car project','Microsoft opens new office'])assert.deepEqual(priorityTopics(t).map(x=>x.key),[],t);
+ // Neutral wording, no downside word, a bare price move, a short text: still in (the other stories need the old screens).
+ const run=new Date('2026-11-25T23:20:00Z');
+ const feed=feedOf([{...row('Oil prices rise on OPEC+ supply talk','2026-11-25T18:00:00.000Z',{lane:'market'}),sentiment:undefined,bodyEn:'OPEC+ met.'},
+  {...row('Apple CEO Tim Cook to step down','2026-11-25T19:00:00.000Z',{tickers:['AAPL']}),sentiment:undefined},
+  {...row('Nvidia plunges 8% in premarket','2026-11-25T13:00:00.000Z',{tickers:['NVDA']}),sentiment:undefined},
+  ...Array.from({length:30},(_,i)=>row(`Stocks fall as worries spread ${i}`.replace(/\d+$/,String.fromCharCode(97+i%26)+i),'2026-11-25T17:00:00.000Z',{lane:'market'}))]);
+ const {stories}=editionIntake(feed,run);
+ const titles=stories.map(s=>s.title);
+ for(const t of ['Oil prices rise on OPEC+ supply talk','Apple CEO Tim Cook to step down','Nvidia plunges 8% in premarket'])assert.ok(titles.includes(t),t);
+ assert.equal(stories.filter(s=>s.group==='market')[0].title,'Oil prices rise on OPEC+ supply talk','priority first in its group');
+ // After the AI: a priority story it left out is put back at the top of its list; a priority story it ranked low moves up.
+ const st=[{title:'Fed holds rates steady',group:'market'},{title:'Stocks drift',group:'market'},{title:'Apple CEO Tim Cook to step down',group:'company'},{title:'Acme wins contract',group:'company'}];
+ const r=withPriority({market:[{key:'s2',stars:2,reason:{ja:'x',en:'x'}}],company:[{key:'s4',stars:3,reason:{ja:'x',en:'x'}},{key:'s3',stars:5,reason:{ja:'y',en:'y'}}]},st);
+ assert.deepEqual(r.market.map(p=>p.key),['s1','s2']);assert.equal(r.market[0].reason.ja,'重要な話題（金利）のため候補に入れました');
+ assert.deepEqual(r.company.map(p=>[p.key,p.stars]),[['s3',5],['s4',3]]);
+});
+test('candidate run: the 3 planned stories are chosen, stored and mailed at 06:00; published exactly as mailed when the owner does nothing',async()=>{
+ const now=new Date('2026-11-25T21:00:00Z'),sent=[],writes=[];
+ const pool={query:async(sql,args)=>{writes.push({sql,args});return {rows:sql.includes('RETURNING day')?[{day:'2026-11-26'}]:[]};}};
+ const list=[cand(1,'company',1,4),cand(2,'market',1,3),cand(3,'market',2,2),cand(4,'company',2,5)];
+ const r=await runCandidates({pool,readFeed:async()=>feedOf([]),now,mail:async x=>{sent.push(x);return {state:'sent'};},rank:async()=>({by:'ai',attempts:1,ranking:{market:[],company:[]}}),
+  line:async({stars})=>stars===2?null:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}});
+ assert.equal(r.state,'ready');
+ // With no stories the plan is empty; with candidates it is the auto pick (2 market-wide first, then the best company story).
+ assert.deepEqual(sent[0].planned,[]);
+ const {planPicks}=await import('../services/resolute-api/shock-candidates.mjs');
+ const planned=await planPicks({candidates:list,line:async({stars})=>stars===2?null:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}});
+ assert.deepEqual(planned.map(p=>[p.id,p.stars,!!p.rizel]),[[sid(2),3,true],[sid(1),4,true],[sid(3),2,false]]);
+ const store=memoryPool({state:'ready',candidates:list,planned,added:[],picks:null,picked_at:null});
+ const result=await publishPicks({pool:store,readFeed:async()=>{throw Error('not read');},now:new Date('2026-11-26T23:20:00Z'),build:async()=>{throw Error('not rebuilt');},line:async()=>{throw Error('not rewritten');}});
+ assert.equal(result.source,'planned');
+ assert.deepEqual(store.saved[0].map(parseRiskArticle).map(a=>[a.ja.title,a.stars,a.pick.source,a.rizel?.ja??null]),[['Story 2',3,'auto','まず自分のルールを確かめます。'],['Story 1',4,'auto','まず自分のルールを確かめます。'],['Story 3',2,'auto',null]]);
+});
+test('owner mail: on a day the owner picked, the table sentence about ★ is left out (owner-only mail)',()=>{
+ const base={url:'https://news.example/x',publishedAt:'2026-11-26T15:00:00.000Z',market:{index:'nas100',session:null,reading:null},quoteId:null,...copy('米国株のニュース')};
+ const owner=ownerShockMailText({day:'2026-11-27',articles:[parseRiskArticle({...base,id:sid(1),stars:3,pick:{source:'owner'}})],quotes:[],fallback:false});
+ assert.ok(!owner.includes('AIは★を変えません'));assert.ok(owner.includes('載せるニュースと★は、オーナーが選びました。'));
+ const auto=ownerShockMailText({day:'2026-11-27',articles:[parseRiskArticle({...base,id:sid(1),stars:3,pick:{source:'auto'}})],quotes:[],fallback:false});
+ assert.ok(auto.includes('AIは★を変えません'));
+});
+test('home notice: weekends and NYSE holidays by the U.S. Eastern date, one constant pair for the wording',()=>{
+ assert.equal(marketClosedNotice(new Date('2026-11-26T15:00:00Z'),'ja'),'本日は感謝祭のため、米国市場はお休みです。');
+ assert.equal(marketClosedNotice(new Date('2026-11-26T15:00:00Z'),'en'),'U.S. markets are closed today for Thanksgiving.');
+ assert.equal(marketClosedNotice(new Date('2026-11-28T15:00:00Z'),'ja'),MARKET_CLOSED_NOTICE.weekend.ja);
+ assert.equal(marketClosedNotice(new Date('2026-11-29T15:00:00Z'),'en'),'U.S. markets are closed today.');
+ assert.equal(marketClosedNotice(new Date('2026-11-27T15:00:00Z'),'ja'),null,'the early-close Friday is a trading day');
+ // Eastern date: Saturday 00:30 JST is still Friday in New York.
+ assert.equal(marketClosedNotice(new Date('2026-11-27T15:30:00Z'),'ja'),null);
+ // Observed days carry the holiday's own name.
+ assert.equal(marketClosedNotice(new Date('2027-07-05T15:00:00Z'),'ja'),'本日は独立記念日のため、米国市場はお休みです。');
+ assert.equal(marketClosedNotice(new Date('2027-12-24T15:00:00Z'),'ja'),'本日はクリスマスのため、米国市場はお休みです。');
+ // Every NYSE holiday of the calendar has a name, and every named day is a holiday of the calendar.
+ assert.equal(Object.keys(US_MARKET_HOLIDAYS).length,20);for(const d of Object.keys(US_MARKET_HOLIDAYS))assert.equal(usMarketSession(new Date(d+'T15:00:00Z')),'holiday',d);
+ for(const [d,name] of [['2026-01-01','元日'],['2026-01-19','キング牧師記念日'],['2026-02-16','大統領の日'],['2026-04-03','聖金曜日'],['2026-05-25','戦没将兵追悼記念日'],['2026-06-19','ジューンティーンス'],['2026-09-07','労働者の日'],['2026-12-25','クリスマス']])
+  assert.ok(marketClosedNotice(new Date(d+'T15:00:00Z'),'ja').includes(name),d);
+});
+test('home notice: one line on phones (nowrap, a font that fits the longest holiday name at 360px; measured with Playwright)',async()=>{
+ const css=await readFile(new URL('../app/research/market-closed-note.module.css',import.meta.url),'utf8');
+ assert.match(css,/\.note\{[^}]*white-space:nowrap/);assert.match(css,/\.page\{[^}]*font-size:min\(12\.5px,2\.85vw\)/);
+ // At 360px the box is 320px wide: 2.85vw = 10.26px per character; the longest line (27 characters) + icon, gap, padding and border fit.
+ const longest=Math.max(...Object.values(US_MARKET_HOLIDAYS).map(h=>[...MARKET_CLOSED_NOTICE.holiday.ja.replace('{name}',h.ja)].length));
+ assert.equal(longest,27);assert.ok(longest*0.0285*360+2+16+14+5<=320);
 });
