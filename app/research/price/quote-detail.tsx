@@ -55,7 +55,7 @@ function AlertSheet({ ticker, currency, ja, onClose }: { ticker: string; currenc
   const t = (a: string, b: string) => ja ? a : b;
   return <div className={styles.sheetBack} onClick={onClose}><div className={styles.sheet} role="dialog" aria-modal="true" aria-label={t("価格通知", "Price alert")} onClick={event => event.stopPropagation()}>
     <h2>{t("価格通知", "Price alert")}</h2>
-    {delivery === "live" ? <p>{t("米国市場の取引時間中に5分ごとに確認し、価格がこの水準を超えたとき（下回ったとき）に1回、スマホへ通知します。スマホ通知をオンにした端末に届きます。", "Checked every 5 minutes during U.S. market hours. You get one notification on your phone when the price crosses this level (on devices with notifications turned on).")} <Link href="/research/notifications">{t("通知の設定", "Notification settings")}</Link></p>
+    {delivery === "live" ? <p>{t("この価格に届いたら1回通知します", "One alert when the price reaches this level")} <Link href="/research/notifications">{t("通知の設定", "Notification settings")}</Link></p>
       : delivery === "pro-required" ? <p>{t("スマホへの価格通知はPRO会員向けです。設定は保存できます。", "Price alerts on your phone are for PRO members. You can still save your settings.")}</p>
       : delivery === "not-ready" ? <p>{t("設定のみ保存できます。通知配信は準備中です。", "You can save your settings, but alerts aren't being sent yet.")}</p> : null}
     <form onSubmit={event => {

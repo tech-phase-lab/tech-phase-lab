@@ -160,13 +160,12 @@ export default function CompanyActivity({ ticker, lang, sample }: { ticker: stri
     </button></h2>
     <div id={bodyId} hidden={!open}>
       {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time access to all updates"}</Link></p>}
-      {failed && <p className={styles.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{data && (ja ? " 前回取得した記事を表示しています。" : " Showing previously loaded articles.")} <button onClick={() => setAttempt(value => value + 1)}>{ja ? "再試行" : "Retry"}</button></p>}
+      {failed && <p className={styles.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{data && (ja ? " 前回の内容です" : " Showing the last update.")} <button onClick={() => setAttempt(value => value + 1)}>{ja ? "再試行" : "Retry"}</button></p>}
       {!data && !failed && <p className={styles.problem} role="status">{ja ? "配信済み記事を読み込んでいます…" : "Loading updates…"}</p>}
       {data && !rows.length && <p className={styles.problem}>{ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window."}</p>}
       {!!rows.length && <div className={styles.rule}/>}
       {!!rows.length && <div className={styles.timeline}>{rows.slice(0, 8).map(item)}</div>}
       {rows.length > 8 && <details className={styles.more}><summary>{ja ? `ほか${rows.length - 8}件を見る` : `Show ${rows.length - 8} more`}</summary><div className={styles.timeline}>{rows.slice(8).map(item)}</div></details>}
-      {!!wireRows.length && <p className={styles.fine}>{ja ? "「企業・配信会社」「第三者」の表示がある記事は見出しのみで、本文は確認していません。見出しを押すと元の記事へ移動します。" : "Items labelled company / wire or third party are headlines only; article text is not checked. Headlines open the original."}</p>}
       <div className={styles.rule}/>
       <div className={styles.foot}>
         {live ? <StockNewsBell ticker={ticker} ja={ja} full={full} /> : <span />}

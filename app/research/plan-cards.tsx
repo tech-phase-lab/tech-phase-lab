@@ -1,6 +1,5 @@
 "use client";
 import type { Language } from "@/lib/research/data";
-import Link from "next/link";
 import ProOfferCard from "./pro-offer-card";
 import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
@@ -82,7 +81,5 @@ export default function PlanCards({ lang }: { lang: Language }) {
       <h3>{t("米国株を調べる、深く知る。", "Explore US stocks in depth.")}</h3>
       {groups(free, ja)}
     </article>
-    <p className={styles.note}>{t("PROプランは自動更新です。解約はマイアカウントからいつでも可能です。", "PRO renews automatically. Cancel anytime from My Account.")}<br />
-      <Link href="/terms">{t("利用規約", "Terms")}</Link>{t(" ・ ", " · ")}<Link href={TOKUSHOHO_HREF}>{t("特定商取引法", "Legal Notice")}</Link></p>
   </div>;
 }
