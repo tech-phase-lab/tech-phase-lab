@@ -23,6 +23,7 @@ const body='The U.S. Commerce Department opened an investigation into SK hynix o
 const copy={publishable:true,ja:{title:'SKハイニックスを巡る調査を開始',source:'Example Wire',content:'米商務省がSKハイニックスの対中輸出を巡る調査を始めました。',date:'2026年11月24日'},en:{title:'U.S. opens probe into SK hynix',source:'Example Wire',content:'The U.S. Commerce Department opened an investigation into SK hynix over chip exports.',date:'November 23, 2026'}};
 const story=(title,publishedAt,extra={})=>({id:hash(title+publishedAt),url:`https://news.example/${hash(title).slice(0,10)}`,title,body,publishedAt,source:'report',tickers:[],...extra});
 
+// These fixtures span the old 30-hour window; the edition window (owner, Nov 27) is tested in resolute-shock-owner-pick.test.mjs.
 test('timing: only the move AFTER publication counts — before the open that session, during or after regular hours the next one',()=>{
  for(const [at,expected] of [
   ['2026-11-23T14:00:00Z',MON], // Mon 09:00 New York: before the open → Monday
@@ -117,7 +118,7 @@ test('at most 3 stories, never two with stars on the same session; market-wide n
   row('Apple shares slide after iPhone orders are cut','2026-11-24T15:00:00.000Z',{tickers:['AAPL']}), // Tue 10:00 → Wed
   row('Stocks drop as inflation worries return','2026-11-24T21:00:00.000Z',{lane:'market'}), // Tue 16:00 → Wed
  ];
- const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves,edition:null});
  assert.ok(selected.length<=3);
  const preview=previewSelection({selected,reserve,diagnostics},moves);
  // Tue: TP大型株100 moved −1.5% (2.0×: at least the ★2 line), so the market-wide story keeps Tuesday (owner: market-wide news
@@ -140,7 +141,7 @@ test('when the market did not move after the market-wide headline, the company t
  const calm={[TUE]:{...tuesday,nas100:{...tuesday.nas100,changePercent:-0.5}}};
  const items=[row('Nasdaq falls as Treasury yields climb','2026-11-24T11:00:00.000Z',{lane:'market'}),
   row('US opens probe into SK hynix over chip exports','2026-11-23T19:00:00.000Z',{tickers:['SKHY']})];
- const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves:calm});
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves:calm,edition:null});
  const preview=previewSelection({selected,reserve,diagnostics},calm);
  // SK hynix: SKHY −11.2% and TP半導体40 −8.5%, both ★5 on the table.
  assert.deepEqual(preview.selected.map(p=>[p.index,p.company??null,p.session,p.marketStars]),[['company','SKHY',TUE,5]]);
@@ -202,7 +203,7 @@ test('a headline whose direction is clear gets no stars from a session that move
  // In the selection, a mismatched story never holds its session: the next story on it does.
  const runAt=new Date('2026-11-24T23:20:00Z');
  const items=[row('Stocks rally as chipmakers rebound after Friday rout','2026-11-24T12:00:00.000Z',{lane:'market'}),row('Chip stocks tumble as export curbs widen','2026-11-24T12:30:00.000Z',{tickers:['NVDA']})];
- const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves,edition:null});
  // The mismatched story takes no slot, not even in reserve; the next story fills it.
  assert.deepEqual(selected.map(c=>c.title),['Chip stocks tumble as export curbs widen']);
  assert.deepEqual(reserve.map(c=>c.title),[]);assert.equal(diagnostics.movedAgainst,1);

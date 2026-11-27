@@ -48,6 +48,7 @@ async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute
 const quietPool=()=>{const saved=[];return {saved,query:async(sql,args)=>{if(sql.includes('INSERT INTO resolute.risk_days'))saved.push({state:args[1],articles:JSON.parse(args[2])});return {rows:[]};}};};
 const select=async x=>({state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'r'});
 
+// These fixtures span the old 30-hour window; the edition window (owner, Nov 27) is tested in resolute-shock-owner-pick.test.mjs.
 test('reproduces Nov 24: one page per lane reaches about four hours back, every story tried is withheld, none-today',async()=>{
  const {read,calls}=provider();
  const onePage=async()=>read(); // the old read: no window, one page per lane
@@ -83,7 +84,7 @@ test('the daily read pages back to the window start: the whole 30 hours is cover
 test('ranking: market-wide news first, then single-company news, opinion pieces last; one story per company',()=>{
  const {selected,reserve,diagnostics}=selectDailyCandidates({ok:true,enabled:false,items:[],officialUpdates:[],reportUpdates:[...lanes.company,...lanes.market].map(r=>({
   title:r.title,bodyEn:r.text,url:r.news_url,publishedAt:new Date(r.date).toISOString(),publisher:r.source_name,tickers:r.tickers??[],lane:r.tickers?'company':'market',
-  ...(r.sentiment?{sentiment:r.sentiment.toLowerCase()}:{})})),reportCoverage:{configured:true,marketLane:true}},now,{moves:fixture.moves,limits:{stories:3,attempts:12}});
+  ...(r.sentiment?{sentiment:r.sentiment.toLowerCase()}:{})})),reportCoverage:{configured:true,marketLane:true}},now,{moves:fixture.moves,limits:{stories:3,attempts:12},edition:null});
  assert.ok(diagnostics.knownMove>=4);
  const order=[...selected,...reserve].map(c=>kindOf(c.title));
  const lastReal=order.lastIndexOf('realistic'),firstOpinion=order.indexOf('opinion');

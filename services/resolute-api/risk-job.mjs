@@ -9,6 +9,7 @@ import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {REPORT_UPDATES_LIMIT} from './rizel-report-source.mjs';
 import {createMovesReader} from './risk-moves.mjs';
 import {storyScope} from '../../lib/resolute/risk-scope.ts';
+import {priorityRank} from '../../lib/resolute/shock-priority.ts';
 import {japaneseMoney} from '../../lib/research/money-ja.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 // Match complete English words, including explicit inflections. Substrings such
@@ -67,7 +68,9 @@ export function feedCounts(feed){
 function feedError(message,check,feed,limit){
  const error=Error(message);error.check=check;error.counts=feedCounts(feed);if(limit!==undefined)error.limit=limit;return error;
 }
-export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={}){
+/** `wide` (the owner pick's candidates, owner Nov 27): stories are ranked by how much the news matters, not by a downside word, so
+ * the headline downside screen (noDownsideHeadline) is skipped; every other check still applies. */
+export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false,wide=false}={}){
  if(!feed||feed.ok!==true)throw feedError('SOURCE_UNAVAILABLE','feed-not-ok',feed);
  if(typeof feed.enabled!=='boolean')throw feedError('SOURCE_UNAVAILABLE','enabled-not-boolean',feed);
  if(!Array.isArray(feed.items))throw feedError('SOURCE_UNAVAILABLE','items-not-array',feed);
@@ -80,8 +83,10 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  if(!feed.enabled&&feed.officialUpdates===undefined)throw feedError('SOURCE_UNAVAILABLE','general-disabled-without-official',feed);
  const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[]),...(feed.reportUpdates??[])];if(raw.length>FEED_LIMITS.raw)throw feedError('SOURCE_LIMIT','raw-over-limit',feed,FEED_LIMITS.raw);const unique=new Map();
  const rejected={partial:0,body:0,unrelated:0,noDownsideHeadline:0,date:0,url:0,duplicateUrl:0};
- for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
- if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
+ for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,text=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
+ // A must-capture topic (owner pick, shock-priority.ts) is never dropped for a short text: the headline stands in for a missing one.
+ const priority=wide&&typeof title==='string'&&priorityRank(title)!==null,body=priority&&(!text||text.length<100)?[title,text].filter(Boolean).join('\n'):text;
+ if(typeof title!=='string'||!body||body.length<(priority?10:100)||body.length>24000){rejected.body++;continue;}
  const marketHeadline=marketWide.test(title)&&(marketDownside.test(title)||marketUpside.test(title)),headlineUp=upside.test(title)||marketWide.test(title)&&marketUpside.test(title);
  // Nov 24: a company-lane story already names a rostered (high-tech) ticker, and the provider's own Negative sentiment is a
  // downside signal; without these, stories such as "Dell shares slide after outlook" never reached the model. Screening only:
@@ -89,8 +94,8 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  const rostered=a.lane==='company'&&Array.isArray(a.tickers)&&a.tickers.length>0,providerNegative=a.sentiment==='negative';
  // Nov 25 (owner: market-wide news first): a headline about the whole market or the chip sector (risk-scope.ts) is relevant too.
  // The downside screen below still applies, and the model still decides publishability from the text.
- if(!relevant.test(title+' '+body)&&!marketHeadline&&!rostered&&storyScope(title)==='company'){rejected.unrelated++;continue;}
- if(!negative.test(title)&&!headlineUp&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
+ if(!priority&&!relevant.test(title+' '+body)&&!marketHeadline&&!rostered&&storyScope(title)==='company'){rejected.unrelated++;continue;}
+ if(!wide&&!negative.test(title)&&!headlineUp&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
  const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
  if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000){rejected.date++;continue;}
  let u;try{u=new URL(a.url);}catch{rejected.url++;continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048){rejected.url++;continue;}u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
@@ -101,7 +106,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  if(unique.has(id))rejected.duplicateUrl++;
  const publisher=typeof a.publisher==='string'&&a.publisher.trim()&&a.publisher.length<=200?a.publisher.trim():null;
  unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint,tickers:cleanTickers(a.tickers),
-  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),headlineDownside:negative.test(title)||marketHeadline,...(headlineUp?{headlineUpside:true}:{})});
+  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),...(priority?{priority:true}:{}),headlineDownside:negative.test(title)||marketHeadline,...(headlineUp?{headlineUpside:true}:{})});
  }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{reportConfigured:feed.reportCoverage?.configured===true,reportCount:feed.reportUpdates?.length??0,reportPossiblyTruncated:feed.reportCoverage?.possiblyTruncated===true,...(Number.isSafeInteger(feed.reportCoverage?.pages)?{reportPages:feed.reportCoverage.pages}:{}),reportOldestPublishedAt:typeof feed.reportCoverage?.oldestPublishedAt==='string'?feed.reportCoverage.oldestPublishedAt:null,reportMarketLane:feed.reportCoverage?.marketLane===true,reportSkipped:Number.isSafeInteger(feed.reportCoverage?.skipped)?feed.reportCoverage.skipped:0,generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
 }
 export function candidatesFromFeed(feed,now=new Date(),options={}){return inspectCandidateFeed(feed,now,options).candidates;}
@@ -118,7 +123,7 @@ export const SUMMARY_INSTRUCTIONS='Summarize the supplied article only, in natur
  +'publication date is not the date of every event described; do not use relative claims such as today, yesterday or just announced. '
  +'Never write: any outlook or prediction, any evaluation of how big or small the impact is, whether something is temporary, likelihoods, buying or selling timing, warnings or advice. '
  +'Banned examples: 一時的, 影響は小さい, 影響は大きい, 〜しそう, 可能性が高い, 買い時, 売り時, 警戒が必要, temporary, likely, the impact is small, buying opportunity, caution is needed, investors should. '
- +'Fields: title (<=100 characters), source (who announced or reported it), content (the facts, <=250 characters), date (when it was announced or takes effect, as stated in the source; otherwise publishedDateTokyo for Japanese and publishedDateNewYork for English). '
+ +'Fields: title (<=100 characters), source (who announced or reported it), content (2 or 3 short factual sentences, <=250 characters: what happened, then the reason or the effect on the market or the stock exactly as the source states it, such as why the source says the shares or the index moved; leave the second part out when the source does not state it, never add your own reason or evaluation), date (when it was announced or takes effect, as stated in the source; otherwise publishedDateTokyo for Japanese and publishedDateNewYork for English). '
  +'Do not add a closing question; the service appends a fixed one. '
  +'Japanese copy: keep every dollar amount exactly as the source writes it (for example $5 billion, $120 or 12%); the service converts amounts to Japanese units. Never write 米ドル, and never put 。 or 、 right after a closing parenthesis. '
  +'The input may be a short news summary rather than the full article; that is enough. Summarize only what it states and leave out what it does not give (an exact price move, figures or an event date are not required). '
@@ -200,13 +205,17 @@ export async function callJsonModel({input,instructions,name,schema,pool,now,fet
 export function rejectedLog(candidate,reason,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:GENERATION_REJECTIONS.includes(reason)?reason:'shape'}));}
 export function bannedLog(candidate,codes,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:'banned-wording',codes}));}
 /** Machine check: banned wording → one rewrite; still present → not published, logged only. */
-/** `why.reason` (optional out-parameter) tells the caller why a null was returned: a GENERATION_REJECTIONS code or 'banned-wording'. */
+/** `why.reason` (optional out-parameter) tells the caller why a null was returned: a GENERATION_REJECTIONS code or 'banned-wording'.
+ * A summary with a number that is not in the source ('new-number', owner Nov 27) is retried once with an instruction to use only
+ * the source's own figures; the retry goes through the same checks (numbers, amounts, banned wording). */
+export const NUMBER_RETRY=' RETRY: the previous summary contained a number that does not appear in the source. Write it again using only figures copied exactly from the source text (title, body or publication date); leave out any figure you cannot copy exactly, and never compute, round or convert one.';
 export async function generate(candidate,pool,now,fetcher,{log=console.log,why={}}={}){
  if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('MODEL_NOT_CONFIGURED');
  const dates=publicationDates(candidate.publishedAt);
  const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,...(candidate.publisher?{publisher:candidate.publisher}:{}),...(candidate.tickers?.length?{tickers:candidate.tickers}:{}),publishedAt:candidate.publishedAt,publishedDateTokyo:dates.tokyo,publishedDateNewYork:dates.newYork});
  delete why.reason;
  let article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS,pool,now,fetcher),candidate,why);
+ if(!article&&why.reason==='new-number'){delete why.reason;article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS+NUMBER_RETRY,pool,now,fetcher),candidate,why);}
  if(!article){rejectedLog(candidate,why.reason,log);return null;}
  let codes=summaryIssues(article.ja,article.en);
  if(!codes.length)return article;
@@ -251,7 +260,7 @@ export async function fillMarketReactions(pool,readMoves,now=new Date(),{days=6}
   if(!Array.isArray(row.articles)||!row.articles.length||row.articles.some(isLegacyRiskArticle))continue;
   const before=row.articles.map(parseRiskArticle);
   // A story whose session turned out to move against its headline is dropped from the day (owner, Nov 25: not shown).
-  const after=(await reactArticles(before,readMoves,quotes,row.day)).map(parseRiskArticle).filter(a=>!directionMismatch(a.market));
+  const after=(await reactArticles(before,readMoves,quotes,row.day)).map(parseRiskArticle).filter(a=>a.pick||!directionMismatch(a.market));
   waiting+=after.filter(a=>a.stars===null).length;
   if(JSON.stringify(after)===JSON.stringify(before))continue;
   // Compare-and-set: a concurrent writer wins and this run leaves the row for the next update.
