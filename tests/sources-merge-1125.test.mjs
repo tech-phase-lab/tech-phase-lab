@@ -21,7 +21,7 @@ function compile(file, extra = {}) {
 const sourceList = compile('source-list');
 const { chainSourceBlocks } = compile('stock-chain-map', { '@/lib/research/chain-map-core': chain, './source-list': sourceList });
 const panel = compile('company-introduction', { './chain-map': { CompanyNetworkMap: () => null }, './source-list': sourceList });
-const NOTE_JA = '公式資料で確認できた関係だけを載せています。SECは名簿の正確性や網羅性を保証していません。売買を勧めるものではありません。';
+const NOTE_JA = '公式資料で確認できた関係のみ';
 
 test('the same document and quote is one block; a different quote of the same document is its own block', () => {
   const doc = { url: 'https://example.com/10-k', label: '10-K' };

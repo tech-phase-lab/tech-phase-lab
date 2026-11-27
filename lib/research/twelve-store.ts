@@ -89,7 +89,19 @@ async function keptStatistics(ticker: string): Promise<Raw | null> {
   return kept && kept.value !== null && kept.value !== undefined ? { payload: kept.value, retrievedAt: new Date(kept.at).toISOString() } : null;
 }
 const seriesParams = (ticker: string) => ({ symbol: providerSymbol(ticker), interval: "1day", outputsize: "100", adjust: "splits" });
-const readSeries = async (ticker: string): Promise<Series> => ({ payload: required(await providerCall("time_series", seriesParams(ticker), 4_000), "series-unavailable"), adjust: "splits", retrievedAt: stamp() });
+const readSeries = async (ticker: string): Promise<Series> => {
+  const series: Series = { payload: required(await providerCall("time_series", seriesParams(ticker), 4_000), "series-unavailable"), adjust: "splits", retrievedAt: stamp() };
+  await durablePut("compare-series", ticker, { at: Date.parse(series.retrievedAt), value: series.payload }).catch(() => false);
+  return series;
+};
+/** The monitor's copy of a company's daily series, at most SERIES_KEPT_DAYS old. Production, Nov 27: the runtime cache is regional, so a
+ *  comparison served in kix1 never saw the series the job stored in sfo1 (BRK-B against ORCL: 「株価 —」). */
+const SERIES_KEPT_DAYS = 3;
+async function keptSeries(ticker: string, now: number): Promise<Series | null> {
+  const kept = (await durableGet("compare-series", [ticker]).catch(() => ({})) as Record<string, { at: number; value: unknown }>)[ticker];
+  if (!kept || kept.value === null || kept.value === undefined || now - kept.at > SERIES_KEPT_DAYS * 86400_000) return null;
+  return { payload: kept.value, adjust: "splits", retrievedAt: new Date(kept.at).toISOString() };
+}
 const seriesHour = sharedCache("comparison-store-series-hour-v1", 3 * 3600, readSeries);
 const seriesDay = sharedCache("comparison-store-series-day-v1", 3 * 86400, readSeries);
 async function readStatements(ticker: string): Promise<Statements> {
@@ -159,7 +171,7 @@ export async function cachedStatements(ticker: string, now = Date.now()): Promis
  * yesterday, which is all the momentum factor reads). An hour copy written by an older build is still read first. */
 export async function userSeries(ticker: string, now = Date.now()): Promise<Series | null> {
   const h = hourSlot(now), d = daySlot(now);
-  return await peek(seriesHour, ticker, [h, h - 1]) ?? await peek(seriesDay, ticker, [d, d - 1]);
+  return await peek(seriesHour, ticker, [h, h - 1]) ?? await peek(seriesDay, ticker, [d, d - 1]) ?? keptSeries(ticker, now);
 }
 
 /** The provider's statements read again after a newer earnings release, by the background job only: at most two reads per company and
@@ -187,7 +199,8 @@ export const warmStatements = (ticker: string, now = Date.now()) => fill("statem
 export const hasStatisticsToday = async (ticker: string, now = Date.now()) => !!await peek(statisticsDay, ticker, [daySlot(now)])
   // A copy the runtime cache has lost is not bought again the same day.
   || await keptStatistics(ticker).then(kept => !!kept && daySlot(Date.parse(kept.retrievedAt)) === daySlot(now));
-export const hasSeriesToday = async (ticker: string, now = Date.now()) => !!await peek(seriesDay, ticker, [daySlot(now)]);
+export const hasSeriesToday = async (ticker: string, now = Date.now()) => !!await peek(seriesDay, ticker, [daySlot(now)])
+  || await keptSeries(ticker, now).then(kept => !!kept && daySlot(Date.parse(kept.retrievedAt)) === daySlot(now));
 
 /** A small shared note per company and week, written by the background job: does its filing leave a figure only the provider's statements can
  * fill? Computed by the caller (the comparison server), stored here so the job checks the filing once a week, not daily. */

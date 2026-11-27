@@ -48,7 +48,7 @@ export default function TopicsList({ lang, data, wire, wireReady, updating = fal
   return <section ref={top} className={styles.topics} aria-label={ja ? "注目トピック一覧" : "Top topics"}>
     <p className={styles.topicLive}><span aria-hidden="true" className={updating ? styles.topicLiveUpdating : undefined} />{ja ? "自動で更新中" : "Updating automatically"}</p>
     {!cards.length ? (error
-      ? <p role="status" className={styles.topicEmpty}>{ja ? "トピックを取得できません。しばらくしてからもう一度開いてください。" : "Topics are unavailable. Please try again shortly."}</p>
+      ? <p role="status" className={styles.topicEmpty}>{ja ? "トピックを読み込めません" : "Topics can't be loaded"}</p>
       : !data && !wireReady
         ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "トピックを取得中" : "Fetching topics"} />
         : <p role="status" className={styles.topicEmpty}>{ja ? "現在、掲載中のトピックはありません。" : "No topics are currently listed."}</p>)

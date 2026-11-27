@@ -15,7 +15,7 @@ This is an English translation of the Japanese Privacy Policy. If the English an
 
 ## 2. Holdings and Diagnosis Information
 
-Holdings you enter or import (stocks, number of shares, purchase price and so on) are stored on your device and not on the Operator's servers. When holdings are read from a screenshot, the image is sent to an external AI service and used only for reading it. It is not stored on the Operator's servers. All confirmed RESOLUTE diagnosis answers and rules (currency and exchange-rate settings, how you buy, conditions for not buying, conditions for stopping, loss-cut figures and so on) are stored on the Operator's servers for each member account. Only you can see them, while signed in and with access to RESOLUTE. You can delete what is stored. When you delete it, it is also deleted from the Operator's servers. It may remain in backups kept for recovery from failures for up to ● days, but it is erased automatically after that period, and even if data is restored from a backup, deleted data and notification settings you turned off are not brought back. Answers in progress (drafts) are stored only in your browser and disappear after a certain time. They are not sent to the server.
+Holdings you enter or import (stocks, number of shares, purchase price and so on) are stored on your device and not on the Operator's servers. When holdings are read from a screenshot, the image is sent to an external AI service and used only for reading it. It is not stored on the Operator's servers. All confirmed RESOLUTE diagnosis answers and rules (currency and exchange-rate settings, how you buy, conditions for not buying, conditions for stopping, loss-cut figures and so on) are stored on the Operator's servers for each member account. Only you can see them, while signed in and with access to RESOLUTE. You can delete what is stored. When you delete it, it is also deleted from the Operator's servers. It may remain in backups kept for recovery from failures for up to 30 days, but it is erased automatically after that period, and even if data is restored from a backup, deleted data and notification settings you turned off are not brought back. Answers in progress (drafts) are stored only in your browser and disappear after a certain time. They are not sent to the server.
 
 ## 3. How We Use Information
 
@@ -35,7 +35,7 @@ We use cookies and browser storage to keep you signed in and to save your settin
 
 ## 5. Retention Period
 
-We keep information for as long as needed for the purposes of use. Diagnosis answers and rules are kept while you have an account. When you close your account, we delete them, including from backups, within ● days, except for information we must keep by law.
+We keep information for as long as needed for the purposes of use. Diagnosis answers and rules are kept while you have an account. When you close your account, we delete them, including from backups, within 30 days, except for information we must keep by law.
 
 ## 6. Requests for Disclosure, Correction and Deletion
 

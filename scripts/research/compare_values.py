@@ -153,12 +153,17 @@ def with_statements(db, ticker, record):
 
 
 def needs_statements(record, today):
-    """The filing gives no usable figures: no facts at all (a trust, no XBRL), no share count, or twelve-month revenue older than
+    """The filing gives no usable figures: no facts at all (a trust, no XBRL), no recent share count, or twelve-month revenue older than
     value_check.TD_WHEN_OLDER days (a foreign filer between its 20-Fs). A company with facts and no revenue (before its first sale)
     is judged on P/B instead: the provider would have no sales either."""
     if not record or record.get('error'):
         return True
     if not record.get('shares'):
+        return True
+    # A share count too old to use (vc.MAX_SHARE_AGE) is none at all. Berkshire Hathaway (BRK-B, Nov 27): its last cover count in the SEC's
+    # company facts is of 2011 and it files no diluted weighted count, so every recent day had no market value and the comparison showed
+    # 「割安 —」 while the provider's statements, which carry the share count, were never read.
+    if today - max(p['end'] for p in record['shares']) > vc.MAX_SHARE_AGE:
         return True
     return bool(record.get('revenue')) and today - max(p['end'] for p in record['revenue']) > vc.TD_WHEN_OLDER
 

@@ -256,7 +256,8 @@ test('bounded scan metadata is disclosed honestly; only summarized cards reach t
   for (const lang of ['ja', 'en']) {
     const html = render(feed, lang);
     assert.ok(html.includes(lang === 'ja' ? '直近7日・最大30件' : 'recent 7 days, up to 30 items'));
-    assert.ok(html.includes(lang === 'ja' ? 'ほか32件' : '32 more items omitted'));
+    // Owner, Nov 27: the 「今回の取得範囲でほか…件は省略。」 sentence is gone.
+    assert.ok(!html.includes(lang === 'ja' ? 'ほか32件' : '32 more items omitted'));
     assert.ok(html.includes(lang === 'ja' ? '全件表示ではありません' : 'not a complete history'));
   }
   publishNews(feed);

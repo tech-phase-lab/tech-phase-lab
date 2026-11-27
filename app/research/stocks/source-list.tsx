@@ -11,8 +11,8 @@ export type SourceInput = Omit<SourceBlock, "notes" | "rows"> & { note?: string;
 
 /** The one note at the bottom of the stock page (owner, Nov 25): it replaces the map's own note and the old footer line. */
 export const SOURCES_NOTE = {
-  ja: "公式資料で確認できた関係だけを載せています。SECは名簿の正確性や網羅性を保証していません。売買を勧めるものではありません。",
-  en: "Only relationships confirmed in official materials are listed. The SEC does not guarantee the accuracy or completeness of its directory. This is not a recommendation to buy or sell.",
+  ja: "公式資料で確認できた関係のみ",
+  en: "Only relationships confirmed in official materials",
 } as const;
 
 /** 「報道」 / "Media report" marks a press source, unless its name already says so (「SiliconANGLE の報道 報道」, owner Nov 25). */

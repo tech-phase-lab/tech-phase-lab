@@ -174,7 +174,7 @@ export default function PriceTargetsPanel({ lang, sample = null, heading = true,
   const current = Math.min(page, pages);
   return <section ref={panelRef} id="home-price-targets" className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     {heading && <div className={styles.head}><p className={styles.eyebrow}>PRICE TARGETS</p><h2>{t("目標株価の変更", "Price target changes")}</h2></div>}
-    {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
+    {status === "error" && <p role="status" className={styles.state}>{t("目標株価を更新できていません", "Price targets aren't updating")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
     {shown.length > 0 && <div ref={listRef} className={styles.list}>{shown.slice((current - 1) * 4, current * 4).map(item =>
