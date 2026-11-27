@@ -18,9 +18,9 @@ test("the pages carry the owner's Markdown byte for byte", () => {
 
 // Since Nov 17 the texts are the lawyer-reviewed full texts (owner pack). The only placeholder left (Nov 27) is 「●日」 in the privacy
 // policy (days until backups are erased): it stays as written until the real retention is confirmed.
-test("every line of the text is shown exactly as written, the ●日 placeholder included", () => {
+test("every line of the text is shown exactly as written, no placeholder left", () => {
   for (const [source, placeholders] of [[terms, ["月額2,980円(税込)または年額29,800円(税込)", "東京地方裁判所を第一審の合意管轄"]],
-    [privacy, ["最長30日間", "バックアップを含めて●日以内に削除します"]],
+    [privacy, ["最長30日間", "バックアップを含めて30日以内に削除します"]],
     [commerce, ["| 事業者の氏名 | ご請求があればメールでお知らせします |", "support@techphase.app"]]]) {
     const lines = source.split("\n").filter(line => line.trim()).map(line => line.trimEnd());
     assert.deepEqual(blockTexts(parseLegal(source)), lines);
