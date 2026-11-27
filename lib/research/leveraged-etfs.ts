@@ -47,11 +47,14 @@ export const LEVERAGED_LAG_MS = 30 * 60_000;
 /** Thinly traded funds are left out of the list (owner, Nov 27: COHX, CRWL). A fund is shown only while its average daily volume over the last
  * LEVERAGED_ADV_DAYS settled sessions is at least LEVERAGED_MIN_ADV shares. The site's minute job reads each fund's daily bars once per settled
  * session (lib/research/market-data.ts refreshLeveragedSnapshot; ~45 credits a day, never per member).
- * Why 100,000: at 100k shares a day a fund trades a few hundred shares a minute on average, so its last trade keeps up with its stock. On
- * Nov 27 (10:53 ET, early-close day) the list split at that line: MUU … CONL from 173k to 26M shares already, then MSTU 96k, VRTL 63k and
- * eighteen funds under 50k down to LLYX's 426 — CRWL (1,687) and COHX (11,902) among them, the two rows that looked wrong that morning.
- * A fund not measured yet (a new deployment's first minutes) is shown; one the provider gave too few bars for is too (unknown, not thin). */
-export const LEVERAGED_MIN_ADV = 100_000, LEVERAGED_ADV_DAYS = 20;
+ * Why 1,000,000 (owner, Nov 27): measured on Twelve Data's daily bars, 20 sessions to Nov 25, almost every fund trades far above 100k, so 100k
+ * left nothing out. At 1M a day the funds under it were exactly LEVERAGED_KNOWN_THIN below (ARMG 977k … ASMG 33k); AVL (1.009M) stays.
+ * A fund not measured yet (a new deployment's first minutes, or too few bars) is left out only if it is in LEVERAGED_KNOWN_THIN, so the first
+ * minutes after a deploy show the same list as the measured one. COHX (above the line) is left out on Nov 27 by the session rule, not by volume. */
+export const LEVERAGED_MIN_ADV = 1_000_000, LEVERAGED_ADV_DAYS = 20;
+/** The funds under LEVERAGED_MIN_ADV on Nov 25's 20-session average (shares a day): ARMG 977k, QBTX 808k, TSMX 775k, VRTL 321k, GEVX 255k,
+ * LLYX 243k, SMU 181k, AMUU 179k, CRWL 145k, CEGX 92k, ANEL 87k, ASMG 33k. Used only until a fund is measured. */
+export const LEVERAGED_KNOWN_THIN: ReadonlySet<string> = new Set(["ARMG", "QBTX", "TSMX", "VRTL", "GEVX", "LLYX", "SMU", "AMUU", "CRWL", "CEGX", "ANEL", "ASMG"]);
 /** The average volume of the last LEVERAGED_ADV_DAYS daily bars dated on or before `session` (oldest-first bars, as parseBars returns them).
  * Null with fewer than half that many bars that carry a volume. */
 export function averageDailyVolume(bars: readonly { at: string; volume: number | null }[], session: string): number | null {
@@ -59,8 +62,8 @@ export function averageDailyVolume(bars: readonly { at: string; volume: number |
     .slice(-LEVERAGED_ADV_DAYS).map(bar => bar.volume!);
   return volumes.length * 2 < LEVERAGED_ADV_DAYS ? null : volumes.reduce((sum, value) => sum + value, 0) / volumes.length;
 }
-/** `adv`: each fund's measured average (null: unknown). */
-export const leveragedThin = (adv: Record<string, number | null | undefined>, etf: string) => { const value = adv[etf]; return typeof value === "number" && value < LEVERAGED_MIN_ADV; };
+/** `adv`: each fund's measured average (null / absent: not measured, then LEVERAGED_KNOWN_THIN decides). */
+export const leveragedThin = (adv: Record<string, number | null | undefined>, etf: string) => { const value = adv[etf]; return typeof value === "number" && Number.isFinite(value) ? value < LEVERAGED_MIN_ADV : LEVERAGED_KNOWN_THIN.has(etf); };
 
 const easternDate = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
 const day = (value: string | null | undefined) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;

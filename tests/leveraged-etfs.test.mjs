@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { LEVERAGED_ADV_PER_RUN, LEVERAGED_ETFS, LEVERAGED_GIVE_UP, LEVERAGED_MIN_ADV, LEVERAGED_SORTS, averageDailyVolume, leveragedAdvDue, LEVERAGED_PER_RUN, LEVERAGED_START, LEVERAGED_SYMBOLS, leveragedAsOf, leveragedCreditsPerDay, leveragedDue, leveragedRows, nextLeveragedView, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
+import { LEVERAGED_ADV_PER_RUN, LEVERAGED_ETFS, LEVERAGED_GIVE_UP, LEVERAGED_KNOWN_THIN, LEVERAGED_MIN_ADV, leveragedThin, LEVERAGED_SORTS, averageDailyVolume, leveragedAdvDue, LEVERAGED_PER_RUN, LEVERAGED_START, LEVERAGED_SYMBOLS, leveragedAsOf, leveragedCreditsPerDay, leveragedDue, leveragedRows, nextLeveragedView, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
 import { providers } from "../lib/research/intake.ts";
 import { STOCK_LOGOS } from "../lib/research/stock-logos.ts";
 import { existsSync } from "node:fs";
@@ -202,8 +202,10 @@ test("owner, Nov 27 15:30Z (market open): a row whose fund or stock quote is fro
   };
   assert.equal(raw.COHX.session, "2026-11-25"); assert.equal(raw.COHX.lastTradeAt, "2026-11-25T20:59:00.000Z");
   const shaped = Object.fromEntries(Object.entries(raw).map(([s, q]) => [s, { price: q.price, percentChange: q.percentChange, volume: q.volume, extended: null, session: q.session, lastTradeAt: q.lastTradeAt }]));
-  const etfs = (at, adv) => leveragedRows(shaped, at, adv).map(row => row.etf);
-  const rows = leveragedRows(shaped, now), by = Object.fromEntries(rows.map(row => [row.etf, row]));
+  // The session and lag rules on their own: CRWL and SMU counted as measured above the volume line here (in fact both are thin, below).
+  const liquid = { CRWL: 1_500_000, SMU: 1_200_000 };
+  const etfs = (at, adv = liquid) => leveragedRows(shaped, at, adv).map(row => row.etf);
+  const rows = leveragedRows(shaped, now, liquid), by = Object.fromEntries(rows.map(row => [row.etf, row]));
   assert.deepEqual(rows.map(row => row.etf), ["NVDL", "CRWL"], "COHX (11/25 quote) and SMU (its stock's quote is 11/26) are left out, never shown with an old day's change");
   assert.deepEqual([by.CRWL.stale, by.CRWL.percentChange, by.CRWL.underlyingChange, by.CRWL.volume], ["lag", 1.62, 1.21, 1687], "real figures kept, never a made-up 2x");
   assert.equal(by.CRWL.lastTradeAt, "2026-11-27T14:41:00.000Z"); assert.equal(by.CRWL.underlyingLastTradeAt, "2026-11-27T15:29:50.000Z");
@@ -212,11 +214,24 @@ test("owner, Nov 27 15:30Z (market open): a row whose fund or stock quote is fro
   // Before the open the sides are not compared; on a closed Saturday the side older than the other is still left out; no lag outside the session.
   assert.deepEqual(etfs(Date.parse("2026-11-27T12:00:00Z")), ["NVDL", "CRWL", "SMU", "COHX"]);
   assert.deepEqual(etfs(Date.parse("2026-11-28T15:00:00Z")), ["NVDL", "CRWL"]);
-  assert.equal(leveragedRows(shaped, Date.parse("2026-11-28T15:00:00Z")).find(row => row.etf === "CRWL").stale, null);
-  // Thin funds (20-session average volume under 100,000 shares) are left out; an unmeasured one stays.
-  assert.equal(LEVERAGED_MIN_ADV, 100_000);
-  assert.deepEqual(etfs(now, { CRWL: 3_200, NVDL: 4_100_000 }), ["NVDL"]);
-  assert.deepEqual(etfs(now, { CRWL: null }), ["NVDL", "CRWL"], "too few bars: unknown, not thin");
+  assert.equal(leveragedRows(shaped, Date.parse("2026-11-28T15:00:00Z"), liquid).find(row => row.etf === "CRWL").stale, null);
+  // Thin funds (20-session average under 1,000,000 shares, owner Nov 27) are left out. Not measured yet: only the 12 known thin funds are.
+  assert.equal(LEVERAGED_MIN_ADV, 1_000_000);
+  assert.deepEqual(etfs(now, { CRWL: 145_000, NVDL: 4_100_000 }), ["NVDL"]);
+  assert.deepEqual(etfs(now, { AVL: 1_009_000 }), ["NVDL"], "CRWL unmeasured: known thin");
+  assert.deepEqual(etfs(now, {}), ["NVDL"]);
+  assert.deepEqual(etfs(Date.parse("2026-11-27T12:00:00Z"), { CRWL: null, SMU: null }), ["NVDL", "COHX"], "too few bars: the known thin list decides; COHX is above the line");
+  assert.deepEqual(etfs(Date.parse("2026-11-27T12:00:00Z"), { NVDL: 900_000, COHX: 2_000_000 }), ["COHX"], "a measured figure overrides the seed");
+});
+
+test("the volume line (owner, Nov 27): 1,000,000 shares a day; before measuring, exactly the 12 funds under it on Nov 25 are left out", () => {
+  assert.deepEqual([...LEVERAGED_KNOWN_THIN].sort(), ["AMUU", "ANEL", "ARMG", "ASMG", "CEGX", "CRWL", "GEVX", "LLYX", "QBTX", "SMU", "TSMX", "VRTL"]);
+  const funds = new Set(LEVERAGED_ETFS.map(item => item.etf));
+  assert.ok([...LEVERAGED_KNOWN_THIN].every(etf => funds.has(etf)));
+  for (const etf of funds) assert.equal(leveragedThin({}, etf), LEVERAGED_KNOWN_THIN.has(etf), etf);
+  assert.equal(leveragedThin({ AVL: 1_009_000 }, "AVL"), false, "AVL stays");
+  assert.equal(leveragedThin({ ARMG: 977_000 }, "ARMG"), true);
+  assert.equal(leveragedThin({ ARMG: 1_200_000 }, "ARMG"), false, "a fund that grows past the line comes back once measured");
 });
 
 test("average daily volume: the last 20 settled sessions' daily bars; too few bars is unknown; each fund measured once per settled session", () => {
