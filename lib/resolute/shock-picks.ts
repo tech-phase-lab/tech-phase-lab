@@ -12,6 +12,8 @@ export type ShockCandidate = {
   source: { title: string; tickers: string[]; publisher: string | null };
   ja: RiskCopy; en: RiskCopy; market: RiskMarket;
   suggested: { stars: number; reason: { ja: string; en: string }; by: 'ai' | 'rule' };
+  /** A must-capture story whose summary was withheld (the reason code): listed for the owner, never pickable or published. */
+  withheld?: string;
 };
 /** One picked story: its ★ and, optionally, the owner's own RIZEL line (published exactly as written, no wording check; English optional). */
 export type OwnerPick = { id: string; stars: number; rizel?: { ja: string; en?: string } };
@@ -25,7 +27,8 @@ export function parseCandidate(v: unknown): ShockCandidate {
   if (!s || typeof s.title !== 'string' || !TEXT.test(s.title) || !Array.isArray(s.tickers) || s.tickers.length > 30 || !s.tickers.every(t => typeof t === 'string' && /^[A-Z][A-Z0-9.]{0,9}$/.test(t)) || !(s.publisher === null || typeof s.publisher === 'string' && TEXT.test(s.publisher))) throw Error('INVALID_CANDIDATE');
   if (!g || !isStars(g.stars) || !['ai', 'rule'].includes(g.by) || !g.reason || typeof g.reason.ja !== 'string' || typeof g.reason.en !== 'string' || !TEXT.test(g.reason.ja) || !TEXT.test(g.reason.en)) throw Error('INVALID_CANDIDATE');
   return { id: x.id, url: u.href, publishedAt: x.publishedAt, group: x.group, rank: x.rank, source: { title: s.title, tickers: [...s.tickers], publisher: s.publisher },
-    ja: parseRiskCopy(x.ja), en: parseRiskCopy(x.en), market: parseRiskMarket(x.market), suggested: { stars: g.stars, reason: { ja: g.reason.ja, en: g.reason.en }, by: g.by } };
+    ja: parseRiskCopy(x.ja), en: parseRiskCopy(x.en), market: parseRiskMarket(x.market), suggested: { stars: g.stars, reason: { ja: g.reason.ja, en: g.reason.en }, by: g.by },
+    ...(typeof x.withheld === 'string' && /^[a-z-]{1,30}$/.test(x.withheld) ? { withheld: x.withheld } : {}) };
 }
 /** A story the owner added (owner, Nov 27: sometimes none of the candidates can be published): drafted from the owner's screenshots
  * and / or pasted text (the owner may edit the draft), with the owner's ★. `url` is the source link when the owner gave one. */
@@ -42,9 +45,9 @@ export function parseAdded(v: unknown): AddedStory {
 }
 /** The owner's answer: 1 to maxStories distinct stories of the day (candidates or the owner's own added stories), each with ★1–5,
  * in the owner's order. Throws otherwise. */
-export function parsePicks(v: unknown, candidates: readonly { id: string }[]): OwnerPick[] {
+export function parsePicks(v: unknown, candidates: readonly { id: string; withheld?: string }[]): OwnerPick[] {
   if (!Array.isArray(v) || !v.length || v.length > RISK_POLICY.ownerPicks.maxStories) throw Error('INVALID_PICKS');
-  const ids = new Set(candidates.map(c => c.id)), seen = new Set<string>();
+  const ids = new Set(candidates.filter(c => !c.withheld).map(c => c.id)), seen = new Set<string>();
   return v.map(p => {
     const x = p as OwnerPick;
     if (!x || typeof x !== 'object' || typeof x.id !== 'string' || !ids.has(x.id) || seen.has(x.id) || !isStars(x.stars)) throw Error('INVALID_PICKS');
@@ -58,7 +61,7 @@ export function parsePicks(v: unknown, candidates: readonly { id: string }[]): O
  * there are that many, the rest by rank (market-wide first within the same rank), each with the suggested ★. */
 export function autoPicks(candidates: readonly ShockCandidate[]): OwnerPick[] {
   const { autoStories, autoMinMarket } = RISK_POLICY.ownerPicks;
-  const ranked = [...candidates].sort((a, b) => a.rank - b.rank || (a.group === 'market' ? 0 : 1) - (b.group === 'market' ? 0 : 1));
+  const ranked = candidates.filter(c => !c.withheld).sort((a, b) => a.rank - b.rank || (a.group === 'market' ? 0 : 1) - (b.group === 'market' ? 0 : 1));
   const market = ranked.filter(c => c.group === 'market').slice(0, autoMinMarket), taken = new Set(market.map(c => c.id));
   const rest = ranked.filter(c => !taken.has(c.id)).slice(0, Math.max(0, autoStories - market.length));
   const chosen = new Set([...market, ...rest].map(c => c.id));

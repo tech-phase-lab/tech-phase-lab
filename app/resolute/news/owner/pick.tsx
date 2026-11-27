@@ -4,8 +4,8 @@ import {SUMMARY_QUESTION} from '@/lib/resolute/risk';
 import {candidateNumbers,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
 import s from '../../diagnosis.module.css';
 /** The day's owner pick as the owner API returns it (risk-store.mjs ownerShockDay). */
-export type ShockDay={day:string;state:string;candidates:ShockCandidate[];added:AddedStory[];picks:OwnerPick[]|null;pickedAt:string|null;revision:number;publishedSource:string|null;publishedAt:string|null;open:boolean;answerUntil:string;publishAt:string;maxStories:number;maxAdded:number};
-type Choice={stars:number;rizel:string};
+export type ShockDay={day:string;state:string;candidates:ShockCandidate[];planned:{id:string;stars:number;rizel?:{ja:string;en:string}}[];added:AddedStory[];picks:OwnerPick[]|null;pickedAt:string|null;revision:number;publishedSource:string|null;publishedAt:string|null;open:boolean;answerUntil:string;publishAt:string;maxStories:number;maxAdded:number};
+type Choice={stars:number;rizel:string;rizelEn?:string};
 const strip=(t:string)=>{const q=SUMMARY_QUESTION.ja,x=t.trim();return (x.endsWith(q)?x.slice(0,-q.length):x).trim();};
 const newId=()=>'o'+Array.from(crypto.getRandomValues(new Uint8Array(10)),b=>b.toString(16).padStart(2,'0')).join('');
 /** Shrinks a screenshot in the browser (longest side 1600 px, JPEG) so several fit in one request. Nothing is stored. */
@@ -22,7 +22,9 @@ function Stars({value,onChange,label}:{value:number;onChange:(n:number)=>void;la
 export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSaved:()=>Promise<void>}){
  const [order,setOrder]=useState<string[]>([]),[choice,setChoice]=useState<Record<string,Choice>>({}),[added,setAdded]=useState<AddedStory[]>([]),[message,setMessage]=useState(''),[busy,setBusy]=useState(false);
  const [files,setFiles]=useState<File[]>([]),[text,setText]=useState(''),[url,setUrl]=useState(''),[draftNote,setDraftNote]=useState('');
- useEffect(()=>{if(!day)return;const picks=day.picks??[];setOrder(picks.map(p=>p.id));setChoice(Object.fromEntries(picks.map(p=>[p.id,{stars:p.stars,rizel:p.rizel?.ja??''}])));setAdded(day.added);},[day]);
+ // Before the owner answers, the service's 3 planned stories are ticked with their ★ and RIZEL line (owner, Nov 27): a correction is a small edit.
+ useEffect(()=>{if(!day)return;const picks=day.picks??day.planned.map(p=>({id:p.id,stars:p.stars,rizel:p.rizel}));setOrder(picks.map(p=>p.id));
+  setChoice(Object.fromEntries(picks.map(p=>[p.id,{stars:p.stars,rizel:p.rizel?.ja??'',...(p.rizel?.en?{rizelEn:p.rizel.en}:{})}])));setAdded(day.added);},[day]);
  if(!day)return <section className={s.card}><h2>今日の候補</h2><p>候補の保存先がまだ用意されていません。データベースの準備が必要です。</p></section>;
  const max=day.maxStories,closed=!day.open;
  const starsOf=(id:string,suggested:number)=>choice[id]?.stars??suggested;
@@ -47,7 +49,8 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
   if(!day||busy||!order.length)return;setBusy(true);setMessage('');
   try{
    const ready=added.filter(a=>a.ja.title.trim()&&a.ja.summary.trim()).map(a=>({...a,en:{title:a.en.title.trim()||a.ja.title,summary:a.en.summary.trim()||a.ja.summary},stars:starsOf(a.id,a.stars)}));
-   const picks=order.filter(id=>day.candidates.some(c=>c.id===id)||ready.some(a=>a.id===id)).map(id=>{const c=choice[id],line=c?.rizel.trim();return {id,stars:c?.stars??3,...(line?{rizel:{ja:line}}:{})};});
+   const plannedLine=(id:string)=>day.planned.find(p=>p.id===id)?.rizel;
+   const picks=order.filter(id=>day.candidates.some(c=>c.id===id&&!c.withheld)||ready.some(a=>a.id===id)).map(id=>{const c=choice[id],line=c?.rizel.trim(),pl=plannedLine(id);return {id,stars:c?.stars??3,...(line?{rizel:pl&&pl.ja===line?{ja:line,en:pl.en}:{ja:line}}:{})};});
    if(!picks.length){setMessage('タイトルと要約が入ったニュースを選んでください');return;}
    const r=await fetch('/api/resolute/risk/owner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'picks',day:day.day,baseRevision:day.revision,picks,added:ready}),redirect:'error'});
    if(r.status===409){setMessage(`受付は${day.answerUntil}までです。締め切りを過ぎたか、ほかの画面で保存されました。再読み込みしてください`);return;}
@@ -55,18 +58,18 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
    await onSaved();setMessage(`保存しました。${day.publishAt}に、選んだ順に公開します`);
   }catch{setMessage('保存を確認できませんでした。再読み込みして状態を確認してください');}finally{setBusy(false);}
  }
- const story=(id:string,title:string,body:ReactNode,suggested:number)=>{const n=order.indexOf(id),on=n>=0;
+ const story=(id:string,title:string,body:ReactNode,suggested:number,locked=false)=>{const n=order.indexOf(id),on=n>=0;
   return <li key={id} className={s.field} style={{listStyle:'none',marginBottom:16}}>
-   <label><input type="checkbox" checked={on} disabled={closed||!on&&order.length>=max} onChange={()=>toggle(id,suggested)}/> {on?`${n+1}番目 `:''}<b>{title}</b></label>
+   <label><input type="checkbox" checked={on} disabled={closed||locked||!on&&order.length>=max} onChange={()=>toggle(id,suggested)}/> {on?`${n+1}番目 `:''}<b>{title}</b></label>
    {body}
    {on?<div><div>衝撃度 <Stars value={starsOf(id,suggested)} onChange={v=>set(id,{stars:v})} label={`${title}の★`}/></div>
     <label>リゼルの一言（空欄ならAIが書きます。書いた文はそのまま載ります）<input value={choice[id]?.rizel??''} maxLength={80} onChange={e=>set(id,{rizel:e.target.value})} disabled={closed}/></label></div>:null}
   </li>;};
  const group=(g:'market'|'company',head:string)=>{const list=day.candidates.filter(c=>c.group===g);return <><h3>{head}（{list.length}件）</h3><ol style={{padding:0}}>{list.map(c=>story(c.id,c.ja.title,<>
-  <p>{strip(c.ja.content)}</p>
+  <p>{c.withheld?`${strip(c.ja.content)}。載せるときは「ニュースを追加」から本文を入れてください`:strip(c.ja.content)}</p>
   {candidateNumbers(c,'ja').length?<p>{candidateNumbers(c,'ja').join(' ／ ')}</p>:<p>数字: まだありません</p>}
   <p>おすすめ: ★{c.suggested.stars} {c.suggested.reason.ja}</p>
-  <p><a href={c.url} target="_blank" rel="noreferrer">出典{c.source.publisher?`（${c.source.publisher}）`:''}</a></p></>,c.suggested.stars))}</ol></>;};
+  <p><a href={c.url} target="_blank" rel="noreferrer">出典{c.source.publisher?`（${c.source.publisher}）`:''}</a></p></>,c.suggested.stars,!!c.withheld))}</ol></>;};
  return <section className={s.card}><h2>今日の候補（{day.day}）</h2>
   <p>{closed?(day.publishedAt?`${day.publishedSource==='owner'?'オーナーの選択':'自動の選択'}で公開済みです。`:`受付は${day.answerUntil}で締め切りました。`):`載せるニュースを${max}つまで選び、★を決めて「公開」を押してください。${day.answerUntil}まで受け付け、${day.publishAt}に選んだ順に公開します。選ばれていなければ、AIのおすすめを公開します。`}</p>
   {day.state==='ready'?<>{group('market','市場全体のニュース')}{group('company','個別企業のニュース')}</>:<p>{day.state==='processing'?'候補を作っています。':'今日の候補はまだありません。'}</p>}

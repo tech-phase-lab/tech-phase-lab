@@ -9,6 +9,7 @@ import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {REPORT_UPDATES_LIMIT} from './rizel-report-source.mjs';
 import {createMovesReader} from './risk-moves.mjs';
 import {storyScope} from '../../lib/resolute/risk-scope.ts';
+import {priorityRank} from '../../lib/resolute/shock-priority.ts';
 import {japaneseMoney} from '../../lib/research/money-ja.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 // Match complete English words, including explicit inflections. Substrings such
@@ -82,8 +83,10 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false,wi
  if(!feed.enabled&&feed.officialUpdates===undefined)throw feedError('SOURCE_UNAVAILABLE','general-disabled-without-official',feed);
  const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[]),...(feed.reportUpdates??[])];if(raw.length>FEED_LIMITS.raw)throw feedError('SOURCE_LIMIT','raw-over-limit',feed,FEED_LIMITS.raw);const unique=new Map();
  const rejected={partial:0,body:0,unrelated:0,noDownsideHeadline:0,date:0,url:0,duplicateUrl:0};
- for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
- if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
+ for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,text=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
+ // A must-capture topic (owner pick, shock-priority.ts) is never dropped for a short text: the headline stands in for a missing one.
+ const priority=wide&&typeof title==='string'&&priorityRank(title)!==null,body=priority&&(!text||text.length<100)?[title,text].filter(Boolean).join('\n'):text;
+ if(typeof title!=='string'||!body||body.length<(priority?10:100)||body.length>24000){rejected.body++;continue;}
  const marketHeadline=marketWide.test(title)&&(marketDownside.test(title)||marketUpside.test(title)),headlineUp=upside.test(title)||marketWide.test(title)&&marketUpside.test(title);
  // Nov 24: a company-lane story already names a rostered (high-tech) ticker, and the provider's own Negative sentiment is a
  // downside signal; without these, stories such as "Dell shares slide after outlook" never reached the model. Screening only:
@@ -91,7 +94,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false,wi
  const rostered=a.lane==='company'&&Array.isArray(a.tickers)&&a.tickers.length>0,providerNegative=a.sentiment==='negative';
  // Nov 25 (owner: market-wide news first): a headline about the whole market or the chip sector (risk-scope.ts) is relevant too.
  // The downside screen below still applies, and the model still decides publishability from the text.
- if(!relevant.test(title+' '+body)&&!marketHeadline&&!rostered&&storyScope(title)==='company'){rejected.unrelated++;continue;}
+ if(!priority&&!relevant.test(title+' '+body)&&!marketHeadline&&!rostered&&storyScope(title)==='company'){rejected.unrelated++;continue;}
  if(!wide&&!negative.test(title)&&!headlineUp&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
  const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
  if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000){rejected.date++;continue;}
@@ -103,7 +106,7 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false,wi
  if(unique.has(id))rejected.duplicateUrl++;
  const publisher=typeof a.publisher==='string'&&a.publisher.trim()&&a.publisher.length<=200?a.publisher.trim():null;
  unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint,tickers:cleanTickers(a.tickers),
-  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),headlineDownside:negative.test(title)||marketHeadline,...(headlineUp?{headlineUpside:true}:{})});
+  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),...(priority?{priority:true}:{}),headlineDownside:negative.test(title)||marketHeadline,...(headlineUp?{headlineUpside:true}:{})});
  }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{reportConfigured:feed.reportCoverage?.configured===true,reportCount:feed.reportUpdates?.length??0,reportPossiblyTruncated:feed.reportCoverage?.possiblyTruncated===true,...(Number.isSafeInteger(feed.reportCoverage?.pages)?{reportPages:feed.reportCoverage.pages}:{}),reportOldestPublishedAt:typeof feed.reportCoverage?.oldestPublishedAt==='string'?feed.reportCoverage.oldestPublishedAt:null,reportMarketLane:feed.reportCoverage?.marketLane===true,reportSkipped:Number.isSafeInteger(feed.reportCoverage?.skipped)?feed.reportCoverage.skipped:0,generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
 }
 export function candidatesFromFeed(feed,now=new Date(),options={}){return inspectCandidateFeed(feed,now,options).candidates;}

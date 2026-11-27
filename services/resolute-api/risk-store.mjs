@@ -15,11 +15,11 @@ const json=(v,status=200)=>Response.json(v,{status,headers:{'Cache-Control':'pri
  * are still accepted. Null when the table is not there yet (migration 030 not applied) or nothing is stored. */
 export async function ownerShockDay(pool,now=new Date()){
  const day=answerDay(now)??riskDate(now);let row;
- try{row=(await pool.query('SELECT state,candidates,added,picks,picked_at,revision,published_source,published_at FROM resolute.shock_candidates WHERE day=$1::date',[day])).rows[0];}catch{return null;}
+ try{row=(await pool.query('SELECT state,candidates,planned,added,picks,picked_at,revision,published_source,published_at FROM resolute.shock_candidates WHERE day=$1::date',[day])).rows[0];}catch{return null;}
  const {answerUntilJst,publishRunJst,maxStories,maxAdded}=RISK_POLICY.ownerPicks;
  const candidates=Array.isArray(row?.candidates)?row.candidates.flatMap(c=>{try{return [parseCandidate(c)];}catch{return [];}}):[];
  const added=Array.isArray(row?.added)?row.added.flatMap(a=>{try{return [parseAdded(a)];}catch{return [];}}):[];
- return {day,state:row?.state??'none',candidates,added,picks:Array.isArray(row?.picks)?row.picks:null,pickedAt:row?.picked_at?new Date(row.picked_at).toISOString():null,revision:row?.revision??0,
+ return {day,state:row?.state??'none',candidates,planned:Array.isArray(row?.planned)?row.planned:[],added,picks:Array.isArray(row?.picks)?row.picks:null,pickedAt:row?.picked_at?new Date(row.picked_at).toISOString():null,revision:row?.revision??0,
   publishedSource:row?.published_source??null,publishedAt:row?.published_at?new Date(row.published_at).toISOString():null,open:answerOpen(day,now)&&!row?.published_at,answerUntil:answerUntilJst,publishAt:publishRunJst,maxStories,maxAdded};
 }
 /** The owner's answer (owner only): the picks (candidates and added stories, each with ★1–5 and optionally the owner's own RIZEL

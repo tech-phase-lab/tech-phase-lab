@@ -5,9 +5,10 @@ import {sendOwnerMail,WITHHELD_REASON_JA} from './shock-owner-mail.mjs';
 import {applyMarketReaction,candidateMarket} from '../../lib/resolute/risk-market.ts';
 import {storyScope,headlineSubject,isBarePriceMove,sameEvent} from '../../lib/resolute/risk-scope.ts';
 import {editionAt,inEdition,editionSession,isRecapHeadline,percentMismatch} from '../../lib/resolute/risk-edition.ts';
-import {parseRiskArticle,readingParts,riskDate,marketStars,SUMMARY_QUESTION} from '../../lib/resolute/risk.ts';
+import {parseRiskArticle,parseRiskRizel,readingParts,riskDate,marketStars,SUMMARY_QUESTION} from '../../lib/resolute/risk.ts';
 import {summaryIssues} from '../../lib/resolute/risk-copy-check.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
+import {priorityRank,priorityTopics} from '../../lib/resolute/shock-priority.ts';
 import {parseCandidate,parsePicks,autoPicks,parseAdded,rizelIssues} from '../../lib/resolute/shock-picks.ts';
 export {rizelIssues};
 
@@ -40,23 +41,26 @@ export function measuredPercents(title,market){
 const groupOf=title=>storyScope(title)==='company'?'company':'market';
 export const INTAKE_MAX={market:24,company:24};
 /** The day's stories (pure): the feed's stories published since the previous publish run (risk-edition.ts), measured on the edition's
- * session when it has closed. Up to INTAKE_MAX per group go to the AI, the most likely to matter first. */
+ * session when it has closed. Must-capture topics (shock-priority.ts) come first in each group and are never cut; then up to
+ * INTAKE_MAX per group go to the AI, the most likely to matter first. */
 export function editionIntake(feed,now,{moves=null,edition=editionAt(now)}={}){
  const intake=inspectCandidateFeed(feed,now,{wide:true});
  const d={...intake.diagnostics,outsideEdition:0,duplicateHeadline:0,barePriceMove:0,recap:0,percentMismatch:0,sameEvent:0,groups:{market:0,company:0}};
  const seen=new Set(),kept=[];
- const ordered=[...intake.candidates].sort((a,b)=>candidateScore(b)-candidateScore(a)||(b.body.length>=400)-(a.body.length>=400)||b.publishedAt.localeCompare(a.publishedAt));
+ const pr=c=>priorityRank(c.title)??99;
+ const ordered=[...intake.candidates].sort((a,b)=>pr(a)-pr(b)||candidateScore(b)-candidateScore(a)||(b.body.length>=400)-(a.body.length>=400)||b.publishedAt.localeCompare(a.publishedAt));
  for(const c of ordered){
   if(!inEdition(c.publishedAt,edition)){d.outsideEdition++;continue;}
   if(seen.has(c.fingerprint)){d.duplicateHeadline++;continue;}seen.add(c.fingerprint);
-  if(groupOf(c.title)==='company'&&isBarePriceMove(c.title)){d.barePriceMove++;continue;}
+  if(groupOf(c.title)==='company'&&isBarePriceMove(c.title)&&pr(c)===99){d.barePriceMove++;continue;}
   if(isRecapHeadline(c.title)){d.recap++;continue;}
   const market=measureStory(c,moves,edition);
   if(percentMismatch(c.title,measuredPercents(c.title,market))){d.percentMismatch++;continue;}
   if(kept.some(k=>sameEvent(k,c))){d.sameEvent++;continue;}
   kept.push({...c,group:groupOf(c.title),market});
  }
- const out=[];for(const g of ['market','company']){const list=kept.filter(c=>c.group===g).slice(0,INTAKE_MAX[g]);d.groups[g]=list.length;out.push(...list);}
+ const out=[];for(const g of ['market','company']){const all=kept.filter(c=>c.group===g),must=all.filter(c=>pr(c)<99),list=[...must,...all.filter(c=>pr(c)===99).slice(0,Math.max(0,INTAKE_MAX[g]-must.length))];d.groups[g]=list.length;out.push(...list);}
+ d.priority=kept.filter(c=>pr(c)<99).length;
  return {stories:out,diagnostics:d,edition};
 }
 
@@ -69,12 +73,13 @@ export const RANK_INSTRUCTIONS='You rank the day\'s news for a Japanese investor
  +'without numbers still qualifies. Put each story in at most one list, up to ten per list, most important first. '
  +'stars: the suggested shock level 1–5 (5 = shakes the whole market or the stock very hard). reasonJa: one short plain Japanese sentence (at most 50 characters), '
  +'reasonEn: the same in English (at most 20 words), saying what the news is and why it matters, with no prediction, no advice, no evaluation of future impact, '
- +'and no number that is not in the input. Prefer a story with enough text (textChars about 400 or more) over a thinner one about the same news. No markdown.';
+ +'and no number that is not in the input. Prefer a story with enough text (textChars about 400 or more) over a thinner one about the same news. '
+ +'A story with a "priority" list is about a must-capture topic (a crash, a recession, a downgrade, an executive exit, tariffs, retaliation, Hormuz, rates, oil): always include it and rank it above the others of its list. No markdown.';
 const rankItem={type:'object',additionalProperties:false,required:['key','stars','reasonJa','reasonEn'],properties:{key:{type:'string'},stars:{type:'integer'},reasonJa:{type:'string'},reasonEn:{type:'string'}}};
 export const RANK_SCHEMA={type:'object',additionalProperties:false,required:['market','company'],properties:{market:{type:'array',maxItems:10,items:rankItem},company:{type:'array',maxItems:10,items:rankItem}}};
 export function rankInput({day,stories}){
  return {day,stories:stories.map((c,i)=>({key:`s${i+1}`,title:c.title,scope:storyScope(c.title),publisher:c.publisher??null,publishedAt:c.publishedAt,textChars:c.body.length,
-  text:c.body.slice(0,600),measured:readingParts(c.market,'en').map(l=>l.text)}))};
+  text:c.body.slice(0,600),measured:readingParts(c.market,'en').map(l=>l.text),...(priorityTopics(c.title).length?{priority:priorityTopics(c.title).map(t=>t.key)}:{})}))};
 }
 /** Checks the AI's ranking; null when it breaks a rule (the caller retries). */
 export function validateRanking(output,input){
@@ -94,6 +99,18 @@ export const RULE_RANK_REASON={ja:'AIの判定ができなかったため、記�
 export function ruleRanking(stories){
  const out={market:[],company:[]};
  stories.forEach((c,i)=>out[c.group].push({key:`s${i+1}`,stars:Math.max(1,Math.min(5,tableStars(c.market)??1)),reason:RULE_RANK_REASON}));
+ return out;
+}
+/** Must-capture topics first (owner, Nov 27): in each list the priority stories come first (the AI's order among them, then the
+ * ones it left out, by topic order, with ★3 and a fixed reason), then the others in the AI's order. */
+export function withPriority(ranking,stories){
+ const listed=new Set([...ranking.market,...ranking.company].map(p=>p.key)),out={market:[],company:[]};
+ for(const g of ['market','company']){
+  const isPri=p=>{const c=stories[Number(p.key.slice(1))-1];return !!c&&priorityRank(c.title)!==null;};
+  const missing=stories.map((c,i)=>({c,key:`s${i+1}`})).filter(x=>x.c.group===g&&!listed.has(x.key)&&priorityRank(x.c.title)!==null).sort((a,b)=>priorityRank(a.c.title)-priorityRank(b.c.title))
+   .map(({c,key})=>{const t=priorityTopics(c.title)[0];return {key,stars:3,reason:{ja:`重要な話題（${t.ja}）のため候補に入れました`,en:`A must-capture topic (${t.key}).`}};});
+  out[g]=[...ranking[g].filter(isPri),...missing,...ranking[g].filter(p=>!isPri(p))];
+ }
  return out;
 }
 const tableStars=m=>{try{return marketStars(m);}catch{return null;}};
@@ -116,7 +133,7 @@ export const SUMMARY_ATTEMPTS=24;
  * story of the same group), at most SUMMARY_ATTEMPTS summaries. `withheld` lists the stories whose summary was withheld. */
 export async function buildCandidates({feed,now,moves=null,budgetPool,fetcher=fetch,rank=rankStories,summarize=generate,limits={market:RISK_POLICY.ownerPicks.market,company:RISK_POLICY.ownerPicks.company},log=console.log}){
  const day=riskDate(now),{stories,diagnostics,edition}=editionIntake(feed,now,{moves});
- const r=await rank({day,stories,budgetPool,now,fetcher});
+ const r0=await rank({day,stories,budgetPool,now,fetcher}),r={...r0,ranking:withPriority(r0.ranking,stories)};
  const byKey=new Map(stories.map((c,i)=>[`s${i+1}`,c])),candidates=[],withheld=[];let attempts=0;
  for(const g of ['market','company']){
   let n=0;
@@ -125,7 +142,10 @@ export async function buildCandidates({feed,now,moves=null,budgetPool,fetcher=fe
    const c=byKey.get(p.key);if(!c)continue;
    attempts++;const why={};
    const draft=await summarize(c,budgetPool,now,fetcher,{why,log});
-   if(!draft){withheld.push({title:c.title,reason:why.reason??'unknown'});continue;}
+   if(!draft){withheld.push({title:c.title,reason:why.reason??'unknown'});
+    // A must-capture story stays in the list without a summary (owner page: shown, not tickable; never auto-published).
+    if(priorityRank(c.title)!==null){n++;candidates.push(withheldCandidate(c,g,n,p,r.by,why.reason??'unknown'));}
+    continue;}
    n++;
    candidates.push(parseCandidate({id:c.id,url:c.url,publishedAt:c.publishedAt,group:g,rank:n,source:{title:c.title.slice(0,200),tickers:c.tickers??[],publisher:c.publisher??null},
     ja:draft.ja,en:draft.en,market:c.market,suggested:{stars:p.stars,reason:p.reason,by:r.by}}));
@@ -133,8 +153,25 @@ export async function buildCandidates({feed,now,moves=null,budgetPool,fetcher=fe
  }
  return {day,candidates,withheld,edition,diagnostics:{...diagnostics,rank:{by:r.by,attempts:r.attempts,...(r.failure?{failure:r.failure}:{})},summaries:attempts,withheld:withheld.length}};
 }
-/** The candidate run (06:00 / 06:30 JST): builds the day's candidates, stores them and mails them to the owner. Never publishes. */
-export async function runCandidates({pool,readFeed,readMoves=null,now=new Date(),budgetPool=pool,fetcher=fetch,mail=sendCandidatesMail,...options}){
+/** A must-capture story whose summary was withheld: its source headline, the reason, no summary. */
+function withheldCandidate(c,group,rank,p,by,reason){
+ const why=WITHHELD_REASON_JA[reason]??WITHHELD_REASON_JA.unknown,title=c.title.slice(0,200),src=c.publisher??'—';
+ return parseCandidate({id:c.id,url:c.url,publishedAt:c.publishedAt,group,rank,source:{title,tickers:c.tickers??[],publisher:c.publisher??null},withheld:reason,
+  ja:{title,source:src,content:why,date:'—'},en:{title,source:src,content:'No summary.',date:'—'},market:c.market,suggested:{stars:p.stars,reason:p.reason,by}});
+}
+/** The service's own picks, chosen when the candidates are built (owner, Nov 27): autoPicks of the summarised candidates, each with
+ * the AI's RIZEL line (checked; none when it fails). Mailed to the owner and published at 08:20 unless the owner answers. */
+export async function planPicks({candidates,budgetPool,now,fetcher=fetch,line=writeRizelLine,edition=null,moves=null}){
+ const planned=[];
+ for(const p of autoPicks(candidates)){
+  const c=candidates.find(x=>x.id===p.id),rizel=await line({article:publishedArticle(c,{stars:p.stars,source:'auto',moves,edition}),stars:p.stars,budgetPool,now,fetcher});
+  planned.push({id:p.id,stars:p.stars,...(rizel?{rizel}:{})});
+ }
+ return planned;
+}
+/** The candidate run (06:00 / 06:30 JST): builds the day's candidates and the service's own 3 picks, stores them and mails the 3 to the
+ * owner (with the owner page link for corrections). Never publishes. */
+export async function runCandidates({pool,readFeed,readMoves=null,now=new Date(),budgetPool=pool,fetcher=fetch,mail=sendCandidatesMail,line=writeRizelLine,...options}){
  const day=riskDate(now);
  const claim=await pool.query(`INSERT INTO resolute.shock_candidates(day,state,built_at) VALUES($1::date,'processing',$2) ON CONFLICT(day) DO UPDATE SET state='processing',built_at=EXCLUDED.built_at
   WHERE resolute.shock_candidates.state='failed' AND resolute.shock_candidates.published_at IS NULL RETURNING day`,[day,now.toISOString()]);
@@ -143,8 +180,9 @@ export async function runCandidates({pool,readFeed,readMoves=null,now=new Date()
   const edition=editionAt(now),feed=await readFeed({since:edition.from});
   const moves=readMoves&&edition.session?await readMoves([edition.session]).catch(()=>null):null;
   const built=await buildCandidates({feed,now,moves,budgetPool,fetcher,...options});
-  await pool.query("UPDATE resolute.shock_candidates SET state='ready',candidates=$2::jsonb WHERE day=$1::date",[day,JSON.stringify(built.candidates)]);
-  const sent=await mail({day,candidates:built.candidates,withheld:built.withheld});
+  const planned=await planPicks({candidates:built.candidates,budgetPool,now,fetcher,edition,moves,line});
+  await pool.query("UPDATE resolute.shock_candidates SET state='ready',candidates=$2::jsonb,planned=$3::jsonb WHERE day=$1::date",[day,JSON.stringify(built.candidates),JSON.stringify(planned)]);
+  const sent=await mail({day,candidates:built.candidates,planned,withheld:built.withheld});
   await pool.query('UPDATE resolute.shock_candidates SET mail_state=$2 WHERE day=$1::date',[day,sent.state]);
   return {state:'ready',day,count:built.candidates.length,mail:sent.state,diagnostics:built.diagnostics};
  }catch(error){
@@ -205,7 +243,7 @@ export async function publishPicks({pool,readFeed,readMoves=null,now=new Date(),
  const day=riskDate(now);
  const claim=await pool.query(`INSERT INTO resolute.shock_candidates(day,state,built_at,published_at) VALUES($1::date,'processing',$2,$2)
   ON CONFLICT(day) DO UPDATE SET published_at=EXCLUDED.published_at WHERE resolute.shock_candidates.published_at IS NULL
-  RETURNING state,candidates,added,picks,picked_at`,[day,now.toISOString()]);
+  RETURNING state,candidates,planned,added,picks,picked_at`,[day,now.toISOString()]);
  if(!claim.rows.length)return {state:'already-published',day};
  try{return await publishClaimed({pool,readFeed,readMoves,now,budgetPool,fetcher,build,line,log,day,row:claim.rows[0]});}
  catch(error){await saveRiskDay(pool,day,null,now).catch(()=>{});const e=Error('SHOCK_PUBLISH_FAILED');e.code=typeof error?.message==='string'&&/^[A-Z_]{3,40}$/.test(error.message)?error.message:'UNLISTED';throw e;}
@@ -218,8 +256,13 @@ async function publishClaimed({pool,readFeed,readMoves,now,budgetPool,fetcher,bu
  if(Array.isArray(row.picks)&&row.picked_at&&Date.parse(row.picked_at)<answerUntil(day)){
   try{const picks=parsePicks(row.picks,[...stored,...added]);chosen=picks.map(p=>({candidate:stored.find(c=>c.id===p.id),added:added.find(a=>a.id===p.id),stars:p.stars,own:p.rizel??null}));source='owner';}catch{chosen=[];}
  }
+ // No answer: the 3 the service planned and mailed at the candidate run, exactly as mailed (★ and RIZEL line), numbers refreshed.
+ if(source==='auto'&&stored.length&&Array.isArray(row.planned)&&row.planned.length){
+  try{const plan=parsePicks(row.planned.map(({id,stars})=>({id,stars})),stored);
+   chosen=plan.map(p=>{const x=row.planned.find(q=>q.id===p.id);let rizel=null;try{rizel=x?.rizel?parseRiskRizel(x.rizel):null;}catch{rizel=null;}return {candidate:stored.find(c=>c.id===p.id),stars:p.stars,planned:rizel};});source='planned';}catch{chosen=[];}
+ }
  if(source==='auto'){
-  // No answer: the service's own picks from all the news up to now (summaries only for what it may publish).
+  // Nothing planned (the candidate run failed): the service's own picks from all the news up to now.
   let pool2=null;
   try{const n=RISK_POLICY.ownerPicks.autoStories;const feed=await readFeed({since:edition.from});const moves=readMoves&&edition.session?await readMoves([edition.session]).catch(()=>null):null;
    pool2=(await build({feed,now,moves,budgetPool,fetcher,limits:{market:n,company:n},log})).candidates;}catch{pool2=null;}
@@ -228,40 +271,39 @@ async function publishClaimed({pool,readFeed,readMoves,now,budgetPool,fetcher,bu
  }
  const moves=readMoves&&edition.session?await readMoves([edition.session]).catch(()=>null):null;
  const articles=[];
- for(const {candidate,added:story,stars,own=null} of chosen){
-  const draft=story?addedArticle({...story,stars},day):publishedArticle(candidate,{stars,source,moves,edition});
+ for(const {candidate,added:story,stars,own=null,planned=null} of chosen){
+  const draft=story?addedArticle({...story,stars},day):publishedArticle(candidate,{stars,source:source==='owner'?'owner':'auto',moves,edition});
   // The owner's own line is published exactly as written (owner, Nov 27: no wording check; English translated when the owner wrote
   // none); otherwise the AI writes one, which must pass the RIZEL wording checks.
-  const rizel=own?await ownerLine({own,budgetPool,now,fetcher}):await line({article:draft,stars,budgetPool,now,fetcher});
+  const rizel=own?await ownerLine({own,budgetPool,now,fetcher}):planned??(source==='planned'?null:await line({article:draft,stars,budgetPool,now,fetcher}));
   articles.push(rizel?parseRiskArticle({...draft,rizel}):draft);
  }
  await saveRiskDay(pool,day,articles,now);
- await pool.query("UPDATE resolute.shock_candidates SET published_source=$2 WHERE day=$1::date",[day,source]);
+ await pool.query("UPDATE resolute.shock_candidates SET published_source=$2 WHERE day=$1::date",[day,source==='owner'?'owner':'auto']);
  return {state:articles.length?'ready':'no-candidates',day,source,count:articles.length,rizelLines:articles.filter(a=>a.rizel).length};
 }
 
 // ---- The owner's candidate mail (06:00 JST, 06:30 on an after-close earnings day). ----
 export const OWNER_PAGE_URL='https://techphase.app/resolute/news/owner';
 const summaryText=copy=>{const q=SUMMARY_QUESTION.ja,t=copy.content.trim();return (t.endsWith(q)?t.slice(0,-q.length):t).trim().replace(/\s*\n\s*/g,' ');};
-export function candidatesMailText({day,candidates,withheld=[]}){
+/** The owner's morning mail (owner, Nov 27): only the 3 stories the service plans to publish, each with its summary, suggested ★,
+ * RIZEL line, numbers and source, then the owner page link for corrections. The day's candidates are on the owner page only. */
+export function candidatesMailText({day,candidates,planned,withheld=[]}){
  const {answerUntilJst,publishRunJst}=RISK_POLICY.ownerPicks;
- const lines=[`衝撃度チェッカー ${day} の候補`,'',`載せるニュースと★を、${answerUntilJst}までにこのページで選んでください: ${OWNER_PAGE_URL}`,
-  `${publishRunJst}に、選んだニュースを選んだ順に公開します。選ばれていなければ、AIのおすすめ（市場全体のニュースを優先して${RISK_POLICY.ownerPicks.autoStories}つ）を公開します。`,''];
- for(const [g,head] of [['market','市場全体のニュース'],['company','個別企業のニュース']]){
-  const list=candidates.filter(c=>c.group===g);
-  lines.push(`■ ${head}（${list.length}件）`,'');
-  if(!list.length)lines.push('なし','');
-  list.forEach((c,i)=>{
-   lines.push(`${i+1}. ${c.ja.title}`,`要約: ${summaryText(c.ja)}`);
-   const n=readingParts(c.market,'ja');if(n.length){lines.push('数字:');for(const l of n)lines.push(`  ${l.text}`);}else lines.push('数字: まだありません（米国市場の取引がまだ終わっていないか、休場です）');
-   lines.push(`おすすめの★: ★${c.suggested.stars}（${'★'.repeat(c.suggested.stars)}${'☆'.repeat(5-c.suggested.stars)}） ${c.suggested.reason.ja}`,`出典: ${c.source.publisher??''} ${c.url}`.replace('  ',' '),'');
-  });
- }
+ const lines=[`衝撃度チェッカー ${day}`,'',`${publishRunJst}に、次の${planned.length}つを公開します。`,''];
+ if(!planned.length)lines.push('公開できるニュースが見つかりませんでした。','');
+ planned.forEach((p,i)=>{
+  const c=candidates.find(x=>x.id===p.id);if(!c)return;
+  lines.push(`${i+1}. ${c.ja.title}`,`要約: ${summaryText(c.ja)}`,`★${p.stars}（${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}） ${c.suggested.reason.ja}`,`リゼルの一言: ${p.rizel?.ja??'なし'}`);
+  const n=readingParts(c.market,'ja');if(n.length){lines.push('数字:');for(const l of n)lines.push(`  ${l.text}`);}else lines.push('数字: まだありません（米国市場の取引がまだ終わっていないか、休場です）');
+  lines.push(`出典: ${c.source.publisher?c.source.publisher+' ':''}${c.url}`,'');
+ });
+ lines.push(`訂正がある場合はこちら（${answerUntilJst}まで）: ${OWNER_PAGE_URL}`);
  const skipped=withheld.filter(w=>w&&typeof w.title==='string').slice(0,10);
- if(skipped.length){lines.push('要約できず、候補にしなかったニュース:');for(const w of skipped)lines.push(`・${w.title.trim().slice(0,200)}`,`  ${WITHHELD_REASON_JA[w.reason]??WITHHELD_REASON_JA.unknown}`);lines.push('');}
- if(candidates.some(c=>c.suggested.by==='rule'))lines.push('※ AIの判定ができなかったため、並びと★のおすすめは記事の順と値動きの表によるものです。');
+ if(skipped.length){lines.push('','要約できなかったニュース:');for(const w of skipped)lines.push(`・${w.title.trim().slice(0,200)}`,`  ${WITHHELD_REASON_JA[w.reason]??WITHHELD_REASON_JA.unknown}`);}
+ if(candidates.some(c=>c.suggested.by==='rule'))lines.push('','※ AIの判定ができなかったため、並びと★のおすすめは記事の順と値動きの表によるものです。');
  return lines.join('\n');
 }
-export async function sendCandidatesMail({day,candidates,withheld,env=process.env,clerk=null,fetcher=fetch}){
- return sendOwnerMail({env,clerk,fetcher,subject:`衝撃度チェッカー ${day} の候補（${RISK_POLICY.ownerPicks.answerUntilJst}まで）`,text:candidatesMailText({day,candidates,withheld}),key:'resolute-shock-candidates-'+day,tag:day});
+export async function sendCandidatesMail({day,candidates,planned=[],withheld,env=process.env,clerk=null,fetcher=fetch}){
+ return sendOwnerMail({env,clerk,fetcher,subject:`衝撃度チェッカー ${day}（訂正は${RISK_POLICY.ownerPicks.answerUntilJst}まで）`,text:candidatesMailText({day,candidates,planned,withheld}),key:'resolute-shock-candidates-'+day,tag:day});
 }

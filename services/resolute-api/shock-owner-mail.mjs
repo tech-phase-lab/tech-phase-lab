@@ -36,7 +36,10 @@ export function ownerShockMailText({day,articles,quotes,fallback,withheld=[]}){
  // Stories the AI picked whose summary was withheld (not shown to members), each with the reason in plain Japanese.
  const skipped=withheld.filter(w=>w&&typeof w.title==='string'&&w.title.trim()).slice(0,10);
  if(skipped.length){lines.push('要約できず、載せなかったニュース:');for(const w of skipped)lines.push(`・${w.title.trim().slice(0,200)}`,`  ${WITHHELD_REASON_JA[w.reason]??WITHHELD_REASON_JA.unknown}`);lines.push('');}
- lines.push('★は、終値の動きと取引中のいちばん大きな動きのうち大きいほうを決まった表に当てはめて付けています。AIは★を変えません。',shown.some(a=>a.pick?.source==='owner')?'載せるニュースと★は、オーナーが選びました。':shown.some(a=>a.pick)?'期限までにオーナーの返事がなかったため、AIのおすすめのニュースと★で公開しました。':fallback?'※ 今日はAIによるニュースの選定に失敗したため、★の多い順に選びました。':'載せるニュースは、AIがその日の市場のまとめ記事とニュースを読んで選びました。');
+ // On a day the owner picked, the ★ are the owner's: the table sentence is left out (owner, Nov 27; owner-only mail).
+ const ownerDay=shown.some(a=>a.pick?.source==='owner');
+ if(!ownerDay)lines.push('★は、終値の動きと取引中のいちばん大きな動きのうち大きいほうを決まった表に当てはめて付けています。AIは★を変えません。');
+ lines.push(shown.some(a=>a.pick?.source==='owner')?'載せるニュースと★は、オーナーが選びました。':shown.some(a=>a.pick)?'期限までにオーナーの返事がなかったため、AIのおすすめのニュースと★で公開しました。':fallback?'※ 今日はAIによるニュースの選定に失敗したため、★の多い順に選びました。':'載せるニュースは、AIがその日の市場のまとめ記事とニュースを読んで選びました。');
  return lines.join('\n');
 }
 /** One mail to the production owner (Clerk lookup at send time, Resend; off unless RESOLUTE_SHOCK_OWNER_MAIL_ENABLED is 'true').
