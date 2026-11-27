@@ -15,10 +15,11 @@ export function assignedQuote(feed:RiskFeed,article:RiskArticle,sample:boolean):
 }
 const headline=(a:RiskArticle,locale:'ja'|'en',sample:boolean)=>sample?(RISK_PREVIEW_DETAILS[a.id]?.[locale==='en'?'homeEn':'homeJa']??a[locale].title):a[locale].title;
 
-/** リゼルの一言 under a home story: the line's title only (the reasons are on the detail). Absent when no line is assigned. */
+/** リゼルの一言 under a home story: the line's title only (the reasons are on the detail). Absent when no line is assigned. A story's own
+ * note (owner pick) is the whole title, its line breaks shown. */
 export function RizelSay({quote,locale}:{quote:RizelQuote|undefined;locale:'ja'|'en'}){
  if(!quote)return null;
- return <div className={s.say}><img src="/rizel-avatar.webp" alt="" width={40} height={40}/><div><small>{locale==='en'?'A word from RIZEL':'リゼルの一言'}</small><p>{quote[locale].title}</p></div></div>;
+ return <div className={s.say}><img src="/rizel-avatar.webp" alt="" width={40} height={40}/><div><small>{locale==='en'?'A word from RIZEL':'リゼルの一言'}</small><p style={{whiteSpace:'pre-line'}}>{quote[locale].title}</p></div></div>;
 }
 
 /** Phone (owner, Nov 26 spec §3): each story as one card, top to bottom: headline, ★ badge and stars, あなたへの影響, the small table,
@@ -55,7 +56,7 @@ export function ShockCards({feed,locale,sample,member}:{feed:RiskFeed;locale:'ja
    <div className={s.panelImpact}><ImpactGauge impact={member?storyImpact(article.impact,member):undefined} locale={locale}/></div>
    <dl>{[[en?'Source':'出どころ',article[locale].source],[en?'Date':'日付',article[locale].date],[en?'What happened':'内容',article[locale].content]].map(([k,v],i)=><div key={k} className={i===2?s.wideCell:undefined}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
    {firstLine?<div className={s.panelMeter}><FirstLineMeter view={firstLine} locale={locale}/></div>:null}
-   {quote?.[locale].reasons.length?<div className={s.panelSay}><small>{en?'A word from RIZEL':'リゼルの一言'}</small><p>{quote[locale].title}</p><ul>{quote[locale].reasons.slice(0,3).map((t,i)=><li key={i}>{t}</li>)}</ul></div>:null}
+   {quote?.[locale].reasons.length?<div className={s.panelSay}><small>{en?'A word from RIZEL':'リゼルの一言'}</small><p style={{whiteSpace:'pre-line'}}>{quote[locale].title}</p><ul>{quote[locale].reasons.slice(0,3).map((t,i)=><li key={i}>{t}</li>)}</ul></div>:null}
   </div>:null}
  </>;
 }

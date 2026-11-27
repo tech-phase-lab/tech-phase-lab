@@ -34,8 +34,8 @@ export type RiskJudge={source:'ai'|'rule';reason:{ja:string;en:string}};
 export type RiskPick={source:'owner'|'auto'};
 /** The story's RIZEL line (owner pick, Nov 27): by 'ai' = written for that story by the AI and checked with the RIZEL wording rules
  * (risk-copy-check.ts); by 'owner' = the owner's own text, published as written. */
-/** ja / en: the title line; reasons: up to three bullet lines in each language (owner, Nov 27: the same shape as an approved quote). */
-export type RiskRizel={ja:string;en:string;reasons?:{ja:string[];en:string[]};by:'ai'|'owner'};
+/** ja / en: one note of up to three lines (owner, Nov 27: no bullets); the line breaks are kept and shown. */
+export type RiskRizel={ja:string;en:string;by:'ai'|'owner'};
 export type RiskArticle={id:string;url:string;publishedAt:string;market:RiskMarket;stars:number|null;ja:RiskCopy;en:RiskCopy;quoteId:string|null;cause?:RiskCause|null;judge?:RiskJudge;impact?:ImpactHints;pick?:RiskPick;rizel?:RiskRizel};
 export type RizelQuote={id:string;ja:{title:string;reasons:string[]};en:{title:string;reasons:string[]};minStars:number;maxStars:number;approved:boolean};
 export type RiskFeed={state:'ready'|'failed'|'stopped'|'preparing';date:string|null;articles:RiskArticle[];quotes:RizelQuote[]};
@@ -219,10 +219,9 @@ export function parseRiskArticle(v:unknown):RiskArticle{if(!v||typeof v!=='objec
  if(pick&&x.stars===null)throw Error('INVALID_STARS');
  if(x.quoteId!==null&&!/^[a-z0-9_-]{1,60}$/.test(x.quoteId))throw Error('INVALID_QUOTE');return {id:x.id,url:x.url,publishedAt:x.publishedAt,market,stars,ja:parseRiskCopy(x.ja),en:parseRiskCopy(x.en),quoteId:stars!==null&&stars===x.stars?x.quoteId:null,...(cause?{cause}:{}),...(judge?{judge}:{}),...(impact?{impact}:{}),...(pick?{pick}:{}),...(rizel?{rizel}:{})};}
 export function parseRiskPick(v:unknown):RiskPick|null{if(v===null||v===undefined)return null;const x=v as RiskPick;if(!x||typeof x!=='object'||!['owner','auto'].includes(x.source))throw Error('INVALID_PICK');return {source:x.source};}
-const RIZEL_TEXT=/^[^<>\u0000\n]{1,160}$/;
-const rizelReasons=(v:unknown)=>{if(v===undefined)return [];if(!Array.isArray(v)||v.length>3||!v.every(t=>typeof t==='string'&&RIZEL_TEXT.test(t.trim())))throw Error('INVALID_RIZEL');return v.map(t=>(t as string).trim());};
-export function parseRiskRizel(v:unknown):RiskRizel|null{if(v===null||v===undefined)return null;const x=v as RiskRizel;if(!x||typeof x!=='object'||typeof x.ja!=='string'||typeof x.en!=='string'||!RIZEL_TEXT.test(x.ja.trim())||!RIZEL_TEXT.test(x.en.trim())||!['ai','owner'].includes(x.by)||x.reasons!==undefined&&(!x.reasons||typeof x.reasons!=='object'))throw Error('INVALID_RIZEL');
- const ja=rizelReasons(x.reasons?.ja),en=rizelReasons(x.reasons?.en);return {ja:x.ja.trim(),en:x.en.trim(),...(ja.length?{reasons:{ja,en:en.length===ja.length?en:ja}}:{}),by:x.by};}
+/** A note: up to three non-empty lines (kept), at most 200 characters (the quote title limit), no markup characters. */
+const rizelNote=(v:unknown)=>{if(typeof v!=='string')return null;const lines=v.split(/\r?\n/).map(t=>t.trim()).filter(Boolean);const t=lines.join('\n');return lines.length>=1&&lines.length<=3&&t.length<=200&&!/[<>\u0000]/.test(t)?t:null;};
+export function parseRiskRizel(v:unknown):RiskRizel|null{if(v===null||v===undefined)return null;const x=v as RiskRizel;const ja=rizelNote(x?.ja),en=rizelNote(x?.en);if(!x||typeof x!=='object'||!ja||!en||!['ai','owner'].includes(x.by))throw Error('INVALID_RIZEL');return {ja,en,by:x.by};}
 const REASON_TEXT=/^[^<>\u0000]{1,160}$/;
 export function parseRiskJudge(v:unknown):RiskJudge|null{if(v===null||v===undefined)return null;const x=v as RiskJudge;
  if(!x||typeof x!=='object'||!['ai','rule'].includes(x.source)||!x.reason||typeof x.reason.ja!=='string'||typeof x.reason.en!=='string'||!REASON_TEXT.test(x.reason.ja)||!REASON_TEXT.test(x.reason.en))throw Error('INVALID_JUDGE');
