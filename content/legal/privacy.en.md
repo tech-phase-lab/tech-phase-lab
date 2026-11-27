@@ -35,7 +35,7 @@ We use cookies and browser storage to keep you signed in and to save your settin
 
 ## 5. Retention Period
 
-We keep information for as long as needed for the purposes of use. Diagnosis answers and rules are kept while you have an account. When you close your account, we delete them, including from backups, within ● days, except for information we must keep by law.
+We keep information for as long as needed for the purposes of use. Diagnosis answers and rules are kept while you have an account. When you close your account, we delete them, including from backups, within 30 days, except for information we must keep by law.
 
 ## 6. Requests for Disclosure, Correction and Deletion
 
