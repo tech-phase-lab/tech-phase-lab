@@ -286,6 +286,17 @@
      "changePct": 14.6
     }
    },
+   "valueCheck": {
+    "score": -24,
+    "exact": -24,
+    "pe": -24,
+    "ps": -24,
+    "peNow": 42.5,
+    "psNow": 24.1,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
+   },
    "preparedAnalysis": {
     "version": 1,
     "method": "deterministic",
@@ -332,15 +343,15 @@
       }
      },
      {
-      "id": "valuation",
-      "kind": "weakness",
+      "id": "financial",
+      "kind": "strength",
       "short": {
-       "ja": "予想PER 42.5×",
-       "en": "Forward P/E 42.5×"
+       "ja": "流動比率 4.59倍",
+       "en": "Current ratio 4.59×"
       },
       "detail": {
-       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
-       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+       "ja": "財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",
+       "en": "Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no debt\" and treated as debt-free; if the debt figures can't be read, no score is given."
       }
      },
      {
@@ -356,17 +367,6 @@
       }
      }
     ]
-   },
-   "valueCheck": {
-    "score": -24,
-    "exact": -24.0,
-    "pe": -24.0,
-    "ps": -24.0,
-    "peNow": 42.5,
-    "psNow": 24.1,
-    "basis": "pe-ps",
-    "period": null,
-    "asOf": "2035-03-09"
    }
   },
   "AMD": {
@@ -611,8 +611,8 @@
    "quarterRevenueQoq": 15.958737864077666,
    "quarterFcfMargin": 4.141436794498019,
    "quarterStockCompensationRatio": null,
-   "quarterDilutedSharesGrowth": 1.218769043266299,
-   "quarterDilutedShares": 1661000000,
+   "quarterDilutedSharesGrowth": 6.337599024984764,
+   "quarterDilutedShares": 1745000000,
    "dataWarnings": [],
    "twelveData": {
     "version": 1,
@@ -652,10 +652,21 @@
      "changePct": -8.6
     }
    },
+   "valueCheck": {
+    "score": 8,
+    "exact": 8,
+    "pe": 8,
+    "ps": 8,
+    "peNow": 31,
+    "psNow": 9.8,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
+   },
    "preparedAnalysis": {
     "version": 1,
     "method": "deterministic",
-    "sourceRevision": "9fe9c5032bd1db83d9a0bc1206b23d1e062b387be4931bc8e33c9d603c10dceb",
+    "sourceRevision": "01797c6e948e0a99602ac13f10f84c60085320356f6dd4cc487a18f94b6e2d50",
     "preparedAt": "2035-03-12T00:00:00.000Z",
     "processingMs": 0.3,
     "periodEnd": "2034-12-26",
@@ -686,15 +697,27 @@
       }
      },
      {
-      "id": "cash-generation",
-      "kind": "strength",
+      "id": "share-count",
+      "kind": "weakness",
       "short": {
-       "ja": "簡易FCF率 4.1%",
-       "en": "Simple FCF margin 4.1%"
+       "ja": "平均株式数 +6.3%",
+       "en": "Average shares +6.3%"
       },
       "detail": {
-       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の4.1%。買収支出やリース等は網羅しません。",
-       "en": "Quarterly operating cash flow less cash capital expenditure equaled 4.1% of revenue. This measure does not capture all acquisitions or leases."
+       "ja": "希薄化後の平均株式数は前年同期比+6.3%。発行済株式数や新株発行数そのものとは異なります。",
+       "en": "Diluted weighted-average shares increased +6.3% year over year. This is not the period-end shares outstanding or the number of newly issued shares."
+      }
+     },
+     {
+      "id": "financial",
+      "kind": "strength",
+      "short": {
+       "ja": "流動比率 2.72倍",
+       "en": "Current ratio 2.72×"
+      },
+      "detail": {
+       "ja": "財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",
+       "en": "Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no debt\" and treated as debt-free; if the debt figures can't be read, no score is given."
       }
      },
      {
@@ -708,31 +731,8 @@
        "ja": "安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",
        "en": "Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."
       }
-     },
-     {
-      "id": "momentum",
-      "kind": "weakness",
-      "short": {
-       "ja": "約3か月の株価 -8.6%",
-       "en": "3-month price -8.6%"
-      },
-      "detail": {
-       "ja": "2034-12-08〜2035-03-09の分割調整済み株価が-8.6%。将来の下落を予測するものではありません。",
-       "en": "Split-adjusted price return from 2034-12-08 to 2035-03-09 was -8.6%. This does not predict future declines."
-      }
      }
     ]
-   },
-   "valueCheck": {
-    "score": 8,
-    "exact": 8.0,
-    "pe": 8.0,
-    "ps": 8.0,
-    "peNow": 31.0,
-    "psNow": 9.8,
-    "basis": "pe-ps",
-    "period": null,
-    "asOf": "2035-03-09"
    }
   },
   "INTC": {
@@ -991,6 +991,17 @@
      "changePct": 18.4
     }
    },
+   "valueCheck": {
+    "score": 30,
+    "exact": 30,
+    "pe": 30,
+    "ps": 30,
+    "peNow": 19.5,
+    "psNow": 2.4,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
+   },
    "preparedAnalysis": {
     "version": 1,
     "method": "deterministic",
@@ -1037,41 +1048,18 @@
       }
      },
      {
-      "id": "cash-generation",
+      "id": "financial",
       "kind": "strength",
       "short": {
-       "ja": "簡易FCF率 6.4%",
-       "en": "Simple FCF margin 6.4%"
+       "ja": "流動比率 2.21倍",
+       "en": "Current ratio 2.21×"
       },
       "detail": {
-       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の6.4%。買収支出やリース等は網羅しません。",
-       "en": "Quarterly operating cash flow less cash capital expenditure equaled 6.4% of revenue. This measure does not capture all acquisitions or leases."
-      }
-     },
-     {
-      "id": "valuation",
-      "kind": "strength",
-      "short": {
-       "ja": "予想PER 19.5×",
-       "en": "Forward P/E 19.5×"
-      },
-      "detail": {
-       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
-       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+       "ja": "財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",
+       "en": "Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no debt\" and treated as debt-free; if the debt figures can't be read, no score is given."
       }
      }
     ]
-   },
-   "valueCheck": {
-    "score": 30,
-    "exact": 30.0,
-    "pe": 30.0,
-    "ps": 30.0,
-    "peNow": 19.5,
-    "psNow": 2.4,
-    "basis": "pe-ps",
-    "period": null,
-    "asOf": "2035-03-09"
    }
   },
   "ARM": {
@@ -1339,6 +1327,17 @@
      "changePct": -12.5
     }
    },
+   "valueCheck": {
+    "score": -30,
+    "exact": -30,
+    "pe": -30,
+    "ps": -30,
+    "peNow": 48,
+    "psNow": 31.5,
+    "basis": "pe-ps",
+    "period": null,
+    "asOf": "2035-03-09"
+   },
    "preparedAnalysis": {
     "version": 1,
     "method": "deterministic",
@@ -1373,15 +1372,15 @@
       }
      },
      {
-      "id": "valuation",
-      "kind": "weakness",
+      "id": "financial",
+      "kind": "strength",
       "short": {
-       "ja": "予想PER 48.0×",
-       "en": "Forward P/E 48.0×"
+       "ja": "流動比率 6.35倍・借入なし",
+       "en": "Current ratio 6.35× · no debt"
       },
       "detail": {
-       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
-       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+       "ja": "財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。有利子負債は提出書類の記載の形（長期債務・短期借入・転換社債など）に合わせて合計します。借入・社債の記載が一つも無い会社は「借入なし」と表示して負債ゼロとして扱い、記載が読み取れない場合は点を付けません。",
+       "en": "Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Debt is added up in the form the filing reports it (long-term debt, short-term borrowings, convertible notes). A company whose filing reports no borrowings or notes at all is shown as \"no debt\" and treated as debt-free; if the debt figures can't be read, no score is given."
       }
      },
      {
@@ -1405,33 +1404,10 @@
       },
       "detail": {
        "ja": "2034-09-30期から2034-12-31期に営業利益率が低下。原因はこの数値だけでは特定できません。",
-       "en": "Operating margin declined from the quarter ended 2034-09-30 to 2034-12-31. These figures alone do not establish the cause."
-      }
-     },
-     {
-      "id": "momentum",
-      "kind": "weakness",
-      "short": {
-       "ja": "約3か月の株価 -12.5%",
-       "en": "3-month price -12.5%"
-      },
-      "detail": {
-       "ja": "2034-12-08〜2035-03-09の分割調整済み株価が-12.5%。将来の下落を予測するものではありません。",
-       "en": "Split-adjusted price return from 2034-12-08 to 2035-03-09 was -12.5%. This does not predict future declines."
+       "en": "Operating margin declined from the quarter ended 2034-09-30 to the quarter ended 2034-12-31. These figures alone do not establish the cause."
       }
      }
     ]
-   },
-   "valueCheck": {
-    "score": -30,
-    "exact": -30.0,
-    "pe": -30.0,
-    "ps": -30.0,
-    "peNow": 48.0,
-    "psNow": 31.5,
-    "basis": "pe-ps",
-    "period": null,
-    "asOf": "2035-03-09"
    }
   }
  }

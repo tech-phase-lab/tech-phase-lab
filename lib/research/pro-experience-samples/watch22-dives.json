@@ -283,8 +283,8 @@
       "approvedAt": "2035-03-11T22:31:40Z",
       "summaryJa": "NVIDIAが年次の開発者会議の日程を発表。新しいデータセンター向け製品の説明を予定。",
       "summaryEn": "NVIDIA announced the dates of its annual developer conference, where it plans to present new data center products.",
-      "impactJa": "会議では、次の世代の製品と出荷時期が話題になりそうです。",
-      "impactEn": "Next-generation products and their shipping schedule are likely to be the focus.",
+      "impactJa": "会議は3月下旬に4日間の日程で開かれ、初日に最高経営責任者（CEO）の基調講演が予定されています。\nデータセンター向けは売上の大半を占める事業で、新製品の性能と価格が今後の受注を左右します。\n注目点は、次の世代のGPUの出荷開始時期と、量産が予定どおり進むかどうかです。\n発表内容は、次の決算で示される売上見通しと合わせて確認できます。",
+      "impactEn": "The conference runs for four days in late March, opening with a keynote by the chief executive.\nData centers make up most of NVIDIA's sales, so the new products' performance and pricing shape future orders.\nThe points to watch are when the next-generation GPUs start shipping and whether volume production stays on schedule.\nThe announcements can be checked against the sales outlook in the next earnings report.",
       "impactLabel": "neutral",
       "confidence": "high"
      },
@@ -301,8 +301,8 @@
       "approvedAt": "2035-03-10T13:06:12Z",
       "summaryJa": "大手クラウド企業が、NVIDIAの新型GPUを使う計算サービスを追加したと発表。",
       "summaryEn": "A major cloud company said it added a computing service that runs on NVIDIA's new GPUs.",
-      "impactJa": "データセンター向けの需要が続いていることを示す材料です。",
-      "impactEn": "A sign that data center demand is holding up.",
+      "impactJa": "",
+      "impactEn": "",
       "impactLabel": "positive",
       "confidence": "high"
      },
@@ -319,8 +319,8 @@
       "approvedAt": "2035-03-06T21:16:30Z",
       "summaryJa": "NVIDIAが四半期配当を1株0.01ドルで据え置くと発表。",
       "summaryEn": "NVIDIA kept its quarterly dividend at $0.01 a share.",
-      "impactJa": "配当は小さく、株価への影響は限られそうです。",
-      "impactEn": "The dividend is small, so the effect on the stock is likely limited.",
+      "impactJa": "",
+      "impactEn": "",
       "impactLabel": "neutral",
       "confidence": "high"
      }
@@ -617,8 +617,8 @@
       "approvedAt": "2035-03-11T20:11:05Z",
       "summaryJa": "AMDが新しいデータセンター向けGPUの出荷を始めたと発表。",
       "summaryEn": "AMD said it has started shipping its new data center GPU.",
-      "impactJa": "出荷が売上にどう表れるかは、次の決算で確認できます。",
-      "impactEn": "The next earnings report will show how the shipments turn into sales.",
+      "impactJa": "出荷先は大手クラウド企業などで、前の世代より計算性能と消費電力あたりの性能が上がったと説明しています。\nデータセンター向けGPUはAMDの成長の中心で、NVIDIAとの競争の中で採用が広がるかが焦点です。\n次の決算では、データセンター部門の売上と、今後の出荷見通しが示されるかが注目点です。",
+      "impactEn": "Initial customers include major cloud companies, and AMD says the GPU improves on the previous generation in both computing performance and performance per watt.\nData center GPUs are at the centre of AMD's growth, and the question is whether adoption widens in competition with NVIDIA.\nThe next earnings report should show data center sales and whether AMD gives an outlook for further shipments.",
       "impactLabel": "positive",
       "confidence": "high"
      },
@@ -635,8 +635,8 @@
       "approvedAt": "2035-03-10T14:01:20Z",
       "summaryJa": "AMDがPC向けの新しいプロセッサーを発表。春から搭載製品が出る予定。",
       "summaryEn": "AMD introduced new PC processors, with laptops using them due this spring.",
-      "impactJa": "PC向けは売上の一部で、影響は限られそうです。",
-      "impactEn": "PCs are one part of sales, so the effect is likely limited.",
+      "impactJa": "",
+      "impactEn": "",
       "impactLabel": "neutral",
       "confidence": "high"
      },
@@ -653,8 +653,8 @@
       "approvedAt": "2035-03-05T21:31:45Z",
       "summaryJa": "AMDが投資家向け説明会の開催を発表。中期の目標を説明する予定。",
       "summaryEn": "AMD announced an investor event where it plans to lay out its medium-term targets.",
-      "impactJa": "目標の数字が、市場の期待と比べてどうかが注目点です。",
-      "impactEn": "How the targets compare with market expectations is the point to watch.",
+      "impactJa": "",
+      "impactEn": "",
       "impactLabel": "neutral",
       "confidence": "high"
      }

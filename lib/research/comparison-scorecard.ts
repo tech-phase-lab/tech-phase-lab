@@ -281,6 +281,28 @@ const kindWords: Record<ScoreKind, Partial<Record<ScoreId,{ja:string;en:string}>
   sector: { financial:{ja:"自己資本比率",en:"equity-to-assets ratio"}, cash:{ja:"ROE",en:"return on equity"}, profitability:{ja:"純投資利益率",en:"net investment income margin"} },
 };
 type AnalysisItem = NonNullable<Financials["preparedAnalysis"]>["items"][number];
+/** The score at or below which a factor counts as weak (0-10 scale): the same cut the market factors use for a weakness (appendMarketItems). */
+export const WEAK_SCORE = 3;
+/** A simple free cash flow margin is a strength only from here (5 + margin/5 >= 7 on the cash score), as comparison-analysis.ts writes it. */
+export const FCF_STRENGTH_PCT = 10;
+/** The fundamental factors a missing weakness may be filled from; never valuation or price momentum. */
+const FUNDAMENTAL_IDS: ScoreId[] = ["growth", "profitability", "cash", "financial", "stability"];
+/** The 長所 / 短所 a company card lists and the overall summary cautions from (owner, Nov 27). A three-month price move is not a business
+ *  strength or weakness: momentum stays in the score and the radar only. A simple FCF margin under 10% is never a strength, whatever an
+ *  older saved analysis says (a 4.1% margin was listed). With no weakness left, the weakest fundamental factor is listed only when its
+ *  score is at or below WEAK_SCORE on the standard yardstick; otherwise there is none (no filler). */
+export function listedTraits(c: Financials, items: readonly AnalysisItem[], now = Date.now()): AnalysisItem[] {
+  const listed = items.filter(i => i.id !== "momentum"
+    && !(i.id === "cash-generation" && i.kind === "strength" && finite(c.quarterFcfMargin) && c.quarterFcfMargin < FCF_STRENGTH_PCT));
+  if (listed.some(i => i.kind === "weakness")) return listed;
+  const weakest = comparisonScores(c, now).filter(s => FUNDAMENTAL_IDS.includes(s.id) && !s.kind && s.value !== null && s.value <= WEAK_SCORE)
+    .sort((a, b) => a.value! - b.value!)[0];
+  if (!weakest) return listed;
+  const short = { ja: comparisonMetric(c, weakest.id, "ja", now), en: comparisonMetric(c, weakest.id, "en", now) };
+  return [...listed, { id: `weak-${weakest.id}`, kind: "weakness", short, detail: short }];
+}
+/** The prepared bullets the detail panel explains: the listed ones, without a filled-in weakest factor (it has no prepared explanation). */
+export const detailTraits = (c: Financials, now = Date.now()) => listedTraits(c, c.preparedAnalysis?.items ?? [], now).filter(i => !i.id.startsWith("weak-"));
 /** One weakness bullet as a plain clause ("売上が43.5%減っています"), using only the figures in the bullet itself. */
 export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   const ja=lang==="ja", text=item.short[lang], numbers=[...text.matchAll(/[-+]?\d[\d,]*(?:\.\d+)?/g)].map(m=>m[0].replace(/^\+/,""));
@@ -341,7 +363,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
       description:ja?`${alt.join("・")}は売上がまだ無い会社や金融機関向けの項目で採点しており、${std.join("・")}と同じ物差しの項目が限られるため、総合の優劣は出していません。各項目を個別に確認してください。`
         :`${alt.join(" and ")} ${alt.length>1?"are":"is"} scored on company-type metrics (no revenue yet, or a financial firm), so few factors measure ${std.join(" and ")} on the same yardstick and no overall leader is named. Compare the factors one by one.`,note};
   }
-  const weakness=(r:typeof best)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness");
+  const traits=(r:typeof best)=>listedTraits(r.c,r.c.preparedAnalysis?.items ?? [],now);
+  const weakness=(r:typeof best)=>traits(r).find(i=>i.kind==="weakness");
   if(gap<0.3) {
     const a=edges(best,[next]),b=edges(next,[best]);
     const split=a.length && b.length ? (ja?`${best.c.ticker}は${words(a.slice(0,1))}、${next.c.ticker}は${words(b.slice(0,1))}で上回ります。`:`${best.c.ticker} is ahead in ${words(a.slice(0,1))}, ${next.c.ticker} in ${words(b.slice(0,1))}.`) : "";
@@ -353,9 +376,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
     : (ja?`${best.c.ticker}は項目全体のバランスで上回ります。`:`${best.c.ticker} leads on the balance of the factors.`);
   // The runner-up: its own strength against the leader, and its weakness as the one caution; otherwise the leader's weakness.
   const leaderFellLess=fellLess(best,ranked.slice(1)), nextFellLess=leaderFellLess ? "" : fellLess(next,[best]);
-  // A company whose smaller fall is already said never gets its fall again as the caution (reviewer, Nov 26: the sentence said it twice).
-  const caution=(r:typeof best,said:boolean)=>said ? r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness" && i.id!=="momentum") : weakness(r);
-  const counter=edges(next,[best]).slice(0,1), nextWeak=caution(next,!!nextFellLess), bestWeak=caution(best,!!leaderFellLess);
+  // The caution is never the price fall (listedTraits drops momentum), so a smaller fall already said is not said twice either.
+  const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next), bestWeak=weakness(best);
   let second="";
   if(nextFellLess && !counter.length) second=nextFellLess;
   else if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;

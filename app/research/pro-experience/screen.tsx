@@ -47,13 +47,12 @@ export function ProExperienceList() {
  * first frame, so the box is never black before it plays. The video has no sound. */
 function FeatureVideo({ feature, lang }: { feature: ProFeature; lang: "ja" | "en" }) {
   const ja = lang === "ja";
-  const { src, label, poster } = videoFor(feature, lang);
+  const { src, poster } = videoFor(feature, lang);
   return <figure className={styles.videoFigure}>
     <div className={styles.media}>
       <video key={src} className={styles.video} src={src} poster={poster || undefined} controls playsInline muted preload="metadata" width={720} height={1566}
         aria-label={ja ? `${feature.name.ja}の動画` : `${feature.name.en || feature.name.ja} video`} />
     </div>
-    {label && <figcaption className={styles.videoLabel}>{ja ? `動画 ${label}・タップで再生` : `Video ${label} · tap to play`}</figcaption>}
   </figure>;
 }
 

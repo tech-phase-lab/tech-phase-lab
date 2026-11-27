@@ -114,8 +114,8 @@ function EpsCard({ numbers, currency, lang }: { numbers: DiveNumbers; currency: 
     <Bar label={lang === "ja" ? "実績" : "Actual"} value={divePerShare(numbers.adjustedEPS, currency, lang)} width={numbers.adjustedEPS / max * 100} tone="gold" />
     <div className={styles.chips}><span className={`${styles.chip} ${beat ? styles.chip_up : styles.chip_down}`}>{lang === "ja" ? `${pctText(diff)} ${beat ? "上回る" : "下回る"}` : `${beat ? "Beat" : "Missed"} by ${Math.abs(diff).toFixed(1)}%`}</span></div>
     <details className={styles.more}><summary>{lang === "ja" ? "EPSとは" : "What is EPS?"}</summary><div className={styles.moreBody}><p>{lang === "ja"
-      ? "EPSは、会社の利益を株数で割った、1株あたりの利益です。「調整後」は、一時的な費用などを除いた数字で、予想も同じ基準です。予想より高いか低いかが、株価の反応に影響しやすい数字です。"
-      : "EPS (earnings per share) is a company's profit divided by its number of shares. \"Adjusted\" means one-time items are excluded, and the estimate uses the same basis. Whether EPS comes in above or below the estimate often affects how the stock reacts."}</p></div></details>
+      ? "EPS＝1株あたり利益。調整後の数字です"
+      : "EPS = earnings per share (adjusted)."}</p></div></details>
   </section>;
 }
 
@@ -152,8 +152,8 @@ export default function EarningsDive({ lang, name, ticker, live, unlocked, histo
   </header>;
   if (!unlocked) return <section className={styles.dive}>{header}<p className={styles.lock}><Link href="/research/account">{ja ? "ログイン・プランを確認" : "Sign in / View your plan"} →</Link></p></section>;
   if (!numbers) return <section className={styles.dive} aria-busy="true">{header}
-    <div className={styles.pills}><span className={`${styles.pill} ${styles.wait}`}><i />{ja ? "数字 確認中" : "Numbers checking"}</span><span className={`${styles.pill} ${styles.wait}`}><i />{ja ? "まとめ 確認中" : "Summary checking"}</span></div>
-    <p className={styles.checking} role="status">{ja ? "決算の数字を確認しています。確認が終わるまで、この部分は表示されません。" : "We are checking the earnings figures. This section appears once the check is done."}</p></section>;
+    <div className={styles.pills}><span className={`${styles.pill} ${styles.wait}`}><i />{ja ? "準備中" : "Coming soon"}</span><span className={`${styles.pill} ${styles.wait}`}><i />{ja ? "まとめ 確認中" : "Summary checking"}</span></div>
+    <p className={styles.checking} role="status">{ja ? "準備中" : "Coming soon"}</p></section>;
   const tiles: { label: string; value: string; unit: string; note: string; tone?: string }[] = [
     { label: ja ? "売上高" : "Revenue", value: ja ? diveScaled(numbers.revenue.current, currency, lang) : diveMoney(numbers.revenue.current, currency, lang), unit: ja ? diveUnit(currency, lang) : "",
       note: ja ? `前期比 ${pctText((numbers.revenue.current / numbers.revenue.previous - 1) * 100)}` : `${pctText((numbers.revenue.current / numbers.revenue.previous - 1) * 100)} QoQ`, tone: numbers.revenue.current >= numbers.revenue.previous ? "up" : "down" },

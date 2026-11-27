@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { ComparisonResult } from "@/lib/research/comparison";
-import { overallComparison } from "@/lib/research/comparison-scorecard";
+import { detailTraits, overallComparison } from "@/lib/research/comparison-scorecard";
 import DetailPanels from "../detail-panels";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
@@ -29,7 +29,7 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
       <h2 className={styles.companiesHeading}>{ja?"会社ごとの長所と短所":"Strengths and weaknesses by company"}</h2>
       <div className={styles.companyCards}>{companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
       <DetailPanels lang={lang}>
-        {companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3><ul>{c.preparedAnalysis?.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul></section>)}
+        {companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3><ul>{detailTraits(c,now).map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul></section>)}
       </DetailPanels>
     </div>
   </ResearchToolShell>;

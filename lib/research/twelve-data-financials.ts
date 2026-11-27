@@ -10,15 +10,14 @@ export type TwelveComparisonBundle = {
   series?:{payload:unknown;adjust:"splits";retrievedAt:string};
   accountingBasis?:"us-gaap"|"ifrs-full";
 };
-/** Adds the market-factor bullets (financial strength, valuation, stability, momentum and the three warnings) to a prepared analysis.
+/** Adds the market-factor bullets (financial strength, stability and the margin and debt warnings) to a prepared analysis; never momentum.
  * Shared by the provider-sourced and the SEC-sourced companies, so both read the same evidence the same way. */
 export function appendMarketItems(prepared:NonNullable<Financials["preparedAnalysis"]>,evidence:TwelveFactorEvidence,periodEnd:string,currency:string,now=Date.now()) {
     const extras=twelveExtraFactors(evidence,now);
-    for(const id of ["financial","stability","momentum"] as const) {
+    // Price momentum is scored and drawn, never listed: a three-month price move is not a business strength or weakness (owner, Nov 27).
+    for(const id of ["financial","stability"] as const) {
       const value=extras[id];
       if(value===null || value>3 && value<7)continue;
-      // Momentum is a strength only when the price rose (owner, Nov 26); a smaller fall is said in the summary, never listed as a strength.
-      if(id==="momentum" && value>=7 && !(evidence.momentum!.changePct>0))continue;
       const ja=twelveFactorMetric(evidence,id,"ja",now)!,en=twelveFactorMetric(evidence,id,"en",now)!;
       prepared.items.push({id,kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods[id]});
     }
@@ -41,12 +40,6 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
     if(extras.financial!==null && stats && stats.totalDebt!>stats.totalCash!) {
       prepared.items=prepared.items.filter(item=>item.id!=="debt-cash");
       prepared.items.push(debtCashItem(periodEnd,stats.totalCash!,stats.totalDebt!,currency));
-    }
-    if(extras.momentum!==null && evidence.momentum!.changePct<0) {
-      const pct=evidence.momentum!.changePct.toFixed(1);
-      addRisk("momentum",`約3か月の株価 ${pct}%`,`3-month price ${pct}%`,
-        `${evidence.momentum!.from}〜${evidence.momentum!.to}の分割調整済み株価が${pct}%。将来の下落を予測するものではありません。`,
-        `Split-adjusted price return from ${evidence.momentum!.from} to ${evidence.momentum!.to} was ${pct}%. This does not predict future declines.`);
     }
 }
 /** Production response shape, consumed by the existing radar/bars/cards without a redesign.
