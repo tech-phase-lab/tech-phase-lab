@@ -1,0 +1,259 @@
+import test from 'node:test';
+import {PGlite} from '@electric-sql/pglite';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {editionAt,inEdition,editionSession,isRecapHeadline,percentMismatch,latestClosedSession} from '../lib/resolute/risk-edition.ts';
+import {sameEvent} from '../lib/resolute/risk-scope.ts';
+import {parsePicks,autoPicks,answerOpen,earningsAfterClose,candidateRunTime,isCandidateRun,parseCandidate,rizelIssues} from '../lib/resolute/shock-picks.ts';
+import {parseRiskArticle,parseRiskFeed,isShownStory,SUMMARY_QUESTION} from '../lib/resolute/risk.ts';
+import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
+import {editionIntake,buildCandidates,publishPicks,candidatesMailText,validateRanking,rankInput,writeRizelLine,RIZEL_INSTRUCTIONS} from '../services/resolute-api/shock-candidates.mjs';
+import {selectDailyCandidates,repeatsTaken} from '../services/resolute-api/rizel-daily-review.mjs';
+import {generate,NUMBER_RETRY} from '../services/resolute-api/risk-job.mjs';
+import {ownerShockMailText,WITHHELD_REASON_JA} from '../services/resolute-api/shock-owner-mail.mjs';
+import {riskRequest,saveOwnerPicks,publicRiskFeed,hash} from '../services/resolute-api/risk-store.mjs';
+import {parseDraft,parseDraftInput,ownerDraftAccess} from '../lib/resolute/owner-news.ts';
+import {OWNER_ACCOUNT_ID,PRODUCTION_OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
+
+const body=t=>`${t}. The report said the move weighed on technology shares across the session, and investors sold chip stocks after the news broke.`;
+const row=(title,publishedAt,{tickers=[],lane='company'}={})=>({title,bodyEn:body(title),url:`https://news.example/${encodeURIComponent(title).slice(0,80)}`,publishedAt,publisher:'Example Wire',tickers,lane,sentiment:'negative'});
+const feedOf=items=>({ok:true,enabled:false,items:[],officialUpdates:[],reportUpdates:items,reportCoverage:{configured:true,marketLane:true}});
+// The two S&P headlines of the Nov 27 edition (as shown, Japanese) and their English originals.
+const SP_JA=['S&PがNvidiaのAA格付けをCreditWatch negativeに指定','S&P Global、NvidiaをCreditWatch Negativeに指定'];
+const SP_EN=['S&P puts Nvidia AA rating on CreditWatch negative','S&P Global places Nvidia on CreditWatch Negative'];
+const nov25={'2026-11-25':{nas100:{previousDate:'2026-11-24',changePercent:0.2,typicalPercent:0.8,up:55,down:45,total:100},sox:{previousDate:'2026-11-24',changePercent:-0.4,typicalPercent:2,up:18,down:22,total:40},
+ fear:{level:20,previousLevel:20},stocks:{SNDK:{previousDate:'2026-11-24',changePercent:-5.6,typicalPercent:3,intradayPercent:-7.1}}}};
+
+test('A: the edition covers the news since the previous publish run; numbers only from the latest closed session',()=>{
+ // Fri Nov 27 08:20 JST (after Thanksgiving): the window starts Thu 08:20 JST = Wed Nov 25 18:20 New York, after Wednesday's close.
+ const run=new Date('2026-11-26T23:20:00Z'),e=editionAt(run);
+ assert.equal(new Date(e.from).toISOString(),'2026-11-25T23:20:00.000Z');assert.equal(e.session,'2026-11-25');assert.equal(latestClosedSession(run),'2026-11-25');
+ // Sandisk's 34% headline (published during Wednesday's session) is not in this edition at all.
+ assert.equal(inEdition('2026-11-25T19:00:00.000Z',e),false);
+ // A Thanksgiving story qualifies, without numbers (its session, Friday, has not closed).
+ assert.equal(inEdition('2026-11-26T15:00:00.000Z',e),true);assert.equal(editionSession('2026-11-26T15:00:00.000Z',e),null);
+ assert.equal(inEdition('2026-11-26',e),false,'a date-only story cannot be placed');
+ // Thu Nov 26 08:20 JST: Wednesday's intraday story is in, and measured on Wednesday (the session it was published during).
+ const wed=editionAt(new Date('2026-11-25T23:20:00Z'));
+ assert.equal(inEdition('2026-11-25T19:00:00.000Z',wed),true);assert.equal(editionSession('2026-11-25T19:00:00.000Z',wed),'2026-11-25');
+ // The candidate run (06:00 JST) reads what is out so far; the window starts at the same place.
+ assert.equal(editionAt(new Date('2026-11-25T21:00:00Z')).from,wed.from);
+ // Weekends are editions too: Sunday 08:20 JST covers Saturday's news, numbers from Friday only for Friday's stories.
+ const sun=editionAt(new Date('2026-11-28T23:20:00Z'));assert.equal(sun.session,'2026-11-27');
+});
+
+test('A: multi-day recaps and a headline % that is not the session\'s move are not that day\'s news',()=>{
+ for(const t of ['Sandisk stock drops 34% from its record high','Nvidia shares down 12% this week','Stocks fall for third straight session','Chip stocks slide 8% in five days','AMD has lost 20% since October','半導体株、年初来で30%下落','Nasdaq falls 5% year to date'])assert.ok(isRecapHeadline(t),t);
+ for(const t of ['Nasdaq falls 2% as yields jump','Stocks post worst day since April','Nvidia rallies after earnings beat','Sandisk株が34%下落'])assert.ok(!isRecapHeadline(t),t);
+ assert.equal(percentMismatch('Sandisk株が34%下落',[-5.6,-7.1]),true);
+ assert.equal(percentMismatch('Sandisk falls 6% on memory price cut',[-5.6,-7.1]),false,'within one point of the close');
+ assert.equal(percentMismatch('Sandisk falls 7.5%',[-5.6,-7.1]),false,'within one point of the intraday extreme');
+ assert.equal(percentMismatch('Sandisk falls 34%',[]),false,'not measured: not checked');
+ // In the intake: the Nov 26 edition (Wednesday measured) drops «Sandisk stock drops 34%» (−5.6% that day) and the weekly recap.
+ const run=new Date('2026-11-25T23:20:00Z');
+ const feed=feedOf([row('Sandisk stock drops 34% after analyst downgrade','2026-11-25T19:00:00.000Z',{tickers:['SNDK']}),row('Sandisk shares slide 6% as memory prices fall','2026-11-25T18:00:00.000Z',{tickers:['SNDK']}),
+  row('Chip stocks tumble 9% this week on AI worries','2026-11-25T17:00:00.000Z',{lane:'market'}),row('Stocks slip as Treasury yields jump','2026-11-24T20:00:00.000Z',{lane:'market'})]);
+ const {stories,diagnostics}=editionIntake(feed,run,{moves:nov25});
+ assert.deepEqual(stories.map(s=>s.title),['Sandisk shares slide 6% as memory prices fall']);
+ assert.equal(diagnostics.percentMismatch,1);assert.equal(diagnostics.recap,1);assert.equal(diagnostics.outsideEdition,1);
+ assert.equal(stories[0].market.session,'2026-11-25');assert.equal(stories[0].market.reading.company.changePercent,-5.6);
+ // The automatic selection uses the same edition window and checks.
+ const legacy=selectDailyCandidates(feed,run,{moves:nov25});
+ assert.ok(![...legacy.selected,...legacy.reserve].some(c=>/34%|this week|Treasury/.test(c.title)));
+ assert.equal(legacy.diagnostics.edition.session,'2026-11-25');
+});
+
+test('C: one story per event — the two S&P CreditWatch headlines collapse to one',()=>{
+ assert.ok(sameEvent({title:SP_JA[0]},{title:SP_JA[1]}));
+ assert.ok(sameEvent({title:SP_EN[0],tickers:['SPGI','NVDA']},{title:SP_EN[1],tickers:['NVDA']}));
+ assert.ok(!sameEvent({title:'Nvidia shares fall after earnings beat'},{title:'Nvidia unveils new Blackwell chip'}));
+ assert.ok(!sameEvent({title:'Stocks fall as Treasury yields jump'},{title:'Stocks rally after Fed holds rates'}));
+ assert.ok(repeatsTaken({title:SP_EN[1],tickers:['NVDA'],publishedAt:'2026-11-25T16:00:00.000Z'},[{title:SP_EN[0],tickers:['SPGI'],publishedAt:'2026-11-25T15:30:00.000Z'}]));
+ const run=new Date('2026-11-25T23:20:00Z');
+ const {stories,diagnostics}=editionIntake(feedOf([row(SP_EN[0],'2026-11-25T15:30:00.000Z',{tickers:['SPGI','NVDA']}),row(SP_EN[1],'2026-11-25T16:00:00.000Z',{tickers:['NVDA']})]),run);
+ assert.equal(stories.length,1);assert.equal(diagnostics.sameEvent,1);
+});
+
+const sid=n=>hash('story-'+n);
+const copy=(t,c='Example Wireが報じました。')=>({ja:{title:t,source:'Example Wire',content:`${c}\n${SUMMARY_QUESTION.ja}`,date:'2026年11月25日'},en:{title:t,source:'Example Wire',content:`Reported.\n${SUMMARY_QUESTION.en}`,date:'November 25, 2026'}});
+const cand=(n,group,rank,stars,title=`Story ${n}`)=>parseCandidate({id:sid(n),url:`https://news.example/${n}`,publishedAt:'2026-11-25T15:00:00.000Z',group,rank,source:{title,tickers:[],publisher:'Example Wire'},
+ ...copy(title),market:{index:group==='market'?'nas100':'company',session:null,reading:null},suggested:{stars,reason:{ja:'市場全体に関わる発表です',en:'A market-wide announcement.'},by:'ai'}});
+
+test('owner pick: timing constants, earnings mornings at 06:30, answers until 08:00, publish at 08:20',()=>{
+ assert.deepEqual([RISK_POLICY.ownerPicks.candidateRunJst,RISK_POLICY.ownerPicks.candidateRunEarningsJst,RISK_POLICY.ownerPicks.answerUntilJst,RISK_POLICY.ownerPicks.publishRunJst],['06:00','06:30','08:00','08:20']);
+ const events=[{kind:'earnings',ticker:'NVDA',startsAt:'2026-11-25T21:20:00Z',afterClose:true},{kind:'earnings',ticker:'MU',startsAt:'2026-11-20T21:30:00Z'},{kind:'economic',startsAt:'2026-11-25T21:00:00Z'}];
+ assert.deepEqual(earningsAfterClose('2026-11-26',events),['NVDA']);assert.equal(candidateRunTime('2026-11-26',events),'06:30');assert.equal(candidateRunTime('2026-11-27',events),'06:00');
+ assert.equal(isCandidateRun(new Date('2026-11-25T21:00:00Z'),events),false,'06:00 waits on an earnings morning');
+ assert.equal(isCandidateRun(new Date('2026-11-25T21:30:00Z'),events),true);
+ assert.equal(isCandidateRun(new Date('2026-11-26T21:00:00Z'),events),true);
+ assert.equal(isCandidateRun(new Date('2026-11-26T23:00:00Z'),events),false,'not after the 08:00 deadline');
+ assert.equal(answerOpen('2026-11-27',new Date('2026-11-26T22:59:00Z')),true);assert.equal(answerOpen('2026-11-27',new Date('2026-11-26T23:00:00Z')),false);
+});
+
+test('owner pick: picks are validated; the auto pick takes three with at least two market-wide',()=>{
+ const list=[cand(1,'company',1,4),cand(2,'market',1,3),cand(3,'company',2,5),cand(4,'market',2,2),cand(5,'market',3,2)];
+ assert.deepEqual(autoPicks(list).map(p=>[p.id,p.stars]),[[sid(2),3],[sid(1),4],[sid(4),2]]);
+ assert.deepEqual(autoPicks([cand(1,'company',1,4),cand(3,'company',2,5),cand(2,'market',1,3)]).map(p=>p.id),[sid(2),sid(1),sid(3)]);
+ assert.deepEqual(parsePicks([{id:sid(3),stars:5,rizel:{ja:'自分のルールを先に。'}},{id:sid(2),stars:1}],list),[{id:sid(3),stars:5,rizel:{ja:'自分のルールを先に。'}},{id:sid(2),stars:1}]);
+ for(const bad of [[],[{id:sid(1),stars:6}],[{id:sid(9),stars:1}],[{id:sid(1),stars:1},{id:sid(1),stars:2}],[1,2,3,4].map(n=>({id:sid(n),stars:1}))])assert.throws(()=>parsePicks(bad,list));
+});
+
+test('owner pick: stars from the owner are kept and shown without measured numbers, in the owner\'s order',()=>{
+ const base={url:'https://news.example/x',publishedAt:'2026-11-26T15:00:00.000Z',market:{index:'nas100',session:null,reading:null},quoteId:null,...copy('感謝祭の日のニュース')};
+ const a=parseRiskArticle({...base,id:sid(1),stars:4,pick:{source:'owner'},rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}});
+ const b=parseRiskArticle({...base,id:sid(2),stars:5,pick:{source:'owner'}});
+ assert.equal(a.stars,4);assert.ok(isShownStory(a));
+ assert.equal(parseRiskArticle({...base,id:sid(3),stars:4}).stars,null,'without a pick the table still decides');
+ assert.deepEqual(parseRiskFeed({state:'ready',date:'2026-11-27',articles:[a,b],quotes:[]}).articles.map(x=>x.stars),[4,5]);
+});
+
+const summaryOut=(content='Example Wireは、S&PがNvidiaの格付けを見直し対象にしたと報じました。発表を受けて半導体株が売られたと伝えています。')=>({publishable:true,cause:{kind:'unclear',ja:'',en:''},
+ ja:{title:'S&PがNvidiaを格付け見直しの対象に',source:'Example Wire',content,date:'2026年11月25日'},en:{title:'S&P puts Nvidia on watch',source:'Example Wire',content:'Example Wire reported that S&P put Nvidia on watch. Chip stocks were sold after the news.',date:'November 25, 2026'}});
+const modelOf=outputs=>{const bodies=[];return {bodies,fetcher:async(_u,init)=>{bodies.push(JSON.parse(init.body));return Response.json({status:'completed',usage:{input_tokens:10,output_tokens:10},output:[{content:[{type:'output_text',text:JSON.stringify(outputs[bodies.length-1])}]}]});}};};
+const withModel=async fn=>{const env={key:process.env.RESOLUTE_OPENAI_API_KEY,limit:process.env.RESOLUTE_AI_MONTHLY_LIMIT_USD};process.env.RESOLUTE_OPENAI_API_KEY='test-key';process.env.RESOLUTE_AI_MONTHLY_LIMIT_USD='2';
+ try{return await fn();}finally{for(const [k,v] of [['RESOLUTE_OPENAI_API_KEY',env.key],['RESOLUTE_AI_MONTHLY_LIMIT_USD',env.limit]])if(v===undefined)delete process.env[k];else process.env[k]=v;}};
+const budget={query:async()=>({rows:[{reserved_usd:0.1}]})};
+
+test('E: a summary with a number not in the source is retried once with the source-numbers instruction; banned wording checks stay',async()=>{
+ const candidate={id:sid(7),url:'https://news.example/7',title:SP_EN[0],body:body(SP_EN[0]),publishedAt:'2026-11-25T15:30:00.000Z',source:'report',tickers:['NVDA']};
+ await withModel(async()=>{
+  let m=modelOf([summaryOut('Nvidiaの株価は12%下落しました。'),summaryOut()]);const why={};
+  const article=await generate(candidate,budget,new Date('2026-11-25T23:20:00Z'),m.fetcher,{why,log:()=>{}});
+  assert.equal(m.bodies.length,2);assert.ok(m.bodies[1].instructions.endsWith(NUMBER_RETRY));assert.ok(article&&article.ja.content.includes('半導体株が売られた'));
+  m=modelOf([summaryOut('Nvidiaの株価は12%下落しました。'),summaryOut('株価は12%下落しました。')]);const why2={};
+  assert.equal(await generate(candidate,budget,new Date('2026-11-25T23:20:00Z'),m.fetcher,{why:why2,log:()=>{}}),null);assert.equal(why2.reason,'new-number');assert.equal(m.bodies.length,2);
+  m=modelOf([summaryOut('この下げは一時的です。'),summaryOut('この下げは一時的です。')]);const why3={};
+  assert.equal(await generate(candidate,budget,new Date('2026-11-25T23:20:00Z'),m.fetcher,{why:why3,log:()=>{}}),null);assert.equal(why3.reason,'banned-wording');
+ });
+});
+
+test('E/F: owner mail shows each summary under its title and why a summary was withheld, in plain Japanese',()=>{
+ const article=parseRiskArticle({id:sid(8),url:'https://news.example/8',publishedAt:'2026-11-25T13:00:00.000Z',stars:2,quoteId:null,
+  market:{index:'nas100',session:'2026-11-25',reading:{from:'2026-11-24',nas100:{changePercent:-1.2,multiple:1.5,same:70,total:100},sox:null,fearChange:3}},
+  judge:{source:'ai',reason:{ja:'金利の上昇で株式全体が下げた',en:'Rates rose.'}},...copy('米国株が金利上昇で下落','米国債利回りの上昇を受けて、主要な株価指数が下がりました。')});
+ const text=ownerShockMailText({day:'2026-11-26',articles:[article],quotes:[],fallback:false,withheld:[{title:SP_EN[1],reason:'not-publishable'},{title:'X',reason:'new-number'}]});
+ assert.ok(text.includes('1. 米国株が金利上昇で下落\n要約: 米国債利回りの上昇を受けて、主要な株価指数が下がりました。'));
+ assert.ok(text.includes(`・${SP_EN[1]}\n  ${WITHHELD_REASON_JA['not-publishable']}`));
+ assert.equal(WITHHELD_REASON_JA['not-publishable'],'要約なし：元の記事の本文が短く、事実だけで書けなかったため');
+ assert.ok(text.includes(WITHHELD_REASON_JA['new-number']));
+});
+
+test('owner pick: candidates are ranked by the AI (validated), summarised, and mailed with the owner page link',async()=>{
+ const run=new Date('2026-11-25T21:00:00Z');
+ const feed=feedOf([row('Fed signals slower rate cuts as inflation stays hot','2026-11-25T19:00:00.000Z',{lane:'market'}),row('Apple CEO Tim Cook to step down','2026-11-25T20:00:00.000Z',{tickers:['AAPL']}),
+  row('Sandisk shares slide 6% as memory prices fall','2026-11-25T18:00:00.000Z',{tickers:['SNDK']})]);
+ const input=rankInput({day:'2026-11-26',stories:editionIntake(feed,run,{moves:nov25}).stories});
+ assert.equal(validateRanking({market:[{key:'s1',stars:9,reasonJa:'x',reasonEn:'x'}],company:[]},input),null,'stars 1–5 only');
+ assert.equal(validateRanking({market:[{key:'s1',stars:3,reasonJa:'一時的な下げ',reasonEn:'x'}],company:[]},input),null,'banned wording');
+ assert.equal(validateRanking({market:[{key:'s1',stars:3,reasonJa:'金利が77%上昇',reasonEn:'x'}],company:[]},input),null,'no invented number');
+ const rank=async({stories})=>({by:'ai',attempts:1,ranking:{market:[{key:'s1',stars:4,reason:{ja:'利下げのペースが市場全体に響く',en:'Rate path moves the whole market.'}}],
+  company:[{key:`s${stories.findIndex(s=>s.title.startsWith('Apple'))+1}`,stars:4,reason:{ja:'巨大企業の経営トップの交代',en:'A mega-cap CEO exit.'}},{key:`s${stories.findIndex(s=>s.title.startsWith('Sandisk'))+1}`,stars:2,reason:{ja:'メモリー価格の下落',en:'Memory prices fell.'}}]}});
+ const summarize=async(c,_p,_n,_f,{why})=>{if(c.title.startsWith('Sandisk')){why.reason='not-publishable';return null;}return parseRiskArticle({id:c.id,url:c.url,publishedAt:c.publishedAt,market:{index:'nas100',session:null,reading:null},stars:null,quoteId:null,...copy(c.title,`${c.title}と報じられました。理由として記事は需要の変化を挙げています。`)});};
+ const built=await buildCandidates({feed,now:run,moves:nov25,rank,summarize});
+ assert.deepEqual(built.candidates.map(c=>[c.group,c.rank,c.suggested.stars]),[['market',1,4],['company',1,4]]);
+ assert.deepEqual(built.withheld,[{title:'Sandisk shares slide 6% as memory prices fall',reason:'not-publishable'}]);
+ const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,withheld:built.withheld});
+ for(const s of ['衝撃度チェッカー 2026-11-26 の候補','08:00までにこのページで選んでください: https://techphase.app/resolute/news/owner','■ 市場全体のニュース（1件）','■ 個別企業のニュース（1件）','おすすめの★: ★4','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+});
+
+test('owner pick: the RIZEL line is checked (AI) — banned wording rewritten once, else no line',async()=>{
+ assert.deepEqual(rizelIssues({ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'}),[]);
+ assert.ok(rizelIssues({ja:'今が買い時です。',en:'Now is a buying opportunity.'}).length);
+ assert.ok(rizelIssues({ja:'3つのルールを確かめます。',en:'Check 3 rules.'}).includes('number'));
+ assert.ok(RIZEL_INSTRUCTIONS.includes('買い時'));
+ const article=parseRiskArticle({id:sid(9),url:'https://news.example/9',publishedAt:'2026-11-25T13:00:00.000Z',stars:3,quoteId:null,market:{index:'nas100',session:null,reading:null},pick:{source:'auto'},...copy('米国株が下落')});
+ let calls=0;const call=async()=>(++calls===1?{ja:'今が買い時です。',en:'A buying opportunity.'}:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'});
+ assert.deepEqual(await writeRizelLine({article,stars:3,call}),{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'});
+ assert.equal(await writeRizelLine({article,stars:3,call:async()=>({ja:'一時的な下げです。',en:'Temporary.'})}),null);
+});
+
+function memoryPool(row){
+ const saved=[],updates=[];
+ return {saved,updates,query:async(sql,args)=>{
+  if(sql.includes('INSERT INTO resolute.shock_candidates')&&sql.includes('published_at'))return {rows:row?[row]:[]};
+  if(sql.includes('INSERT INTO resolute.risk_days')){saved.push(JSON.parse(args[2]));return {rows:[]};}
+  updates.push(sql);return {rows:[]};}};
+}
+test('owner pick: the owner\'s picks are published as answered — order, ★, own RIZEL line as written, own added story',async()=>{
+ const now=new Date('2026-11-26T23:20:00Z'),list=[cand(1,'market',1,3),cand(2,'company',1,4)];
+ const added={id:'o'+'a'.repeat(20),url:null,publisher:'Bloomberg',ja:{title:'オーナーが見つけたニュース',summary:'画像の内容をまとめました。'},en:{title:'Owner news',summary:'Summary.'},stars:3,addedAt:'2026-11-26T22:00:00.000Z'};
+ const pool=memoryPool({state:'ready',candidates:list,added:[added],picks:[{id:sid(2),stars:5,rizel:{ja:'様子見が一番です。',en:'Wait and see.'}},{id:added.id,stars:2},{id:sid(1),stars:1}],picked_at:'2026-11-26T22:30:00.000Z'});
+ const lines=[];const result=await publishPicks({pool,readFeed:async()=>{throw Error('not read');},now,line:async({article})=>{lines.push(article.ja.title);return {ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'};}});
+ assert.equal(result.source,'owner');assert.equal(result.count,3);
+ const day=pool.saved[0].map(parseRiskArticle);
+ assert.deepEqual(day.map(a=>[a.ja.title,a.stars,a.pick.source]),[['Story 2',5,'owner'],['オーナーが見つけたニュース',2,'owner'],['Story 1',1,'owner']]);
+ // The owner's own line is published exactly as written, with no wording check (owner, Nov 27).
+ assert.deepEqual(day[0].rizel,{ja:'様子見が一番です。',en:'Wait and see.',by:'owner'});
+ assert.deepEqual(lines,['オーナーが見つけたニュース','Story 1']);
+ assert.equal(day[1].ja.source,'Bloomberg');assert.ok(day[1].ja.content.endsWith(SUMMARY_QUESTION.ja));
+ // A second run publishes nothing.
+ assert.deepEqual(await publishPicks({pool:memoryPool(null),readFeed:async()=>feedOf([]),now}),{state:'already-published',day:'2026-11-27'});
+});
+test('owner pick: no answer — the service publishes its own three (two market-wide) from all the news, with the suggested ★',async()=>{
+ const now=new Date('2026-11-26T23:20:00Z'),pool=memoryPool({state:'ready',candidates:[cand(1,'company',1,4)],added:[],picks:null,picked_at:null});
+ const build=async({limits})=>{assert.deepEqual(limits,{market:3,company:3});return {candidates:[cand(1,'company',1,4),cand(2,'market',1,3),cand(3,'market',2,2),cand(4,'company',2,5)]};};
+ const result=await publishPicks({pool,readFeed:async()=>feedOf([]),now,build,line:async()=>null});
+ assert.equal(result.source,'auto');
+ assert.deepEqual(pool.saved[0].map(parseRiskArticle).map(a=>[a.ja.title,a.stars,a.pick.source]),[['Story 2',3,'auto'],['Story 1',4,'auto'],['Story 3',2,'auto']]);
+ // Picks saved after the 08:00 deadline are not the owner's answer.
+ const late=memoryPool({state:'ready',candidates:[cand(1,'company',1,4),cand(2,'market',1,3)],added:[],picks:[{id:sid(1),stars:1}],picked_at:'2026-11-26T23:05:00.000Z'});
+ assert.equal((await publishPicks({pool:late,readFeed:async()=>feedOf([]),now,build:async()=>{throw Error('x');},line:async()=>null})).source,'auto');
+});
+
+const req=(body,path='/internal/v1/risk/owner')=>new Request('https://api.example'+path,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+test('owner only: the pick API, the draft API and their checks refuse every other account',async()=>{
+ const pool={query:async()=>{throw Error('must not be read');}};
+ for(const user of ['user_member','user_other',null]){
+  const r=await riskRequest(req({action:'picks',day:'2026-11-27',baseRevision:0,picks:[{id:sid(1),stars:3}]}),user,async()=>({canReceiveNotifications:true}),pool);
+  assert.equal(r.status,403,String(user));
+ }
+ assert.equal(ownerDraftAccess('user_member'),403);assert.equal(ownerDraftAccess(null),401);
+ assert.equal(ownerDraftAccess(OWNER_ACCOUNT_ID),200);assert.equal(ownerDraftAccess(PRODUCTION_OWNER_ACCOUNT_ID),200);
+ // Both owner accounts reach the pick API; outside the answer window it is closed.
+ const closed=await saveOwnerPicks(pool,{day:'2026-11-27',baseRevision:0,picks:[]},new Date('2026-11-26T23:10:00Z'));assert.equal(closed.status,409);
+});
+test('owner pick: the answer is saved compare-and-set with added stories; the owner\'s own text is not wording-checked',async()=>{
+ const list=[cand(1,'market',1,3)],writes=[];
+ const pool={query:async(sql,args)=>{if(sql.startsWith('SELECT candidates'))return {rows:[{candidates:list,revision:2,published_at:null}]};writes.push({sql,args});return {rows:[{revision:3}]};}};
+ const added={id:'o'+'b'.repeat(20),url:'https://news.example/own',publisher:null,ja:{title:'自分で追加',summary:'今が買い時です。'},en:{title:'Own',summary:'Own.'},stars:4,addedAt:'2026-11-26T22:00:00.000Z'};
+ const r=await saveOwnerPicks(pool,{day:'2026-11-27',baseRevision:2,picks:[{id:added.id,stars:4,rizel:{ja:'買い時かもしれません。'}},{id:sid(1),stars:2}],added:[added]},new Date('2026-11-26T22:30:00Z'));
+ assert.equal(r.status,200);assert.deepEqual(await r.json(),{revision:3});
+ assert.match(writes[0].sql,/revision=\$5 AND published_at IS NULL/);assert.equal(JSON.parse(writes[0].args[1])[0].rizel.ja,'買い時かもしれません。');
+ await assert.rejects(saveOwnerPicks(pool,{day:'2026-11-27',baseRevision:2,picks:[{id:sid(9),stars:2}]},new Date('2026-11-26T22:30:00Z')));
+});
+test('owner pick: the member feed shows the story\'s own RIZEL line through the quotes list',async()=>{
+ const base={url:'https://news.example/x',publishedAt:'2026-11-26T15:00:00.000Z',market:{index:'nas100',session:null,reading:null},quoteId:null,...copy('米国株のニュース')};
+ const articles=[{...base,id:sid(1),stars:3,pick:{source:'owner'},rizel:{ja:'様子見が一番です。',en:'Wait.',by:'owner'}},{...base,id:sid(2),stars:5,pick:{source:'owner'},rizel:{ja:'今が買い時です。',en:'Buy now.',by:'ai'}}];
+ const pool={query:async sql=>sql.includes('risk_control')?{rows:[{enabled:true}]}:sql.includes('risk_days')?{rows:[{state:'ready',articles}]}:{rows:[]}};
+ const before=process.env.RESOLUTE_RISK_PUBLISH_APPROVED;process.env.RESOLUTE_RISK_PUBLISH_APPROVED='true';
+ try{const feed=await publicRiskFeed(pool,false,new Date('2026-11-26T23:30:00Z'));
+  assert.deepEqual(feed.articles.map(a=>a.stars),[3,5],'the owner\'s order');
+  assert.equal(feed.quotes.find(q=>q.id===feed.articles[0].quoteId).ja.title,'様子見が一番です。');
+  assert.equal(feed.articles[1].quoteId,null,'an AI line with banned wording is never shown');
+ }finally{if(before===undefined)delete process.env.RESOLUTE_RISK_PUBLISH_APPROVED;else process.env.RESOLUTE_RISK_PUBLISH_APPROVED=before;}
+});
+test('owner news: a draft from text keeps to its numbers and flags banned wording; pictures are optional but one input is required',()=>{
+ assert.throws(()=>parseDraftInput({images:[],text:''}));assert.throws(()=>parseDraftInput({text:'x',url:'http://insecure.example'}));
+ const input=parseDraftInput({text:'Nvidia said revenue rose 12% in the quarter.',url:'https://news.example/n'});
+ const ok=parseDraft('{"ja":{"title":"Nvidiaの売上高が12%増加","summary":"Nvidiaは四半期の売上高が12%増えたと発表しました。"},"en":{"title":"Nvidia revenue up 12%","summary":"Nvidia said revenue rose 12%."},"publisher":"Example"}',input);
+ assert.deepEqual(ok.issues,[]);assert.equal(ok.draft.publisher,'Example');
+ const bad=parseDraft('{"ja":{"title":"Nvidiaの売上高が15%増加","summary":"一時的な増加です。"},"en":{"title":"x","summary":"x"},"publisher":""}',input);
+ assert.ok(bad.issues.includes('new-number'));assert.ok(bad.issues.length>=2);
+ assert.equal(parseDraft('no json',input),null);
+});
+test('migration 030 (written, not applied by this change): the answer and the publish claim run against the real table',async()=>{
+ const boot=new PGlite();await boot.exec('CREATE DATABASE resolute');const dump=await boot.dumpDataDir();await boot.close();
+ const db=new PGlite({database:'resolute',loadDataDir:dump});
+ try{
+  for(const f of ['001_entitlements.sql','009_risk.sql','030_shock_candidates.sql'])await db.exec(await readFile(new URL('../db/resolute/'+f,import.meta.url),'utf8'));
+  const list=[cand(1,'market',1,3),cand(2,'company',1,4)];
+  await db.query("INSERT INTO resolute.shock_candidates(day,state,candidates) VALUES('2026-11-27','ready',$1::jsonb)",[JSON.stringify(list)]);
+  assert.equal((await saveOwnerPicks(db,{day:'2026-11-27',baseRevision:0,picks:[{id:sid(2),stars:5}]},new Date('2026-11-26T22:30:00Z'))).status,200);
+  assert.equal((await saveOwnerPicks(db,{day:'2026-11-27',baseRevision:0,picks:[{id:sid(1),stars:5}]},new Date('2026-11-26T22:31:00Z'))).status,409,'stale revision');
+  const result=await publishPicks({pool:db,readFeed:async()=>feedOf([]),now:new Date('2026-11-26T23:20:00Z'),line:async()=>null});
+  assert.deepEqual([result.state,result.source,result.count],['ready','owner',1]);
+  const day=(await db.query("SELECT articles FROM resolute.risk_days WHERE day='2026-11-27'")).rows[0].articles.map(parseRiskArticle);
+  assert.deepEqual(day.map(a=>[a.ja.title,a.stars]),[['Story 2',5]]);
+  assert.equal((await saveOwnerPicks(db,{day:'2026-11-27',baseRevision:1,picks:[{id:sid(1),stars:5}]},new Date('2026-11-26T22:59:00Z'))).status,409,'published: closed');
+ }finally{await db.close();}
+});

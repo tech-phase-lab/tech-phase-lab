@@ -107,3 +107,35 @@ export function titleSimilarity(a: string, b: string): number {
   return same / (x.size + y.size - same);
 }
 export const NEAR_DUPLICATE = 0.5;
+
+// Words that say nothing about WHICH event a headline reports (verbs of announcing, company-name suffixes, function words).
+const EVENT_STOP = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'onto', 'its', 'their', 'his', 'her', 'has', 'have', 'had', 'was', 'were', 'are', 'is', 'be', 'been',
+  'on', 'of', 'to', 'in', 'at', 'by', 'as', 'an', 'it', 'that', 'this', 'after', 'amid', 'over', 'says', 'said', 'say', 'puts', 'put', 'places', 'placed', 'place', 'sets', 'set',
+  'adds', 'added', 'moves', 'moved', 'reports', 'reported', 'report', 'announces', 'announced', 'shares', 'share', 'stock', 'stocks', 'inc', 'corp', 'corporation', 'co', 'ltd', 'plc',
+  'holdings', 'group', 'global', 'company', 'companies', 'new', 'news', 'update', 'breaking', '株', '株価', '発表', '報道', '指定']);
+/** The distinctive words of a headline for event matching: Latin words (2+ letters, "S&P" kept whole) and runs of kanji or
+ * katakana (hiragana particles split them: 「S&PがNvidiaのAA格付けを…」 → s&p, nvidia, aa, 格付, …). Numbers are ignored. */
+export function eventWords(title: string): Set<string> {
+  const t = typeof title === 'string' ? title.normalize('NFKC').toLowerCase() : '';
+  const latin = t.match(/[a-z][a-z&.'’-]*[a-z]/g) ?? [];
+  const cjk = t.match(/[一-鿿ァ-ヿー]{2,}/g) ?? [];
+  return new Set([...latin.map(w => w.replace(/['’]s$/, '')), ...cjk].filter(w => w.length >= 2 && !EVENT_STOP.has(w)));
+}
+/** The companies a story is about: the rostered companies its headline names and its listed tickers. */
+const issuers = (s: { title: string; tickers?: readonly string[] }) => new Set([...namedCompanies(s.title), ...(s.tickers ?? [])]);
+/** One event, one story (owner, Nov 27: two S&P CreditWatch-on-Nvidia headlines were both shown). True when two stories report
+ * the same event: they share a company (or neither names one and both have the same scope) and most of the shorter headline's
+ * distinctive words are in the other (at least EVENT_MIN_SHARED words and EVENT_OVERLAP of the shorter one). Wording differences
+ * ("puts … on" / "places … on", "S&P" / "S&P Global", 「に指定」) do not matter; titleSimilarity's whole-headline Jaccard missed it. */
+export const EVENT_OVERLAP = 0.6, EVENT_MIN_SHARED = 3;
+export function sameEvent(a: { title: string; tickers?: readonly string[] }, b: { title: string; tickers?: readonly string[] }): boolean {
+  if (titleSimilarity(a.title, b.title) >= NEAR_DUPLICATE) return true;
+  const ia = issuers(a), ib = issuers(b);
+  const shareIssuer = [...ia].some(x => ib.has(x));
+  if (!shareIssuer && (ia.size || ib.size || storyScope(a.title) !== storyScope(b.title))) return false;
+  const x = eventWords(a.title), y = eventWords(b.title);
+  if (!x.size || !y.size) return false;
+  let shared = 0;
+  for (const w of x) if (y.has(w)) shared++;
+  return shared >= EVENT_MIN_SHARED && shared / Math.min(x.size, y.size) >= EVENT_OVERLAP;
+}

@@ -28,7 +28,14 @@ export type RiskCause={kind:'one-off'|'lasting';ja:string;en:string};
  * moves) and picks the stories that moved the market, with a short reason. It never sets the stars. source 'rule' = every AI
  * attempt failed and the selection's own order was used. */
 export type RiskJudge={source:'ai'|'rule';reason:{ja:string;en:string}};
-export type RiskArticle={id:string;url:string;publishedAt:string;market:RiskMarket;stars:number|null;ja:RiskCopy;en:RiskCopy;quoteId:string|null;cause?:RiskCause|null;judge?:RiskJudge;impact?:ImpactHints};
+/** Who chose a published story and its ★ (owner, Nov 27): 'owner' = the owner ticked it and set the ★; 'auto' = the owner did not
+ * answer by the deadline and the service published its own top picks with the suggested ★. A picked story keeps that ★ (the
+ * measured move is shown next to it as information) and is shown even when its session has no measured numbers. */
+export type RiskPick={source:'owner'|'auto'};
+/** The story's RIZEL line (owner pick, Nov 27): by 'ai' = written for that story by the AI and checked with the RIZEL wording rules
+ * (risk-copy-check.ts); by 'owner' = the owner's own text, published as written. */
+export type RiskRizel={ja:string;en:string;by:'ai'|'owner'};
+export type RiskArticle={id:string;url:string;publishedAt:string;market:RiskMarket;stars:number|null;ja:RiskCopy;en:RiskCopy;quoteId:string|null;cause?:RiskCause|null;judge?:RiskJudge;impact?:ImpactHints;pick?:RiskPick;rizel?:RiskRizel};
 export type RizelQuote={id:string;ja:{title:string;reasons:string[]};en:{title:string;reasons:string[]};minStars:number;maxStars:number;approved:boolean};
 export type RiskFeed={state:'ready'|'failed'|'stopped'|'preparing';date:string|null;articles:RiskArticle[];quotes:RizelQuote[]};
 /** Lawyer-reviewed disclaimer (Nov 2026, section 6). EN follows the Terms of Service, Article 2(2). */
@@ -96,7 +103,7 @@ export const marketStars=(m:RiskMarket)=>{
 export const byStars=<T extends {stars:number|null}>(list:readonly T[])=>[...list].sort((a,b)=>(b.stars??0)-(a.stars??0));
 /** Shown to members (owner, Nov 26): only measured stories with stars. Waiting stories, single-stock news without a measured stock
  * and moves against the headline are not shown; fewer than three is fine, none is the quiet day. */
-export const isShownStory=(a:{stars:number|null;market:RiskMarket})=>a.stars!==null&&a.market.reading!==null;
+export const isShownStory=(a:{stars:number|null;market:RiskMarket;pick?:RiskPick})=>a.stars!==null&&(a.market.reading!==null||!!a.pick);
 /** The short, plain explanation behind the small 「i」 next to the stars (owner, Nov 25), above the exact levels (starCriteria). */
 export function starSummary(locale:'ja'|'en'){const {nas100,sox}=RISK_POLICY.indices;return locale==='ja'
  ?`★は、ニュースのあとの${nas100.ja}と${sox.ja}の動きで決めます。終値の動きと取引中のいちばん大きな動きのうち大きいほうで決め、2つの指標のうち★が多いほうをとります。恐怖指数が20%以上上がった日は★を1つ足します。どのニュースを載せるかは、毎朝AIが市場のまとめ記事とニュースを読んで選びます。`
@@ -167,11 +174,14 @@ export function formatReading(m:RiskMarket,locale:'ja'|'en'):string[]{return rea
 const CAUSE_TEXT=/^[^<>\u0000\n]{1,40}$/;
 export function parseRiskCause(v:unknown):RiskCause|null{if(v===null||v===undefined)return null;const x=v as RiskCause;if(!x||typeof x!=='object'||!['one-off','lasting'].includes(x.kind)||typeof x.ja!=='string'||typeof x.en!=='string'||!CAUSE_TEXT.test(x.ja.trim())||!CAUSE_TEXT.test(x.en.trim()))throw Error('INVALID_CAUSE');return {kind:x.kind,ja:x.ja.trim(),en:x.en.trim()};}
 export function riskDate(now=new Date()){return new Date(now.getTime()+9*3600000).toISOString().slice(0,10);}
-/** True during the weekday morning run hour (JST). */
+/** True during the weekday morning run hour (JST): the automatic selection (rizel-daily-review.mjs). */
 export function isDailyRunHour(now=new Date()){const jst=new Date(now.getTime()+9*3600000);return ![0,6].includes(jst.getUTCDay())&&jst.getUTCHours()===RISK_POLICY.runHourJst;}
+/** True during the publish run hour (JST) of the owner pick: every day (owner, Nov 27: weekends and U.S. holidays included). */
+export function isPublishRunHour(now=new Date()){return new Date(now.getTime()+9*3600000).getUTCHours()===RISK_POLICY.runHourJst;}
 /** Start of a day's morning run (ms). */
 export const dailyRunStart=(day:string)=>Date.parse(`${day}T${String(RISK_POLICY.runHourJst).padStart(2,'0')}:00:00+09:00`);
-export function latestRiskDate(now=new Date()){const d=new Date(now.getTime()+9*3600000);if(d.getUTCHours()<RISK_POLICY.runHourJst)d.setUTCDate(d.getUTCDate()-1);while([0,6].includes(d.getUTCDay()))d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10);}
+/** The latest day whose morning run has started (every day, owner Nov 27; risk-store falls back to Friday on a weekend day with no row). */
+export function latestRiskDate(now=new Date()){const d=new Date(now.getTime()+9*3600000);if(d.getUTCHours()<RISK_POLICY.runHourJst)d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10);}
 export function parseRiskCopy(v:unknown):RiskCopy{if(!v||typeof v!=='object')throw Error('INVALID_COPY');const x=v as Record<string,unknown>;for(const k of ['title','source','content','date'])if(typeof x[k]!=='string'||!(x[k] as string).trim()||[...x[k] as string].length>700||/[<>\u0000]/.test(x[k] as string))throw Error('INVALID_COPY');return {title:x.title as string,source:x.source as string,content:x.content as string,date:x.date as string};}
 const validSession=(v:unknown)=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v+'T00:00:00Z'))&&new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v;
 const count=(v:unknown)=>Number.isInteger(v)&&(v as number)>=0&&(v as number)<=500;
@@ -204,8 +214,12 @@ function parseMarketBody(x:RiskMarket):RiskMarket{
  * A RIZEL line chosen for other stars is dropped. */
 export function parseRiskArticle(v:unknown):RiskArticle{if(!v||typeof v!=='object')throw Error('INVALID_ARTICLE');const x=v as RiskArticle;if(!/^[a-f0-9]{64}$/.test(x.id)||!Number.isFinite(Date.parse(x.publishedAt)))throw Error('INVALID_ARTICLE');const u=new URL(x.url);if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048)throw Error('INVALID_URL');
  const market=parseRiskMarket(x.market);if(x.stars!==null&&(!Number.isInteger(x.stars)||x.stars<1||x.stars>5))throw Error('INVALID_STARS');
- const cause=parseRiskCause(x.cause),judge=parseRiskJudge(x.judge),impact=parseImpactHints(x.impact),stars=marketStars(market);
- if(x.quoteId!==null&&!/^[a-z0-9_-]{1,60}$/.test(x.quoteId))throw Error('INVALID_QUOTE');return {id:x.id,url:x.url,publishedAt:x.publishedAt,market,stars,ja:parseRiskCopy(x.ja),en:parseRiskCopy(x.en),quoteId:stars!==null&&stars===x.stars?x.quoteId:null,...(cause?{cause}:{}),...(judge?{judge}:{}),...(impact?{impact}:{})};}
+ const cause=parseRiskCause(x.cause),judge=parseRiskJudge(x.judge),impact=parseImpactHints(x.impact),pick=parseRiskPick(x.pick),rizel=parseRiskRizel(x.rizel),stars=pick?x.stars:marketStars(market);
+ if(pick&&x.stars===null)throw Error('INVALID_STARS');
+ if(x.quoteId!==null&&!/^[a-z0-9_-]{1,60}$/.test(x.quoteId))throw Error('INVALID_QUOTE');return {id:x.id,url:x.url,publishedAt:x.publishedAt,market,stars,ja:parseRiskCopy(x.ja),en:parseRiskCopy(x.en),quoteId:stars!==null&&stars===x.stars?x.quoteId:null,...(cause?{cause}:{}),...(judge?{judge}:{}),...(impact?{impact}:{}),...(pick?{pick}:{}),...(rizel?{rizel}:{})};}
+export function parseRiskPick(v:unknown):RiskPick|null{if(v===null||v===undefined)return null;const x=v as RiskPick;if(!x||typeof x!=='object'||!['owner','auto'].includes(x.source))throw Error('INVALID_PICK');return {source:x.source};}
+const RIZEL_TEXT=/^[^<>\u0000\n]{1,160}$/;
+export function parseRiskRizel(v:unknown):RiskRizel|null{if(v===null||v===undefined)return null;const x=v as RiskRizel;if(!x||typeof x!=='object'||typeof x.ja!=='string'||typeof x.en!=='string'||!RIZEL_TEXT.test(x.ja.trim())||!RIZEL_TEXT.test(x.en.trim())||!['ai','owner'].includes(x.by))throw Error('INVALID_RIZEL');return {ja:x.ja.trim(),en:x.en.trim(),by:x.by};}
 const REASON_TEXT=/^[^<>\u0000]{1,160}$/;
 export function parseRiskJudge(v:unknown):RiskJudge|null{if(v===null||v===undefined)return null;const x=v as RiskJudge;
  if(!x||typeof x!=='object'||!['ai','rule'].includes(x.source)||!x.reason||typeof x.reason.ja!=='string'||typeof x.reason.en!=='string'||!REASON_TEXT.test(x.reason.ja)||!REASON_TEXT.test(x.reason.en))throw Error('INVALID_JUDGE');
@@ -214,4 +228,4 @@ export function parseRiskJudge(v:unknown):RiskJudge|null{if(v===null||v===undefi
 export const isLegacyRiskArticle=(v:unknown)=>!!v&&typeof v==='object'&&!('market' in v);
 export function parseQuote(v:unknown):RizelQuote{const x=v as RizelQuote;if(!x||!/^[a-z0-9_-]{1,60}$/.test(x.id)||typeof x.approved!=='boolean'||!Number.isInteger(x.minStars)||!Number.isInteger(x.maxStars)||x.minStars<1||x.maxStars>5||x.minStars>x.maxStars)throw Error('INVALID_QUOTE');for(const locale of ['ja','en'] as const){const c=x[locale];if(!c||typeof c.title!=='string'||!c.title.trim()||c.title.length>200||!Array.isArray(c.reasons)||c.reasons.length>5||!c.reasons.every(t=>typeof t==='string'&&t.length<=400))throw Error('INVALID_QUOTE');}return x;}
 /** shownOnly (default): the member feed keeps only measured stories with stars (isShownStory). The owner's own view passes false. */
-export function parseRiskFeed(v:unknown,{shownOnly=true}:{shownOnly?:boolean}={}):RiskFeed{const x=v as RiskFeed;if(!x||!['ready','failed','stopped','preparing'].includes(x.state)||!(x.date===null||/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&Number.isFinite(Date.parse(x.date+'T00:00:00Z')))||!Array.isArray(x.articles)||x.articles.length>3||!Array.isArray(x.quotes)||x.quotes.length>100)throw Error('INVALID_FEED');const articles=x.articles.map(parseRiskArticle).filter(a=>!shownOnly||isShownStory(a)),sorted=shownOnly?byStars(articles):articles,quotes=x.quotes.map(parseQuote).filter(q=>q.approved);if(new Set(articles.map(a=>a.id)).size!==articles.length||x.state!=='ready'&&articles.length)throw Error('INVALID_FEED');return{state:x.state,date:x.date,articles:sorted,quotes};}
+export function parseRiskFeed(v:unknown,{shownOnly=true}:{shownOnly?:boolean}={}):RiskFeed{const x=v as RiskFeed;if(!x||!['ready','failed','stopped','preparing'].includes(x.state)||!(x.date===null||/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&Number.isFinite(Date.parse(x.date+'T00:00:00Z')))||!Array.isArray(x.articles)||x.articles.length>3||!Array.isArray(x.quotes)||x.quotes.length>100)throw Error('INVALID_FEED');const articles=x.articles.map(parseRiskArticle).filter(a=>!shownOnly||isShownStory(a)),sorted=shownOnly&&!articles.some(a=>a.pick)?byStars(articles):articles,quotes=x.quotes.map(parseQuote).filter(q=>q.approved);if(new Set(articles.map(a=>a.id)).size!==articles.length||x.state!=='ready'&&articles.length)throw Error('INVALID_FEED');return{state:x.state,date:x.date,articles:sorted,quotes};}

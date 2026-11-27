@@ -1,14 +1,14 @@
 import {createReportReader,withReportReader,REPORT_CHECKS,reportMaxPages} from './rizel-report-source.mjs';
 import {pathToFileURL} from 'node:url';
 import {createNewsReader} from './rizel-news-source.mjs';
-import {selectDailyCandidates,safeErrorCode} from './rizel-daily-review.mjs';
-import {FEED_CHECKS,windowHours} from './risk-job.mjs';
+import {selectDailyCandidates,safeErrorCode,readStart} from './rizel-daily-review.mjs';
+import {FEED_CHECKS} from './risk-job.mjs';
 
 /** GET-only diagnostic. Never claim a day, open a DB pool or call a model.
  * No article content, URLs, credentials or owner data appear in the report.
  */
 export async function checkIntake({readFeed,now=new Date()}){
- const {selected,diagnostics}=selectDailyCandidates(await readFeed({since:now.getTime()-windowHours(now)*3600000}),now);
+ const {selected,diagnostics}=selectDailyCandidates(await readFeed({since:readStart(now)}),now);
  return {event:'RIZEL_INTAKE_CHECK',state:selected.length?'candidates-available':'no-candidates',
   checkedAt:now.toISOString(),historicalReplay:false,candidateCount:selected.length,
   diagnostics,aiCalls:0,writes:0,publication:'withheld'};

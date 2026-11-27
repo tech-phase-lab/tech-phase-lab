@@ -14,6 +14,7 @@ const seven={ok:true,enabled:true,items:[1,2,3,4,5,6,7].map(n=>item(n,`2026-10-1
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
 const recorder=saved=>({query:async(sql,args)=>{if(sql.includes('INSERT INTO resolute.risk_days'))saved.push({state:args[1],articles:JSON.parse(args[2])});return {rows:[]};}});
 
+// These fixtures span the old 30-hour window; the edition window (owner, Nov 27) is tested in resolute-shock-owner-pick.test.mjs.
 test('every tried story judged not-publishable is a quiet day: saved as ready with no stories, exit 0',async()=>{
  const db=await setup(),saved=[];let calls=0;const publishPool=recorder(saved);
  try{
@@ -58,9 +59,9 @@ test('known-move ordering looks at every story in the window, not only the newes
  // Friday's two came out before Friday's open (08:00 and 07:00 New York), so Friday's close is theirs. Weekend stories wait for Monday.
  const friday=[{...item('f1','2026-11-20T13:00:00Z'),title:'Nasdaq slides as AI semiconductor risk warning spreads f1'},{...item('f2','2026-11-20T12:00:00Z'),title:'Chip stocks drop on AI semiconductor risk warning f2'}];
  const feed={ok:true,enabled:true,items:[...weekend,...friday]};
- const first=selectDailyCandidates(feed,monday);
+ const first=selectDailyCandidates(feed,monday,{edition:null});
  assert.ok(first.sessions.includes('2026-11-20'),'Friday stories are read for their close');
- const ordered=selectDailyCandidates(feed,monday,{moves:{'2026-11-20':{sox:{previousDate:'2026-11-19',changePercent:-2.1,typicalPercent:1,up:5,down:35,total:40},nas100:{previousDate:'2026-11-19',changePercent:-1,typicalPercent:1,up:30,down:70,total:100}}}});
+ const ordered=selectDailyCandidates(feed,monday,{edition:null,moves:{'2026-11-20':{sox:{previousDate:'2026-11-19',changePercent:-2.1,typicalPercent:1,up:5,down:35,total:40},nas100:{previousDate:'2026-11-19',changePercent:-1,typicalPercent:1,up:30,down:70,total:100}}}});
  // One move, one story: on the owner's table (Nov 26) Friday is ★2 on both indices (TP半導体40 −2.1%, TP大型株100 −1%), so the
  // market-wide story keeps it (market-wide news first) and the chip-sector one waits in reserve.
  assert.deepEqual(ordered.selected.slice(0,1).map(c=>c.title.split(' ').pop()),['f1']);
@@ -68,7 +69,7 @@ test('known-move ordering looks at every story in the window, not only the newes
  assert.equal(ordered.diagnostics.knownMove,2);
  const db=await setup();const asked=[];
  try{
-  await prepareDailyReview({enabled:true,now:monday,selectionPool:db,readFeed:async()=>feed,readMoves:async s=>{asked.push(...s);return {};},
+  await prepareDailyReview({enabled:true,now:monday,edition:null,selectionPool:db,readFeed:async()=>feed,readMoves:async s=>{asked.push(...s);return {};},
    summarize:async(c,pool,at,fetcher,{why})=>{why.reason='not-publishable';return null;}});
   assert.ok(asked.includes('2026-11-20'),'the thermometer is asked for Friday\'s close');
  }finally{await db.close();}
