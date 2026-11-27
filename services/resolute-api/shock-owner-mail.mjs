@@ -31,7 +31,7 @@ export function ownerShockMailText({day,articles,quotes,fallback,withheld=[]}){
   if(a.pick)lines.push(a.pick.source==='owner'?'選んだ人: オーナー（★もオーナーが決めました）':'選んだ人: AI（期限までに返事がなかったため、おすすめの★で公開しました）');
   if(a.judge)lines.push(`${a.pick?'AIのおすすめの理由':'選んだ理由'}: ${a.judge.reason.ja}`);
   lines.push('使った数字:');for(const l of readingParts(a.market,'ja'))lines.push(`  ${l.text}`);
-  lines.push(`リゼルの一言: ${q?q.ja.title:a.rizel?.ja??'なし'}`,'');
+  lines.push(`リゼルの一言: ${q?q.ja.title:a.rizel?.ja??'なし'}`,...(q?q.ja.reasons:a.rizel?.reasons?.ja??[]).slice(0,3).map(t=>`  ・${t}`),'');
  });
  // Stories the AI picked whose summary was withheld (not shown to members), each with the reason in plain Japanese.
  const skipped=withheld.filter(w=>w&&typeof w.title==='string'&&w.title.trim()).slice(0,10);
