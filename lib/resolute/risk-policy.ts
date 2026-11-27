@@ -75,6 +75,15 @@ export const RISK_POLICY = {
   /** Up to this many stories a day; the next candidates are tried only when one fails the checks (bounded AI cost).
    * Nov 24: five attempts were too few once the whole window is read (opinion pieces and quiet stories are withheld by the
    * model); twelve cost about ¥0.7 each. RESOLUTE_RIZEL_DAILY_STORIES / RESOLUTE_RIZEL_DAILY_ATTEMPTS change them up to the caps. */
+  /** The owner's daily pick (owner, Nov 27). Published every day, weekends and U.S. holidays included. At candidateRunJst
+   * (candidateRunEarningsJst when a watched company reported after the previous U.S. close, so its results can be candidates) the
+   * service builds the day's candidates (`market` market-wide and `company` single-company stories, ranked by how much the news
+   * shakes the market or the stock, each with a summary, the measured numbers when there are any and a suggested ★ with a reason)
+   * and mails them to the owner. The owner's picks (stories, their ★ and order, plus up to maxAdded stories the owner adds) are
+   * accepted until answerUntilJst; at publishRunJst exactly those are published. Without an answer the service picks autoStories
+   * itself from all the news up to the publish run (at least autoMinMarket market-wide when there are), with the suggested ★.
+   * Times are JST, HH:MM. */
+  ownerPicks: { candidateRunJst: '06:00', candidateRunEarningsJst: '06:30', answerUntilJst: '08:00', publishRunJst: '08:20', market: 7, company: 7, autoStories: 3, autoMinMarket: 2, maxStories: 3, maxAdded: 3 },
   dailyStories: 3,
   dailyAttempts: 12,
   maxDailyStories: 5,

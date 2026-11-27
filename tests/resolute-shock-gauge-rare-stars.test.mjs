@@ -26,11 +26,12 @@ const row=(title,minutesBefore,{tickers=[],lane='company',sentiment='negative'}=
  publishedAt:new Date(runAt.getTime()-minutesBefore*60000).toISOString(),publisher:'Example Wire',tickers,lane,sentiment});
 const feedOf=items=>({ok:true,enabled:false,items:[],officialUpdates:[],reportUpdates:items,reportCoverage:{configured:true,marketLane:true}});
 
+// These fixtures span the old 30-hour window; the edition window (owner, Nov 27) is tested in resolute-shock-owner-pick.test.mjs.
 test('today\'s three stories under the new rules: the two bare premarket recaps are dropped, Cipher Digital is single-company news without stars',()=>{
  for(const t of [TODAY.pre56,TODAY.pre3])for(const title of [t.en,t.ja]){assert.equal(storyScope(title),'company',title);assert.equal(isBarePriceMove(title),true,title);}
  for(const title of [TODAY.cipher.en,TODAY.cipher.ja]){assert.equal(storyScope(title),'company',title);assert.equal(isBarePriceMove(title),false,title);}
  const feed=feedOf([row(TODAY.pre56.en,240,{tickers:TODAY.pre56.tickers}),row(TODAY.pre3.en,300,{tickers:TODAY.pre3.tickers}),row(TODAY.cipher.en,120,{tickers:TODAY.cipher.tickers})]);
- const {selected,diagnostics}=selectDailyCandidates(feed,runAt,{moves});
+ const {selected,diagnostics}=selectDailyCandidates(feed,runAt,{moves,edition:null});
  assert.deepEqual(selected.map(c=>c.title),[TODAY.cipher.en]);
  assert.equal(diagnostics.barePriceMove,2);
  const preview=previewSelection({selected,reserve:[],diagnostics},moves);
@@ -50,7 +51,7 @@ test('a day with market-wide and chip-sector news: one move, one story — marke
   row('Stocks slip as investors weigh hotter inflation data',800,{lane:'market'}),
   row('3 AI Stocks to Buy After the Sell-Off',60,{tickers:['NVDA'],sentiment:'positive'}),
  ];
- const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves});
+ const {selected,reserve,diagnostics}=selectDailyCandidates(feedOf(items),runAt,{moves,edition:null});
  // Nov 24: TP大型株100 −1.5% (2.0×, 47/99) moved at least the ★2 line, so a market-wide story keeps Nov 24 (owner: market-wide
  // news first) and shows the stronger index's ★5 (TP半導体40 −8.5%: 8% or more). One move, one story.
  assert.deepEqual(selected.map(c=>c.title),['Nasdaq falls as Treasury yields climb ahead of Fed minutes','Nvidia shares slide as investors question AI spending',TODAY.cipher.en]);

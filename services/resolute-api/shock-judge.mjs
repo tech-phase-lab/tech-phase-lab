@@ -45,7 +45,7 @@ export function judgePool(candidates,moves){
 }
 export function judgeInput({day,pool,wraps}){
  return {day,stories:pool.map(({candidate:c,market:m},i)=>{const r=m.reading,d=decidingMeasure(m),down=!!d&&strongestMove(d,r.fearChange).changePercent<0;
-  return {key:`s${i+1}`,title:c.title,publishedAt:c.publishedAt,scope:storyScope(c.title),session:m.session,
+  return {key:`s${i+1}`,title:c.title,publishedAt:c.publishedAt,scope:storyScope(c.title),session:m.session,textChars:typeof c.body==='string'?c.body.length:0,
    tpLargeCap100:indexFacts(r.nas100,r.fearChange),tpSemiconductor40:indexFacts(r.sox,r.fearChange),
    ...(down&&r.fearChange!==null?{fearIndexChangePercent:r.fearChange}:{}),
    ...(m.company&&r.company?{company:{ticker:m.company.ticker,closePercent:r.company.changePercent,closeTimesNormal:r.company.multiple,...(r.company.intraday!==undefined?{intradayExtremePercent:r.company.intraday}:{})}}:{}),
@@ -56,6 +56,7 @@ export const JUDGE_INSTRUCTIONS='You judge the U.S. market day for a Japanese in
  +'Pick up to six stories, best first; market-wide stories (rates, economic data, policy, index-wide moves) come first when they explain the move, then the chip sector, then single companies. '
  +'Use the numbers as evidence: a large intraday fall that recovered by the close is still a shock; a quiet day is a quiet day whatever the headline says. '
  +'Never credit a story for a move that happened before it was published. If no story explains the day, still pick the most relevant ones. '
+ +'Each picked story is summarised from its own text only, so prefer a story with enough text (textChars about 400 or more) over a thinner one about the same move. '
  +'reason: one short plain sentence in Japanese (at most 50 characters) and English (at most 20 words) saying why, with no prediction, no advice, no evaluation of future impact, and no number that is not in the input. No markdown.';
 export const JUDGE_SCHEMA={type:'object',additionalProperties:false,required:['picks'],properties:{picks:{type:'array',maxItems:JUDGE_MAX_PICKS,items:{type:'object',additionalProperties:false,required:['key','reasonJa','reasonEn'],
  properties:{key:{type:'string'},reasonJa:{type:'string'},reasonEn:{type:'string'}}}}}};
