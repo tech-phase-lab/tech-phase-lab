@@ -163,6 +163,17 @@ export function loadSnapshotDailyBars(ticker: string, size: number, spend: () =>
   return barsEntry(ticker, "1day", size, { fetch: () => { spend(); return true; }, tier: "warm" });
 }
 
+/** 銘柄検索「今日の注目」's live quotes during the regular session (lib/research/search-focus-server.ts): the shared one-minute quote copy
+ * members' reads use (a copy read this minute costs nothing), at most `maxFetch` symbols asked of the provider, in batches of 10 on the
+ * "warm" tier; `spend` gets the credits really asked (given back when the allocator refused the batch). */
+export function loadSnapshotQuotes(tickers: string[], maxFetch: number, spend: (credits: number) => void): Promise<Record<string, Result<MarketQuote | null>>> {
+  return sharedReader.readMany<MarketQuote>({ ...quoteSpec(Date.now()), swr: false }, tickers, async group => {
+    spend(group.length);
+    try { return await fetchQuotes(group, "warm"); }
+    catch (error) { if (isBudgetError(error)) spend(-group.length); throw error; }
+  }, { chunk: 10, maxFetch });
+}
+
 /** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); shared 30 minutes (one credit a read). */
 export async function loadDailyCloses(ticker: string): Promise<Bar[]> {
   try { return await bars(ticker, "1day", 1300, { slotMs: 30 * 60_000 }); }

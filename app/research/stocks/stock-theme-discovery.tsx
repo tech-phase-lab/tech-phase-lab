@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import StockLogo from "../watchlist/stock-logo";
 import type { Language } from "@/lib/research/data";
 import { SEARCH_THEMES, THEME_NAMES } from "@/lib/research/search-themes";
-import { closeLabel } from "@/lib/research/search-focus";
+import { focusLabel } from "@/lib/research/search-focus";
 import type { FocusView } from "@/lib/research/search-focus-server";
 import styles from "./stock-theme-discovery.module.css";
 
@@ -21,7 +21,7 @@ function Row({ ticker, name, change, onSelect }: { ticker: string; name: string;
 
 /** 「テーマから探す」 (owner, Nov 26; sheet 01_銘柄検索_最初の画面): one panel of a fixed height. On the left 「すべて」 and the 17 themes, the only
  * part that scrolls, its lower edge darkened while more lie below; on the right the chosen theme's stocks, or for 「すべて」 「今日の注目」:
- * six stocks of the last close from the shared snapshot (lib/research/search-focus-server.ts). Nothing on this screen grows the page. */
+ * six stocks of the last close (live during the U.S. regular session, with its time) from the shared snapshot (lib/research/search-focus-server.ts). Nothing on this screen grows the page. */
 export default function StockThemeDiscovery({ lang, onSelect, focus }: { lang: Language; onSelect: (ticker: string) => void; focus?: FocusView | null }) {
   const ja = lang === "ja";
   const [id, setId] = useState(ALL);
@@ -57,7 +57,7 @@ export default function StockThemeDiscovery({ lang, onSelect, focus }: { lang: L
       <div className={styles.stocks}>
         {theme ? <ul className={styles.rows}>{theme.stocks.map(([ticker, name]) => <Row key={ticker} ticker={ticker} name={name} change={changes[ticker]} onSelect={onSelect} />)}</ul>
           : <>
-            <div className={styles.focusHead}><h3>{ja ? "今日の注目" : "In focus today"}</h3>{focus?.session && <span>{closeLabel(focus.session, lang)}</span>}</div>
+            <div className={styles.focusHead}><h3>{ja ? "今日の注目" : "In focus today"}</h3>{focus?.session && <span>{focusLabel(focus, lang)}</span>}</div>
             {focus && focus.session && !focus.rows.length ? <p className={styles.quiet}>{ja ? "今日は大きな動きはありませんでした" : "No big moves today"}</p>
               : <ul className={`${styles.rows} ${styles.focusRows}`}>{(focus?.rows ?? []).map(row => <Row key={row.ticker} ticker={row.ticker} name={THEME_NAMES[row.ticker] ?? row.name} change={row.change} onSelect={onSelect} />)}</ul>}
           </>}
