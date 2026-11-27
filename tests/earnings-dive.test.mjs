@@ -85,9 +85,9 @@ test("numbers first: until the summary exists the second mark says 準備中 and
   assert.match(t, /売上高 542\.29/);
 });
 
-test("when the figures could not be read the screen says 確認中 and keeps its layout; a free viewer sees the sign-in link", () => {
+test("when the figures could not be read the screen says 準備中 and keeps its layout; a free viewer sees the sign-in link", () => {
   const checking = text(render({ live: null }));
-  assert.match(checking, /数字 確認中/); assert.match(checking, /まとめ 確認中/); assert.match(checking, /決算の数字を確認しています/);
+  assert.match(checking, /準備中/); assert.match(checking, /まとめ 確認中/); assert.doesNotMatch(checking, /数字 確認中|決算の数字を確認しています/);
   const locked = text(render({ live: live({ numbers, summary, summaryAt: null, failed: false }), unlocked: false }));
   assert.match(locked, /ログイン・プランを確認/);
   assert.doesNotMatch(locked, /542\.29/);
