@@ -147,6 +147,8 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const tone = toneOf(quote?.percentChange ?? null), arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
   const interval = shownRange === "ytd" ? "daily" : periodInterval(shownRange);
   const intraday = shownRange !== "ytd" && isIntradayPeriod(shownRange);
+  // Owner, Nov 27: when the map is part of the company introduction, no separate 「連関マップ」 heading or pointer sentence.
+  const mapInCompany = !!(profile?.network && profile.introduction);
   const periodBases = bases?.ticker === ticker ? bases : null;
   const tag = quote ? { price: quote.price, text: plain(quote.price), tone } : undefined;
   return <ResearchToolShell lang={lang} setLang={setLang} title={`${title}${bare ? "" : ` ${ticker}`}`} description="" showTools={false} showHeading={false}>
@@ -154,7 +156,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
       <button type="button" className={styles.back} onClick={() => window.history.length > 1 ? router.back() : router.push(origin.href)}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>{origin[lang]}</button>
       {!bare && <nav className={styles.tabs} aria-label={t("ページ内の移動", "On this page")}>
-        {([["price", "株価", "Price"], ["company", "企業情報", "Company"], ["map", "連関マップ", "Relationship map"]] as const).map(([id, a, b]) =>
+        {([["price", "株価", "Price"], ["company", "企業情報", "Company"], ["map", "連関マップ", "Relationship map"]] as const).filter(([id]) => id !== "map" || !mapInCompany).map(([id, a, b]) =>
           <a key={id} href={`#${id}`} aria-current={tab === id} onClick={() => setTab(id)}>{t(a, b)}</a>)}
       </nav>}
       <div className={styles.head}>{!bare && <Tile ticker={ticker} size="detail" />}<div className={styles.who}><h1>{title}</h1></div>
@@ -189,10 +191,10 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <h2>{t("企業情報", "Company")}</h2>
           {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.introduction ? <CompanyIntroductionPanel introduction={profile.introduction} network={profile.network} lang={lang} /> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の企業情報は準備中です。", "Company information is not available yet.")}</p>}
         </section>
-        <section id="map" className={styles.section}>
+        {!mapInCompany && <section id="map" className={styles.section}>
           <h2>{t("連関マップ", "Relationship map")}</h2>
-          {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.network && !profile.introduction ? <CompanyNetworkMap key={profile.network.root} graph={profile.network} lang={lang} /> : profile.network ? <p className={styles.error} style={{ padding: 0 }}>{t("連関マップは上の企業情報の中にあります。", "The relationship map is part of the company information above.")}</p> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の連関マップは準備中です。", "A relationship map is not available yet.")}</p>}
-        </section></>}
+          {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.network && !profile.introduction ? <CompanyNetworkMap key={profile.network.root} graph={profile.network} lang={lang} /> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の連関マップは準備中です。", "A relationship map is not available yet.")}</p>}
+        </section>}</>}
       <p className={styles.credit}>{t("提供：Twelve Data", "Data: Twelve Data")}</p>
       {alertOpen && <AlertSheet ticker={ticker} currency={quote?.currency ?? "USD"} ja={ja} onClose={() => setAlertOpen(false)} />}
     </div>

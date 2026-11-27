@@ -186,7 +186,7 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
         {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { if (list.current) list.current.style.minHeight = ""; setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
       <details className={styles.sources} ref={sources}>
-        <summary>{ja ? "ニュース取得リスト" : "Stocks covered"}<span aria-hidden="true">▾</span></summary>
+        <summary>{ja ? "対象銘柄" : "Stocks covered"}<span aria-hidden="true">▾</span></summary>
         <div className={styles.sourcesPanel}>
           <h4>{ja ? `監視${providers.length}銘柄（ニュース・決算）` : `${providers.length} watched stocks (news & earnings)`}</h4>
           <ul>{providers.map(p => <li key={p.ticker}><b>{p.ticker}</b><span>{shortName(p.name)}</span></li>)}</ul>
@@ -195,7 +195,7 @@ export default function FlashPage({ lang, onReady, initial = null }: { lang: Lan
     </div>
     {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time access to all updates"}</Link></p>}
     <div ref={list} className={styles.panel}>
-      {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
+      {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回の内容です" : " Showing the previous update")}</p>}
       {/* Company headlines still on the way: one quiet line, so the page never looks like earnings only (owner, Nov 15). */}
       {wireSettled && !wireLoaded && view === "all" && <p className={timeline.fine} role="status">{ja ? "ニュースを読み込んでいます" : "Loading news…"}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}

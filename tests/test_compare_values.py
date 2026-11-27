@@ -61,6 +61,19 @@ class Figures(unittest.TestCase):
         self.assertEqual(record_['equity'], [{'end': date(2025, 12, 31).toordinal(), 'filed': date(2026, 2, 20).toordinal(), 'value': 900.0}])
 
 
+class Statements(unittest.TestCase):
+    def test_a_share_count_too_old_to_use_asks_for_the_provider_statements(self):
+        # Berkshire Hathaway (BRK-B): the SEC's company facts end their cover counts in 2011 and hold no diluted weighted count.
+        today = date(2026, 11, 27).toordinal()
+        fresh = {'revenue': [{'end': today - 60, 'filed': today - 20, 'value': 1.0}], 'income': [], 'currency': 'USD',
+                 'shares': [{'end': today - 60, 'value': 1.0, 'kind': 'cover'}]}
+        self.assertFalse(cv.needs_statements(fresh, today))
+        stale = {**fresh, 'shares': [{'end': date(2011, 4, 29).toordinal(), 'value': 941481.0, 'kind': 'cover'}]}
+        self.assertTrue(cv.needs_statements(stale, today))
+        edge = {**fresh, 'shares': [{'end': today - vc.MAX_SHARE_AGE, 'value': 1.0, 'kind': 'cover'}]}
+        self.assertFalse(cv.needs_statements(edge, today))
+
+
 class Calculation(unittest.TestCase):
     def setUp(self):
         self.days = trading_days('2021-01-04', 1300)

@@ -195,9 +195,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"
-      : "Original test publications: recent 7 days, up to 30 items."}{data.originalPreviewWindow.omittedInScan > 0 && (lang === "ja"
-        ? ` 今回の取得範囲でほか${data.originalPreviewWindow.omittedInScan}件は省略。`
-        : ` ${data.originalPreviewWindow.omittedInScan} more items omitted from this scan.`)}{data.originalPreviewWindow.scanLimited && (lang === "ja"
+      : "Original test publications: recent 7 days, up to 30 items."}{data.originalPreviewWindow.scanLimited && (lang === "ja"
           ? " 取得範囲に上限があり、全件表示ではありません。"
           : " Acquisition scan is limited; this is not a complete history.")}</p>}
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
@@ -223,7 +221,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}>{!generalOnly && <h2 id="general-news-title">{lang === "ja" ? "注目トピック" : "Top Topics"}</h2>}<button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
-    {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "注目トピックの配信は準備中です。" : "Top Topics are coming soon."}</p> : <>
+    {error ? <p role="status">{lang === "ja" ? "ニュースを読み込めません" : "News can't be loaded"}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "注目トピックの配信は準備中です。" : "Top Topics are coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>
       {!data.items.length && <p>{lang === "ja" ? "現在、公開中の記事はありません。" : "No articles are currently published."}</p>}
       <div className={styles.items}>{visibleNews.map(item => <article key={item.id}><details className={styles.story}>

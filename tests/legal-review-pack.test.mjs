@@ -203,8 +203,9 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
     "翌朝のひとこと、衝撃度チェッカー、RIZELの一言及びアラート通知（終値アラートを含みます。）(以下「通知機能」)は、購入日から1年間使えます。"]) assert.ok(termsJa.includes(phrase), phrase);
   assert.equal(termsJa, source("terms.ja.md")); assert.equal(privacyJa, source("privacy.ja.md")); assert.equal(commerceJa, source("commerce.ja.md"));
   assert.equal(termsEn, source("terms.en.md")); assert.equal(privacyEn, source("privacy.en.md")); assert.equal(commerceEn, source("commerce.en.md"));
-  // 「●日」 stays until the backup retention is confirmed (RESOLUTE's protection chain keeps objects without an expiry today).
-  assert.equal((privacyJa.match(/●日/g) ?? []).length, 2); assert.equal((privacyEn.match(/● days/g) ?? []).length, 2);
+  // Owner, Nov 27: backups keep a deleted item up to 30 days; 「●日」 stays only in the account-deletion line (section 5, 保管期間).
+  assert.equal((privacyJa.match(/●日/g) ?? []).length, 1); assert.equal((privacyEn.match(/● days/g) ?? []).length, 1);
+  assert.ok(privacyJa.includes("最長30日間") && privacyEn.includes("up to 30 days"));
   // No 運営責任者 row. Operator wording (owner, Nov 19), the same for Tech Phase Research and RESOLUTE: seller リゼル / RIZEL,
   // the name and the phone number by email on request, RESOLUTE's address without "same as".
   assert.ok(!commerceJa.includes("運営責任者"));

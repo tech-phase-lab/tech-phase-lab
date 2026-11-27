@@ -149,6 +149,21 @@ test("a statistics copy the runtime cache has lost is read back from the monitor
   assert.equal(state.calls.filter(c => c === "statistics:ASML").length, 1);
 }));
 
+// Production, Nov 27: BRK-B against ORCL served in kix1 showed 「株価 —」; the job had stored BRK-B's series in sfo1 (a regional runtime cache).
+test("a price series the runtime cache does not hold (another region) is read back from the monitor; no provider call for the user", () => withClock(realNow(), async clock => {
+  const state = provider(clock), kept = new Map();
+  const { mod, cache } = await loadStore(kept);
+  await mod.warmSeries("BRK-B", clock.now());
+  assert.ok(kept.has("compare-series|BRK-B"), "the monitor keeps the series");
+  assert.ok(state.calls.some(c => c.startsWith("time_series:BRK.B")), "asked under the provider's symbol");
+  cache.clear(); state.calls.length = 0; clock.advance(10 * 3600_000);
+  const got = await mod.userSeries("BRK-B");
+  assert.ok(got && got.adjust === "splits"); assert.deepEqual(state.calls, []);
+  assert.equal(await mod.hasSeriesToday("BRK-B", Date.parse(got.retrievedAt)), true, "a kept copy from today is not bought again");
+  clock.advance(3.1 * 86_400_000); cache.clear();
+  assert.equal(await mod.userSeries("BRK-B"), null, "older than three days: no copy");
+}));
+
 test("the statements (200 credits) a runtime cache has lost are read back from the monitor; the job does not buy them again", () => withClock(NOW, async clock => {
   const state = provider(clock), kept = new Map();
   const { mod, cache } = await loadStore(kept);

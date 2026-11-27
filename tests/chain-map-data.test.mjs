@@ -140,7 +140,7 @@ test('the map shows suppliers first, no range buttons, a card per company and ev
     assert.ok(!html.includes('直接の関係') && !html.includes('2段先まで'));
     // Owner, Nov 25: no per-card 「出典・引用・発表日」; one closed 「出典」 after the footer note lists every relation's and far link's source.
     assert.equal((html.match(/<details/g) ?? []).length, 1);
-    assert.ok(html.indexOf('data-chain-sources') > html.indexOf(lang === 'ja' ? '投資判断を勧めるものではありません' : 'Not investment advice'));
+    assert.ok(html.indexOf('data-chain-sources') > html.indexOf(lang === 'ja' ? '公式資料で確認できた関係のみ' : 'Only relationships confirmed in official materials'));
     // Owner, Nov 25: the same document and quote is one block; its companies are listed under the quote once each.
     const blocks = chainSourceBlocks(data, lang);
     assert.equal((html.slice(html.indexOf('data-chain-sources')).match(/<li[ >]/g) ?? []).length, blocks.length);

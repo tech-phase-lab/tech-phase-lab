@@ -12,7 +12,7 @@ import { decodeValue, encodeValue } from "./twelve-copies-wire.ts";
  * first read; these copies are what is left when it has lost one. Any failure here is a miss and never an error. */
 
 /** The kinds kept here (scripts/research/twelve_copies.py KINDS; a test keeps them equal). */
-export const DURABLE_KINDS = ["compare-statistics", "compare-statements", "md-facts-stats-v2", "md-facts-next-earnings-v2", "portfolio-splits"] as const;
+export const DURABLE_KINDS = ["compare-statistics", "compare-statements", "compare-series", "md-facts-stats-v2", "md-facts-next-earnings-v2", "portfolio-splits"] as const;
 export type DurableKind = (typeof DURABLE_KINDS)[number];
 const isKind = (name: string): name is DurableKind => (DURABLE_KINDS as readonly string[]).includes(name);
 
