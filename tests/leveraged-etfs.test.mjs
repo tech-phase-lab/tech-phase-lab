@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { LEVERAGED_ETFS, LEVERAGED_GIVE_UP, LEVERAGED_PER_RUN, LEVERAGED_START, LEVERAGED_SYMBOLS, leveragedAsOf, leveragedCreditsPerDay, leveragedDue, leveragedRows, nextLeveragedView, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
+import { LEVERAGED_ADV_PER_RUN, LEVERAGED_ETFS, LEVERAGED_GIVE_UP, LEVERAGED_MIN_ADV, LEVERAGED_SORTS, averageDailyVolume, leveragedAdvDue, LEVERAGED_PER_RUN, LEVERAGED_START, LEVERAGED_SYMBOLS, leveragedAsOf, leveragedCreditsPerDay, leveragedDue, leveragedRows, nextLeveragedView, sortLeveraged, leveragedPrice, leveragedPercent } from "../lib/research/leveraged-etfs.ts";
 import { providers } from "../lib/research/intake.ts";
 import { STOCK_LOGOS } from "../lib/research/stock-logos.ts";
 import { existsSync } from "node:fs";
@@ -186,4 +186,51 @@ test("the snapshot written once a minute is found by every instance: the newest 
       assert.ok(got && at - got.value.at <= 125_000, `minute ${minute} +${offset}: ${got && (at - got.value.at)}`);
     }
   }
+});
+
+test("owner, Nov 27 15:30Z (market open): a row whose fund or stock quote is from an older session is left out; a fund lagging its stock keeps its figures below the fresh rows", () => {
+  const now = Date.parse("2026-11-27T15:30:00Z"), sec = iso => String(Date.parse(iso) / 1000);
+  // Twelve Data /quote answers as stored in the snapshot (parseQuote), shaped as the route shapes them.
+  const twelve = (symbol, datetime, close, percent_change, volume, lastTrade) => parseQuote({ symbol, datetime, close: String(close), percent_change: String(percent_change), volume: String(volume),
+    timestamp: sec(`${datetime}T14:30:00Z`), last_quote_at: sec(lastTrade), is_market_open: true }, symbol);
+  const raw = {
+    COHX: twelve("COHX", "2026-11-25", 41.2, -0.12, 9100, "2026-11-25T20:59:00Z"), COHR: twelve("COHR", "2026-11-27", 98.4, 10.6, 2_400_000, "2026-11-27T15:29:40Z"),
+    CRWL: twelve("CRWL", "2026-11-27", 23.5, 1.62, 1687, "2026-11-27T14:41:00Z"), CRWD: twelve("CRWD", "2026-11-27", 512, 1.21, 900_000, "2026-11-27T15:29:50Z"),
+    NVDL: twelve("NVDL", "2026-11-27", 80, 3.1, 4_000_000, "2026-11-27T15:29:55Z"), NVDA: twelve("NVDA", "2026-11-27", 190, 1.5, 60_000_000, "2026-11-27T15:29:58Z"),
+    // The stock's quote is the stale side: its change is not shown either.
+    SMU: twelve("SMU", "2026-11-27", 10, 4, 50_000, "2026-11-27T15:20:00Z"), SMR: twelve("SMR", "2026-11-26", 30, 2, 10, "2026-11-26T20:00:00Z"),
+  };
+  assert.equal(raw.COHX.session, "2026-11-25"); assert.equal(raw.COHX.lastTradeAt, "2026-11-25T20:59:00.000Z");
+  const shaped = Object.fromEntries(Object.entries(raw).map(([s, q]) => [s, { price: q.price, percentChange: q.percentChange, volume: q.volume, extended: null, session: q.session, lastTradeAt: q.lastTradeAt }]));
+  const etfs = (at, adv) => leveragedRows(shaped, at, adv).map(row => row.etf);
+  const rows = leveragedRows(shaped, now), by = Object.fromEntries(rows.map(row => [row.etf, row]));
+  assert.deepEqual(rows.map(row => row.etf), ["NVDL", "CRWL"], "COHX (11/25 quote) and SMU (its stock's quote is 11/26) are left out, never shown with an old day's change");
+  assert.deepEqual([by.CRWL.stale, by.CRWL.percentChange, by.CRWL.underlyingChange, by.CRWL.volume], ["lag", 1.62, 1.21, 1687], "real figures kept, never a made-up 2x");
+  assert.equal(by.CRWL.lastTradeAt, "2026-11-27T14:41:00.000Z"); assert.equal(by.CRWL.underlyingLastTradeAt, "2026-11-27T15:29:50.000Z");
+  assert.deepEqual([by.NVDL.stale, by.NVDL.session, by.NVDL.underlyingSession], [null, "2026-11-27", "2026-11-27"]);
+  for (const sort of LEVERAGED_SORTS) assert.deepEqual(sortLeveraged(rows, sort).map(row => row.etf), ["NVDL", "CRWL"], `${sort}: the lagging fund below the fresh one`);
+  // Before the open the sides are not compared; on a closed Saturday the side older than the other is still left out; no lag outside the session.
+  assert.deepEqual(etfs(Date.parse("2026-11-27T12:00:00Z")), ["NVDL", "CRWL", "SMU", "COHX"]);
+  assert.deepEqual(etfs(Date.parse("2026-11-28T15:00:00Z")), ["NVDL", "CRWL"]);
+  assert.equal(leveragedRows(shaped, Date.parse("2026-11-28T15:00:00Z")).find(row => row.etf === "CRWL").stale, null);
+  // Thin funds (20-session average volume under 100,000 shares) are left out; an unmeasured one stays.
+  assert.equal(LEVERAGED_MIN_ADV, 100_000);
+  assert.deepEqual(etfs(now, { CRWL: 3_200, NVDL: 4_100_000 }), ["NVDL"]);
+  assert.deepEqual(etfs(now, { CRWL: null }), ["NVDL", "CRWL"], "too few bars: unknown, not thin");
+});
+
+test("average daily volume: the last 20 settled sessions' daily bars; too few bars is unknown; each fund measured once per settled session", () => {
+  const bars = Array.from({ length: 25 }, (_, i) => ({ at: `2026-10-${String(i + 1).padStart(2, "0")}`, volume: i < 5 ? 1_000_000 : 50_000 }));
+  assert.equal(averageDailyVolume(bars, "2026-10-25"), 50_000, "the 20 newest bars only");
+  assert.equal(averageDailyVolume([...bars, { at: "2026-10-26", volume: 9_000_000 }], "2026-10-25"), 50_000, "today's unfinished bar is not counted");
+  assert.equal(averageDailyVolume(bars.slice(0, 9), "2026-10-25"), null);
+  const all = LEVERAGED_ETFS.map(item => item.etf), now = Date.parse("2026-11-27T22:00:00Z");
+  assert.deepEqual(leveragedAdvDue({}, "2026-11-27", now), all.slice(0, LEVERAGED_ADV_PER_RUN));
+  const done = Object.fromEntries(all.map(etf => [etf, { adv: 1, session: "2026-11-27", tried: now }]));
+  assert.deepEqual(leveragedAdvDue(done, "2026-11-27", now), []);
+  assert.deepEqual(leveragedAdvDue({ ...done, MUU: { adv: 1, session: "2026-11-26", tried: now - 60_000 } }, "2026-11-27", now), [], "a failed read waits 20 minutes");
+  assert.deepEqual(leveragedAdvDue({ ...done, MUU: { adv: 1, session: "2026-11-26", tried: now - 21 * 60_000 } }, "2026-11-27", now), ["MUU"]);
+  const data = read("lib/research/market-data.ts");
+  assert.match(data, /call\("time_series", \{ symbol: etf, interval: "1day", outputsize: "25" \}, "warm"\)/, "the minute job's warm tier, never a member's request");
+  assert.doesNotMatch(read("app/api/research/market/leveraged/route.ts"), /time_series/);
 });

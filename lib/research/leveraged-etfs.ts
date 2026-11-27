@@ -1,3 +1,4 @@
+import { marketPhase } from "./us-market-session.ts";
 import { displayClock, formatDisplay, zoneLabel } from "./display-time.ts";
 /** マーケット「レバETF」tab (owner, Nov 25): long 2x / 3x ETFs on the stocks Tech Phase follows. Every ticker below was checked against the
  * provider on Nov 25, 2026 (Twelve Data's own fund name says "2X Long <underlying>" / "Bull 2X" / "UltraPro"); one that the provider cannot serve is
@@ -28,30 +29,75 @@ export const LEVERAGED_ETFS: readonly LeveragedEtf[] = [
 export const LEVERAGED_SYMBOLS: readonly string[] = [...new Set([...LEVERAGED_ETFS.map(item => item.etf), ...LEVERAGED_ETFS.map(item => item.underlying)])];
 
 export type LeveragedQuote = { price: number; percentChange: number | null; volume: number | null;
-  extended?: { price: number; percentChange: number | null; session: "pre" | "post"; live?: boolean } | null };
+  extended?: { price: number; percentChange: number | null; session: "pre" | "post"; live?: boolean } | null;
+  /** The provider's session date (YYYY-MM-DD, its `datetime`) and the last trade's time (ISO, its `last_quote_at`), when known. */
+  session?: string | null; lastTradeAt?: string | null };
+/** "lag": during the regular session the fund has not traded for LEVERAGED_LAG_MS while its stock traded later (owner, Nov 27: CRWL, 1,687
+ * shares); the figures are real and stay, the row goes below the fresh ones. */
+export type LeveragedStale = "lag" | null;
 export type LeveragedRow = LeveragedEtf & {
   price: number; percentChange: number | null; volume: number | null; underlyingChange: number | null;
   /** The pre-market / after-hours price, only while that session is the one under way. */
   extended: { price: number; percentChange: number; session: "pre" | "post" } | null;
+  session: string | null; lastTradeAt: string | null; underlyingSession: string | null; underlyingLastTradeAt: string | null;
+  stale: LeveragedStale;
 };
-/** One row per fund the provider answered for. The stock's own day change comes from its own quote (never derived from the fund's). */
-export function leveragedRows(quotes: Record<string, LeveragedQuote | undefined>): LeveragedRow[] {
+export const LEVERAGED_LAG_MS = 30 * 60_000;
+
+/** Thinly traded funds are left out of the list (owner, Nov 27: COHX, CRWL). A fund is shown only while its average daily volume over the last
+ * LEVERAGED_ADV_DAYS settled sessions is at least LEVERAGED_MIN_ADV shares. The site's minute job reads each fund's daily bars once per settled
+ * session (lib/research/market-data.ts refreshLeveragedSnapshot; ~45 credits a day, never per member).
+ * Why 100,000: at 100k shares a day a fund trades a few hundred shares a minute on average, so its last trade keeps up with its stock. On
+ * Nov 27 (10:53 ET, early-close day) the list split at that line: MUU … CONL from 173k to 26M shares already, then MSTU 96k, VRTL 63k and
+ * eighteen funds under 50k down to LLYX's 426 — CRWL (1,687) and COHX (11,902) among them, the two rows that looked wrong that morning.
+ * A fund not measured yet (a new deployment's first minutes) is shown; one the provider gave too few bars for is too (unknown, not thin). */
+export const LEVERAGED_MIN_ADV = 100_000, LEVERAGED_ADV_DAYS = 20;
+/** The average volume of the last LEVERAGED_ADV_DAYS daily bars dated on or before `session` (oldest-first bars, as parseBars returns them).
+ * Null with fewer than half that many bars that carry a volume. */
+export function averageDailyVolume(bars: readonly { at: string; volume: number | null }[], session: string): number | null {
+  const volumes = bars.filter(bar => bar.at.slice(0, 10) <= session && bar.volume !== null && Number.isFinite(bar.volume) && bar.volume >= 0)
+    .slice(-LEVERAGED_ADV_DAYS).map(bar => bar.volume!);
+  return volumes.length * 2 < LEVERAGED_ADV_DAYS ? null : volumes.reduce((sum, value) => sum + value, 0) / volumes.length;
+}
+/** `adv`: each fund's measured average (null: unknown). */
+export const leveragedThin = (adv: Record<string, number | null | undefined>, etf: string) => { const value = adv[etf]; return typeof value === "number" && value < LEVERAGED_MIN_ADV; };
+
+const easternDate = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
+const day = (value: string | null | undefined) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+const time = (value: string | null | undefined) => { const at = typeof value === "string" ? Date.parse(value) : NaN; return Number.isFinite(at) ? at : null; };
+/** One row per fund the provider answered for that trades enough (LEVERAGED_MIN_ADV). The stock's own day change comes from its own quote (never
+ * derived from the fund's). A row whose fund or stock quote is for an older session than the current one (from the regular open to the end of
+ * after-hours: today, New York) or than the other side's is left out (owner, Nov 27: COHX dated 11/25 beside COHR's 11/27 had shown 11/25's
+ * change as today's). Before the open the two sides are not compared (a pre-market print may move one of them first). */
+export function leveragedRows(quotes: Record<string, LeveragedQuote | undefined>, now = Date.now(), adv: Record<string, number | null | undefined> = {}): LeveragedRow[] {
+  const phase = marketPhase(new Date(now)), today = phase === "regular" || phase === "post" ? easternDate.format(now) : null;
   return LEVERAGED_ETFS.flatMap(item => {
-    const q = quotes[item.etf];
-    if (!q || !Number.isFinite(q.price) || q.price <= 0) return [];
+    const q = quotes[item.etf], u = quotes[item.underlying];
+    if (!q || !Number.isFinite(q.price) || q.price <= 0 || leveragedThin(adv, item.etf)) return [];
+    const session = day(q.session), underlyingSession = day(u?.session);
+    const old = (own: string | null, other: string | null) => own !== null && ((today !== null && own < today) || (phase !== "pre" && other !== null && own < other));
+    if (old(session, underlyingSession) || old(underlyingSession, session)) return [];
     const ext = q.extended;
-    return [{ ...item, price: q.price, percentChange: q.percentChange ?? null, volume: q.volume ?? null, underlyingChange: quotes[item.underlying]?.percentChange ?? null,
-      extended: ext && ext.live && Number.isFinite(ext.price) && ext.price > 0 && ext.percentChange !== null && Number.isFinite(ext.percentChange) ? { price: ext.price, percentChange: ext.percentChange, session: ext.session } : null }];
+    const last = time(q.lastTradeAt), stockLast = time(u?.lastTradeAt);
+    const lag = phase === "regular" && last !== null && stockLast !== null && now - last > LEVERAGED_LAG_MS && stockLast > last;
+    return [{ ...item, price: q.price, percentChange: q.percentChange ?? null, volume: q.volume ?? null, underlyingChange: u?.percentChange ?? null,
+      extended: ext && ext.live && Number.isFinite(ext.price) && ext.price > 0 && ext.percentChange !== null && Number.isFinite(ext.percentChange) ? { price: ext.price, percentChange: ext.percentChange, session: ext.session } : null,
+      session, lastTradeAt: last === null ? null : new Date(last).toISOString(), underlyingSession, underlyingLastTradeAt: stockLast === null ? null : new Date(stockLast).toISOString(),
+      stale: lag ? "lag" as const : null }];
   });
 }
 
 export type LeveragedSort = "gainers" | "losers" | "volume";
 export const LEVERAGED_SORTS: readonly LeveragedSort[] = ["gainers", "losers", "volume"];
-/** 上昇率 (largest rise first), 下落率 (largest fall first), 出来高 (most shares first). A row without the figure goes last; ties keep the list's order. */
+/** 上昇率 (largest rise first), 下落率 (largest fall first), 出来高 (most shares first). A row without the figure goes last; ties keep the list's order.
+ * Whatever the order, fresh rows come first, then those whose fund lags its stock ("lag"). */
 export function sortLeveraged(rows: readonly LeveragedRow[], sort: LeveragedSort): LeveragedRow[] {
   const value = (row: LeveragedRow) => sort === "volume" ? row.volume : row.percentChange;
   const sign = sort === "losers" ? 1 : -1;
+  const rank = (row: LeveragedRow) => row.stale === "lag" ? 1 : 0;
   return rows.map((row, index) => ({ row, index })).sort((a, b) => {
+    const tier = rank(a.row) - rank(b.row);
+    if (tier) return tier;
     const x = value(a.row), y = value(b.row);
     if (x === null || !Number.isFinite(x)) return y === null || !Number.isFinite(y) ? a.index - b.index : 1;
     if (y === null || !Number.isFinite(y)) return -1;
@@ -66,7 +112,16 @@ export const leveragedPercent = (value: number, digits = 2) => `${value > 0 ? "+
 /** The shared snapshot (owner, Nov 25: "all rows at once from the first load"). The site's minute job (app/api/research/compare/warm, run
  * every minute by the Railway monitor) refreshes it in the background through the allocator; a member's request only reads it and never asks the
  * provider. Every symbol keeps its own time, so a refused or failed batch leaves that symbol's last good quote in place. */
-export type LeveragedSnapshot<Q> = { at: number; quotes: Record<string, { value: Q; at: number }> };
+export type LeveragedSnapshot<Q> = { at: number; quotes: Record<string, { value: Q; at: number }>;
+  /** Each fund's average daily volume (LEVERAGED_ADV_DAYS sessions; null: too few bars), the settled session it was measured for and the last
+   * attempt. Absent in snapshots written before Nov 27. */
+  liquidity?: Record<string, { adv: number | null; session: string | null; tried: number }> };
+/** Funds whose average volume is due: never measured, or measured for an older settled session and not tried in the last 20 minutes;
+ * at most LEVERAGED_ADV_PER_RUN a minute. */
+export const LEVERAGED_ADV_PER_RUN = 12;
+export function leveragedAdvDue(liquidity: LeveragedSnapshot<unknown>["liquidity"] = {}, session: string, now: number, funds: readonly string[] = LEVERAGED_ETFS.map(item => item.etf)): string[] {
+  return funds.filter(etf => { const entry = liquidity[etf]; return !entry || (entry.session !== session && now - entry.tried >= 20 * 60_000); }).slice(0, LEVERAGED_ADV_PER_RUN);
+}
 /** A symbol is read again once this old: every ~2 minutes while U.S. stocks trade (04:00–20:00 New York, pre-market and after-hours included),
  * every 15 minutes otherwise. At most LEVERAGED_PER_RUN symbols a minute (four 12-symbol batches), oldest first, so the 89 symbols spread over two
  * minutes (~45 credits a minute) instead of 89 in one. A symbol never read yet is always read at once (the first fill is the whole list). */

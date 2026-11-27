@@ -2,7 +2,8 @@ import "server-only";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
 import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, fastRefresh, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
-import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
+import { LEVERAGED_ETFS, averageDailyVolume, leveragedAdvDue, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
+import { settledSession } from "./search-focus.ts";
 import { BOARD_SNAPSHOT_PERIOD, boardDue, boardJobKey } from "./market-snapshot.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
 import { cachedStatistics } from "./twelve-store";
@@ -342,13 +343,23 @@ export function refreshLeveragedSnapshot(now = Date.now()): Promise<{ spent: num
         for (const symbol of group) { const value = values.get(symbol); if (value) { quotes[symbol] = { value, at }; read++; } }
       } catch (error) { failed += group.length; if (isBudgetError(error)) spent -= group.length; }
     }));
-    if (Object.keys(quotes).length) await sharedReader.save(LEVERAGED_SNAPSHOT_SPEC, "all", { value: { at: Date.now(), quotes }, at: Date.now() });
+    // Thin funds (owner, Nov 27): each fund's daily bars once per settled session, on the warm tier, at most LEVERAGED_ADV_PER_RUN a minute.
+    const liquidity: NonNullable<LevSnapshot["liquidity"]> = { ...(old?.liquidity ?? {}) }, settled = settledSession(now);
+    await Promise.all(leveragedAdvDue(liquidity, settled, now).map(async etf => {
+      const before = liquidity[etf];
+      try {
+        spent++;
+        const bars = parseBars(await call("time_series", { symbol: etf, interval: "1day", outputsize: "25" }, "warm"));
+        liquidity[etf] = bars.length ? { adv: averageDailyVolume(bars, settled), session: settled, tried: now } : { adv: before?.adv ?? null, session: before?.session ?? null, tried: now };
+      } catch (error) { if (isBudgetError(error)) spent--; liquidity[etf] = { adv: before?.adv ?? null, session: before?.session ?? null, tried: now }; }
+    }));
+    if (Object.keys(quotes).length) await sharedReader.save(LEVERAGED_SNAPSHOT_SPEC, "all", { value: { at: Date.now(), quotes, liquidity }, at: Date.now() });
     return { spent, read, failed };
   })().finally(() => { leveragedRun = null; });
 }
 /** The list's quotes from the snapshot, and the time of its oldest fund quote. No snapshot at all (a new deployment before the minute job has
  * run once): this request fills it once (shared by concurrent requests), so the very first visitor still gets the whole list. */
-export async function loadLeveragedSnapshot(): Promise<{ quotes: Record<string, MarketQuote>; at: number | null; filled: boolean }> {
+export async function loadLeveragedSnapshot(): Promise<{ quotes: Record<string, MarketQuote>; at: number | null; filled: boolean; adv: Record<string, number | null> }> {
   let snapshot = await currentLeveragedSnapshot(), filled = false;
   if (!snapshot) { await refreshLeveragedSnapshot(); snapshot = await currentLeveragedSnapshot(); filled = true; }
   const quotes: Record<string, MarketQuote> = {};
@@ -357,7 +368,8 @@ export async function loadLeveragedSnapshot(): Promise<{ quotes: Record<string, 
     quotes[symbol] = entry.value;
     if (LEVERAGED_FUNDS.has(symbol)) at = at === null ? entry.at : Math.min(at, entry.at);
   }
-  return { quotes, at, filled };
+  const adv = Object.fromEntries(Object.entries(snapshot?.liquidity ?? {}).map(([etf, entry]) => [etf, entry.adv]));
+  return { quotes, at, filled, adv };
 }
 
 /** マーケット: every tab's cards and each tab's first chart in ONE shared snapshot (lib/research/market-snapshot.ts; owner, Nov 25: a tab not
