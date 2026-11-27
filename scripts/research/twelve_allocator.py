@@ -14,6 +14,9 @@ background job took ~455 credits at the start of every minute, so members' pages
 background tiers now yield to members: their ceiling is lowered by a member reserve, at least MEMBER_RESERVE_MIN and otherwise
 MEMBER_RESERVE_FACTOR times the most credits members asked for (granted or refused) in any of the last MEMBER_WINDOW minutes. A minute
 in which members were refused anything leaves the jobs nothing at all for the next MEMBER_WINDOW minutes beyond what members asked.
+The 15-second refresh of a viewed stock (tier 'fast', 450; production, Nov 27: refused on 4 of 5 calls under its old ceiling of 200 during
+the session) costs one credit per distinct symbol and 15-second slot whatever the number of viewers; it is capped at FAST_PER_MINUTE credits
+a minute, and the jobs also leave room for the most it asked for in the window (at most FAST_PER_MINUTE).
 Once a minute a summary line (credits granted and refused by tier and caller, the reserve) is printed: the measurement by caller."""
 import json
 import os
@@ -23,12 +26,13 @@ import time
 import urllib.parse
 import urllib.request
 
-CEILING = {'critical': 600, 'warm': 420, 'user': 480, 'background': 400, 'fast': 200}
+CEILING = {'critical': 600, 'user': 480, 'fast': 450, 'warm': 420, 'background': 400}
+FAST_PER_MINUTE = 160  # the 15-second refresh's own cap a minute: 40 distinct symbols viewed at 4 slots a minute (lib/research/twelve-budget.ts)
 PLAN_CREDITS_PER_MINUTE = 610
 METER_MAX_AGE = 3.0
 OVERLAP = 2.0          # for the website's grants: credits granted this long before a reading are counted again (they may not be in it yet)
 MAX_COST = 120         # one lease never asks for more than this
-MEMBER_TIERS = ('user',)              # what members' pages ask for (the optional 15-second refresh, 'fast', is not a need)
+MEMBER_TIERS = ('user',)              # what members' pages need; the 15-second refresh ('fast') adds its asks to the reserve, never a refusal
 YIELDING_TIERS = ('warm', 'background')
 MEMBER_RESERVE_MIN = 60               # warm 420 + 60 = members' 480: members always have at least this much above the jobs
 MEMBER_RESERVE_FACTOR = 2             # room for twice the busiest recent minute of members' asks
@@ -85,6 +89,8 @@ class Allocator:
         self.stats = {'granted': 0, 'refused': 0, 'grantedCredits': 0, 'meterReads': 0, 'unknownMeter': 0}
         self.member_asks = {}  # minute -> credits members asked for (granted or refused)
         self.member_refused = {}  # minute -> credits members were refused
+        self.fast_asks = {}  # minute -> credits the 15-second refresh asked for (granted or refused)
+        self.fast_granted = {}  # minute -> credits granted to it
         self.minute = None
         self.summary = self._empty_summary()
         self.log = print
@@ -100,7 +106,7 @@ class Allocator:
             return
         previous, summary = self.minute, self.summary
         self.minute, self.summary = minute, self._empty_summary()
-        for book in (self.member_asks, self.member_refused):
+        for book in (self.member_asks, self.member_refused, self.fast_asks, self.fast_granted):
             for m in [m for m in book if m < minute - MEMBER_WINDOW]:
                 del book[m]
         if previous is not None and (summary['granted'] or summary['refused'] or summary['monitor']):
@@ -118,7 +124,8 @@ class Allocator:
         recent = [c for m, c in self.member_asks.items() if minute - MEMBER_WINDOW < m <= minute]
         if any(c > 0 for m, c in self.member_refused.items() if minute - MEMBER_WINDOW < m <= minute):
             return CEILING['user']
-        return max(MEMBER_RESERVE_MIN, MEMBER_RESERVE_FACTOR * max(recent, default=0))
+        fast = [c for m, c in self.fast_asks.items() if minute - MEMBER_WINDOW < m <= minute]
+        return max(MEMBER_RESERVE_MIN, MEMBER_RESERVE_FACTOR * max(recent, default=0) + min(FAST_PER_MINUTE, max(fast, default=0)))
 
     def ceiling(self, tier):
         """The tier's ceiling now: the warm and background jobs' is lowered while members are using the site."""
@@ -172,12 +179,18 @@ class Allocator:
             minute = self._minute(self.clock())
             if tier in MEMBER_TIERS:
                 self.member_asks[minute] = self.member_asks.get(minute, 0) + cost
+            if tier == 'fast':
+                self.fast_asks[minute] = self.fast_asks.get(minute, 0) + cost
             unknown = used is None
             if unknown:
                 self.stats['unknownMeter'] += 1
                 ok = False
             else:
                 ok = used + cost <= self.ceiling(tier)
+                if tier == 'fast' and self.fast_granted.get(minute, 0) + cost > FAST_PER_MINUTE:
+                    ok = False
+            if ok and tier == 'fast':
+                self.fast_granted[minute] = self.fast_granted.get(minute, 0) + cost
             book = self.summary['granted' if ok else 'refused']
             book[label] = book.get(label, 0) + cost
             if ok:
