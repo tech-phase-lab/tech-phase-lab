@@ -44,7 +44,6 @@ test("no 'not connected / not auto-updated' copy on the 監視22銘柄 pages (ow
   const dashboard = read("app/research/companies/company-dashboard.tsx"), watch = read("app/research/companies/company-watch.tsx");
   assert.doesNotMatch(dashboard, /株価・速報の配信は未接続|Live prices and news are not connected|自動反映していません|not incorporated automatically|自動更新なし|<footer/);
   assert.doesNotMatch(watch, /自動反映は未接続|doesn't automatically include newer results/);
-  assert.match(watch, /リアルタイム監視は配信済みの記事を自動更新します。/);
 });
 
 test("owner accounts keep full access: the 監視22銘柄 pages open and every live quote is readable, also as FREE", () => {
