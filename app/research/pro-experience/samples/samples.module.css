@@ -6,6 +6,10 @@
 .sampleBox{position:relative;min-width:0;padding:12px;border:1px dashed #3a4a5c;border-radius:14px;background:#0d131b}
 .sampleHint{margin:2px 0 0;font-size:12.5px;line-height:1.6;color:#9aa7b7;text-align:center;overflow-wrap:anywhere}
 .notice{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;transform:translateX(-50%);margin:0;padding:8px 16px;border:1px solid #2c3a4a;border-radius:999px;background:#141c27;color:#e8eef5;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 8px 24px #0008}
+/* Phones (owner, Nov 27: the notice sat behind the bottom menu's centre search button): clear of the whole menu, raised centre button
+ * included. The menu's top edge is about 83px above the screen bottom and the button's ring reaches about 110px (bottom-nav.module.css),
+ * plus the home indicator's safe area; 16px of air above that. */
+@media (max-width:760px){.notice{z-index:61;bottom:calc(126px + env(safe-area-inset-bottom));max-width:calc(100vw - 32px);white-space:normal;text-align:center}}
 .loading{min-height:220px;border-radius:10px;background:repeating-linear-gradient(135deg,#0f1520 0 8px,#121a28 8px 16px)}
 
 /* Choosing stocks (comparison, radar). */

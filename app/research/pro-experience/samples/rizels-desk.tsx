@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { DESK_HINTS } from "@/lib/research/pro-experience-samples";
 import sample from "@/lib/research/pro-experience-samples/desk.json";
@@ -22,9 +22,14 @@ export type DeskTab = "notes" | "ask" | "weekly";
 /** The ask flow: the example button, the question being typed, ready to send, sent (waiting), Rizel answering, answered. */
 export type AskPhase = "idle" | "typing" | "typed" | "sent" | "answering" | "answered";
 
-/** The owner's spec (Nov 17): the banner comes down about 1 s after opening and goes up by itself 3 s later (or on a tap). */
-export const BANNER_DELAY_MS = 1000;
+/** The owner's spec (Nov 27, replacing Nov 17's 1 s): the page opens on the list as it is; about 5 s later the banner comes down, about 1 s
+ * after that the new note is added on top, gently and without moving the view; the banner goes up by itself 3 s after it came (or on a tap).
+ * Once per visit. */
+export const BANNER_DELAY_MS = 5000;
+export const NOTE_AFTER_BANNER_MS = 1000;
 export const BANNER_SHOW_MS = 3000;
+/** How long the new note's entrance (it opens its room and fades in) runs; the mark is then taken off so it never plays again. */
+export const NOTE_ENTER_MS = 600;
 const BANNER_LEAVE_MS = 350;
 /** The example question is typed in about 1.2 s; 「リゼルが回答中…」 about 1.5 s after sending, the answer about 2 s after that. */
 export const TYPE_MS = 1200;
@@ -70,6 +75,10 @@ export default function RizelsDeskSample({ lang }: { lang: Lang }) {
   const setHint = useSampleHint();
   const [tab, setTab] = useState<DeskTab>("notes");
   const [arrived, setArrived] = useState(false);
+  const [entering, setEntering] = useState(false);
+  const notesRef = useRef<HTMLDivElement>(null);
+  /** Where the first older note was on screen before the new one went in, when the list's top was already scrolled out of view. */
+  const anchor = useRef<{ id: string; top: number } | null>(null);
   const [banner, setBanner] = useState<"before" | "in" | "out" | "gone">("before");
   const [reactions, setReactions] = useState<Record<string, ReactionCounts>>(() => Object.fromEntries(notes.map(note => [note.id, startCounts(note)])));
   const [phase, setPhase] = useState<AskPhase>("idle");
@@ -86,8 +95,9 @@ export default function RizelsDeskSample({ lang }: { lang: Lang }) {
   useEffect(() => {
     const all = timers.current;
     const id = setTimeout(() => {
-      setArrived(true); setBanner("in");
+      setBanner("in");
       bannerTimer.current = setTimeout(() => leave(), BANNER_SHOW_MS);
+      later(arrive, NOTE_AFTER_BANNER_MS);
     }, BANNER_DELAY_MS);
     return () => { clearTimeout(id); clearTimeout(bannerTimer.current); clearInterval(typing.current); all.forEach(clearTimeout); all.clear(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps -- once, when the sample opens
@@ -95,6 +105,24 @@ export default function RizelsDeskSample({ lang }: { lang: Lang }) {
   useEffect(() => { setHint(DESK_HINTS[tab]); }, [tab, setHint]);
   useEffect(() => () => setHint(null), [setHint]);
 
+  // The new note goes in on top. With the list in view it opens its own room and fades in (no animation with reduced motion); with the list
+  // scrolled above the screen it goes in at once and the page is moved by the same height, so what is on screen stays where it was.
+  function arrive() {
+    const list = notesRef.current, first = list?.querySelector<HTMLElement>("[data-note]");
+    const above = !!list && list.getBoundingClientRect().top < 0;
+    anchor.current = above && first ? { id: first.dataset.note!, top: first.getBoundingClientRect().top } : null;
+    const animate = !!list && !above && !reducedMotion();
+    setArrived(true); setEntering(animate);
+    if (animate) later(() => setEntering(false), NOTE_ENTER_MS);
+  }
+  useLayoutEffect(() => {
+    const saved = anchor.current;
+    if (!arrived || !saved) return;
+    anchor.current = null;
+    const now = notesRef.current?.querySelector<HTMLElement>(`[data-note="${saved.id}"]`);
+    const moved = now ? now.getBoundingClientRect().top - saved.top : 0;
+    if (moved) window.scrollBy(0, moved);
+  }, [arrived]);
   function leave() {
     clearTimeout(bannerTimer.current);
     setBanner(current => (current === "in" ? "out" : current));
@@ -146,8 +174,10 @@ export default function RizelsDeskSample({ lang }: { lang: Lang }) {
         className={styles.tab} onClick={() => setTab(item.id)}>{item.label}</button>)}
     </div>
     <div role="tabpanel" id={`desk-panel-${tab}`} aria-labelledby={`desk-tab-${tab}`} className={styles.panel}>
-      {tab === "notes" && <div className={styles.notes}>{shown.map(note => <NoteCard key={note.id} note={note} lang={lang} fresh={note.id === NEW_ID}
-        reactions={{ counts: reactions[note.id], error: false, react: react(note.id) }} />)}</div>}
+      {tab === "notes" && <div className={styles.notes} ref={notesRef}>{shown.map(note => {
+        const card = <NoteCard key={note.id} note={note} lang={lang} fresh={note.id === NEW_ID} reactions={{ counts: reactions[note.id], error: false, react: react(note.id) }} />;
+        return note.id === NEW_ID ? <div key={note.id} className={styles.arrive} data-entering={entering || undefined}><div className={styles.arriveInner}>{card}</div></div> : card;
+      })}</div>}
       {tab === "ask" && <Ask lang={lang} phase={phase} typed={question.slice(0, typed)} onTry={startTyping} onSend={send} />}
       {tab === "weekly" && <div className={styles.weekly}>
         <div className={weeklyStyles.bar}><span className={`${weeklyStyles.picker} ${styles.issueTag}`}>{ja ? "サンプル号" : "Sample issue"} · {shortDate(weekly[lang].date)}</span></div>

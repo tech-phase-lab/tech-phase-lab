@@ -74,17 +74,17 @@ test("an out-of-universe company leaves valuation out for everyone, and the verd
   assert.equal(overallComparison(none, "en", now).note, "Overall scores average the 6 factors every company has.");
 });
 
-test("momentum is a strength only when the price rose; when both fell, the smaller fall is said in the owner's words", () => {
+test("momentum is never listed as a strength or weakness; when both fell, the smaller fall is said in the owner's words", () => {
   const [nvda, amd] = compare(["NVDA", "AMD"]);
-  for (const c of [nvda, amd]) assert.ok(!c.preparedAnalysis.items.some(i => i.id === "momentum" && i.kind === "strength"), c.ticker);
+  for (const c of [nvda, amd]) assert.ok(!c.preparedAnalysis.items.some(i => i.id === "momentum"), c.ticker);
   const ja = overallComparison([nvda, amd], "ja", now).description, en = overallComparison([nvda, amd], "en", now).description;
   assert.match(ja, /AMDは株価の下げがNVDAより小さく、約3か月で14\.8%の下落です。/);
   assert.match(en, /AMD has fallen less than NVDA, down 14\.8% over about three months\./);
   assert.doesNotMatch(ja, /株価の勢い/); assert.doesNotMatch(en, /price momentum/);
-  // A rising price is still called a strength.
+  // A rising price is still scored, but not listed (owner, Nov 27: a 3-month price move is not a business strength or weakness).
   const [mu] = compare(["MU", "NVDA"]);
   assert.ok(comparisonScores(mu, now).find(s => s.id === "momentum").value === 7);
-  assert.ok(mu.preparedAnalysis.items.some(i => i.id === "momentum" && i.kind === "strength"));
+  assert.ok(!mu.preparedAnalysis.items.some(i => i.id === "momentum"));
 });
 
 test("the compare route reads every company on its own: no step that changes one company's figures because of another", () => {
