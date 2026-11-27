@@ -24,6 +24,8 @@ const HOLIDAYS = new Set([
 ]);
 /** Regular session ends at 13:00 on these days. */
 const EARLY_CLOSE = new Set(["2026-11-27", "2026-12-24", "2027-11-26"]);
+/** The regular session's close on a New York date ("2026-11-27"), in minutes after midnight New York time: 13:00 on an early-close day, else 16:00. */
+export const regularCloseMinutes = (date: string) => EARLY_CLOSE.has(date) ? 13 * 60 : 16 * 60;
 
 export function usMarketSession(at: Date): MarketSession | null {
   const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })

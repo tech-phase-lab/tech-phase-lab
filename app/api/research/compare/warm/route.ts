@@ -10,7 +10,8 @@ const headers = { "Cache-Control": "private, no-store" };
  * the Railway monitor (COMPARISON_WARM_URL) or a Vercel Cron, with `Authorization: Bearer <COMPARISON_WARM_SECRET or CRON_SECRET>`.
  * The same minute first refreshes the マーケット「レバETF」 snapshot and the snapshot of the other tabs' cards and first charts
  * (lib/research/market-data.ts refreshLeveragedSnapshot, refreshBoardSnapshot), and the 銘柄検索「今日の注目」 snapshot
- * (lib/research/search-focus-server.ts refreshFocusSnapshot: daily bars once per settled session, at most 24 a minute).
+ * (lib/research/search-focus-server.ts refreshFocusSnapshot: daily bars once per settled session, at most 24 a minute; during the regular
+ * session live quotes, at most 20 a minute).
  * The answer carries tickers and credit counts only, never data or keys. */
 export async function GET(request: Request) {
   const auth = request.headers.get("authorization");
@@ -24,9 +25,10 @@ export async function GET(request: Request) {
   const board = await refreshBoardSnapshot().catch(() => ({ spent: 0, read: 0, failed: -1 }));
   console.info(`board snapshot spent=${board.spent} read=${board.read} failed=${board.failed}`);
   // Owner, Nov 26: 銘柄検索「今日の注目」 and the theme rows' day change. Each stock's daily bars once per settled session (~90 credits a
-  // trading day, at most 24 a minute, warm tier), through the same shared bar copies members' reads use.
-  const focus = await refreshFocusSnapshot().catch(() => ({ spent: 0, read: 0, copies: 0, failed: -1 }));
-  if (focus.spent || focus.copies || focus.failed) console.info(`search focus snapshot spent=${focus.spent} read=${focus.read} copies=${focus.copies} failed=${focus.failed}`);
+  // trading day, at most 24 a minute, warm tier), through the same shared bar copies members' reads use. Owner, Nov 27: during the U.S.
+  // regular session also each candidate's live quote about every 5 minutes (~17 credits a minute, never more than 20, warm tier).
+  const focus = await refreshFocusSnapshot().catch(() => ({ spent: 0, read: 0, copies: 0, failed: -1, quoted: 0 }));
+  if (focus.spent || focus.copies || focus.failed || focus.quoted) console.info(`search focus snapshot spent=${focus.spent} read=${focus.read} copies=${focus.copies} quoted=${focus.quoted} failed=${focus.failed}`);
   // 監視22銘柄's quote cards (production, Nov 26: eight of them showed — for EPS, market cap and dividend yield): the statistics of at most
   // one company without a current copy (none when the comparison's daily copy is stored) and one earnings list, warm tier; members only read.
   const facts = await refreshMonitoredFacts().catch(() => ({ spent: 0, read: 0, failed: -1 }));
