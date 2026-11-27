@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import type { DeepAnalysis } from "@/lib/research/deep-analysis";
@@ -14,7 +13,7 @@ type State = { status: "loading" } | { status: "locked" } | { status: "unavailab
 export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Language; ticker?: string; kind: "earnings" | "indicator" }) {
   const signedIn = useIdentitySignedIn();
   const [fetched, setState] = useState<State>({ status: "loading" });
-  // Signed out: the PRO notice, without asking the server (which would only answer 401).
+  // Signed out: nothing, without asking the server (which would only answer 401).
   const state: State = signedIn === true ? fetched : signedIn === false ? { status: "locked" } : { status: "loading" };
   const ja = lang === "ja";
   useEffect(() => {
@@ -31,12 +30,8 @@ export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Langua
     return () => controller.abort();
   }, [signedIn]);
   const title = kind === "earnings" ? (ja ? "決算の深掘り分析" : "Earnings deep dive") : (ja ? "経済指標の深掘り分析" : "Indicator deep dive");
-  if (state.status === "loading" || state.status === "unavailable") return null;
-  if (state.status === "locked") {
-    return <section className={styles.panel} aria-label={title}><span className={styles.badge}>PRO</span><h3>{title}</h3>
-      <p className={styles.locked}>{ja ? "決算や重要指標の発表直後に、背景・前回との比較・次に見るべき点を深掘りした分析をPRO会員向けに提供しています。" : "PRO members get an in-depth reading of each earnings release and key indicator right after it is published."}{" "}
-        <Link href="/research#tech-phase-pro">{ja ? "PROの案内を見る" : "Explore PRO"}</Link></p></section>;
-  }
+  // Not PRO: nothing at all (FREE members already have the PRO trial; owner decision, Nov 2026).
+  if (state.status !== "ready") return null;
   const items = state.items.filter(item => item.kind === kind && (!ticker || item.subject === ticker)).slice(0, 3);
   if (!items.length) return null;
   const format = (value: string) => formatDisplay(value, lang, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
