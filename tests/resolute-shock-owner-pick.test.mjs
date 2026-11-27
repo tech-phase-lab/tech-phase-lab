@@ -155,30 +155,27 @@ test('owner pick: candidates are ranked by the AI (validated), summarised, and m
  assert.deepEqual(built.candidates.map(c=>[c.group,c.rank,c.suggested.stars]),[['market',1,4],['company',1,4]]);
  assert.deepEqual(built.withheld,[{title:'Sandisk shares slide 6% as memory prices fall',reason:'not-publishable'}]);
  // The morning mail lists only the 3 the service plans to publish, then the correction link (owner, Nov 27).
- const planned=[{id:built.candidates[0].id,stars:4,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',reasons:{ja:['見出しより先に、自分のルールを見ます。','決めた手順は、今日も同じです。','迷ったら、書いた理由を読み返します。'],en:['a','b','c']},by:'ai'}},{id:built.candidates[1].id,stars:4}];
+ const planned=[{id:built.candidates[0].id,stars:4,rizel:{ja:'まず自分のルールを確かめます。\n見出しより先に、決めた手順を見ます。',en:'Check your own rules first.\nLook at your steps before the headline.',by:'ai'}},{id:built.candidates[1].id,stars:4}];
  const text=candidatesMailText({day:'2026-11-26',candidates:built.candidates,planned,withheld:built.withheld});
- for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。\n  ・見出しより先に、自分のルールを見ます。\n  ・決めた手順は、今日も同じです。\n  ・迷ったら、書いた理由を読み返します。','リゼルの一言: なし',`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[0].id}`,`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[1].id}`,'訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
- assert.ok(!text.includes('■'),'the 14 candidates are on the owner page only');
+ for(const s of ['衝撃度チェッカー 2026-11-26','08:20に、次の2つを公開します。','1. Fed signals','リゼルの一言: まず自分のルールを確かめます。\n  見出しより先に、決めた手順を見ます。','リゼルの一言: なし',`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[0].id}`,`このニュースを直す: https://techphase.app/resolute/news/owner?edit=${built.candidates[1].id}`,'訂正がある場合はこちら（08:00まで）: https://techphase.app/resolute/news/owner','要約なし：元の記事の本文が短く'])assert.ok(text.includes(s),s);
+ assert.ok(!text.includes('■'),'the 14 candidates are on the owner page only');assert.ok(!text.includes('・見出し'),'no bullets');
 });
 
-const RJ=['見出しより先に、自分のルールを見ます。','決めた手順は、今日も同じです。','迷ったら、書いた理由を読み返します。'],RE=['Look at your rules before the headline.','The steps you set are the same today.','When unsure, reread the reasons you wrote.'];
-const note=(ja,en,rj=RJ,re=RE)=>({ja,en,reasons:{ja:rj,en:re}});
-test('owner pick: the RIZEL note is a title and three bullets, checked (AI) — banned wording rewritten once, else no note',async()=>{
- assert.deepEqual(rizelIssues(note('まず自分のルールを確かめます。','Check your own rules first.')),[]);
- assert.deepEqual(rizelIssues({ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'}),['shape'],'the three bullets are required');
- assert.ok(rizelIssues(note('今が買い時です。','Now is a buying opportunity.')).length);
- assert.ok(rizelIssues(note('まず自分のルールを確かめます。','Check your own rules first.',[RJ[0],RJ[1],'今が買い時です。'])).length,'bullets are checked too');
- assert.ok(rizelIssues(note('3つのルールを確かめます。','Check 3 rules.')).includes('number'));
- assert.ok(RIZEL_INSTRUCTIONS.includes('買い時'));
+test('owner pick: the RIZEL note is one note of 1–3 short sentences, checked (AI) — banned wording rewritten once, else no note',async()=>{
+ assert.deepEqual(rizelIssues({ja:'まず自分のルールを確かめます。見出しより先に、決めた手順を見ます。',en:'Check your own rules first. Look at your steps before the headline.'}),[]);
+ assert.ok(rizelIssues({ja:'今が買い時です。',en:'Now is a buying opportunity.'}).length);
+ assert.ok(rizelIssues({ja:'まず自分のルールを確かめます。今が買い時です。',en:'x'}).length,'every sentence is checked');
+ assert.ok(rizelIssues({ja:'3つのルールを確かめます。',en:'Check 3 rules.'}).includes('number'));
+ assert.deepEqual(rizelIssues({ja:'あ'.repeat(121),en:'x'}),['shape']);
+ assert.ok(RIZEL_INSTRUCTIONS.includes('買い時')&&/no bullets/.test(RIZEL_INSTRUCTIONS));
  const article=parseRiskArticle({id:sid(9),url:'https://news.example/9',publishedAt:'2026-11-25T13:00:00.000Z',stars:3,quoteId:null,market:{index:'nas100',session:null,reading:null},pick:{source:'auto'},...copy('米国株が下落')});
- const out=(ja,en,rj=RJ,re=RE)=>({ja,en,reasonsJa:rj,reasonsEn:re});
- let calls=0;const call=async()=>(++calls===1?out('今が買い時です。','A buying opportunity.'):out('まず自分のルールを確かめます。','Check your own rules first.'));
- assert.deepEqual(await writeRizelLine({article,stars:3,call}),{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',reasons:{ja:RJ,en:RE},by:'ai'});
- assert.equal(await writeRizelLine({article,stars:3,call:async()=>out('一時的な下げです。','Temporary.')}),null);
- // The owner's note: title and bullets as written, English translated line for line (or the Japanese when that fails).
+ let calls=0;const call=async()=>(++calls===1?{ja:'今が買い時です。',en:'A buying opportunity.'}:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'});
+ assert.deepEqual(await writeRizelLine({article,stars:3,call}),{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'});
+ assert.equal(await writeRizelLine({article,stars:3,call:async()=>({ja:'一時的な下げです。',en:'Temporary.'})}),null);
+ // The owner's note: as written, its line breaks kept; English translated line for line (or the Japanese when that fails).
  const {ownerLine}=await import('../services/resolute-api/shock-candidates.mjs');
- assert.deepEqual(await ownerLine({own:{ja:'様子見が一番です。',reasons:['買い時を待ちます。']},call:async()=>({en:'Waiting is best.',reasonsEn:['I wait for the right time.']})}),
-  {ja:'様子見が一番です。',en:'Waiting is best.',reasons:{ja:['買い時を待ちます。'],en:['I wait for the right time.']},by:'owner'});
+ assert.deepEqual(await ownerLine({own:{ja:'様子見が一番です。\n買い時を待ちます。'},call:async()=>({lines:['Waiting is best.','I wait for the right time.']})}),
+  {ja:'様子見が一番です。\n買い時を待ちます。',en:'Waiting is best.\nI wait for the right time.',by:'owner'});
  assert.deepEqual(await ownerLine({own:{ja:'様子見が一番です。'},call:async()=>{throw Error('x');}}),{ja:'様子見が一番です。',en:'様子見が一番です。',by:'owner'});
 });
 
@@ -365,28 +362,32 @@ test('one story from the morning mail: only its ★ and RIZEL line change; the o
  assert.equal(r.status,403);
 });
 
-test('one story from the mail: the 一言 title and its bullets are edited together; the member feed shows them like an approved quote',async()=>{
- const planned=[{id:sid(2),stars:3,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',reasons:{ja:['a1','a2','a3'],en:['e1','e2','e3']},by:'ai'}},{id:sid(1),stars:4}];
+test('one story from the mail: the 一言 is one note (line breaks kept); the member feed shows it as the quote title with no reasons',async()=>{
+ const planned=[{id:sid(2),stars:3,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',by:'ai'}},{id:sid(1),stars:4}];
  const day={picks:null,planned};
- // Untouched: the planned note keeps its English and bullets.
- assert.deepEqual(editedPicks(day,sid(2),5,'まず自分のルールを確かめます。',['a1','a2','a3'])[0],{id:sid(2),stars:5,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',reasons:['a1','a2','a3'],enReasons:['e1','e2','e3']}});
- // Edited bullets: the owner's Japanese only (translated at publish time); empty bullets are left out.
- assert.deepEqual(editedPicks(day,sid(2),5,'まず自分のルールを確かめます。',['新しい一文','',' '])[0],{id:sid(2),stars:5,rizel:{ja:'まず自分のルールを確かめます。',reasons:['新しい一文']}});
- // Empty title: no owner note (the AI writes title and bullets), whatever the bullets say.
- assert.deepEqual(editedPicks(day,sid(1),2,'',['x'])[1],{id:sid(1),stars:2});
- assert.equal(parsePicks(editedPicks(day,sid(2),5,'t',['b1','b2','b3']),[cand(1,'company',1,4),cand(2,'market',1,3)])[0].rizel.reasons.length,3);
- assert.throws(()=>parsePicks([{id:sid(2),stars:3,rizel:{ja:'t',reasons:['1','2','3','4']}}],[cand(2,'market',1,3)]));
+ // Untouched: the planned note keeps its English.
+ assert.deepEqual(editedPicks(day,sid(2),5,'まず自分のルールを確かめます。')[0],{id:sid(2),stars:5,rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.'}});
+ // Edited: the owner's Japanese with its line breaks (empty lines dropped), translated at publish time.
+ assert.deepEqual(editedPicks(day,sid(2),5,' 一行目です。\n\n二行目です。 ')[0],{id:sid(2),stars:5,rizel:{ja:'一行目です。\n二行目です。'}});
+ assert.deepEqual(editedPicks(day,sid(1),2,'  ')[1],{id:sid(1),stars:2});
+ const list=[cand(1,'company',1,4),cand(2,'market',1,3)];
+ assert.equal(parsePicks(editedPicks(day,sid(2),5,'a\nb\nc'),list)[0].rizel.ja,'a\nb\nc');
+ assert.throws(()=>parsePicks([{id:sid(2),stars:3,rizel:{ja:'a\nb\nc\nd'}}],list),'at most three lines');
+ assert.throws(()=>parsePicks([{id:sid(2),stars:3,rizel:{ja:'あ'.repeat(121)}}],list),'at most 120 characters');
  // ?edit= for a story no longer in the plan opens the full page.
- const full={...day,candidates:[cand(1,'company',1,4),cand(2,'market',1,3)],added:[]};
+ const full={...day,candidates:list,added:[]};
  assert.equal(editableStory(full,sid(2)),true);assert.equal(editableStory({...full,picks:[{id:sid(1),stars:2}]},sid(2)),false);assert.equal(editableStory(null,sid(2)),false);
- // Published note → the member feed's quote: title on the card, the bullets as its reasons (くわしく), as for an approved quote.
+ // Published note → the member feed's quote: the whole note as the title (line breaks kept), no reasons (nothing extra in くわしく).
  const base={url:'https://news.example/x',publishedAt:'2026-11-26T15:00:00.000Z',market:{index:'nas100',session:null,reading:null},quoteId:null,...copy('米国株のニュース')};
- const articles=[{...base,id:sid(1),stars:3,pick:{source:'owner'},rizel:{ja:'まず自分のルールを確かめます。',en:'Check your own rules first.',reasons:{ja:RJ,en:RE},by:'ai'}}];
+ const articles=[{...base,id:sid(1),stars:3,pick:{source:'owner'},rizel:{ja:'まず自分のルールを確かめます。\n手順は同じです。',en:'Check your own rules first.\nThe steps are the same.',by:'owner'}}];
  const pool={query:async sql=>sql.includes('risk_control')?{rows:[{enabled:true}]}:sql.includes('risk_days')?{rows:[{state:'ready',articles}]}:{rows:[]}};
  const before=process.env.RESOLUTE_RISK_PUBLISH_APPROVED;process.env.RESOLUTE_RISK_PUBLISH_APPROVED='true';
  try{const feed=await publicRiskFeed(pool,false,new Date('2026-11-26T23:30:00Z'));
   const q=feed.quotes.find(x=>x.id===feed.articles[0].quoteId);
-  assert.deepEqual(q.ja,{title:'まず自分のルールを確かめます。',reasons:RJ});assert.deepEqual(q.en,{title:'Check your own rules first.',reasons:RE});
-  assert.equal(q.approved,true);
+  assert.deepEqual(q.ja,{title:'まず自分のルールを確かめます。\n手順は同じです。',reasons:[]});assert.deepEqual(q.en,{title:'Check your own rules first.\nThe steps are the same.',reasons:[]});
  }finally{if(before===undefined)delete process.env.RESOLUTE_RISK_PUBLISH_APPROVED;else process.env.RESOLUTE_RISK_PUBLISH_APPROVED=before;}
+ // The cards show the line breaks.
+ const {readFile:rf}=await import('node:fs/promises');
+ assert.match(await rf(new URL('../app/resolute/home/shock-section.tsx',import.meta.url),'utf8'),/whiteSpace:'pre-line'\}\}>\{quote\[locale\]\.title\}/);
+ assert.match(await rf(new URL('../app/resolute/news/screen.tsx',import.meta.url),'utf8'),/whiteSpace:'pre-line'\}\}>\{quote\[locale\]\.title\}/);
 });

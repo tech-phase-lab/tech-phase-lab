@@ -15,20 +15,20 @@ export type ShockCandidate = {
   /** A must-capture story whose summary was withheld (the reason code): listed for the owner, never pickable or published. */
   withheld?: string;
 };
-/** One picked story: its ★ and, optionally, the owner's own RIZEL line (published exactly as written, no wording check; English optional). */
-/** A story's RIZEL line as picked: the title line and up to three bullet lines (Japanese; English when known). */
-export type PickLine = { ja: string; en?: string; reasons?: string[]; enReasons?: string[] };
+/** A story's RIZEL note as picked (owner, Nov 27: one note, no bullets): up to RIZEL_LINES lines in Japanese, at most RIZEL_MAX_CHARS
+ * characters; English when known (an untouched planned note). */
+export const RIZEL_LINES = 3, RIZEL_MAX_CHARS = 120;
+export type PickLine = { ja: string; en?: string };
 export type OwnerPick = { id: string; stars: number; rizel?: PickLine };
-/** A stored line in either shape (a pick's PickLine, or a planned / published line with reasons: {ja, en}) as a PickLine. */
+/** A note as stored and shown: each line trimmed, empty lines dropped, at most RIZEL_LINES lines kept with their line breaks. */
+export const normalizeNote = (text: string) => text.split(/\r?\n/).map(t => t.trim()).filter(Boolean).slice(0, RIZEL_LINES).join('\n');
+/** A stored note (a pick, or a planned / published note) as a PickLine; null when it has no Japanese. */
 export function pickLine(v: unknown): PickLine | null {
-  const x = v as { ja?: unknown; en?: unknown; reasons?: unknown; enReasons?: unknown };
-  const ja = typeof x?.ja === 'string' ? x.ja.trim() : '';
+  const x = v as { ja?: unknown; en?: unknown };
+  const ja = typeof x?.ja === 'string' ? normalizeNote(x.ja) : '';
   if (!ja) return null;
-  const list = (r: unknown) => Array.isArray(r) ? r.filter((t): t is string => typeof t === 'string').map(t => t.trim()).filter(Boolean).slice(0, 3) : [];
-  const r = x.reasons, reasons = Array.isArray(r) ? list(r) : r && typeof r === 'object' ? list((r as { ja?: unknown }).ja) : [];
-  const enReasons = Array.isArray(r) ? list(x.enReasons) : r && typeof r === 'object' ? list((r as { en?: unknown }).en) : [];
-  const en = typeof x.en === 'string' && x.en.trim() ? x.en.trim() : undefined;
-  return { ja, ...(en ? { en } : {}), ...(reasons.length ? { reasons } : {}), ...(reasons.length && enReasons.length === reasons.length ? { enReasons } : {}) };
+  const en = typeof x.en === 'string' ? normalizeNote(x.en) : '';
+  return en ? { ja, en } : { ja };
 }
 const HEX64 = /^[a-f0-9]{64}$/, TEXT = /^[^<>\u0000]{1,200}$/;
 const isStars = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 1 && (v as number) <= 5;
@@ -67,7 +67,8 @@ export function parsePicks(v: unknown, candidates: readonly { id: string; withhe
     seen.add(x.id);
     if (x.rizel !== undefined && x.rizel !== null && typeof x.rizel !== 'object') throw Error('INVALID_PICKS');
     const line = x.rizel ? pickLine(x.rizel) : null;
-    if (line && ([...line.ja].length > 80 || [...(line.en ?? '')].length > 200 || (Array.isArray(x.rizel?.reasons) && x.rizel.reasons.length > 3) || [...(line.reasons ?? []), ...(line.enReasons ?? [])].some(t => [...t].length > 120))) throw Error('INVALID_PICKS');
+    const rawLines = typeof x.rizel?.ja === 'string' ? x.rizel.ja.split(/\r?\n/).filter(t => t.trim()).length : 0;
+    if (line && (rawLines > RIZEL_LINES || [...line.ja.replace(/\n/g, '')].length > RIZEL_MAX_CHARS || [...(line.en ?? '')].length > 400 || /[<>\u0000]/.test(line.ja + (line.en ?? '')))) throw Error('INVALID_PICKS');
     return line ? { id: x.id, stars: x.stars, rizel: line } : { id: x.id, stars: x.stars };
   });
 }
@@ -116,38 +117,32 @@ export function answerDay(now: Date): string | null {
 export const candidateNumbers = (c: { market: RiskMarket }, locale: 'ja' | 'en') => readingParts(c.market, locale).map(l => l.text);
 /** Fixed codes for an AI-written RIZEL line that breaks the rules: the RIZEL wording rules (quoteIssues), the summary wording rules
  * (summaryIssues), numbers and length. The owner's own line is never checked (owner, Nov 27). */
-export function rizelIssues(line: { ja?: unknown; en?: unknown; reasons?: { ja?: unknown; en?: unknown } } | null | undefined): string[] {
-  const ja = typeof line?.ja === 'string' ? line.ja.trim() : '', en = typeof line?.en === 'string' ? line.en.trim() : '';
-  const rj = Array.isArray(line?.reasons?.ja) ? (line!.reasons!.ja as unknown[]) : [], re = Array.isArray(line?.reasons?.en) ? (line!.reasons!.en as unknown[]) : [];
-  // The title and three bullet lines (owner, Nov 27: the same shape as an approved quote).
-  if (!ja || !en || [...ja].length > 50 || en.split(/\s+/).length > 20 || rj.length !== 3 || re.length !== 3) return ['shape'];
-  if (![...rj, ...re].every(t => typeof t === 'string' && t.trim())) return ['shape'];
-  const bj = (rj as string[]).map(t => t.trim()), be = (re as string[]).map(t => t.trim());
-  if (bj.some(t => [...t].length > 60) || be.some(t => t.split(/\s+/).length > 24) || /[<>\u0000\n]/.test([ja, en, ...bj, ...be].join(''))) return ['shape'];
-  const codes = [...quoteIssues({ ja: { title: ja, reasons: bj }, en: { title: en, reasons: be } }), ...summaryIssues(ja, en, ...bj, ...be)];
-  if (/[0-9０-９]/.test([ja, en, ...bj, ...be].join(''))) codes.push('number');
+export function rizelIssues(line: { ja?: unknown; en?: unknown } | null | undefined): string[] {
+  const ja = typeof line?.ja === 'string' ? normalizeNote(line.ja) : '', en = typeof line?.en === 'string' ? normalizeNote(line.en) : '';
+  // One note of 1–3 short sentences (owner, Nov 27), in at most three lines.
+  if (!ja || !en || [...ja.replace(/\n/g, '')].length > RIZEL_MAX_CHARS || en.length > 200 || /[<>\u0000]/.test(ja + en)) return ['shape'];
+  const codes = [...quoteIssues({ ja: { title: ja, reasons: [] }, en: { title: en, reasons: [] } }), ...summaryIssues(ja, en)];
+  if (/[0-9０-９]/.test(ja + en)) codes.push('number');
   return [...new Set(codes)];
 }
 /** The `edit` query of the owner page (one story from the morning mail), or null when it is not a story id. */
 export const editTarget = (v: unknown): string | null => typeof v === 'string' && (HEX64.test(v) || ADDED_ID.test(v)) ? v : null;
-/** The RIZEL line the owner typed (title + up to three bullets) as a pick line. An empty title means none (the AI writes the whole
- * line); empty bullets are left out. A line identical to `previous` keeps previous's English. */
-export function typedLine(title: string, bullets: readonly string[], previous?: PickLine | null): PickLine | undefined {
-  const ja = title.trim(), reasons = bullets.map(t => t.trim()).filter(Boolean).slice(0, 3);
+/** The RIZEL note the owner typed (up to three lines, kept). Empty means none (the AI writes it). A note identical to `previous` keeps
+ * previous's English. */
+export function typedLine(text: string, previous?: PickLine | null): PickLine | undefined {
+  const ja = normalizeNote(text);
   if (!ja) return undefined;
-  const prevReasons = previous?.reasons ?? [];
-  if (previous && previous.ja === ja && prevReasons.length === reasons.length && prevReasons.every((t, i) => t === reasons[i])) return previous;
-  return { ja, ...(reasons.length ? { reasons } : {}) };
+  return previous && previous.ja === ja ? previous : { ja };
 }
-/** One story edited from the morning mail (owner, Nov 27): the full pick set the page saves, with only that story's ★ and RIZEL line
- * (title and bullets) changed. The set is the owner's answer when there is one, else the service's planned 3 (their lines kept as they
- * are). Null when the story is not in the set. An empty title drops the owner's line (the AI writes one at publish time). */
-export function editedPicks(day: { picks: OwnerPick[] | null; planned: { id: string; stars: number; rizel?: unknown }[] }, id: string, stars: number, title: string, bullets: readonly string[] = []): OwnerPick[] | null {
+/** One story edited from the morning mail (owner, Nov 27): the full pick set the page saves, with only that story's ★ and RIZEL note
+ * changed. The set is the owner's answer when there is one, else the service's planned 3 (their notes kept as they are). Null when the
+ * story is not in the set. An empty note drops the owner's note (the AI writes one at publish time). */
+export function editedPicks(day: { picks: OwnerPick[] | null; planned: { id: string; stars: number; rizel?: unknown }[] }, id: string, stars: number, text: string): OwnerPick[] | null {
   const base: OwnerPick[] = (day.picks ?? day.planned).map(p => { const line = p.rizel ? pickLine(p.rizel) : null; return { id: p.id, stars: p.stars, ...(line ? { rizel: line } : {}) }; });
   if (!isStars(stars) || !base.some(p => p.id === id)) return null;
   return base.map(p => {
     if (p.id !== id) return p;
-    const keep = typedLine(title, bullets, p.rizel);
+    const keep = typedLine(text, p.rizel);
     return keep ? { id, stars, rizel: keep } : { id, stars };
   });
 }

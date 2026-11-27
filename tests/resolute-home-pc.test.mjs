@@ -23,7 +23,7 @@ test('リゼルの一言 on the home: title only, only when one is assigned, beh
  assert.ok(section.includes("{locale==='en'?'A word from RIZEL':'リゼルの一言'}"));
  assert.match(section,/feed\.quotes\.find\(q=>q\.id===article\.quoteId&&q\.approved\)/);
  assert.match(section,/if\(!quote\)return null;/);
- assert.match(section,/<p>\{quote\[locale\]\.title\}<\/p><\/div><\/div>/,'the phone shows the title only');
+ assert.match(section,/<p style=\{\{whiteSpace:'pre-line'\}\}>\{quote\[locale\]\.title\}<\/p><\/div><\/div>/,'the phone shows the title only (an owner-pick note keeps its line breaks)');
  assert.ok(read('app/resolute/news/screen.tsx').includes("{en?'A word from RIZEL':'リゼルの一言'}"));
  assert.ok(!read('app/resolute/news/screen.tsx').includes("'RIZELの一言'"));
  const feed={state:'ready',date:'2026-11-24',articles:[],quotes:[{id:'q'}]};

@@ -77,9 +77,9 @@ export async function publicRiskFeed(pool,owner=false,now=new Date()){
  if(row.articles.length&&!articles.length)return{state:'stopped',date:day,articles:[],quotes:[]};
  const quotes=(await pool.query('SELECT value FROM resolute.risk_quotes')).rows.map(r=>parseQuote(r.value)).filter(q=>q.approved&&!quoteIssues(q).length);
  // A story's own RIZEL line (owner pick, Nov 27) is served as that story's line, through the same quotes list (so the web app's
- // RESOLUTE_RIZEL_LINE_PUBLISHED gate applies to it too). The AI's line is checked again with the RIZEL wording rules; the owner's
+ // RESOLUTE_RIZEL_LINE_PUBLISHED gate applies to it too). The whole note is the quote's title (its line breaks are shown); no reasons. The AI's line is checked again with the RIZEL wording rules; the owner's
  // own line is shown as the owner wrote it (owner, Nov 27).
- const own=articles.filter(a=>a.rizel&&a.stars!==null).map(a=>({a,q:{id:`ai-${a.id.slice(0,16)}`,ja:{title:a.rizel.ja,reasons:a.rizel.reasons?.ja??[]},en:{title:a.rizel.en,reasons:a.rizel.reasons?.en??[]},minStars:1,maxStars:5,approved:true}})).filter(x=>x.a.rizel.by==='owner'||!quoteIssues(x.q).length);
+ const own=articles.filter(a=>a.rizel&&a.stars!==null).map(a=>({a,q:{id:`ai-${a.id.slice(0,16)}`,ja:{title:a.rizel.ja,reasons:[]},en:{title:a.rizel.en,reasons:[]},minStars:1,maxStars:5,approved:true}})).filter(x=>x.a.rizel.by==='owner'||!quoteIssues(x.q).length);
  const lined=articles.map(a=>{const x=own.find(o=>o.a===a);return x?{...a,quoteId:x.q.id}:a;});
  return parseRiskFeed({state:'ready',date:day,articles:lined,quotes:[...quotes,...own.map(x=>x.q)]},{shownOnly:!owner});
 }
