@@ -109,3 +109,18 @@ export function rizelIssues(line: { ja?: unknown; en?: unknown } | null | undefi
   if (/[0-9０-９]/.test(ja + en)) codes.push('number');
   return [...new Set(codes)];
 }
+/** The `edit` query of the owner page (one story from the morning mail), or null when it is not a story id. */
+export const editTarget = (v: unknown): string | null => typeof v === 'string' && (HEX64.test(v) || ADDED_ID.test(v)) ? v : null;
+/** One story edited from the morning mail (owner, Nov 27): the full pick set the page saves, with only that story's ★ and RIZEL line
+ * changed. The set is the owner's answer when there is one, else the service's planned 3 (their lines kept as they are). Null when the
+ * story is not in the set. An empty line drops the owner's line (the AI writes one at publish time). */
+export function editedPicks(day: { picks: OwnerPick[] | null; planned: { id: string; stars: number; rizel?: { ja: string; en?: string } }[] }, id: string, stars: number, line: string): OwnerPick[] | null {
+  const base: OwnerPick[] = (day.picks ?? day.planned).map(p => ({ id: p.id, stars: p.stars, ...(p.rizel?.ja ? { rizel: p.rizel.en ? { ja: p.rizel.ja, en: p.rizel.en } : { ja: p.rizel.ja } } : {}) }));
+  if (!isStars(stars) || !base.some(p => p.id === id)) return null;
+  const ja = line.trim();
+  return base.map(p => {
+    if (p.id !== id) return p;
+    const keep = p.rizel && p.rizel.ja === ja ? p.rizel : ja ? { ja } : undefined;
+    return keep ? { id, stars, rizel: keep } : { id, stars };
+  });
+}

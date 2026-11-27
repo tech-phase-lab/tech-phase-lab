@@ -111,12 +111,14 @@ export const MARKET_CLOSED_NOTICE = {
   weekend: { ja: "本日の米国市場はお休みです。", en: "U.S. markets are closed today." },
   holiday: { ja: "本日は{name}のため、米国市場はお休みです。", en: "U.S. markets are closed today for {name}." },
 } as const;
+/** Holidays whose notice gives no name (owner, Nov 27: Memorial Day): the plain line, as on a weekend. */
+const NOTICE_WITHOUT_NAME = new Set(Object.entries(US_MARKET_HOLIDAYS).filter(([, h]) => h.en === "Memorial Day").map(([d]) => d));
 /** The notice for `at`, or null on a trading day. "Today" is the U.S. Eastern calendar date: a Saturday, a Sunday, or an NYSE holiday of
  * the 2026–2027 calendar (outside the calendar only weekends are known). */
 export function marketClosedNotice(at: Date, lang: "ja" | "en"): string | null {
   if (!Number.isFinite(at.getTime())) return null;
   const { date, weekday } = newYorkDay(at);
-  if (weekday === 0 || weekday === 6) return MARKET_CLOSED_NOTICE.weekend[lang];
+  if (weekday === 0 || weekday === 6 || NOTICE_WITHOUT_NAME.has(date)) return MARKET_CLOSED_NOTICE.weekend[lang];
   const holiday = US_MARKET_HOLIDAYS[date];
   return holiday ? MARKET_CLOSED_NOTICE.holiday[lang].replace("{name}", holiday[lang]) : null;
 }

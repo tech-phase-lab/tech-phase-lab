@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useState,type ReactNode} from 'react';
 import {SUMMARY_QUESTION} from '@/lib/resolute/risk';
-import {candidateNumbers,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
+import {candidateNumbers,editedPicks,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
 import s from '../../diagnosis.module.css';
 /** The day's owner pick as the owner API returns it (risk-store.mjs ownerShockDay). */
 export type ShockDay={day:string;state:string;candidates:ShockCandidate[];planned:{id:string;stars:number;rizel?:{ja:string;en:string}}[];added:AddedStory[];picks:OwnerPick[]|null;pickedAt:string|null;revision:number;publishedSource:string|null;publishedAt:string|null;open:boolean;answerUntil:string;publishAt:string;maxStories:number;maxAdded:number};
@@ -16,7 +16,7 @@ async function shrink(file:File):Promise<string>{
   c.getContext('2d')!.drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',0.85);}finally{URL.revokeObjectURL(url);}
 }
 function Stars({value,onChange,label}:{value:number;onChange:(n:number)=>void;label:string}){
- return <span role="radiogroup" aria-label={label}>{[1,2,3,4,5].map(n=><button key={n} type="button" role="radio" aria-checked={value===n} className={value===n?s.primary:s.secondary} onClick={()=>onChange(n)} style={{minWidth:40,marginRight:4}}>★{n}</button>)}</span>;
+ return <span role="radiogroup" aria-label={label} style={{display:'flex',gap:6,margin:'6px 0 10px'}}>{[1,2,3,4,5].map(n=><button key={n} type="button" role="radio" aria-checked={value===n} className={value===n?s.primary:s.secondary} onClick={()=>onChange(n)} style={{flex:1,minWidth:0,padding:'10px 0'}}>★{n}</button>)}</span>;
 }
 /** The owner's daily pick: tick stories, set each one's ★ (and, optionally, the RIZEL line), add the owner's own news, then 公開. */
 export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSaved:()=>Promise<void>}){
@@ -90,5 +90,30 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
    <button className={s.secondary} type="button" disabled={closed} onClick={()=>{setAdded(l=>l.filter(x=>x.id!==a.id));setOrder(o=>o.filter(x=>x!==a.id));}}>削除</button></div>,a.stars))}</ol>
   <button className={s.primary} type="button" disabled={busy||closed||!order.length} onClick={()=>void submit()}>公開</button>
   <p role="status">{message}</p>
+ </section>;
+}
+/** One story from the morning mail's 「このニュースを直す」 (owner, Nov 27): only that story's ★ and RIZEL line, prefilled; 保存 saves the
+ * whole pick set with only this story changed, so the other planned stories stay as they are. */
+export function OwnerEditOne({day,id,onSaved}:{day:ShockDay|null;id:string;onSaved:()=>Promise<void>}){
+ const base=day?(day.picks??day.planned):[],current=base.find(p=>p.id===id);
+ const [stars,setStars]=useState(current?.stars??3),[line,setLine]=useState(current?.rizel?.ja??''),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ useEffect(()=>{if(current){setStars(current.stars);setLine(current.rizel?.ja??'');}},[current]);
+ const story=day?.candidates.find(c=>c.id===id)??null,added=day?.added.find(a=>a.id===id)??null,title=story?.ja.title??added?.ja.title??'';
+ if(!day||!current||!title)return <section className={s.card}><p>このニュースは、今日の公開予定にありません。</p><a href="/resolute/news/owner">すべての候補を見る</a></section>;
+ async function save(){
+  if(!day||busy)return;const picks=editedPicks(day,id,stars,line);if(!picks)return;setBusy(true);setMessage('');
+  try{const r=await fetch('/api/resolute/risk/owner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'picks',day:day.day,baseRevision:day.revision,picks,added:day.added}),redirect:'error'});
+   if(r.status===409){setMessage(`受付は${day.answerUntil}までです。締め切りを過ぎたか、ほかの画面で保存されました。再読み込みしてください`);return;}
+   if(!r.ok)throw Error();await onSaved();setMessage(`保存しました。${day.publishAt}に公開します`);
+  }catch{setMessage('保存を確認できませんでした。再読み込みして状態を確認してください');}finally{setBusy(false);}
+ }
+ return <section className={s.card} data-owner-edit-one="">
+  <h2>{title}</h2>
+  {story?<p>{strip(story.ja.content)}</p>:null}
+  <div className={s.field}><div>衝撃度 <Stars value={stars} onChange={setStars} label={`${title}の★`}/></div>
+   <label>リゼルの一言（空欄ならAIが書きます。書いた文はそのまま載ります）<input value={line} maxLength={80} onChange={e=>setLine(e.target.value)} disabled={!day.open}/></label></div>
+  <button className={s.primary} type="button" disabled={busy||!day.open} onClick={()=>void save()}>保存</button>
+  <p role="status">{message}</p>
+  <a href="/resolute/news/owner">すべての候補を見る</a>
  </section>;
 }

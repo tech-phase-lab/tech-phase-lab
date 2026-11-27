@@ -296,7 +296,7 @@ export function candidatesMailText({day,candidates,planned,withheld=[]}){
   const c=candidates.find(x=>x.id===p.id);if(!c)return;
   lines.push(`${i+1}. ${c.ja.title}`,`要約: ${summaryText(c.ja)}`,`★${p.stars}（${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}） ${c.suggested.reason.ja}`,`リゼルの一言: ${p.rizel?.ja??'なし'}`);
   const n=readingParts(c.market,'ja');if(n.length){lines.push('数字:');for(const l of n)lines.push(`  ${l.text}`);}else lines.push('数字: まだありません（米国市場の取引がまだ終わっていないか、休場です）');
-  lines.push(`出典: ${c.source.publisher?c.source.publisher+' ':''}${c.url}`,'');
+  lines.push(`出典: ${c.source.publisher?c.source.publisher+' ':''}${c.url}`,`このニュースを直す: ${OWNER_PAGE_URL}?edit=${c.id}`,'');
  });
  lines.push(`訂正がある場合はこちら（${answerUntilJst}まで）: ${OWNER_PAGE_URL}`);
  const skipped=withheld.filter(w=>w&&typeof w.title==='string').slice(0,10);

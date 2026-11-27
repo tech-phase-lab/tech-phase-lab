@@ -1,6 +1,5 @@
 "use client";
 
-import MarketClosedNote from "./market-closed-note";
 import Link from "next/link";
 import { useSyncExternalStore, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
@@ -91,7 +90,6 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     <div className={styles.group}>
       {standalone ? <Link href={"/research" + researchViewHashes.pro} className={[styles.item, styles.proLine].join(" ")}>{icons.gem}<span>Tech Phase PRO</span></Link> : <button type="button" className={`${styles.item} ${styles.proLine} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView?.("pro")}>{icons.gem}<span>Tech Phase PRO</span></button>}
       <Link href={ja ? "/resolute" : "/resolute?lang=en"} className={`${styles.item} ${styles.rzLine}`}>{icons.anchor}<span>RESOLUTE</span></Link>
-      <MarketClosedNote lang={ja ? "ja" : "en"} place="side" />
     </div>
     <div className={styles.foot}>
       <div className={styles.group}>
