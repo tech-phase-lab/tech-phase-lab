@@ -924,6 +924,24 @@ def validate_names(ja, en):
             continue
         LAST_NAME_REJECTION[0] = word[:40]
         raise ValueError('changed-names')
+    # A company written with its one Japanese spelling (japanese_names.NAMES) must be named in the English too (owner, Nov 26: "GE
+    # HealthCare advances total body PET/CT" became 「GEベルノバ、…」, GE Vernova being the only GE spelling in the list).
+    import japanese_names
+    for name, spelling in japanese_names.NAMES.items():
+        if re.search(r'(?<![ァ-ヿ])' + re.escape(spelling) + r'(?![ァ-ヿ])', ja) and not _glossary_named(name, english):
+            LAST_NAME_REJECTION[0] = spelling[:40]
+            raise ValueError('changed-names')
+
+
+def _glossary_named(name, english):
+    """The English names the company (its listed name, its first word when that is three letters or more, or a known alias or ticker)."""
+    lowered = name.lower()
+    first = lowered.split()[0]
+    names = {lowered} | ({first} if len(first) >= 3 else set())
+    for group in NAME_GROUPS:
+        if lowered in group or first in group:
+            names |= group
+    return any(_mentioned(alias, english) for alias in names)
 
 
 def validate_meaning(text, evidence, negated_scope=None, directions=True):

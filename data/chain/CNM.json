@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "CNM",
+    "name": "コア・アンド・メイン",
+    "cik": 1856525,
+    "name_en": "Core & Main"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "name_en": "The Home Depot",
+      "sub": "住宅資材小売",
+      "sub_en": "Home improvement retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "前身の水道資材事業を2005年に設立",
+          "text_en": "Formed the predecessor waterworks business in 2005",
+          "source": {
+            "label": "Core & Main 10-K(2026年2月期)",
+            "label_en": "Core & Main 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In 2005, The Home Depot acquired National Waterworks Holdings and subsequently merged it with Hughes Supply Inc. to establish one of the leading waterworks distributors in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CDR",
+      "ticker": "CDR",
+      "name": "クレイトン・デュビリエ&ライス",
+      "name_en": "Clayton, Dubilier & Rice",
+      "sub": "投資会社",
+      "sub_en": "Private equity",
+      "sub_short": "投資",
+      "sub_short_en": "PE",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年にHDサプライから事業を買収",
+          "text_en": "Bought the business from HD Supply in 2017",
+          "source": {
+            "label": "Core & Main 10-K(2026年2月期)",
+            "label_en": "Core & Main 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "In August 2017, HD Supply Waterworks was acquired by Clayton, Dubilier & Rice, LLC (\"CD&R\") from HD Supply and was subsequently rebranded as Core & Main."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LCS",
+      "ticker": "LCS",
+      "name": "ランドスケープ&コンストラクション・サプライズ",
+      "name_en": "Landscape & Construction Supplies",
+      "sub": "造園・建設資材",
+      "sub_en": "Landscape & construction supplies",
+      "sub_short": "資材",
+      "sub_short_en": "Supplies",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年3月に資産を買収",
+          "text_en": "Bought its assets in March 2023",
+          "source": {
+            "label": "Core & Main 10-K(2026年2月期)",
+            "label_en": "Core & Main 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "•On March 6, 2023, the Company acquired certain assets and assumed certain liabilities of Landscape & Construction Supplies LLC (\"LCS\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Core & Main 10-K(2026年2月期)",
+            "label_en": "Core & Main 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Credit Agreement, dated as of August 1, 2017, by and among Core & Main LP, as borrower, Citibank, N.A., as administrative agent and collateral agent, and the other financial institutions and lenders from time to time party thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Core & Main 10-K(2026年2月期)",
+            "label_en": "Core & Main 10-K (FY ended Feb 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856525/000185652526000031/cnm-20260201.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Credit Agreement, dated as of August 1, 2017, by and among Core & Main LP, as borrower, JPMorgan Chase Bank, N.A., as administrative agent and collateral agent, and the other financial institutions and lenders from time to time party thereto"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

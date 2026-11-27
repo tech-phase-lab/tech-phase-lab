@@ -18,16 +18,18 @@
 .peek span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .rule{height:1px;background:linear-gradient(90deg,transparent,var(--hair) 12%,var(--hair) 88%,transparent);margin:0 22px}
 .timeline{position:relative;padding:6px 22px 8px}
-.timeline::before{content:"";position:absolute;left:84px;top:18px;bottom:18px;width:1px;background:linear-gradient(180deg,var(--hair),var(--hair) 85%,transparent)}
+.timeline::before{content:"";position:absolute;left:91px;top:18px;bottom:18px;width:1px;background:linear-gradient(180deg,var(--hair),var(--hair) 85%,transparent)}
 .item{display:grid;grid-template-columns:50px 14px 1fr;gap:0 12px;padding:14px 0;position:relative}
 .when time{display:flex;flex-direction:column;font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.35;color:#586376;padding-top:4px}
 .node{width:7px;height:7px;border-radius:50%;background:#080b12;border:1px solid #586376;margin:8px 0 0 3px;position:relative;z-index:1}
 .unread .node{background:var(--live);border-color:var(--live);box-shadow:0 0 0 4px var(--live-soft),0 0 10px rgba(93,255,180,.8)}
+/* New rows pulse like the fresh dot above (owner, 11/26: with NEW gone, a steady dot did not read as new). Steady with reduced motion. */
+.unread .node{animation:nodeFlash .9s infinite}
+@keyframes nodeFlash{0%{box-shadow:0 0 0 0 rgba(93,255,180,.8),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 11px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
 .entry{min-width:0}
 .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:3px}
 .tag{font-size:10.5px;letter-spacing:.14em;color:#8c98ab}
 .news{color:#9aa8c8}.analyst{color:var(--live)}.flash{color:#ff7b7b}
-.newMark{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;color:var(--live);text-shadow:0 0 8px rgba(93,255,180,.8)}
 .headline{font-size:14.5px;font-weight:500;line-height:1.6;margin:0;overflow-wrap:anywhere}
 .headline a{color:inherit;text-decoration:none}.headline a:hover{text-decoration:underline}
 .src{font-size:11.5px;color:#586376;margin:2px 0 0;letter-spacing:.04em}
@@ -43,8 +45,8 @@
 .bellOn small{border-color:currentColor}
 .bell svg{width:15px;height:15px}
 .bell small{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.14em;border:1px solid rgba(217,180,106,.5);border-radius:4px;padding:0 5px;line-height:15px}
-@media(max-width:380px){.timeline::before{left:76px}.item{grid-template-columns:44px 14px 1fr;gap:0 10px}.head{padding:18px 16px}.timeline,.foot{padding-left:16px;padding-right:16px}.rule{margin:0 16px}}
-@media(prefers-reduced-motion:reduce){.dot,.fresh .dot{animation:none}.chev{transition:none}}
+@media(max-width:380px){.timeline::before{left:77px}.item{grid-template-columns:44px 14px 1fr;gap:0 10px}.head{padding:18px 16px}.timeline,.foot{padding-left:16px;padding-right:16px}.rule{margin:0 16px}}
+@media(prefers-reduced-motion:reduce){.dot,.fresh .dot,.unread .node{animation:none}.chev{transition:none}}
 
 .found{display:block;font-size:9.5px;letter-spacing:0;color:#6f7b8c}
 

@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "UFPT",
+    "name": "UFPテクノロジーズ",
+    "cik": 914156,
+    "name_en": "UFP Technologies"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ISRG",
+      "ticker": "ISRG",
+      "name": "インテュイティブ・サージカル",
+      "name_en": "Intuitive Surgical",
+      "sub": "手術ロボット",
+      "sub_en": "Surgical robots",
+      "sub_short": "ロボ",
+      "sub_short_en": "Robots",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の24.3%)",
+          "text_en": "Largest customer, 24.3% of sales",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Net sales from our largest two customers, Intuitive Surgical SARL and Stryker Corporation, were 24.3% and 21.5%, respectively, of our total net sales for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "name_en": "Stryker",
+      "sub": "医療機器",
+      "sub_en": "Medtech",
+      "sub_short": "医療機器",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目に大きい顧客(供給契約)",
+          "text_en": "Second-largest customer; supply deals",
+          "source": {
+            "label": "UFP Technologies 8-K(2025年4月)",
+            "label_en": "UFP Technologies 8-K (April 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000117184325002025/f8k_040425.htm",
+            "level": "official",
+            "date": "2025-04-04",
+            "quote": "Technologies, Inc., a Delaware corporation (the \"Company\") entered into two supply agreements - a new supply agreement (the \"March 31 Letter Agreement\") and an amended and restated supply agreement (the \"March 26 Letter Agreement\") - with Sage Products, LLC (\"Stryker\", and together with the Company, the \"Parties\"), its second largest customer, securing exclusive manufacturing rights on a significant portion of its recently acquired business through AJR"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TECHNOPLASTICS",
+      "ticker": "TECHNOPLASTICS",
+      "name": "テクノ・プラスチックス",
+      "name_en": "Techno Plastics Industries",
+      "sub": "医療部品",
+      "sub_en": "Medical parts",
+      "sub_short": "医療部品",
+      "sub_short_en": "Med parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "(2) Acquisitions Techno Plastics Industries On July 7, 2025, the Company purchased 100% of the outstanding membership interests of Techno Plastics Industries, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AJRSPEC",
+      "ticker": "AJRSPEC",
+      "name": "AJRスペシャリティ・プロダクツ",
+      "name_en": "AJR Specialty Products",
+      "sub": "発泡材",
+      "sub_en": "Foam products",
+      "sub_short": "発泡材",
+      "sub_short_en": "Foam",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年4月に買収",
+          "text_en": "Acquired in April 2025",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AJR Specialty Products and AJR Custom Foam Products On April 25, 2025, the Company purchased 100% of the outstanding membership interests of AJR Specialty Products, LLC, (\"AJR Specialty\") and AJR Custom Foam Products, LLC, (\"AJR Custom Foam\") pursuant to a Securities Purchase Agreement, for an aggregate purchase price of $2.8 million in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AQF",
+      "ticker": "AQF",
+      "name": "AQFメディカル",
+      "name_en": "AQF Medical",
+      "sub": "医療部品",
+      "sub_en": "Medical parts",
+      "sub_short": "医療部品",
+      "sub_short_en": "Med parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月に買収",
+          "text_en": "Acquired in August 2024",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "AQF On August 23, 2024, the Company purchased 100% of the issued and outstanding membership interests of the parent holding companies of AQF Limited, operating as AQF Medical, (\"AQF\") pursuant to a Share Purchase Agreement and related agreements, for an aggregate purchase price of €43 million in cash (total purchase price in U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Restated Credit Agreement, dated December 22, 2021, between and among the Company, certain of its subsidiaries as guarantors and Bank of America, N.A., in its capacity as the initial lender, Administrative Agent, Swingline Lender and L/C Issuer"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

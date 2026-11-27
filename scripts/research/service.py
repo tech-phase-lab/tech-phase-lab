@@ -57,13 +57,18 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import earnings_patrol
+import earnings_dive_generate
+import earnings_reconcile
 import result_fallback
 import dart_api
 import dart_watch
 import earnings_announce
 import earnings_history
 import value_check
+import compare_values
 import twelve_allocator
+import twelve_copies
 import official_research
 import deep_analysis
 import llm_cost
@@ -526,7 +531,7 @@ def discovery_signature(result, links):
         candidate = links[url]
         if isinstance(candidate, dict):
             for key in (
-                "title", "publishedOn", "contentType", "contentBytes", "inlineText",
+                "title", "publishedOn", "publishedAt", "contentType", "contentBytes", "inlineText",
                 "secForm", "secAccession", "secCik", "secFilingDate", "secAcceptanceDateTime",
             ):
                 add(candidate.get(key))
@@ -890,6 +895,7 @@ class AutomaticMonitor:
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.price_alert_thread = threading.Thread(target=self.run_price_alerts, name="price-alerts", daemon=True)
         self.value_check_thread = threading.Thread(target=self.run_value_check, name="value-check", daemon=True)
+        self.compare_values_thread = threading.Thread(target=self.run_compare_values, name="compare-values", daemon=True)
         self.push_demo_thread = threading.Thread(target=self.run_push_demo, name="push-demo-target", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         # Several headline workers translate different articles at once. Each
@@ -909,6 +915,7 @@ class AutomaticMonitor:
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
+        self.earnings_patrol_thread = threading.Thread(target=self.run_earnings_patrol, name="earnings-patrol", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.channel_probe = official_channel_probe.Probe()
         self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
@@ -1203,6 +1210,27 @@ class AutomaticMonitor:
                 print("watch-earnings-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_earnings_patrol(self):
+        """The 監視22銘柄 earnings patrol (earnings_patrol.py): every three hours, and a few minutes after each new results flash of a
+        roster company. Off with EARNINGS_PATROL=false. Its problems reach the owner as operational incidents."""
+        if not earnings_patrol.enabled():
+            print("earnings-patrol-disabled", flush=True)
+            return
+        schedule = earnings_patrol.Schedule()
+        if self.stop_event.wait(120):  # let the monitor open its database first
+            return
+        while not self.stop_event.is_set():
+            now = datetime.now(timezone.utc)
+            try:
+                with self.db_lock, monitor.connect(self.db_path) as db:
+                    newest = earnings_patrol.newest_flash(db)
+                trigger = schedule.tick(newest, now)
+                if trigger:
+                    earnings_patrol.run_once(self.db_path, now, trigger, lock=self.db_lock)
+            except Exception as exc:
+                print("earnings-patrol-failed " + type(exc).__name__, flush=True)
+            self.stop_event.wait(60)
+
     def run_event_results(self):
         """Big events (an election) and indicators without a reader of their own (ADP, ISM, FOMC, GDP, retail sales).
         Headline feeds are read while a watch is open; the three official pages (FRB, BEA, Census) on their own, faster around release times."""
@@ -1398,14 +1426,41 @@ class AutomaticMonitor:
                         print(json.dumps({"event": "value-check-run", "asOf": result.get("asOf"), "credits": result.get("credits"),
                                           "ranked": {k: len(v["items"]) for k, v in result["universes"].items()},
                                           # the first ten of each list (public tickers), so the ranking can be checked from the logs
-                                          "top": {k: [f'{i["ticker"]}:{i["score"]}' for i in v["items"][:10]] for k, v in result["universes"].items()}}),
+                                          "top": {k: [f'{i["ticker"]}:{i["score"]}' for i in v["items"][:10]] for k, v in result["universes"].items()},
+                                          "values": len(result.get("values") or {})}),
                               flush=True)
+                    elif value_check.ensure_values(db):
+                        # A snapshot stored before the comparison's list existed: the list from the stored data, in memory only.
+                        print(json.dumps({"event": "value-check-values-derived", "values": len(value_check.DERIVED.get("values") or {})}), flush=True)
                 finally:
                     db.close()
             except Exception as error:
                 value_check.STATUS["lastError"] = type(error).__name__
                 print(json.dumps({"event": "value-check-failed", "error": type(error).__name__}), flush=True)
             self.stop_event.wait(300)
+
+    def run_compare_values(self, now=lambda: datetime.now(timezone.utc)):
+        """銘柄比較の割安性 for every comparable company (compare_values.py, owner Nov 26): one step about once a minute, in the
+        background tier through the allocator; on with Treasure Hunt (VALUE_CHECK_ENABLED) unless COMPARE_VALUES_ENABLED is "false"."""
+        if not value_check.enabled() or os.environ.get("COMPARE_VALUES_ENABLED", "true").strip().lower() == "false":
+            return
+        clock, last_log = {"at": 0}, 0.0
+        while not self.stop_event.is_set():
+            try:
+                db = value_check.connect(self.value_check_path())
+                try:
+                    report = compare_values.step(db, now=now(), should_stop=self.stop_event.is_set, last_statement=clock,
+                                                 sleep=lambda seconds: self.stop_event.wait(seconds))
+                    if any(report.get(k) for k in ("facts", "updated", "backfilled", "statements", "computed")):
+                        print(json.dumps({"event": "compare-values-step", **report}), flush=True)
+                    if time.time() - last_log > 3600:
+                        last_log = time.time()
+                        print(json.dumps({"event": "compare-values-coverage", **compare_values.coverage(db)}), flush=True)
+                finally:
+                    db.close()
+            except Exception as error:
+                print(json.dumps({"event": "compare-values-failed", "error": type(error).__name__}), flush=True)
+            self.stop_event.wait(60)
 
     def run_web_push(self):
         if not self.web_push_enabled:
@@ -1561,9 +1616,11 @@ class AutomaticMonitor:
         self.ownership_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
+        self.earnings_patrol_thread.start()
         self.push_thread.start()
         self.price_alert_thread.start()
         self.value_check_thread.start()
+        self.compare_values_thread.start()
         self.push_demo_thread.start()
 
     def stop(self):
@@ -1598,9 +1655,11 @@ class AutomaticMonitor:
         self.comparison_warm_thread.join(timeout=60)
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
+        self.earnings_patrol_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
         self.value_check_thread.join(timeout=15)
+        self.compare_values_thread.join(timeout=15)
         self.push_demo_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -2494,6 +2553,7 @@ class AutomaticMonitor:
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
+            state["earningsPatrol"] = {**earnings_patrol.diagnostics(db), "reconcile": earnings_reconcile.diagnostics(db)}
             state["signalIntake"]["dart"] = dart_api.diagnostics()
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
@@ -4041,6 +4101,22 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "watch-earnings-unavailable"})
             return
+        if path == "/value-check/values":
+            # The Stock Comparison's valuation list (every comparable company), served apart from Treasure Hunt's ranking so the ranking keeps
+            # the size the site in production accepts (reviewer, Nov 26). Only the site's server, which checks PRO membership.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                db = value_check.connect(self.app.value_check_path())
+                try:
+                    payload = value_check.values_payload(db)
+                finally:
+                    db.close()
+                self.send_json(200 if payload.get("ok") else 503, payload)
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "value-check-unavailable"})
+            return
         if path == "/value-check":
             # 割安判別ツール: served only to the site's server, which checks PRO membership (the same for every member).
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
@@ -4326,6 +4402,23 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
             return
+        if path == "/company-dives":
+            # Nov 26 (owner): earnings deep dives built for a new quarter, without any model call (earnings_dive_generate.py: MU's
+            # template over the parsed figures and the release's existing deep analysis), that passed every check. Same token as
+            # /earnings-results; read only.
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                db = earnings_history.connect_read_only(self.app.db_path)
+                try:
+                    dives = earnings_dive_generate.published(db)
+                finally:
+                    db.close()
+                self.send_json(200, {"ok": True, "dives": dives})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "company-dives-unavailable"})
+            return
         if path == "/earnings-results":
             # Nov 18 (owner): the calendar's results view reads every stored result of a month, not only the news feed's last
             # seven days. Same token as /news; a bounded, validated range; read only.
@@ -4392,9 +4485,25 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
-        if path == "/twelve/lease":
-            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
+        if path == "/value-check/want":
+            # The site's server: companies a member compared without a valuation figure go first in compare_values (order only, no call).
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                payload = self.read_json(4096)
+                tickers = payload.get("tickers") if isinstance(payload, dict) else None
+                compare_values.want(tickers[:10] if isinstance(tickers, list) else [])
+            except Exception:
+                self.send_json(400, {"ok": False})
+                return
+            self.send_json(200, {"ok": True})
+            return
+        if path == "/twelve/lease":
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py): the site's server token, or
+            # RESOLUTE's own lease token for its jobs' tiers only (closes, splits, thermometer; lib/resolute/twelve-lease.ts).
+            resolute = twelve_allocator.resolute_token_ok(self.headers.get("Authorization", ""))
+            if not resolute and (not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized()):
                 self.send_json(401, {"ok": False})
                 return
             allocator = twelve_allocator.installed()
@@ -4403,11 +4512,37 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 payload = self.read_json(1024)
-                granted = allocator.grant(payload.get("cost"), payload.get("tier"), payload.get("caller"))
+                if resolute and payload.get("tier") not in twelve_allocator.RESOLUTE_TIERS:
+                    raise ValueError("tier")
+                decision = allocator.decide(payload.get("cost"), payload.get("tier"), payload.get("caller"))
             except Exception:
                 self.send_json(400, {"ok": False})
                 return
-            self.send_json(200, {"ok": True, "granted": granted})
+            # "meter-unknown": nothing granted, and the caller learns the minute could not be judged (the site shows its last copies;
+            # RESOLUTE's alerts keep their own pace).
+            self.send_json(200, {"ok": True, "granted": decision == "granted", **({"reason": "meter-unknown"} if decision == "meter-unknown" else {})})
+            return
+        if path in ("/twelve/copies/get", "/twelve/copies/put"):
+            # Durable copies of the site's costly Twelve Data answers (twelve_copies.py): the runtime cache loses them within hours.
+            # The site's server token only.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                payload = self.read_json(64 * 1024)
+                db = twelve_copies.connect(twelve_copies.path_for(self.app.db_path))
+                try:
+                    if path.endswith("/put"):
+                        self.send_json(200, {"ok": True, "stored": twelve_copies.put(db, payload)})
+                    else:
+                        self.send_json(200, {"ok": True, "copies": twelve_copies.get(db, payload)})
+                finally:
+                    db.close()
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)[:40]})
+            except Exception as exc:
+                print(json.dumps({"event": "twelve-copies-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
             return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own

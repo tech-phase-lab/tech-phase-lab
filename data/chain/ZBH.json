@@ -164,6 +164,84 @@
         }
       ],
       "name_en": "Globus Medical"
+    },
+    {
+      "id": "MONOGRAM",
+      "ticker": "MONOGRAM",
+      "name": "モノグラム・テクノロジーズ",
+      "name_en": "Monogram Technologies",
+      "sub": "手術ロボット",
+      "sub_en": "Surgical robotics",
+      "sub_short": "ロボ",
+      "sub_short_en": "Robotics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年度に買収",
+          "text_en": "Acquired by Zimmer Biomet",
+          "source": {
+            "label": "Pro-Dex 10-K(2026年6月期)",
+            "label_en": "Pro-Dex 10-K (FY ended Jun 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788920/000107997326001215/pdex_10k-063026.htm",
+            "level": "official",
+            "date": "2026-09-03",
+            "quote": "during the second quarter of fiscal 2026, Zimmer Biomet acquired Monogram Technologies, Inc. (\"Monogram\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MTLS",
+      "ticker": "MTLS",
+      "name": "マテリアライズ",
+      "name_en": "Materialise",
+      "sub": "3Dプリント",
+      "sub_en": "3D printing",
+      "sub_short": "3D印刷",
+      "sub_short_en": "3D print",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "共同開発の提携先に挙げる",
+          "text_en": "Names Zimmer Biomet among its collaboration partners",
+          "source": {
+            "label": "Materialise 20-F(2025年度)",
+            "label_en": "Materialise 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091223/000110465926047671/mtls-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "We have entered into collaborations with a number of industrial and medical-device companies and academic institutions, including Zimmer Biomet"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNMD",
+      "ticker": "CNMD",
+      "name": "コンメド",
+      "name_en": "CONMED",
+      "sub": "外科機器",
+      "sub_en": "Surgical devices",
+      "sub_short": "外科",
+      "sub_short_en": "Surgical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "足首・足の手術機器の競合に挙げる",
+          "text_en": "Names Zimmer Biomet as a foot-and-ankle competitor",
+          "source": {
+            "label": "CONMED 10-K(2025年度)",
+            "label_en": "CONMED 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/816956/000081695626000009/cnmd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We compete with Smith & Nephew, plc; Arthrex, Inc.; Stryker Corporation; Johnson & Johnson: DePuy Mitek, Inc.; Zimmer Biomet, Inc."
+          }
+        }
+      ]
     }
   ],
   "far": [],

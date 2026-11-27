@@ -22,7 +22,7 @@ const cached = [
 
 const nextConfig: NextConfig = {
   // The company pages read lib/research/dives/<TICKER>.json at request time (lib/research/company-dive-loader.ts).
-  outputFileTracingIncludes: { "/research/companies/*": ["./lib/research/dives/*.json"] },
+  outputFileTracingIncludes: { "/research/companies/*": ["./lib/research/dives/*.json"], "/api/research/company-earnings": ["./lib/research/dives/*.json"] },
   // The sign-in-free start page for the LINE broadcast (owner, Nov 9): a single static file, opened at /start (Next.js also sends /start/ to it).
   async rewrites() {
     return { beforeFiles: [{ source: "/start", destination: "/start/index.html" }], afterFiles: [], fallback: [] };

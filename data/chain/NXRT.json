@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "NXRT",
+    "name": "ネクスポイント・レジデンシャル・トラスト",
+    "cik": 1620393,
+    "name_en": "NexPoint Residential Trust"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NEXBANK",
+      "ticker": "NEXBANK",
+      "name": "ネックスバンク",
+      "name_en": "NexBank Capital",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "物件オールド・ファームを売却",
+          "text_en": "Bought its Old Farm property",
+          "source": {
+            "label": "NexPoint Residential Trust 10-K(2025年度)",
+            "label_en": "NexPoint Residential Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620393/000119312526077343/nxrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(2) Old Farm was sold to NexBank Capital, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BHEQUITIES",
+      "ticker": "BHEQUITIES",
+      "name": "BHエクイティーズ",
+      "name_en": "BH Equities",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investing",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁持ち分を買い取る契約(2017年)",
+          "text_en": "Sold its joint venture interests to NXRT (2017)",
+          "source": {
+            "label": "NexPoint Residential Trust 10-K(2025年度)",
+            "label_en": "NexPoint Residential Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620393/000119312526077343/nxrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On June 30, 2017, the Company and the OP entered into a contribution agreement with BH Equities, LLC and its affiliates (collectively, \"BH Equity\"), whereby the Company purchased 100% of the joint venture interests in the portfolio owned by BH Equity, representing approximately 8.4% ownership in the portfolio (the \"BH Buyout\"), for total consideration of approximately $51.7 million (the \"Purchase Amount\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "NexPoint Residential Trust 8-K(2026年6月)",
+            "label_en": "NexPoint Residential Trust 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620393/000143774926020003/nxrt20260608_8k.htm",
+            "level": "official",
+            "date": "2026-06-09",
+            "quote": "The purchase price was funded with borrowings under the Company's existing revolving credit facility with JPMorgan Chase Bank, N.A., as administrative agent."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RJF",
+      "ticker": "RJF",
+      "name": "レイモンド・ジェームズ",
+      "name_en": "Raymond James Financial",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "NexPoint Residential Trust 10-K(2025年度)",
+            "label_en": "NexPoint Residential Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620393/000119312526077343/nxrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At-the-Market Offering On March 4, 2020, the Company, the OP and the Adviser entered into separate equity distribution agreements with each of Jefferies LLC (\"Jefferies\"), Raymond James & Associates, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "NexPoint Residential Trust 10-K(2025年度)",
+            "label_en": "NexPoint Residential Trust 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620393/000119312526077343/nxrt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At-the-Market Offering On March 4, 2020, the Company, the OP and the Adviser entered into separate equity distribution agreements with each of Jefferies LLC (\"Jefferies\"), Raymond James & Associates, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

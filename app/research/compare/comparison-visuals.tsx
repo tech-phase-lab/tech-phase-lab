@@ -1,6 +1,7 @@
 "use client";
 import type { ComparisonResult } from "@/lib/research/comparison";
-import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentBalance, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
+import { VALUE_LABELS, valueAsOfLine, valueCheckItem } from "@/lib/research/comparison-value";
 import styles from "./styles.module.css";
 // The color of each company (owner, Nov 5): the first a yellowish gold, the second blue, the third a light purple.
 const companyColors = ["#ffc247", "#4cc9f0", "#ff7ac6"];
@@ -74,8 +75,7 @@ function StatusOverlay({companies,lang,now}: {companies:ComparisonResult["compan
     <p className={styles.snapshotNote}>{ja ? "未取得・評価保留は描画しません" : "Unavailable or unscored factors are not plotted"}</p>
   </section>;
 }
-/** missingNote: the 「— 未取得…」 legend; the PRO tour's sample, where every factor is filled, leaves it out. */
-function ScoreOverview({companies,lang,now,missingNote=true}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number;missingNote?:boolean}) {
+function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
   const scoreSets=companies.map(c=>comparisonScores(c,now)), factors=scoreSets[0], ja=lang==="ja";
   const columns={gridTemplateColumns:`repeat(${companies.length},minmax(0,1fr))`} as React.CSSProperties;
   return <section className={styles.scoreOverview} data-count={companies.length}><div className={styles.scoreHeading}><h2>{ja ? "比較スナップショット" : "Comparison snapshot"}</h2><small>{ja ? "参考スコア / 10" : "Reference score (out of 10)"}</small></div>
@@ -88,7 +88,7 @@ function ScoreOverview({companies,lang,now,missingNote=true}: {companies:Compari
           <div className={styles.snapValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`,background:colorOf(i),opacity:winner ? 1 : .6}}/>}</span><strong style={winner ? {color:colorOf(i)} : undefined}>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>
           <small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></div>;})}</div>
     </div>)}
-    {missingNote && <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— means data or a score isn't available. It doesn't mean zero."}</p>}
+    {valueAsOfLine(companies,lang,now) && <p className={styles.snapshotNote}>{valueAsOfLine(companies,lang,now)}</p>}
   </section>;
 }
 /** Bullets saved before Nov 15 used long forms; they are shown in the short form that fits one line at 360px. */
@@ -97,7 +97,11 @@ export const compactTrait=(text:string)=>text.replace(/^営業赤字（利益率
 /** One item is one line (owner, Nov 15: 「ここは1行固定」): 12px, or 11px when long for the 184px column; anything longer ends in "…". */
 const fitSize=(text:string)=>textWidth(text)*12>146 ? "small" : "normal";
 function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number;colorIndex?:number}) {
-  const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
+  // Without a current quarter (no revenue yet) the quarter's points are not shown; the valuation point, which does not depend on it, is.
+  const valuation=valueCheckItem(c.valueCheck);
+  // The valuation point is written from the figure at display time, so its wording (VALUE_LABELS) is the same wherever it was prepared.
+  const prepared=(hasRecentQuarter(c,now) || hasRecentBalance(c,now)) && c.preparedAnalysis ? c.preparedAnalysis.items : null;
+  const items=prepared ? prepared.flatMap(i=>i.id!=="valuation" ? [i] : valuation ? [valuation] : []) : valuation ? [valuation] : [], ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
   const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>compactTrait(i.short[lang])),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>compactTrait(i.short[lang]))};
   return <article className={styles.scoreCard}>
@@ -105,18 +109,17 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
     {c.quarterRevenue && <p className={styles.periodLine}>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"} · ` : ""}{ja ? "対象期間" : "Reporting period"} {c.quarterRevenue.start ? `${c.quarterRevenue.start} – ` : ""}{c.quarterRevenue.end}</p>}
     {availability && <p className={styles.periodLine}>{availability}</p>}
     {c.quarterRevenue && c.periodMonths && <p className={styles.periodLine}>{c.periodMonths === 6 ? (ja ? "半期（6か月）の決算です。この会社は四半期の数値を開示していません。" : "Half-year results: this company does not report quarterly figures.") : (ja ? "年度（12か月）の決算です。提出書類に年次決算後の四半期の数値がありません。" : "Full-year results: the filings carry no quarterly figures after the annual report.")}</p>}
-    {c.previousQuarterShown !== undefined && <p className={styles.periodLine}>{ja ? `新しい決算（${c.previousQuarterShown}発表）は四半期報告書の提出待ちのため、前の四半期の数値です。` : `The newer results (released ${c.previousQuarterShown}) await the quarterly report; these are the previous quarter's figures.`}</p>}
     {c.capexNotReported && <p className={styles.periodLine}>{ja ? "設備投資の記載が決算書にないため、0として資金創出を計算しています。" : "The filings show no capital spending line, so free cash flow counts it as zero."}</p>}
-    {!!c.supplemented?.length && <p className={styles.periodLine}>{ja ? `一部の項目（${c.supplemented.map(id=>({growth:"成長",profitability:"収益",cash:"資金",stability:"安定",financial:"財務",momentum:"株価",valuation:"割安",market:"株価・割安"} as Record<string,string>)[id] ?? id).join("・")}）は${c.supplementedFromQuarter ? `、データ提供元に最新の四半期がまだ無いため、前の四半期（${c.supplementedFromQuarter.slice(0,4)}年${Number(c.supplementedFromQuarter.slice(5,7))}月期）の数値です。` : "同じ四半期のデータ提供元の数値です。"}` : `Some factors (${c.supplemented.join(", ")}) use the data provider's figures for ${c.supplementedFromQuarter ? `the previous quarter (to ${c.supplementedFromQuarter}), as the newest one is not in yet` : "the same quarter"}.`}</p>}
+    {!!c.supplemented?.length && <p className={styles.periodLine}>{ja ? `一部の項目（${c.supplemented.map(id=>({growth:"成長",profitability:"収益",cash:"資金",stability:"安定",financial:"財務",momentum:"株価",valuation:"割安",market:"株価"} as Record<string,string>)[id] ?? id).join("・")}）は${c.supplementedFromQuarter ? `、データ提供元に最新の四半期がまだ無いため、前の四半期（${c.supplementedFromQuarter.slice(0,4)}年${Number(c.supplementedFromQuarter.slice(5,7))}月期）の数値です。` : "同じ四半期のデータ提供元の数値です。"}` : `Some factors (${c.supplemented.join(", ")}) use the data provider's figures for ${c.supplementedFromQuarter ? `the previous quarter (to ${c.supplementedFromQuarter}), as the newest one is not in yet` : "the same quarter"}.`}</p>}
     <div className={styles.companyProfile}>
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item} data-fit={fitSize(item)} data-lines={VALUE_LABELS.traitLines}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item} data-fit={fitSize(item)} data-lines={VALUE_LABELS.traitLines}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>

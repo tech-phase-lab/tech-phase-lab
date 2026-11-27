@@ -1,0 +1,6 @@
+/* Market closed notice (owner, Nov 27): a small bordered box with a megaphone, one line that never wraps (the longest holiday line
+ * fits at 360px, checked with Playwright). */
+.note{display:flex;align-items:center;gap:5px;box-sizing:border-box;max-width:100%;margin:0 0 14px;padding:7px 8px;border:1px solid var(--line,#1a2332);border-radius:8px;color:#8c98ab;font-size:min(12.5px,2.85vw);line-height:1.4;white-space:nowrap;overflow:hidden}
+.note span{min-width:0;white-space:nowrap}
+.icon{flex:none;width:14px;height:14px;color:inherit}
+@media(min-width:761px){.note{font-size:12.5px}}

@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "IBKR",
+    "name": "インタラクティブ・ブローカーズ",
+    "cik": 1381197,
+    "name_en": "Interactive Brokers"
+  },
+  "rows": [
+    {
+      "ja": "供給元・取引先",
+      "en": "Suppliers & providers"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FRHC"
+  ],
+  "companies": [
+    {
+      "id": "FRHC",
+      "ticker": "FRHC",
+      "name": "フリーダム・ホールディング",
+      "name_en": "Freedom Holding",
+      "sub": "証券",
+      "sub_en": "Brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "欧州で競合するネット証券に挙げる",
+          "text_en": "Names Interactive Brokers as a competitor in Europe",
+          "source": {
+            "label": "Freedom Holding 10-Kの添付資料(2026年3月期)",
+            "label_en": "Freedom Holding exhibit to its 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/924805/000092480526000012/ex415prospectus2ndbondprog.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "In Europe, we compete with digital-first brokers such as eToro and Interactive Brokers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TIGR",
+      "ticker": "TIGR",
+      "name": "UPフィンテック",
+      "name_en": "UP Fintech Holding",
+      "sub": "ネット証券",
+      "sub_en": "Online brokerage",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "一部の顧客の信用取引をIBが提供",
+          "text_en": "Interactive Brokers provides margin financing to some of its customers",
+          "source": {
+            "label": "UP Fintech Holding 20-F(2025年度)",
+            "label_en": "UP Fintech Holding 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1756699/000119312526174855/tigr-20251231.htm",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "We generate interest income arising from margin financing offered by us to consolidated account customers and earn financing service fees related to the margin financing provided by Interactive Brokers to fully disclosed account customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TECTONIC",
+      "ticker": "TECTONIC",
+      "name": "テクトニック・ファイナンシャル",
+      "name_en": "Tectonic Financial",
+      "sub": "金融サービス",
+      "sub_en": "Financial services",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "清算会社の1社としてIBを利用",
+          "text_en": "Uses Interactive Brokers as a clearing firm",
+          "source": {
+            "label": "Tectonic Financial 10-K(2024年度)",
+            "label_en": "Tectonic Financial 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1766526/000118518525000251/tectp10k123124.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Finally, we provide margin loans offered through our clearing firms, Pershing LLC and Interactive Brokers LLC, and periodically serve as a member of an underwriting or selling group member in public offerings, which we offer to our clients."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZEROHASH",
+      "ticker": "ZEROHASH",
+      "name": "ゼロハッシュ",
+      "name_en": "Zero Hash",
+      "sub": "暗号資産の取引基盤",
+      "sub_en": "Crypto infrastructure",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "暗号資産の執行・清算・保管を担う",
+          "text_en": "Executes, clears and holds its customers' crypto",
+          "source": {
+            "label": "Interactive Brokers 10-K(2025年度)",
+            "label_en": "Interactive Brokers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000062/ibkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "• Cryptocurrency - Customers of Interactive Brokers LLC, including both individuals and advisors, can trade Bitcoin (BTC), Ethereum (ETH), Litecoin (LTC), Bitcoin Cash (BCH) and more2 through Paxos Trust Company or Zero Hash LLC, which execute, clear and custody the cryptocurrencies, alongside other asset classes on a single unified platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PAXOS",
+      "ticker": "PAXOS",
+      "name": "パクソス",
+      "name_en": "Paxos Trust Company",
+      "sub": "暗号資産の取引基盤",
+      "sub_en": "Crypto infrastructure",
+      "sub_short": "暗号資産",
+      "sub_short_en": "Crypto",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "暗号資産の執行・清算・保管を担う",
+          "text_en": "Executes, clears and holds its customers' crypto",
+          "source": {
+            "label": "Interactive Brokers 10-K(2025年度)",
+            "label_en": "Interactive Brokers 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000062/ibkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "• Cryptocurrency - Customers of Interactive Brokers LLC, including both individuals and advisors, can trade Bitcoin (BTC), Ethereum (ETH), Litecoin (LTC), Bitcoin Cash (BCH) and more2 through Paxos Trust Company or Zero Hash LLC, which execute, clear and custody the cryptocurrencies, alongside other asset classes on a single unified platform."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

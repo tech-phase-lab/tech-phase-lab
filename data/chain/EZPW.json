@@ -1,0 +1,162 @@
+{
+  "root": {
+    "ticker": "EZPW",
+    "name": "イージーコープ",
+    "cik": 876523,
+    "name_en": "EZCORP"
+  },
+  "rows": [
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FCFS"
+  ],
+  "companies": [
+    {
+      "id": "FCFS",
+      "ticker": "FCFS",
+      "name": "ファーストキャッシュ",
+      "name_en": "FirstCash Holdings",
+      "sub": "質屋",
+      "sub_en": "Pawn stores",
+      "sub_short": "質屋",
+      "sub_short_en": "Pawn",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "唯一の上場競合に挙げる",
+          "text_en": "Named its only US-listed direct competitor",
+          "source": {
+            "label": "EZCORP 10-K(2026年9月期)",
+            "label_en": "EZCORP 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652326000076/ezpw-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "There is one U.S. publicly traded company in the marketplace with which we directly compete, FirstCash Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOUNDERSONE",
+      "ticker": "FOUNDERSONE",
+      "name": "ファウンダーズ・ワン",
+      "name_en": "Founders One",
+      "sub": "質屋",
+      "sub_en": "Pawn stores",
+      "sub_short": "質屋",
+      "sub_short_en": "Pawn",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に経営権を取得",
+          "text_en": "Bought control in January 2026",
+          "source": {
+            "label": "EZCORP 10-K(2026年9月期)",
+            "label_en": "EZCORP 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652326000076/ezpw-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "•672 pawn stores in Mexico; and •290 pawn stores in Guatemala, El Salvador, Honduras, the Caribbean and Central America On January 2, 2026, we acquired a controlling interest in Founders One, LLC (\"Founders\"), which through its subsidiary Simple Management Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ELBUFALO",
+      "ticker": "ELBUFALO",
+      "name": "エル・ブファロ・ポーン",
+      "name_en": "El Bufalo Pawn",
+      "sub": "質屋",
+      "sub_en": "Pawn stores",
+      "sub_short": "質屋",
+      "sub_short_en": "Pawn",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に店舗を買収",
+          "text_en": "Bought its stores in January 2026",
+          "source": {
+            "label": "EZCORP 10-K(2026年9月期)",
+            "label_en": "EZCORP 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652326000076/ezpw-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "El Bufalo Pawn Acquisition On January 12, 2026, we acquired the business operations of 12 pawn stores in Texas, primarily in the Laredo area, operating under the name \"El Bufalo Pawn,\" from LBP, L.P. and certain individual sellers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RICHDATA",
+      "ticker": "RICHDATA",
+      "name": "リッチ・データ",
+      "name_en": "Rich Data Corporation",
+      "sub": "与信AI",
+      "sub_en": "Credit analytics",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資先",
+          "text_en": "Company it invested in",
+          "source": {
+            "label": "EZCORP 10-K(2026年9月期)",
+            "label_en": "EZCORP 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652326000076/ezpw-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "Our ability to recover our investments in other companies (such as our investment in Rich Data Corporation) is heavily dependent on the success and performance of those companies, including their respective ability to obtain further debt or equity financing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIMPLEMGMT",
+      "ticker": "SIMPLEMGMT",
+      "name": "シンプル・マネジメント・グループ",
+      "name_en": "Simple Management Group",
+      "sub": "質屋",
+      "sub_en": "Pawn stores",
+      "sub_short": "質屋",
+      "sub_short_en": "Pawn",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ファウンダーズ・ワンを通じて取得",
+          "text_en": "Acquired through Founders One",
+          "source": {
+            "label": "EZCORP 10-K(2026年9月期)",
+            "label_en": "EZCORP 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/876523/000087652326000076/ezpw-20260930.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "The valuation allowance increased by $14.8 million in fiscal 2026, primarily due to the valuation allowance on net operating loss carryforwards acquired in connection with the acquisition of Simple Management Group."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

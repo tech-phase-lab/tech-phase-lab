@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "LAUR",
+    "name": "ローリエイト・エデュケーション",
+    "cik": 912766,
+    "name_en": "Laureate Education"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CVSA",
+      "ticker": "CVSA",
+      "name": "コビスタ(旧アドタレム)",
+      "name_en": "Covista (formerly Adtalem)",
+      "sub": "教育",
+      "sub_en": "Education",
+      "sub_short": "教育",
+      "sub_short_en": "Education",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ウォールデン大学の買い手",
+          "text_en": "Bought its Walden University unit",
+          "source": {
+            "label": "Laureate Education 10-K(2025年度)",
+            "label_en": "Laureate Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828026009479/laur-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Dispositions Walden Divestiture On August 12, 2021, the Company closed the transaction pursuant to the Membership Interest Purchase Agreement (the Walden Purchase Agreement), dated September 11, 2020, with Adtalem Global Education Inc., a Delaware corporation (the Walden Purchaser)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STRA",
+      "ticker": "STRA",
+      "name": "ストラテジック・エデュケーション",
+      "name_en": "Strategic Education",
+      "sub": "大学運営",
+      "sub_en": "Universities",
+      "sub_short": "大学",
+      "sub_short_en": "College",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "豪州・NZ事業の買い手",
+          "text_en": "Bought its Australia-NZ business",
+          "source": {
+            "label": "Laureate Education 10-K(2024年度)",
+            "label_en": "Laureate Education 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828025006557/laur-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "LLC, Laureate International B.V. and Laureate Education, Inc. 10-K 001-38002 2.8 02/27/2020 2.2# Sale and Purchase Agreement, dated July 29, 2020, by and among LEI AMEA Investments B.V., Laureate Education, Inc., SEI Newco Inc. and Strategic Education, Inc. 10-Q 001-38002 2.9 11/05/2020 2.3# Master Agreement, dated September 10, 2020, by and among Laureate International B.V., Laureate I, B.V., Servicios Regionales Universitarios LE, S.C. and Fundación Educación y"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WENGEN",
+      "ticker": "WENGEN",
+      "name": "ウェンゲン・アルバータ",
+      "name_en": "Wengen Alberta",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2007年の買収時の出資者",
+          "text_en": "Investor in its 2007 buyout",
+          "source": {
+            "label": "Laureate Education 10-K(2025年度)",
+            "label_en": "Laureate Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828026009479/laur-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Goodwill, Other Intangible Assets and Long-lived Assets Goodwill Goodwill primarily represents the amounts paid by Wengen Alberta, Limited Partnership (Wengen) in excess of the fair value of the net assets acquired in the August 2007 leveraged buyout transaction (LBO), plus the excess purchase price over fair value of net assets for businesses acquired after the LBO transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOWPHIPPS",
+      "ticker": "SNOWPHIPPS",
+      "name": "スノー・フィップス",
+      "name_en": "Snow Phipps Group",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株式購入契約の相手",
+          "text_en": "Party to a stock purchase agreement",
+          "source": {
+            "label": "Laureate Education 10-K(2025年度)",
+            "label_en": "Laureate Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828026009479/laur-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "On May 6, 2024, the Company entered into a stock purchase agreement with each of Snow Phipps Group, LLC, Snow Phipps Group, L.P., Snow Phipps Group (B), L.P., Snow Phipps Group (Offshore), L.P., Snow Phipps Group (RPV), L.P. and SPG Co-Investment, L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "担保代理人",
+          "text_en": "Collateral agent on its pledge agreement",
+          "source": {
+            "label": "Laureate Education 10-K(2025年度)",
+            "label_en": "Laureate Education 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912766/000162828026009479/laur-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Restated Pledge Agreement, dated as of April 26, 2017, among Laureate Education, Inc. and certain domestic subsidiaries of Laureate Education, Inc. party thereto from time to time, as pledgors, and Citibank, N.A., as collateral agent 10-Q 001-38002"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

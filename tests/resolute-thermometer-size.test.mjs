@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { collectThermometer, THERMOMETER_ROSTERS } from '../lib/resolute/thermometer-provider.ts';
-import { safeThermometerSnapshot, safeShockStocks, safeShockIntraday } from '../lib/resolute/thermometer-runtime.ts';
+import { basketTrail, collectThermometer, THERMOMETER_ROSTERS, TRAIL_SESSIONS } from '../lib/resolute/thermometer-provider.ts';
+import { safeThermometerSnapshot, safeShockStocks, safeShockIntraday, safeTrail } from '../lib/resolute/thermometer-runtime.ts';
 
 // The site reads the served thermometer snapshot with a 16,384-byte limit (lib/resolute/thermometer-transport.ts) and drops the
 // whole reading above it. With #875's trail and #876's history / drops it is near 11 KB, so the Shock Gauge additions (the
@@ -35,6 +35,13 @@ test('a realistic full thermometer snapshot stays at 14 KB or less as served; th
   const served = { ...safeThermometerSnapshot(collected, asOf), validUntil: Date.parse('2026-11-26T21:00:00Z') };
   assert.ok(served.trail && served.shock, 'a full snapshot: trail and the Shock Gauge map are present');
   assert.ok(bytes(served) <= 14 * 1024, `served snapshot ${bytes(served)} bytes`);
+  // The home chart (owner, Nov 26 §2): both baskets carry three months, ending on the snapshot's session, after storage and the
+  // site's own re-validation (JSON round trip, as the row and the resolute-api answer are).
+  const reread = safeThermometerSnapshot(JSON.parse(JSON.stringify(served)), asOf);
+  for (const id of ['nas100', 'sox']) {
+    const line = reread.trail?.[id];
+    assert.equal(line?.length, TRAIL_SESSIONS, `${id} trail`); assert.equal(line.at(-1).date, asOf); assert.equal(line[0].close, 100);
+  }
   assert.ok(!('shockStocks' in served) && !('shockIntraday' in served), 'stored-only data is never served');
   // The percentile thermometer stores its reading only (score, band, percentiles), never the history series.
   for (const id of ['nas100', 'sox']) assert.ok(bytes(served[id]) < 400, `${id} reading ${bytes(served[id])} bytes`);
@@ -44,4 +51,12 @@ test('a realistic full thermometer snapshot stays at 14 KB or less as served; th
   assert.ok(Object.values(intraday[asOf]).every(r => Object.keys(r).length === 6));
   assert.ok(Object.values(stocks[asOf]).every(m => [m.changePercent, m.typicalPercent, m.intradayPercent].every(v => v === undefined || Math.round(v * 100) / 100 === v)));
   assert.ok(intraday[asOf].nas100.changePercent < -3, 'the last session\'s intraday fall is measured');
+});
+
+test('the home chart line survives a 20-year chained level far above the reader\'s bound (rebased to 100)', () => {
+  const levels = Array.from({ length: 80 }, (_, i) => ({ date: new Date(Date.UTC(2026, 7, 3 + i)).toISOString().slice(0, 10), close: 3e7 * (1 + i / 100) }));
+  const session = levels.at(-1).date, trail = basketTrail(levels, session);
+  assert.equal(trail.length, TRAIL_SESSIONS); assert.equal(trail[0].close, 100);
+  assert.deepEqual(safeTrail({ nas100: trail, sox: trail }, session), { nas100: trail, sox: trail });
+  assert.deepEqual(basketTrail([], session), []);
 });

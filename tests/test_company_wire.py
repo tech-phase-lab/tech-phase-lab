@@ -563,6 +563,64 @@ class LowValueTests(unittest.TestCase):
         self.assertEqual([t for t in self.EVENT_NEWS if company_wire.hidden_title(t)], [])
         self.assertEqual([t for t in self.STILL_LOW_VALUE if not company_wire.hidden_title(t)], [])
 
+    # Owner, Nov 26: a consumer brand's stunt naming a CEO, "another connection" teasers and celebrity trivia are never translated;
+    # earnings, guidance, export controls, deals and broker actions are.
+    STUNTS_AND_TEASERS = ("‘Your booth is waiting': Denny's welcomes Jensen Huang back as Nvidia CEO",
+                          "Chinese-Linked Executive's Other Connection to Nvidia", 'Another Nvidia connection for China-linked executive',
+                          'The hidden link between Nvidia and a Chinese chip broker', "Wendy's trolls Elon Musk after Tesla CEO's tweet",
+                          "McDonald's offers free fries to celebrate Nvidia founder Jensen Huang",
+                          'Jensen Huang signs autographs and poses for selfies in Taipei', "Jensen Huang's leather jacket steals the show at Computex")
+    KEPT_NEAR_MISSES = ('Nvidia reports record third-quarter revenue of $57 billion', 'Nvidia raises fourth-quarter revenue guidance above estimates',
+                        'US tightens export controls on Nvidia H20 chips to China', 'Nvidia agrees to buy Run:ai for $700 million',
+                        'Bernstein raises Nvidia price target to $300', 'Morgan Stanley upgrades Micron to Overweight',
+                        "McDonald's to deploy Nvidia AI across 40,000 restaurants", 'Starbucks partners with Nvidia on drive-thru AI',
+                        'Intel cuts ties with Chinese distributor after export probe', 'Meta launches AI selfie feature for Instagram',
+                        'Nvidia names Jensen Huang chief executive again after board vote')
+
+    def test_brand_stunts_and_connection_teasers_are_dropped_and_material_news_kept(self):
+        self.assertEqual([t for t in self.STUNTS_AND_TEASERS if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.KEPT_NEAR_MISSES if company_wire.hidden_title(t)], [])
+
+    # Owner, Nov 26: company-blog marketing and customer showcases are never translated; launches, partnerships and expansions are.
+    SHOWCASES = ('See what 5 builders are making with Gemini 4 Neon', '5 ways to use Gemini in Google Docs', 'Tips for holiday shopping with AI Mode',
+                 'How small businesses are using Gemini to grow', 'Meet the students building the future of AI',
+                 'Behind the scenes of the Pixel camera', 'Customer spotlight: Wayfair scales search with Vertex AI',
+                 'Indie filmmakers in India bring big-screen stories to life with Google Flow', 'Retailers build shopping agents with Gemini',
+                 # Owner, Nov 26 (audit of the served feed).
+                 'Dropbox to Present at the 2026 UBS Global Technology and AI Conference', 'CrowdStrike to Participate in Upcoming Investor Conferences',
+                 'Cango Inc. to Report Third Quarter 2026 Financial Results on November 30, 2026, Eastern Time',
+                 'Hydreight Technologies Announces Timing of Q3 2026 Financial Results and Earnings Call', 'Uniserve Announces Grant of Incentive Stock Options',
+                 'Options Now Available on ANUU, ANDD & ANSS: Leverage Shares by Themes 2X Long, 2X Short and 1X Short Anthropic (ANT) ETFs',
+                 'CDW Canada Named 2026 Cisco Partner of the Year for Cloud & AI and SMB', 'Anthropic Rebounds From 10% Drop as Markets Stage Dramatic Recovery | Closing Bell',
+                 'Freedom Gold Corp. Announces Extension and Amendment of FT Offering and Extension of Unit Offering',
+                 'A Man in Denver Has Been Throwing Eggs at Waymo Vehicles', "Former Tesla engineer says AI will create more 'fake jobs' — not mass unemployment",
+                 'Remedy says Microsoft decides whether Quantum Break gets a sequel', "Mulvaney: Trump ‘Reading the Room Wrong' on Huang",
+                 'Nvidia, Micron and Oracle Shares Fall as AI Sell-Off Continues; Key Reasons Behind the Decline')
+    SHOWCASE_NEAR_MISSES = ('Introducing Gemini 4 Neon', 'Meet the new Pixel 11', 'Google launches Gemini 4 Neon: 5 ways to try it',
+                            'Golden State Warriors and Google expand partnership, naming Gemini the official AI assistant partner',
+                            "Nvidia to expand King's Cross hub in London", 'Nvidia builds Taiwan AI supercomputer with Foxconn',
+                            'Palantir wins $480 million Army contract award', "Exclusive: Nvidia in talks to supply ‘Rubin' chips to Saudi venture",
+                            'Nvidia unveils Rubin Ultra at GTC conference', 'iQIYI Announces Receipt of Minimum Bid Price Notice from Nasdaq',
+                            'Amazon to launch Amazon Autos in UK in early 2027 in first expansion beyond US')
+
+    def test_marketing_showcases_are_dropped_and_launches_kept(self):
+        self.assertEqual([t for t in self.SHOWCASES if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.SHOWCASE_NEAR_MISSES if company_wire.hidden_title(t)], [])
+
+    def test_a_headline_filed_under_a_company_it_does_not_name_is_rejected_for_that_company(self):
+        row = lambda ticker, title: {'ticker': ticker, 'title': title, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}
+        kings = "Nvidia to expand King's Cross hub in London"
+        self.assertTrue(company_wire.locally_rejected(row('GOOGL', kings)))
+        self.assertFalse(company_wire.locally_rejected(row('NVDA', kings)))
+        self.assertFalse(company_wire.locally_rejected(row('GOOGL', 'Golden State Warriors expand Gemini partnership')))
+        self.assertFalse(company_wire.locally_rejected(row('GOOGL', 'Fed holds rates steady')))
+        self.assertFalse(company_wire.locally_rejected(row('KXHCF', 'Kioxia and NVIDIA Collaborate')))
+        # Without a ticker (the prefilter reads articles, not copies) the copy is not judged.
+        self.assertFalse(company_wire.locally_rejected({'title': kings, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}))
+        self.assertTrue(company_wire.locally_rejected({'title': kings, 'publisher': 'Reuters', 'source': 'gnews', 'url': 'https://news.example/x'}, 'GOOGL'))
+        # The Stock News API files a story under the companies it is about: its copies are not judged.
+        self.assertFalse(company_wire.locally_rejected({**row('GOOGL', kings), 'source': 'stocknews'}))
+
     def test_gurufocus_templates_links_and_outlet_are_dropped(self):
         self.assertEqual([t for t in self.GURUFOCUS if not company_wire.hidden_title(t)], [])
         # GF Securities is a broker, not a GuruFocus template.
@@ -664,3 +722,35 @@ class TechAlertsNoiseTests(unittest.TestCase):
                                              'published': published}], 'Nebius Group', seen_at=published)
                 feed = company_wire.public_feed(db, now.timestamp())
         self.assertEqual([r['titleEn'] for r in feed['items'].get('NBIS', [])], ['Nebius signs $17.4 billion GPU capacity deal with Microsoft'])
+
+
+class ContributorOpinionTests(unittest.TestCase):
+    # Owner, Nov 26: the NBIS row 「ネビウスの設備投資は誤解されていたので買いだ」 was the Seeking Alpha contributor article
+    # "Nebius' CapEx Was Misread, So I'm Buying". Contributor rating calls are never translated; brokerage actions are.
+    OPINIONS = ("Nebius' CapEx Was Misread, So I'm Buying (NASDAQ:NBIS)", "Nebius' CapEx Is Misunderstood: Buy",
+                'Micron: The Memory Supercycle Has Legs: Strong Buy', 'Oracle: Debt Is Piling Up: Sell',
+                'Intel: Turnaround Takes Time: Hold (NASDAQ:INTC)', 'Sandisk: This Is Not Over (Rating Upgrade)',
+                'Palantir: Priced For Perfection (Rating Downgrade)', 'AMD: Upgrading To Strong Buy', 'Why I Sold All My Nvidia Shares',
+                'Micron: Pounding The Buy Table (Double Upgrade)', "Nebius: Why I'm Extremely Bullish After The Crash (NASDAQ:NBIS)",
+                "Broadcom Stock Hasn't Traded This Low Since July 2025. I Think It's a Buy.")
+    KEPT = ('Morgan Stanley upgrades Nebius to Buy, raises price target to $150', 'Nebius initiated at Buy by Citi with $140 target',
+            'Rosenblatt on Nebius: Buy', 'Analyst reiterates Strong Buy on Nebius Group',
+            'Nebius Group drops 11% amid broad technology selloff (NBIS:NASDAQ)', 'Nvidia: Sell-off deepens as export curbs widen',
+            'SoftBank sold its entire Nvidia stake for $5.8 billion', 'Nebius signs $17.4 billion GPU capacity deal with Microsoft',
+            'Freedom Capital Markets maintains Nebius Group at Buy, keeps price target at $314', 'Broadcom Inc. : Bernstein keeps its Buy rating')
+
+    def test_contributor_rating_calls_are_hidden_and_broker_actions_kept(self):
+        self.assertEqual([t for t in self.OPINIONS if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.KEPT if company_wire.contributor_opinion(t)], [])
+
+    def test_the_pattern_matches_lib_research_contributor_opinion(self):
+        import os, re
+        ts = open(os.path.join(os.path.dirname(__file__), '..', 'lib', 'research', 'contributor-opinion.ts'), encoding='utf-8').read()
+        block = re.search(r'export const CONTRIBUTOR_OPINION_EN = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
+        self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)), company_wire.CONTRIBUTOR_OPINION_EN)
+
+    def test_translators_keep_a_rating_tag_apart_from_the_sentence(self):
+        import headline_translation
+        for text in (company_wire.POLICY, headline_translation.POLICY):
+            self.assertIn('(Rating Upgrade)', text)
+            self.assertIn('「〜：買い」', text)

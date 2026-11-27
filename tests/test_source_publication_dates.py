@@ -56,7 +56,8 @@ class SourcePublicationDateTests(unittest.TestCase):
         self.assertEqual(len(after), 1)
         self.assertEqual(after[0]['publishedOn'], '2026-10-01')
         self.assertEqual(datetime.fromisoformat(after[0]['observedAt']), datetime.fromisoformat(OBSERVED))
-        self.assertNotIn('publishedAt', after[0])
+        # The article's stated instant is kept beside its day (owner, Nov 26).
+        self.assertEqual(after[0]['publishedAt'], '2026-10-01T16:00:00+00:00')
         self.assertEqual(self.db.execute('SELECT detected_at FROM release_events WHERE url=?', (URL,)).fetchone()[0], OBSERVED)
         monitor.add_source(self.db, 'MSFT', URL, '2026-10-02', TITLE)
         self.assertEqual(self.row()['published_on'], '2026-10-01')

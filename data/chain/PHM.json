@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "PHM",
+    "name": "パルテグループ",
+    "cik": 822416,
+    "name_en": "PulteGroup"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CENTEX",
+      "ticker": "CENTEX",
+      "name": "センテックス",
+      "name_en": "Centex",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "sub_short": "住宅",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2009年に買収",
+          "text_en": "Acquired in 2009",
+          "source": {
+            "label": "PulteGroup 10-K(2025年度)",
+            "label_en": "PulteGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000007/phm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "We may also be asked to indemnify underwriters that purchased and securitized loans originated by a former subsidiary of Centex Corporation (\"Centex\"), which we acquired in 2009, for losses incurred by investors in those securitized loans based on similar breaches of representations and warranties."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFC",
+      "ticker": "TFC",
+      "name": "トゥルーイスト",
+      "name_en": "Truist Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "住宅ローン子会社の買戻し契約の代理人",
+          "text_en": "Agent on its mortgage unit's repurchase facility",
+          "source": {
+            "label": "PulteGroup 8-K(2026年8月)",
+            "label_en": "PulteGroup 8-K (August 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000038/phm-20260811.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "(\"PulteGroup\"), entered into a Master Repurchase Agreement (the \"Repurchase Agreement\") dated as of August 11, 2026 with Truist Bank, as Agent and representative of itself as a Buyer (as defined in the Repurchase Agreement) and the other Buyers (\"Agent\"), and the other Buyers listed therein."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LSEA",
+      "ticker": "LSEA",
+      "name": "ランドシー・ホームズ",
+      "name_en": "Landsea Homes",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilding",
+      "sub_short": "住宅",
+      "sub_short_en": "Homes",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前を挙げる",
+          "text_en": "Names PulteGroup as a competitor",
+          "source": {
+            "label": "Landsea Homes 10-K(2024年度)",
+            "label_en": "Landsea Homes 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1721386/000172138625000008/lsea-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "While our competitors vary by market, we compete directly with major national builders such as KB Home, Lennar Corporation, Tri Pointe Homes, Inc., PulteGroup, Inc., and D.R."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "PulteGroup 10-K(2025年度)",
+            "label_en": "PulteGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000007/phm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Restated Credit Agreement dated as of June 14, 2022 among PulteGroup, Inc., as Borrower, Bank of America, N.A., as Administrative Agent, and the other Lenders party thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "PulteGroup 10-K(2025年度)",
+            "label_en": "PulteGroup 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/822416/000082241626000007/phm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Restated Credit Agreement dated as of February 4, 2026 among PulteGroup, Inc., as Borrower, Bank of America, N.A., as Administrative Agent, and the other Lenders party thereto (Filed herewith)** (u) Master Repurchase Agreement dated as of August 16, 2023, among JPMorgan Chase, as Agent, Lead Arranger and a Buyer, the other Buyers party thereto and Pulte Mortgage LLC, as Seller"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

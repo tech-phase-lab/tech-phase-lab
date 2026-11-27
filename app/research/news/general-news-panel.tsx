@@ -20,13 +20,15 @@ import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
 import { publishNews } from "@/lib/research/news-snapshot";
-import FeedPagination from "./feed-pagination";
+import { forgetLastView, readLastView, topicsSubset, writeLastView } from "@/lib/research/member-last-view";
+import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
 import TopicsList from "./topics-list";
 /** Stories on the home list: five pages of five. */
 const HOME_STORIES = 25;
+const UPDATE_BLINK_MS = 900;
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
@@ -60,7 +62,7 @@ export function warmNews() {
   request.catch(() => { /* the list asks again when it appears */ }).finally(() => { if (warming === request) warming = null; });
 }
 
-export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
+export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews, keepPlan }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** 注目トピック: "pro" once the membership check confirmed PRO, "none" once it said otherwise */ keepPlan?: "pro" | "none"; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
   const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [failed, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
@@ -79,18 +81,41 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   // 注目トピック (owner, Nov 15): the page has no top band to fetch the company headlines, so it asks for them itself, each time the
   // news feed is checked (about every five seconds), the way the home band does.
   const [wireAt, setWireAt] = useState<string | null>(null);
+  const wireChecked = useRef(false);
   useEffect(() => {
     if (!generalOnly) return;
     let alive = true;
+    const started = Date.now();
     void (async () => {
       try {
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
         if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) publishWire(items); }
       } catch { /* keep the previous list */ }
-      finally { if (alive) setWireAt(new Date().toISOString()); }
+      // Owner, Nov 26: the dot beside 自動で更新中 blinks while this check runs, for at least one blink (UPDATE_BLINK_MS) so it is seen.
+      if (wireChecked.current && Date.now() - started < UPDATE_BLINK_MS) await new Promise(done => setTimeout(done, UPDATE_BLINK_MS - (Date.now() - started)));
+      wireChecked.current = true;
+      if (alive) setWireAt(new Date().toISOString());
     })();
     return () => { alive = false; };
   }, [generalOnly, receivedAt]);
+  // Checking: the company headlines were last asked for before the news feed's latest check (or never).
+  const updating = generalOnly && (!wireAt || (!!receivedAt && Date.parse(wireAt) < Date.parse(receivedAt)));
+  // 注目トピック: a PRO member's last view on this device (lib/research/member-last-view.ts), shown once the topics screen's membership
+  // check confirmed PRO (`keepPlan`), then refreshed; forgotten once the check says otherwise.
+  const keepAs = useRef(keepPlan);
+  const keptShown = useRef(false);
+  useEffect(() => {
+    keepAs.current = keepPlan;
+    if (!generalOnly) return;
+    if (keepPlan === "none") { forgetLastView("topics"); return; }
+    if (keepPlan !== "pro" || keptShown.current || initialNews) return;
+    keptShown.current = true;
+    const kept = readLastView<GeneralNewsFeed>("topics");
+    if (!kept) return;
+    // Read once the check answered (reading it during render would not match the server's page).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setData(old => old ?? kept.data); setReceivedAt(old => old ?? new Date(kept.at).toISOString());
+  }, [keepPlan, generalOnly, initialNews]);
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -117,6 +142,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
         const at = new Date().toISOString();
         snapshot = { data: payload, at, time: Date.now() };
         setData(payload); publishNews(payload); setError(false); setReceivedAt(at);
+        if (generalOnly && keepAs.current === "pro") writeLastView("topics", topicsSubset(payload));
       },
       onFailure: () => {
         // A failed check must not let a stale module snapshot reappear after remount.
@@ -131,7 +157,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       stopObserving();
       poller.stop();
     };
-  }, [refresh, initialNews]);
+  }, [refresh, initialNews, generalOnly]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
   // The home list shows the Stock News API stories only (owner, Nov 15): never the Tech Alerts (ハイテク速報) items, which are another
@@ -165,7 +191,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
-  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
+  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} updating={updating} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"
@@ -208,7 +234,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
       {receivedAt && <p className={styles.note}>{lang === "ja" ? "画面取得" : "Fetched"} {format(receivedAt)} · {lang === "ja" ? `約${NEWS_POLL_INTERVAL_MS / 1000}秒ごとに更新` : `Refreshes about every ${NEWS_POLL_INTERVAL_MS / 1000} seconds`}</p>}
     </>}
     </>}
-    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panel.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { turnPageInPlace(panel.current?.closest<HTMLElement>("#home-news") ?? panel.current, panel.current); setPage(n); }} />
     {!generalOnly && <Link className={styles.seeAll} href="/research/general-news">{lang === "ja" ? "注目トピックですべて見る" : "See all in Top Topics"} <span aria-hidden="true">›</span></Link>}
   </section>;
 }

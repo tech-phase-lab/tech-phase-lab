@@ -8,21 +8,11 @@ div.page h1 { margin: 0 0 10px; font-size: 26px; line-height: 1.25; font-weight:
 .axisY { padding: 0 6px 6px; }
 .axisX { padding-top: 4px; text-align: center; }
 .svg { display: block; width: 100%; height: auto; }
-.grid { stroke: #1d2938; stroke-width: .6; }
 .base { stroke: #4c5d74; stroke-width: .9; }
-.tick { font-size: 8.5px; fill: #7a899b; font-family: var(--font-geist-mono, monospace); }
 .zone { font-size: 9.5px; font-weight: 700; }
 .name { font-size: 10px; fill: #e8eef5; font-family: var(--font-geist-mono, monospace); font-weight: 600; paint-order: stroke; stroke: #0b1118; stroke-width: 2.5px; pointer-events: none; }
 .trail { stroke: #8fa3b8; stroke-width: 1; stroke-dasharray: 1.6 2.6; stroke-linecap: round; opacity: .85; }
 .tappable { cursor: pointer; }
-.picked { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 8px 6px 0; padding: 8px 10px; border: 1px solid #263447; border-radius: 10px; background: #0f1822; font-size: 11.5px; color: #c3ccd8; line-height: 1.6; }
-.picked b { font-family: var(--font-geist-mono, monospace); color: #fff; font-size: 12.5px; }
-.picked i { font-style: normal; color: #8a95a3; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 6px 0; padding: 0; list-style: none; font-size: 11px; color: #9aa8b8; }
-.legend li { display: flex; align-items: center; gap: 6px; }
-.legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
-.legend .hollow { background: transparent; border: 1.6px solid; width: 10px; height: 10px; }
-.legend b { letter-spacing: -1px; color: #8fa3b8; font-weight: 400; }
 .ranking { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
 .ranking header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 .ranking h2 { margin: 0; font-size: 17px; font-weight: 600; }
@@ -66,7 +56,6 @@ div.page .headRow h1 { margin: 0; }
 .lockCta b { font-size: 16px; letter-spacing: .04em; color: #e8eef5; }
 .lockCta p { margin: 0; font-size: 13px; line-height: 1.75; color: #c3ccd8; }
 .leader { stroke: #7f90a6; stroke-width: .7; opacity: .9; }
-.beyond { font-size: 8px; fill: #9fb0c2; font-weight: 500; }
 .order { margin: -4px 0 2px; font-size: 11px; color: #7b8897; }
 .review { margin-right: 4px; padding: 0 4px; border: 1px solid rgba(224, 194, 122, .5); border-radius: 999px; font-size: 8.5px; font-weight: 500; color: #e0c27a; font-family: inherit; letter-spacing: 0; vertical-align: 1px; }
 .skeleton { aspect-ratio: 340 / 316; border-radius: 12px; background: linear-gradient(180deg, #0d1620, #09111a); }
@@ -74,4 +63,17 @@ div.page .headRow h1 { margin: 0; }
 .negative { background: linear-gradient(90deg, #b04a4a, #f08a8a); }
 .unranked { margin: 2px 2px 0; font-size: 12px; color: #8a97a8; }
 .unranked b { margin-right: 8px; color: #cfd8e3; font-family: var(--font-geist-mono, monospace); letter-spacing: .04em; }
-.earlier { font-size: 8px; fill: #8392a5; font-weight: 500; }
+.legendMore { margin-top: 4px; }
+.legendLine .hollow { background: transparent; border: 1.6px solid; width: 10px; height: 10px; box-sizing: border-box; }
+.legendLine b { letter-spacing: -1px; color: #8fa3b8; font-weight: 400; }
+.picked { margin: 10px 6px 0; padding: 12px 14px; border: 1px solid rgba(217, 181, 106, .75); border-radius: 12px; background: #15130d; font-size: 12.5px; color: #c3ccd8; line-height: 1.6; }
+.pickedHead { display: flex; align-items: baseline; gap: 10px; margin: 0 0 6px; }
+.pickedHead b { font-family: var(--font-geist-mono, monospace); color: #e8c36f; font-size: 14px; letter-spacing: .02em; }
+.pickedHead i { font-style: normal; font-size: 11.5px; color: #8a95a3; }
+.picked dl { margin: 0; display: flex; flex-direction: column; gap: 3px; }
+.picked dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.picked dt { color: #aab6c4; white-space: nowrap; }
+.picked dd { margin: 0; text-align: right; color: #e8eef5; }
+.picked dd em { font-style: normal; font-family: var(--font-geist-mono, monospace); }
+.picked dd span { margin-left: 12px; white-space: nowrap; }
+.picked small { display: block; margin-top: 4px; font-size: 11px; color: #e0c27a; }

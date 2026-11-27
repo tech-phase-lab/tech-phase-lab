@@ -92,8 +92,8 @@ test("MO vs BTI: an overall verdict on the factors both have; a half-year beside
 
 test("the 'not enough common factors' sentence counts the companies actually compared", () => {
   const empty = t => ({ ...extractFinancials(t, "1", { cik: 1, facts: {} }, NOW), ticker: t });
-  assert.equal(overallComparison([empty("AAA"), empty("BBB")], "ja", NOW).description, "2社に共通する項目が3つ未満のため、総合順位は出していません。");
-  assert.equal(overallComparison([empty("AAA"), empty("BBB"), empty("CCC")], "ja", NOW).description, "3社に共通する項目が3つ未満のため、総合順位は出していません。");
+  assert.equal(overallComparison([empty("AAA"), empty("BBB")], "ja", NOW).description, "2社を同じ物差しで比べられる項目が3つ未満のため、総合順位は出していません。");
+  assert.equal(overallComparison([empty("AAA"), empty("BBB"), empty("CCC")], "ja", NOW).description, "3社を同じ物差しで比べられる項目が3つ未満のため、総合順位は出していません。");
 });
 
 test("a 20-F filer with no tagged interim report: its fiscal year is the latest period, current for 500 days", () => {

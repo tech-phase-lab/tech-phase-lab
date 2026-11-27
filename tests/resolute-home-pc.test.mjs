@@ -23,7 +23,7 @@ test('リゼルの一言 on the home: title only, only when one is assigned, beh
  assert.ok(section.includes("{locale==='en'?'A word from RIZEL':'リゼルの一言'}"));
  assert.match(section,/feed\.quotes\.find\(q=>q\.id===article\.quoteId&&q\.approved\)/);
  assert.match(section,/if\(!quote\)return null;/);
- assert.match(section,/<p>\{quote\[locale\]\.title\}<\/p><\/div><\/div>/,'the phone shows the title only');
+ assert.match(section,/<p style=\{\{whiteSpace:'pre-line'\}\}>\{quote\[locale\]\.title\}<\/p><\/div><\/div>/,'the phone shows the title only (an owner-pick note keeps its line breaks)');
  assert.ok(read('app/resolute/news/screen.tsx').includes("{en?'A word from RIZEL':'リゼルの一言'}"));
  assert.ok(!read('app/resolute/news/screen.tsx').includes("'RIZELの一言'"));
  const feed={state:'ready',date:'2026-11-24',articles:[],quotes:[{id:'q'}]};
@@ -34,7 +34,7 @@ test('リゼルの一言 on the home: title only, only when one is assigned, beh
 test('the home chart line: about three months of the stored basket levels, validated on read',()=>{
  const levels=Array.from({length:80},(_,i)=>({date:new Date(Date.UTC(2026,7,1+i)).toISOString().slice(0,10),close:100+i+0.123}));
  const session=levels[70].date,trail=basketTrail(levels,session);
- assert.equal(trail.length,TRAIL_SESSIONS);assert.equal(trail.at(-1).date,session);assert.equal(trail.at(-1).close,170.12);
+ assert.equal(trail.length,TRAIL_SESSIONS);assert.equal(trail.at(-1).date,session);assert.equal(trail[0].close,100);assert.equal(trail.at(-1).close,Math.round(170.123/108.123*10000)/100,'rebased to 100 at the first session (owner, Nov 26 §2)');
  assert.deepEqual(safeTrail({nas100:trail,sox:null},session),{nas100:trail,sox:null});
  assert.equal(safeTrail({nas100:trail.slice(0,-1),sox:null},session),undefined,'must end on the snapshot session');
  assert.equal(safeTrail({nas100:[...trail].reverse(),sox:null},session),undefined);
@@ -49,7 +49,10 @@ test('phone home: chart card on top (the gauge card is gone, its note stays smal
  assert.match(css,/\.chartLine \{[^}]*animation:draw 1s/);assert.match(css,/\.chartDot \{[^}]*pulse 2\.4s/);
  assert.ok(home.indexOf('<MarketChartCard')<home.indexOf('TODAY</div>{today}{shock}'));
  assert.match(tiles,/role="switch"/);assert.match(tiles,/className=\{s\.alerts\}/);
- for(const p of ['picBook','picPhone','picChart','picCoin'])assert.ok(tiles.includes(`s.${p}`),p);
+ for(const p of ['picBook','picPhone','picChart','picReceipt'])assert.ok(tiles.includes(`s.${p}`),p);
+ // 税金の目安 (owner, Nov 26 §5): a thin gold receipt, not the gold ¥ coin, and no glow.
+ assert.ok(!tiles.includes('picCoin')&&!tiles.includes('>¥<'));assert.match(tiles,/fill="#141a2b" stroke="#e3c17a" strokeWidth="1\.6"/);
+ assert.doesNotMatch(css,/picCoin/);assert.doesNotMatch(css.match(/\.picReceipt \{[^}]*\}/)[0],/box-shadow|rgba\(216,179,106/);
  assert.match(home,/morningEnabled:on\},baseRevision:settings\.revision/);
 });
 

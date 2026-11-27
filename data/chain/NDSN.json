@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "NDSN",
+    "name": "ノードソン",
+    "cik": 72331,
+    "name_en": "Nordson"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "KLIC"
+  ],
+  "companies": [
+    {
+      "id": "ATRION",
+      "ticker": "ATRION",
+      "name": "アトリオン",
+      "name_en": "Atrion",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "sub_short": "医療",
+      "sub_short_en": "Medtech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約で買収(2024年)",
+          "text_en": "Acquired under a 2024 merger agreement",
+          "source": {
+            "label": "Nordson 10-K(2025年10月期)",
+            "label_en": "Nordson 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233125000144/ndsn-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Agreement and Plan of Merger, dated as of May 28, 2024, by and among Nordson Corporation, Alpha Medical Merger Sub, Inc. and Atrion Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARAG",
+      "ticker": "ARAG",
+      "name": "ARAG",
+      "name_en": "ARAG Group",
+      "sub": "精密噴霧装置",
+      "sub_en": "Precision spraying",
+      "sub_short": "噴霧",
+      "sub_short_en": "Spraying",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年度に買収",
+          "text_en": "Acquired in fiscal 2023",
+          "source": {
+            "label": "Nordson 10-K(2025年10月期)",
+            "label_en": "Nordson 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233125000144/ndsn-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "The financial results of the ARAG Group, from the acquisition date through October 31, 2023, were not material to our Consolidated Financial Statements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CYBEROPTICS",
+      "ticker": "CYBEROPTICS",
+      "name": "サイバーオプティクス",
+      "name_en": "CyberOptics",
+      "sub": "検査用センサー",
+      "sub_en": "Inspection sensors",
+      "sub_short": "センサ",
+      "sub_short_en": "Sensors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年11月に買収",
+          "text_en": "Acquired in November 2022",
+          "source": {
+            "label": "Nordson 10-K(2025年10月期)",
+            "label_en": "Nordson 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233125000144/ndsn-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "The assets and liabilities acquired were as follows: August 24, 2023 Cash $ 32,966 Receivables - net 31,081 Inventories - net 54,252 Goodwill 684,938 Intangibles 353,500 Other assets 55,963 Total Assets $ 1,212,700 Accounts payable $ 18,915 Deferred income taxes 100,097 Other liabilities 15,785 Total Liabilities $ 134,797 On November 3, 2022, we acquired 100% of CyberOptics Corporation (\"CyberOptics\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLIC",
+      "ticker": "KLIC",
+      "name": "キューリック・アンド・ソファ",
+      "name_en": "Kulicke & Soffa",
+      "sub": "半導体後工程装置",
+      "sub_en": "Semiconductor assembly equipment",
+      "sub_short": "装置",
+      "sub_short_en": "Machine",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "装置の主な競合に挙げる",
+          "text_en": "Names Nordson among its major equipment competitors",
+          "source": {
+            "label": "Kulicke & Soffa Industries 10-K(2026年10月期)",
+            "label_en": "Kulicke & Soffa Industries 10-K (FY ended Oct 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/56978/000005697826000040/klic-20261003.htm",
+            "level": "official",
+            "date": "2026-11-19",
+            "quote": "Our major equipment competitors are ASM Pacific Technology, Hesse GmbH, Han's Laser Technology Co., Ltd., BE Semiconductor Industries N.V., Hanwha Precision Machinery Co., Ltd., Hanmi Semiconductor Co., Ltd., and Nordson Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Nordson 8-K(2026年2月)",
+            "label_en": "Nordson 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233126000005/ndsn-20260130.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Credit Agreement\") with its subsidiary, Nordson Engineering GmbH, a private limited liability company organized and existing under the laws of Germany, registered with the commercial register of the local court of Lüneburg under number HRB 999 (\"Nordson GmbH\"), with Wells Fargo Bank, National Association, as Administrative Agent (the \"Revolving Agent\"), various financial institutions named therein as lenders and Wells Fargo Securities, LLC, BofA Securities, Inc., BNP P"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Nordson 10-K(2025年10月期)",
+            "label_en": "Nordson 10-K (FY ended Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233125000144/ndsn-20251031.htm",
+            "level": "official",
+            "date": "2025-12-17",
+            "quote": "Restated Term Loan Agreement, dated April 30, 2019, among Nordson Corporation, various financial institutions named therein, and PNC Bank, National Association, as administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "Nordson 8-K(2026年2月)",
+            "label_en": "Nordson 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72331/000007233126000005/ndsn-20260130.htm",
+            "level": "official",
+            "date": "2026-02-02",
+            "quote": "Credit Agreement\") with its subsidiary, Nordson Engineering GmbH, a private limited liability company organized and existing under the laws of Germany, registered with the commercial register of the local court of Lüneburg under number HRB 999 (\"Nordson GmbH\"), with Wells Fargo Bank, National Association, as Administrative Agent (the \"Revolving Agent\"), various financial institutions named therein as lenders and Wells Fargo Securities, LLC, BofA Securities, Inc., BNP P"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

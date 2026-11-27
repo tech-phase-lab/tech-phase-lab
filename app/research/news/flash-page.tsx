@@ -7,17 +7,18 @@ import { companyWireDelay, parseCompanyWire, type CompanyWireItem } from "@/lib/
 import { flashRows, WATCH_TICKERS, type FlashRow } from "@/lib/research/flash-rows";
 import { freeFlashRows } from "@/lib/research/free-flash";
 import Link from "next/link";
-import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
+import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { providers } from "@/lib/research/intake";
 import { isFreshItem } from "@/lib/research/company-freshness";
-import { createNewsPoller } from "@/lib/research/news-poller";
+import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
 import { observePageActivity } from "@/lib/research/page-activity";
 import { readVisitStart } from "../use-alerts-unread";
+import { forgetLastView, readLastView, writeLastView } from "@/lib/research/member-last-view";
 import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
-import FeedPagination from "./feed-pagination";
+import FeedPagination, { turnPageInPlace } from "./feed-pagination";
 import { displayClock, displayDayKey, zoneLabel } from "@/lib/research/display-time";
 import NewsStory from "./news-story";
 
@@ -35,21 +36,28 @@ export function dayHeading(key: string, ja: boolean) {
 function timeCell(row: FlashRow, lang: Language) {
   // A source that states only the day sits under that day's heading with no clock (owner, Oct 15: "時刻なし" removed).
   if (row.timeKind === "date") return null;
+  // A source that states no time shows when it was first seen, labelled 取得 / Found as on the company timeline: a found
+  // time is never shown as if it were the publication time (owner, Oct 10; label added Nov 26).
+  if (row.timeKind === "found") return <time dateTime={row.at}><span className={timeline.found}>{lang === "ja" ? "取得" : "Found"}</span>{displayClock(row.at, lang)}</time>;
   return <time dateTime={row.at}>{displayClock(row.at, lang)}</time>;
 }
 
+/** The alerts the server drew into the first HTML (lib/research/news-first-paint.ts): `full` is the server's own verdict on the session. */
+export type FirstAlerts = { feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]> | null; checkedAt: number };
+
 /** 速報: the watched companies' live monitor and earnings results as one
- * newest-first timeline. New rows look like the live monitor's: a mint dot,
- * NEW, and they stay marked until the page is left (owner, Oct 14). */
-export default function FlashPage({ lang, onReady }: { lang: Language; onReady?: () => void }) {
+ * newest-first timeline. New rows look like the live monitor's: a mint dot
+ * (no NEW label, owner 11/26), and they stay marked until the page is left (owner, Oct 14). */
+export default function FlashPage({ lang, onReady, initial = null }: { lang: Language; onReady?: () => void; initial?: FirstAlerts | null }) {
   const ja = lang === "ja";
-  const [feed, setFeed] = useState<GeneralNewsFeed | null>(null);
-  const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
+  const [feed, setFeed] = useState<GeneralNewsFeed | null>(initial?.feed ?? null);
+  const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>(initial?.wire ?? {});
   const [failed, setFailed] = useState(false);
-  const [checkedAt, setCheckedAt] = useState(0);
+  // The server's read time, so the first paint and the hydrated page cut the FREE window at the same instant.
+  const [checkedAt, setCheckedAt] = useState(initial?.checkedAt ?? 0);
   // The page is shown once the company headlines have answered (or a short grace period passed), so they do not slide in on top afterwards.
-  const [wireSettled, setWireSettled] = useState(false);
-  const [wireLoaded, setWireLoaded] = useState(false);
+  const [wireSettled, setWireSettled] = useState(initial?.wire != null);
+  const [wireLoaded, setWireLoaded] = useState(initial?.wire != null);
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [view, setView] = useState<"all" | "earnings">("all");
   const [page, setPage] = useState(1);
@@ -58,7 +66,26 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const memberPlan = useMemberDisplay();
   const ownerAccount = useOwnerAccount();
   const ownerRole = useResearchOwner();
+  const memberSettled = useMemberSettled();
   const full = memberPlan === "pro" || ownerAccount || ownerRole;
+  // The server draws the FREE view for a signed-out visitor only (lib/research/news-first-paint.ts). A browser that turns out PRO with it
+  // on screen (a remembered PRO hint without a live session) reads both feeds at once instead of after one interval.
+  const drawnFree = initial !== null && !full;
+  // A PRO member's last view on this device (lib/research/member-last-view.ts): shown once the membership check confirmed PRO, then refreshed.
+  const keptShown = useRef(false);
+  useEffect(() => {
+    if (initial || keptShown.current || !memberSettled || !full) return;
+    keptShown.current = true;
+    const kept = readLastView<{ feed: GeneralNewsFeed; wire: Record<string, CompanyWireItem[]>; checkedAt: number }>("alerts");
+    if (!kept) return;
+    // Read once after mount (reading it during render would not match the server's page).
+    setFeed(old => old ?? kept.data.feed); setWire(old => Object.keys(old).length ? old : kept.data.wire);
+    setCheckedAt(old => old || kept.data.checkedAt); setWireSettled(true); setWireLoaded(true);
+  }, [initial, memberSettled, full]);
+  useEffect(() => {
+    if (memberSettled && !full) { forgetLastView("alerts"); return; }
+    if (full && feed && wireLoaded && checkedAt) writeLastView("alerts", { feed, wire, checkedAt });
+  }, [memberSettled, full, feed, wire, wireLoaded, checkedAt]);
   const tracker = useRef(createWatchTracker());
   const wireTracker = useRef(createWatchTracker());
   const list = useRef<HTMLDivElement>(null);
@@ -93,10 +120,12 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       },
       onFailure: () => setFailed(true),
     });
-    poller.start(0);
+    // With the server's alerts on screen they are the baseline for "new", and the next read is the regular one.
+    if (initial) tracker.current(flashRows(initial.feed, {}, lang).filter(row => !row.id.startsWith("wire:")).map(row => ({ id: row.id, at: row.timeKind === "date" ? `${row.at}T00:00:00Z` : row.at })));
+    poller.start(drawnFree ? NEWS_POLL_INTERVAL_MS : 0);
     const stop = observePageActivity(() => poller.resume(), () => poller.pause());
     return () => { stop(); poller.stop(); };
-  }, [lang]);
+  }, [lang, initial, drawnFree]);
   useEffect(() => {
     // Wire headlines are a lower-trust lane: a failure here never affects the rest.
     // Until the first list arrives, a failed try is repeated within seconds, not a minute later (owner, Nov 15).
@@ -124,10 +153,12 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       if (active) timer = setTimeout(run, companyWireDelay(loaded, failures));
     };
     const grace = setTimeout(() => setWireSettled(true), 2_500);
+    const first = drawnFree ? initial?.wire : null;
+    if (first) { wireTracker.current(Object.values(first).flat().map(item => ({ id: `wire:${item.id}`, at: item.publishedAt }))); loaded = true; }
     const stop = observePageActivity(() => { active = true; void run(); }, () => { active = false; clearTimeout(timer); timer = undefined; });
-    void run();
+    if (first) timer = setTimeout(run, companyWireDelay(true, 0)); else void run();
     return () => { alive = false; clearTimeout(grace); clearTimeout(timer); stop(); };
-  }, []);
+  }, [initial, drawnFree]);
 
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
   useEffect(() => { if ((feed || failed) && wireSettled) onReady?.(); }, [feed, failed, wireSettled, onReady]);
@@ -143,7 +174,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
     <span className={timeline.when}>{timeCell(row, lang)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
-      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
+      <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span></div>
       {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). The left column carries the
           time, so no 「発表 …」 line under each item (owner, Nov 25). */}
       <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication="" capDetail />
@@ -152,7 +183,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
     <div className={styles.controls}>
       <div className={tabStyles.tabs} role="group" aria-label={ja ? "表示する速報" : "Alert filter"}>
-        {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
+        {(["all", "earnings"] as const).map(key => <button key={key} type="button" aria-pressed={key === view} onClick={() => { if (list.current) list.current.style.minHeight = ""; setView(key); setPage(1); }}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "決算" : "Earnings")}</button>)}
       </div>
       <details className={styles.sources} ref={sources}>
         <summary>{ja ? "ニュース取得リスト" : "Stocks covered"}<span aria-hidden="true">▾</span></summary>
@@ -175,6 +206,6 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         return [...heading, item(row)];
       })}</div>}
     </div>
-    <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { turnPageInPlace(list.current); setPage(next); }} />
   </section>;
 }

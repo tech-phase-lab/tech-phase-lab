@@ -10,9 +10,9 @@ import { events } from "@/lib/research/content-server";
 import { buildCompanyProfiles } from "@/lib/research/companies";
 import { companyWatchForMember, watchTitles } from "@/lib/research/company-watch";
 import CompanyWatch from "../company-watch";
-import { loadCompanyDive } from "@/lib/research/company-dive-loader";
 import { companyDiveForMember } from "@/lib/research/company-dive";
 import { newerReport } from "@/lib/research/dive-staleness";
+import { loadEffectiveDive, loadLiveRelease } from "@/lib/research/company-earnings-live.server";
 import { isOwnerAccount } from "@/lib/membership/entitlements";
 import rawSnapshot from "@/lib/research/intake-snapshot.json";
 import { buildCoverageCompanies, coverageCompanyIssues, providers, snapshotIssues, type IntakeSnapshot } from "@/lib/research/intake";
@@ -51,13 +51,16 @@ export default async function CompanyPage({ params }: { params: Promise<{ ticker
   }
   // The reviewed deep dive (lib/research/dives/<TICKER>.json) replaces the legacy cards once it exists and passes the check; a file
   // that fails is dropped for this ticker only (logged by the loader) and the legacy view stays as the fallback.
-  const file = loadCompanyDive(ticker);
+  const file = await loadEffectiveDive(ticker);
   const dive = file ? companyDiveForMember(file, verified) : null;
   const watch = dive ? null : companyWatchForMember(ticker, member);
   if (!dive && !watch) notFound();
   const shown = (dive ?? watch)!;
+  // A newer quarter the monitor already read from the company's own release (seconds after the filing) replaces the file's quarter at
+  // the top of the page; the deep dive keeps its own, labelled quarter until a new dive is published.
+  const live = dive ? (await loadLiveRelease({ ticker, period: dive.period, releasedOn: dive.releasedOn, currency: dive.currency })).release : null;
   // Never call an older quarter 直近 when the calendar or the SEC results data already know a newer release.
-  const stale = newerReport(ticker, shown.releasedOn);
+  const stale = newerReport(ticker, live?.releasedOn ?? shown.releasedOn);
   if (stale) console.warn(`[company-dive] ${ticker}: the page shows ${shown.period} (released ${shown.releasedOn}, ${dive ? "dive file" : "legacy view"}) but a newer release on ${stale.on}${stale.period ? ` (${stale.period})` : ""} is known from the ${stale.source}`);
-  return <CompanyWatch key={ticker} companies={companyOptions} watch={watch} dive={dive} titles={watchTitles} stale={stale} ownerNotice={isOwnerAccount(verified.userId)}/>;
+  return <CompanyWatch key={ticker} companies={companyOptions} watch={watch} dive={dive} live={live} titles={watchTitles} stale={stale} ownerNotice={isOwnerAccount(verified.userId)}/>;
 }

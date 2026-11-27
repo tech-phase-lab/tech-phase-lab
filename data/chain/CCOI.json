@@ -91,6 +91,32 @@
         }
       ],
       "name_en": "Ciena"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "T-Mobile US",
+      "name_en": "T-Mobile US",
+      "sub": "携帯通信",
+      "sub_en": "Wireless",
+      "sub_short": "通信",
+      "sub_short_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "有線事業を売却し、IP中継サービスを購入",
+          "text_en": "Sold its wireline business to Cogent and buys IP transit from it",
+          "source": {
+            "label": "T-Mobile US 10-K(2025年度)",
+            "label_en": "T-Mobile US 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we completed the sale of the wireline business to Cogent Infrastructure, Inc. Under the terms of the wireline sale agreement, the Company agreed to make payments pursuant to an IP transit services agreement totaling $700 million"
+          }
+        }
+      ]
     }
   ],
   "far": [],

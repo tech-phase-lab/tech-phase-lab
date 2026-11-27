@@ -116,6 +116,32 @@
         }
       ],
       "name_en": "IndusInd International Holdings Limited"
+    },
+    {
+      "id": "IGW",
+      "ticker": "IGW",
+      "name": "インベスコ・グレートウォール",
+      "name_en": "Invesco Great Wall Fund Management",
+      "sub": "中国の資産運用",
+      "sub_en": "Asset management in China",
+      "sub_short": "運用",
+      "sub_short_en": "Asset mgr",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の合弁会社",
+          "text_en": "Its joint venture in China",
+          "source": {
+            "label": "Invesco 10-K(2025年度)",
+            "label_en": "Invesco 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914208/000091420826000079/ivz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Invesco Great Wall Fund Management Company Limited (IGW or Invesco Great Wall), our joint venture in China"
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -116,6 +116,58 @@
         }
       ],
       "name_en": "Freddie Mac"
+    },
+    {
+      "id": "INTT",
+      "ticker": "INTT",
+      "name": "インテスト",
+      "name_en": "inTEST",
+      "sub": "半導体試験装置",
+      "sub_en": "Test equipment",
+      "sub_short": "試験装置",
+      "sub_short_en": "Testing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "M&T Bankとの融資契約",
+          "text_en": "Has a loan agreement with M&T Bank",
+          "source": {
+            "label": "inTEST 10-K(2025年度)",
+            "label_en": "inTEST 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1036262/000103626226000012/intt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "Our credit facility (the \"Loan Agreement\") with M&T Bank (\"M&T\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HZO",
+      "ticker": "HZO",
+      "name": "マリンマックス",
+      "name_en": "MarineMax",
+      "sub": "ボート販売",
+      "sub_en": "Boat retail",
+      "sub_short": "ボート",
+      "sub_short_en": "Boats",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資契約の幹事行",
+          "text_en": "M&T Bank is administrative agent on its credit agreement",
+          "source": {
+            "label": "MarineMax 10-K(2026年9月期)",
+            "label_en": "MarineMax 10-K (FY ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1057060/000119312526463429/hzo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "In June 2026, we entered into the Amended and Restated Credit Agreement with Manufacturers and Traders Trust Company (\"M&T Bank\") as Administrative Agent, Swingline Lender, and Issuing Bank"
+          }
+        }
+      ]
     }
   ],
   "far": [],

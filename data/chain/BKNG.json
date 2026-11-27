@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
     }
   ],
   "rivals": [
@@ -145,6 +149,58 @@
         }
       ],
       "name_en": "Yanolja"
+    },
+    {
+      "id": "TRIP",
+      "ticker": "TRIP",
+      "name": "Tripadvisor",
+      "name_en": "Tripadvisor",
+      "sub": "旅行情報",
+      "sub_en": "Travel reviews",
+      "sub_short": "旅行",
+      "sub_short_en": "Travel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合であり、提携することもあると記載",
+          "text_en": "Competes with, and in some cases partners with, Booking",
+          "source": {
+            "label": "Tripadvisor 10-K(2025年度)",
+            "label_en": "Tripadvisor 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1526520/000119312526051281/trip-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we primarily compete, and in some cases partner, with the following businesses: • General OTAs, such as Expedia, Booking, Airbnb"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRVG",
+      "ticker": "TRVG",
+      "name": "トリバゴ",
+      "name_en": "trivago",
+      "sub": "ホテル比較",
+      "sub_en": "Hotel metasearch",
+      "sub_short": "旅行予約",
+      "sub_short_en": "Travel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大半がBooking系などの大手OTAの広告",
+          "text_en": "Earns most of its revenue from large OTA advertisers including Booking brands",
+          "source": {
+            "label": "trivago 20-F(2025年度)",
+            "label_en": "trivago 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1683825/000168382526000006/trvg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We continue to generate the great majority of our revenue from our largest OTA advertisers, including brands affiliated with Booking Holdings, such as Booking.com, Agoda and priceline.com"
+          }
+        }
+      ]
     }
   ],
   "far": [],

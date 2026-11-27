@@ -7,6 +7,7 @@ import { join, relative } from 'node:path';
 // (sign-in, membership, owner, or the monitor's token). A new route that does neither fails here, so a PRO feature cannot ship open by accident.
 const PUBLIC = {
   'research/macro': 'public FRED rates, no member data',
+  'research/capital-map': 'public reported 13F / issuer holdings for 資本マップ (FREE), the same data the page draws',
   'research/earnings-consensus': 'public EPS consensus (Twelve Data display licence, attribution shown)',
   'research/market/board': 'public market quotes (Twelve Data display licence)',
   'research/market/chart': 'public market chart',
@@ -19,6 +20,7 @@ const PUBLIC = {
   'research/price-targets/stream': 'change signal only, short-lived origin-bound ticket',
   'research/news': 'public news feed (FREE limits are applied by the feed builder)',
   'research/earnings-results': 'public earnings results of a month for the calendar (FREE under the Oct 25 policy; no member data)',
+  'research/company-earnings': 'the 監視銘柄 pages\' earnings key figures (FREE under the Oct 25 policy) and yes/no checks of the dive, for the monitor\'s earnings patrol; no member data',
   'research/price-targets': 'public price-target feed',
   'research/company-wire': 'public company wire',
   'research/live': 'public live feed',

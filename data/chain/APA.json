@@ -121,6 +121,58 @@
         }
       ],
       "name_en": "TotalEnergies"
+    },
+    {
+      "id": "LB",
+      "ticker": "LB",
+      "name": "ランドブリッジ",
+      "name_en": "LandBridge",
+      "sub": "土地",
+      "sub_en": "Land",
+      "sub_short": "地主",
+      "sub_short_en": "Land",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社の土地周辺で事業をする生産者に挙げる",
+          "text_en": "Lists APA among producers operating on or near its land",
+          "source": {
+            "label": "LandBridge 10-K(2025年度)",
+            "label_en": "LandBridge 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1995807/000119312526072404/lb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Various producers have operations on or in the vicinity of our Southern Position, including Crescent Energy, VTX Energy, APA Corporation, Permian Resources and Diamondback Energy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KNTK",
+      "ticker": "KNTK",
+      "name": "キネティック",
+      "name_en": "Kinetik Holdings",
+      "sub": "中流(ガス処理・導管)",
+      "sub_en": "Midstream",
+      "sub_short": "中流",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "APAが株主として配当再投資契約に参加",
+          "text_en": "APA is a stockholder party to its distribution reinvestment agreement",
+          "source": {
+            "label": "Kinetik 10-K(2025年度)",
+            "label_en": "Kinetik 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1692787/000169278726000048/apa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "with certain stockholders including BCP Raptor Aggregator, LP, BX Permian Pipeline Aggregator, LP, Buzzard Midstream LLC, APA Corporation, Apache Midstream LLC and certain individuals"
+          }
+        }
+      ]
     }
   ],
   "far": [],

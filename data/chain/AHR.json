@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "AHR",
+    "name": "アメリカン・ヘルスケアREIT",
+    "cik": 1632970,
+    "name_en": "American Healthcare REIT"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MERIDIANSL",
+      "ticker": "MERIDIANSL",
+      "name": "メリディアン・シニア・リビング",
+      "name_en": "Meridian Senior Living",
+      "sub": "介護施設運営",
+      "sub_en": "Senior living operator",
+      "sub_short": "介護",
+      "sub_short_en": "Senior",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "介護施設の合弁の相手",
+          "text_en": "Partner in a senior living joint venture",
+          "source": {
+            "label": "American Healthcare REIT 10-K(2025年度)",
+            "label_en": "American Healthcare REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526082692/ahr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "As of December 31, 2024, we owned, through our operating partnership, approximately 98.0% of the joint venture with an affiliate of Meridian Senior Living, LLC, or Meridian, that owned Pinnacle Beaumont ALF and Pinnacle Warrenton ALF."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "American Healthcare REIT 10-K(2025年度)",
+            "label_en": "American Healthcare REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526082692/ahr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Facility We, through our operating partnership, as borrower, and certain of our subsidiaries, or the subsidiary guarantors, collectively, with us, as guarantors, are party to an amended loan agreement, or the 2024 Credit Agreement, with Bank of America, N.A., or Bank of America, KeyBank National Association, or KeyBank, Citizens Bank, National Association and a syndicate of other banks, as lenders, for a credit facility with an aggregate maximum principal amount up to"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "American Healthcare REIT 10-K(2025年度)",
+            "label_en": "American Healthcare REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526082692/ahr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "as borrower, and certain of our subsidiaries, or the subsidiary guarantors, collectively, with us, as guarantors, are party to an amended loan agreement, or the 2024 Credit Agreement, with Bank of America, N.A., or Bank of America, KeyBank National Association, or KeyBank, Citizens Bank, National Association and a syndicate of other banks, as lenders, for a credit facility with an aggregate maximum principal amount up to $1,150,000,000, or the 2024 Credit Facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CFG",
+      "ticker": "CFG",
+      "name": "シチズンズ・バンク",
+      "name_en": "Citizens Bank, N.A.",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "American Healthcare REIT 10-K(2025年度)",
+            "label_en": "American Healthcare REIT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526082692/ahr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "as borrower, and certain of our subsidiaries, or the subsidiary guarantors, collectively, with us, as guarantors, are party to an amended loan agreement, or the 2024 Credit Agreement, with Bank of America, N.A., or Bank of America, KeyBank National Association, or KeyBank, Citizens Bank, National Association and a syndicate of other banks, as lenders, for a credit facility with an aggregate maximum principal amount up to $1,150,000,000, or the 2024 Credit Facility."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RF",
+      "ticker": "RF",
+      "name": "リージョンズ・ファイナンシャル",
+      "name_en": "Regions Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "American Healthcare REIT 8-K(2026年11月)",
+            "label_en": "American Healthcare REIT 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526451939/ahr-20261106.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "LLC, RBC Capital Markets, LLC, Regions Securities LLC and Truist Securities, Inc., or each, an Agent, and, collectively, the Agents, and the Forward Purchasers (as defined below), providing for the offer and sale of shares of our common stock, $0.01 par value per share, or Common Stock, having an aggregate gross sales price of up to $1,750,000,000, or the Shares, through the Agents, as our sales agents or, if applicable, as forward sellers, or directly to the Agents as"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RY",
+      "ticker": "RY",
+      "name": "Royal Bank of Canada",
+      "name_en": "Royal Bank of Canada",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式売出しの販売代理人",
+          "text_en": "Sales agent for its share offering program",
+          "source": {
+            "label": "American Healthcare REIT 8-K(2026年11月)",
+            "label_en": "American Healthcare REIT 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1632970/000119312526451939/ahr-20261106.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "LLC, RBC Capital Markets, LLC, Regions Securities LLC and Truist Securities, Inc., or each, an Agent, and, collectively, the Agents, and the Forward Purchasers (as defined below), providing for the offer and sale of shares of our common stock, $0.01 par value per share, or Common Stock, having an aggregate gross sales price of up to $1,750,000,000, or the Shares, through the Agents, as our sales agents or, if applicable, as forward sellers, or directly to the Agents as"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

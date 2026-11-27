@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "DXPE",
+    "name": "DXPエンタープライゼズ",
+    "cik": 1020710,
+    "name_en": "DXP Enterprises"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PREMIERFLOW",
+      "ticker": "PREMIERFLOW",
+      "name": "プレミアフロー",
+      "name_en": "PREMIERflow",
+      "sub": "ポンプ・流体機器",
+      "sub_en": "Pumps & fluid systems",
+      "sub_short": "ポンプ",
+      "sub_short_en": "Pumps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に買収",
+          "text_en": "Acquired in January 2026",
+          "source": {
+            "label": "DXP Enterprises 10-K(2025年度)",
+            "label_en": "DXP Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "NOTE 22 - SUBSEQUENT EVENTS On January 1, 2026, the Company completed the acquisition of PREMIERflow, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MIDATLANTICSS",
+      "ticker": "MIDATLANTICSS",
+      "name": "ミッド・アトランティック・ストレージ・システムズ",
+      "name_en": "Mid Atlantic Storage Systems",
+      "sub": "貯水タンク",
+      "sub_en": "Water storage tanks",
+      "sub_short": "タンク",
+      "sub_short_en": "Tanks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に買収",
+          "text_en": "Acquired in January 2026",
+          "source": {
+            "label": "DXP Enterprises 10-K(2025年度)",
+            "label_en": "DXP Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On January 1, 2026, the Company completed the acquisition of Mid Atlantic Storage Systems Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMBIENTEH2O",
+      "ticker": "AMBIENTEH2O",
+      "name": "アンビエンテH2O",
+      "name_en": "Ambiente H2O",
+      "sub": "水処理",
+      "sub_en": "Water treatment",
+      "sub_short": "水処理",
+      "sub_short_en": "Water",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年2月に買収",
+          "text_en": "Acquired in February 2026",
+          "source": {
+            "label": "DXP Enterprises 10-K(2025年度)",
+            "label_en": "DXP Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On February 1, 2026, the Company completed the acquisition of Ambiente H2O Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "DXP Enterprises 10-K(2025年度)",
+            "label_en": "DXP Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Security Agreement, dated as of December 23, 2020, by and among the Company, as borrower, and the other persons party thereto from time to time, as guarantors, Goldman Sachs Bank USA, as administrative agent, and certain financial institutions, as lenders"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "DXP Enterprises 8-K(2026年7月)",
+            "label_en": "DXP Enterprises 8-K (July 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026047831/dxpe-20260702.htm",
+            "level": "official",
+            "date": "2026-07-10",
+            "quote": "Agreement (the \"Second A&R Credit Agreement\") by and among the Company, certain of the Company's US subsidiaries, as borrowers (together with the Company, the \"US Borrowers\"), certain of the Company's Canadian subsidiaries, as borrowers (the \"Canadian Borrowers\", and together with the US Borrowers, the \"Borrowers\"), Bank of America, N.A., as agent, certain financial institutions, as lenders, Bank of America, N.A., as sole lead arranger and sole bookrunner, and each of U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMO",
+      "ticker": "BMO",
+      "name": "BMOフィナンシャル・グループ",
+      "name_en": "BMO Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "DXP Enterprises 10-K(2025年度)",
+            "label_en": "DXP Enterprises 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1020710/000162828026012382/dxpe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Security Agreement, dated as of July 19, 2022, by and among the Company and the other persons party thereto, as borrowers, the other persons party thereto from time to time, as guarantors, Bank of America, N.A., as agent, certain financial institutions, as lenders, Bank of America, N.A., as sole lead arranger and sole bookrunner, and Bank of Montreal, Chicago Branch, as documentation agent."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

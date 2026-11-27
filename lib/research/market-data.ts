@@ -1,12 +1,12 @@
 import "server-only";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
-import { FAST_QUOTE_TTL_MS } from "./quote-refresh-gate.ts";
-import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
+import { MAX_QUOTES_PER_REQUEST, MAX_SPARKLINES_PER_REQUEST, STALE_LIMIT_MS, barSlotMs, fastRefresh, quoteSlotMs, stocksTrading, type ReadSpec, type Result, type Tier } from "./twelve-budget.ts";
 import { LEVERAGED_ETFS, leveragedDue, type LeveragedSnapshot } from "./leveraged-etfs.ts";
 import { BOARD_SNAPSHOT_PERIOD, boardDue, boardJobKey } from "./market-snapshot.ts";
 import { isBudgetError, sharedReader, twelveCall } from "./twelve-gateway";
 import { cachedStatistics } from "./twelve-store";
+import { MONITORED_EARNINGS_PER_MINUTE, MONITORED_FACTS_TICKERS, MONITORED_STATS_PER_MINUTE, factsDue, isMonitoredFactsTicker, type CopyState } from "./monitored-facts.ts";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, hasStatFacts, splitBars, type StatFacts, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server.
@@ -18,7 +18,8 @@ import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarn
 export const marketDataConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
 
 const call = (path: string, params: Record<string, string>, tier: Tier = "user") => twelveCall(path, params, { tier });
-const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS });
+// swr (speed, Nov 26): the first request of a new slot gets the previous slot's copy at once; the slot's one read runs in the background.
+const quoteSpec = (now: number): ReadSpec => ({ name: "md-quote-v1", slotMs: quoteSlotMs("AAPL", now), staleMs: STALE_LIMIT_MS, swr: true });
 
 async function fetchQuotes(group: string[], tier: Tier = "user"): Promise<Map<string, MarketQuote | null>> {
   const parsed = parseQuotes(await call("quote", { symbol: group.join(","), prepost: "true" }, tier), group);
@@ -34,19 +35,12 @@ export async function loadMarketQuotes(tickers: string[], options: { fast?: bool
 export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean; stale: number }> {
   const spec = quoteSpec(Date.now());
   const got = await sharedReader.readMany<MarketQuote>(spec, tickers, group => fetchQuotes(group), { maxFetch: MAX_QUOTES_PER_REQUEST });
-  let granted = fast;
-  if (fast) {
-    const older = Object.keys(got).filter(t => got[t].fresh && got[t].value && Date.now() - got[t].at >= FAST_QUOTE_TTL_MS).slice(0, 12);
-    if (older.length) {
-      try {
-        const values = await fetchQuotes(older, "fast"), at = Date.now();
-        for (const t of older) { const quote = values.get(t); if (quote) { got[t] = { value: quote, at, fresh: true }; await sharedReader.save(spec, t, { value: quote, at }); } }
-      } catch { granted = false; }
-    }
-  }
+  let granted = fast, all = got;
+  // fast: one provider read per symbol and 15-second slot for everyone (twelve-budget.ts fastRefresh), under the "fast" tier (200).
+  if (fast) ({ got: all, granted } = await fastRefresh<MarketQuote>(sharedReader, spec, got, group => fetchQuotes(group, "fast")).catch(() => ({ got, granted: false })));
   const out: Record<string, MarketQuote> = {};
   let stale = 0;
-  for (const t of new Set(tickers)) { const hit = got[t]; if (hit?.value) { out[t] = hit.value; if (!hit.fresh) stale++; } }
+  for (const t of new Set(tickers)) { const hit = all[t]; if (hit?.value) { out[t] = hit.value; if (!hit.fresh) stale++; } }
   return { quotes: out, fast: granted, stale };
 }
 
@@ -101,11 +95,12 @@ async function resolveFresh(id: string, tier: Tier = "user"): Promise<Board> {
   throw new Error(`unresolved ${id}`);
 }
 /** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board a minute. */
-const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS });
-async function boardEntry(id: string, fast: boolean): Promise<Board | null> {
+const boardSpec = (fast: boolean): ReadSpec => ({ name: "md-board-v1", slotMs: fast ? 15_000 : 60_000, staleMs: STALE_LIMIT_MS, swr: true });
+async function boardEntry(id: string, fast: boolean): Promise<Board | null> { return (await boardRead(id, fast))?.value ?? null; }
+async function boardRead(id: string, fast: boolean) {
   const got = await sharedReader.read<Board>(boardSpec(fast), id, () => resolveFresh(id));
   if (got) resolvedVariant.set(id, got.value.variant);
-  return got?.value ?? null;
+  return got;
 }
 async function marketTarget(id: string): Promise<{ symbol: string; extra: Variant }> {
   const variant = resolvedVariant.get(id) ?? (await boardEntry(id, false))?.variant;
@@ -145,6 +140,21 @@ const readAll = (ticker: string, range: ChartRange, options?: { slotMs?: number;
 export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] }> {
   const series = periodSeries(period);
   return shapePeriod(period, await bars(ticker, series.interval, series.size, isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }));
+}
+
+/** A stock page's first paint (speed, Nov 26): the shared copies only, never the provider (no credit, no per-request allowance). `quote`:
+ * this slot's copy or the last good one (its own time travels in asOf); `chart`: the default period's bars only when this slot's copy is
+ * there (an older chart is read by the page as before). */
+export async function peekQuote(ticker: string): Promise<MarketQuote | null> {
+  const got = await sharedReader.readMany<MarketQuote>(quoteSpec(Date.now()), [ticker], null).catch(() => ({} as Record<string, Result<MarketQuote | null>>));
+  return got[ticker]?.value ?? null;
+}
+export async function peekPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] } | null> {
+  const series = periodSeries(period);
+  const got = await barsEntry(ticker, series.interval, series.size, { fetch: false, ...(isIntradayPeriod(period) ? {} : { slotMs: Math.max(10 * 60_000, barSlotMs(ticker, series.interval, Date.now())) }) }).catch(() => null);
+  if (!got?.fresh || !got.value.length) return null;
+  const shaped = shapePeriod(period, got.value);
+  return shaped.bars.length ? shaped : null;
 }
 
 /** 銘柄検索「今日の注目」's daily bars (lib/research/search-focus-server.ts), read by the minute job the way refreshBoardSnapshot reads its
@@ -190,39 +200,43 @@ export async function loadIntraday(quotes: MarketQuote[]): Promise<Record<string
 }
 
 /** Statistics: the comparison's daily copy of every US-listed company first (no credit); the provider (50 credits) only for one it lacks. */
-async function statisticsFor(ticker: string): Promise<unknown> {
+async function statisticsFor(ticker: string, tier: Tier = "user", spend?: () => void): Promise<unknown> {
   const stored = await cachedStatistics(ticker).catch(() => null);
   if (stored) return stored.payload;
-  return call("statistics", { symbol: ticker });
+  spend?.();
+  return call("statistics", { symbol: ticker }, tier);
 }
 /** Production QA, Nov 25 (NVDA, AMD and TSM showed — for EPS, market cap, dividend yield and next earnings while MU did not): the four facts
  * were one cached answer, so a refused 20-credit earnings read threw away NVDA's statistics although the comparison had stored them for
  * free, and a failed or unparseable statistics read was cached for six hours as an empty answer. The statistics and the earnings date are
  * now read separately through the shared reader: a fresh copy for six hours (a day for the date), one read for everyone, and when a read is
  * refused, fails or comes back empty, the last good copy. An empty answer is never stored as a valid one. */
-const STATS_SPEC: ReadSpec = { name: "md-facts-stats-v2", slotMs: 6 * 3600_000, staleMs: 14 * 86_400_000 };
-const EARNINGS_SPEC: ReadSpec = { name: "md-facts-next-earnings-v2", slotMs: 24 * 3600_000, staleMs: 7 * 86_400_000 };
+const STATS_SPEC: ReadSpec = { name: "md-facts-stats-v2", slotMs: 6 * 3600_000, staleMs: 14 * 86_400_000, durable: true };
+const EARNINGS_SPEC: ReadSpec = { name: "md-facts-next-earnings-v2", slotMs: 24 * 3600_000, staleMs: 7 * 86_400_000, durable: true };
 /** A ticker whose provider read just failed is not asked again by this instance for a while (each statistics read costs 50 credits). */
 const FACTS_RETRY_MS = 10 * 60_000;
 const factsFailed = new Map<string, number>();
 const failedLately = (key: string) => Date.now() - (factsFailed.get(key) ?? 0) < FACTS_RETRY_MS;
 const noteFailure = (key: string) => { factsFailed.set(key, Date.now()); if (factsFailed.size > 5_000) factsFailed.delete(factsFailed.keys().next().value!); };
-async function readStatFacts(ticker: string): Promise<StatFacts> {
-  const parsed = parseStatistics(await statisticsFor(ticker), ticker);
+async function readStatFacts(ticker: string, tier: Tier = "user", spend?: () => void): Promise<StatFacts> {
+  const parsed = parseStatistics(await statisticsFor(ticker, tier, spend), ticker);
   if (!hasStatFacts(parsed)) throw new Error("facts-empty");
   return parsed;
 }
-async function readNextEarnings(ticker: string, today: string): Promise<string | null> {
+async function readNextEarnings(ticker: string, today: string, tier: Tier = "user"): Promise<string | null> {
   // No period=next: Twelve Data answers it with a 404 ("No earning were found") whenever it lists no future date, so every stock page paid
   // 20 credits for an error. The plain list is a valid answer; a future date in it is the next one, none is a valid "not known yet".
-  return parseNextEarnings(await call("earnings", { symbol: ticker }), today);
+  return parseNextEarnings(await call("earnings", { symbol: ticker }, tier), today);
 }
 /** EPS, market cap, dividend yield and the next earnings date. The site's own calendar wins over the provider's. A failed, refused or empty
- * read is never stored; the last good copy stands in for it, and members asking for the same company at once share one read. */
+ * read is never stored; the last good copy stands in for it, and members asking for the same company at once share one read.
+ * 監視22銘柄 (lib/research/monitored-facts.ts): the minute job keeps their copies (refreshMonitoredFacts), so a member's request only reads them
+ * and never asks the provider: 22 cards' reads at once were refused and starved the warm job (production, Nov 26). */
 export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { complete: boolean }> {
   const today = new Date().toISOString().slice(0, 10);
   const own = nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], today);
-  const guarded = <T>(name: string, work: () => Promise<T>) => failedLately(`${name}:${ticker}`) ? null
+  const scheduled = isMonitoredFactsTicker(ticker);
+  const guarded = <T>(name: string, work: () => Promise<T>) => scheduled || failedLately(`${name}:${ticker}`) ? null
     : async () => { try { return await work(); } catch (error) { noteFailure(`${name}:${ticker}`); throw error; } };
   const [stats, earnings] = await Promise.all([
     sharedReader.read<StatFacts>(STATS_SPEC, ticker, guarded("stats", () => readStatFacts(ticker))).catch(() => null),
@@ -231,7 +245,43 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { c
   const value = stats && hasStatFacts(stats.value) ? stats.value : null;
   // A stored date that has passed is not "next" any more.
   const provider = earnings?.value && earnings.value >= today ? earnings.value : null;
-  return { eps: value?.eps ?? null, marketCap: value?.marketCap ?? null, dividendYield: value?.dividendYield ?? null, nextEarnings: own ?? provider, complete: value !== null };
+  return { eps: value?.eps ?? null, marketCap: value?.marketCap ?? null, dividendYield: value?.dividendYield ?? null, nextEarnings: own ?? provider,
+    nextEarningsKnown: own !== null || earnings !== null, complete: value !== null };
+}
+
+let monitoredRun: Promise<{ spent: number; read: number; failed: number }> | null = null;
+/** One minute of the 監視22銘柄 facts (from app/api/research/compare/warm, before the comparison, which yields the credits spent here): the
+ * statistics of at most MONITORED_STATS_PER_MINUTE companies without a current copy (none when the comparison's daily copy is stored) and the
+ * earnings list of at most MONITORED_EARNINGS_PER_MINUTE, on the warm tier through the allocator. A refusal costs nothing and the company is
+ * simply due again next minute; a failed read is not asked again by this instance for FACTS_RETRY_MS. `spent`: credits granted. */
+export function refreshMonitoredFacts(now = Date.now()): Promise<{ spent: number; read: number; failed: number }> {
+  return monitoredRun ??= (async () => {
+    const today = new Date(now).toISOString().slice(0, 10);
+    const events = [...calendarEvents, ...dateOnlyEarnings];
+    const state = (got: Result<unknown> | null): CopyState => got ? { at: got.at, fresh: got.fresh } : null;
+    const tickers = MONITORED_FACTS_TICKERS;
+    const [stats, earnings] = await Promise.all([
+      Promise.all(tickers.map(async t => [t, state(await sharedReader.read<StatFacts>(STATS_SPEC, t, null).catch(() => null))] as const)),
+      Promise.all(tickers.filter(t => !nextEarningsFromSite(t, events, today))
+        .map(async t => [t, state(await sharedReader.read<string | null>(EARNINGS_SPEC, t, null).catch(() => null))] as const)),
+    ]);
+    let spent = 0, read = 0, failed = 0;
+    const run = async <T>(spec: ReadSpec, ticker: string, name: string, cost: number, work: (spend: () => void) => Promise<T>) => {
+      let asked = false;
+      const got = await sharedReader.read<T>(spec, ticker, async () => {
+        try { return await work(() => { asked = true; spent += cost; }); }
+        catch (error) { if (isBudgetError(error)) { if (asked) spent -= cost; } else noteFailure(`${name}:${ticker}`); throw error; }
+      }).catch(() => null);
+      if (got?.fresh) read++; else failed++;
+    };
+    await Promise.all([
+      ...factsDue(stats, MONITORED_STATS_PER_MINUTE, t => failedLately(`stats:${t}`))
+        .map(t => run<StatFacts>(STATS_SPEC, t, "stats", 50, spend => readStatFacts(t, "warm", spend))),
+      ...factsDue(earnings, MONITORED_EARNINGS_PER_MINUTE, t => failedLately(`earnings:${t}`))
+        .map(t => run<string | null>(EARNINGS_SPEC, t, "earnings", 20, spend => { spend(); return readNextEarnings(t, today, "warm"); })),
+    ]);
+    return { spent, read, failed };
+  })().finally(() => { monitoredRun = null; });
 }
 
 /** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the
@@ -239,13 +289,17 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts & { c
 /** The price board: one quote per requested symbol (those that cannot be read are simply absent, and logged). */
 export type BoardQuote = { id: string; price: number; change: number | null; percentChange: number | null; currency: string; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"]; high: number | null; low: number | null; open: number | null; volume: number | null };
 const boardQuote = (id: string, quote: MarketQuote): BoardQuote => ({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
-export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> {
+export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> { return (await loadBoardWithState(ids, fast)).items; }
+/** `stale`: how many answers are an earlier slot's copy (the route then keeps the answer out of the shared cache). */
+export async function loadBoardWithState(ids: string[], fast = false): Promise<{ items: BoardQuote[]; stale: number }> {
   const out: BoardQuote[] = [];
+  let stale = 0;
   await Promise.all(ids.filter(isMarketChartSymbol).map(async id => {
-    const quote = (await boardEntry(id, fast))?.quote;
-    if (quote) out.push(boardQuote(id, quote));
+    const got = await boardRead(id, fast);
+    const quote = got?.value.quote;
+    if (quote) { out.push(boardQuote(id, quote)); if (!got.fresh) stale++; }
   }));
-  return ids.flatMap(id => out.filter(item => item.id === id));
+  return { items: ids.flatMap(id => out.filter(item => item.id === id)), stale };
 }
 
 /** マーケット「レバETF」(owner, Nov 25): the funds and the stocks under them (lib/research/leveraged-etfs.ts, 89 symbols) in ONE shared snapshot.
@@ -316,7 +370,7 @@ export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number;
     await Promise.all(due.map(async job => {
       try {
         if (job.kind === "quote") {
-          const got = await sharedReader.read<Board>(boardSpec(false), job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
+          const got = await sharedReader.read<Board>({ ...boardSpec(false), swr: false }, job.id, () => { spent++; return resolveFresh(job.id, "warm"); });
           if (!got?.fresh) throw new Error("not-read");
           resolvedVariant.set(job.id, got.value.variant);
           entries[boardJobKey(job)] = { at: got.at, quote: boardQuote(job.id, got.value.quote) };
@@ -334,9 +388,19 @@ export function refreshBoardSnapshot(now = Date.now()): Promise<{ spent: number;
   })().finally(() => { boardRun = null; });
 }
 /** Every card's quote and every tab's first chart (shaped as the chart answer is), from the snapshot. `at`: its oldest entry. */
-export async function loadBoardSnapshot(): Promise<{ quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }>; at: number | null; filled: boolean }> {
+export type BoardSnapshotView = { quotes: Record<string, BoardQuote>; charts: Record<string, { bars: Bar[]; before: Bar[] }>; at: number | null };
+export async function loadBoardSnapshot(): Promise<BoardSnapshotView & { filled: boolean }> {
   let snapshot = await currentBoardSnapshot(), filled = false;
   if (!snapshot) { await refreshBoardSnapshot(); snapshot = await currentBoardSnapshot(); filled = true; }
+  return { ...shapeBoardSnapshot(snapshot), filled };
+}
+/** The page's first paint (app/research/market/page.tsx): the shared snapshot as it is, or null. Never asks the provider, never fills it. */
+export async function peekBoardSnapshot(): Promise<BoardSnapshotView | null> {
+  if (!marketDataConfigured()) return null;
+  const snapshot = await currentBoardSnapshot();
+  return snapshot ? shapeBoardSnapshot(snapshot) : null;
+}
+function shapeBoardSnapshot(snapshot: BoardSnapshot | null): BoardSnapshotView {
   const quotes: Record<string, BoardQuote> = {}, charts: Record<string, { bars: Bar[]; before: Bar[] }> = {};
   let at: number | null = null;
   for (const entry of Object.values(snapshot?.entries ?? {})) {
@@ -348,5 +412,5 @@ export async function loadBoardSnapshot(): Promise<{ quotes: Record<string, Boar
     const shaped = shapePeriod(BOARD_SNAPSHOT_PERIOD, entry.bars);
     if (shaped.bars.length) charts[key.slice("chart:".length)] = shaped;
   }
-  return { quotes, charts, at, filled };
+  return { quotes, charts, at };
 }

@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "DOCS",
+    "name": "ドキシミティ",
+    "cik": 1516513,
+    "name_en": "Doximity"
+  },
+  "rows": [
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "HLYK",
+    "ZD",
+    "AMWL"
+  ],
+  "companies": [
+    {
+      "id": "PATHWAYMED",
+      "ticker": "PATHWAYMED",
+      "name": "パスウェイ・メディカル",
+      "name_en": "Pathway Medical",
+      "sub": "医療AI",
+      "sub_en": "Clinical AI",
+      "sub_short": "AI",
+      "sub_short_en": "AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "Doximity 10-K(2026年3月期)",
+            "label_en": "Doximity 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651326000025/docs-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "Business Combinations Pathway Acquisition On July 29, 2025, the Company completed the acquisition of all outstanding shares of Pathway Medical Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CURATIVETALENT",
+      "ticker": "CURATIVETALENT",
+      "name": "キュラティブ・タレント",
+      "name_en": "Curative Talent",
+      "sub": "医療人材",
+      "sub_en": "Healthcare staffing",
+      "sub_short": "人材",
+      "sub_short_en": "Staffing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Doximity 10-K(2026年3月期)",
+            "label_en": "Doximity 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651326000025/docs-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "This includes our acquisitions of Curative Talent, AMiON, and Pathway Medical Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMION",
+      "ticker": "AMION",
+      "name": "アミオン",
+      "name_en": "AMiON",
+      "sub": "医師の勤務表",
+      "sub_en": "Physician scheduling",
+      "sub_short": "ソフト",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Doximity 10-K(2026年3月期)",
+            "label_en": "Doximity 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1516513/000151651326000025/docs-20260331.htm",
+            "level": "official",
+            "date": "2026-05-19",
+            "quote": "This includes our acquisitions of Curative Talent, AMiON, and Pathway Medical Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HLYK",
+      "ticker": "HLYK",
+      "name": "ヘルスリンクト",
+      "name_en": "HealthLynked",
+      "sub": "医療ネットワーク",
+      "sub_en": "Healthcare network",
+      "sub_short": "医療IT",
+      "sub_short_en": "Health IT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合に挙げる",
+          "text_en": "Names Doximity as a competitor",
+          "source": {
+            "label": "HealthLynked 10-K(2025年度)",
+            "label_en": "HealthLynked 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1680139/000121390026037499/ea0282013-10k_health.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Competitors include, but are not limited to, ZocDoc, Inc., Teladoc Health, Inc., Doximity, Inc., GoodRx Holdings, Inc., Oscar Health, Inc., Veritone, Inc., and other digital health platforms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZD",
+      "ticker": "ZD",
+      "name": "ジフ・デイビス",
+      "name_en": "Ziff Davis",
+      "sub": "デジタルメディア",
+      "sub_en": "Digital media",
+      "sub_short": "メディア",
+      "sub_short_en": "Media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療分野の媒体の競合に挙げる",
+          "text_en": "Names Doximity among vertical digital media competitors",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年度)",
+            "label_en": "Ziff Davis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Within these verticals, our businesses compete with (i) diversified internet and digital media companies like IAC, Future PLC, Red Ventures, Penske Media, Integrated Media, and Internet Brands, (ii) vertical-specific digital media companies like RVO Health, TechTarget, Vox Media, Centerfield, Doximity, and Fandom and (iii) other large sellers of advertising products and solutions, including Alphabet, Meta, Snap, Twitch, and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMWL",
+      "ticker": "AMWL",
+      "name": "アメリカン・ウェル",
+      "name_en": "American Well",
+      "sub": "遠隔医療",
+      "sub_en": "Telehealth",
+      "sub_short": "遠隔医療",
+      "sub_short_en": "Virtual",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医師向けツールの競合に挙げる",
+          "text_en": "Names Doximity among physician tool competitors",
+          "source": {
+            "label": "American Well 10-K(2025年度)",
+            "label_en": "American Well 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1393584/000119312526048776/amwl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our competitors in the digital care delivery market range from traditional digital care players such as Teladoc, Included Health and MDLive; video communications players such as Zoom or Microsoft Teams; physician networks or tools such as Doximity and Caregility; technology companies such as Amazon; and EHR players (which are also partners) such as Epic, Cerner, Allscripts and athenahealth."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

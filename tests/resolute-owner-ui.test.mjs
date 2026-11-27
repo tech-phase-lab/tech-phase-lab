@@ -149,10 +149,16 @@ test("while access is being checked RESOLUTE shows its logo and 確認中…, ne
 });
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
-  // Owner, Nov 25 §02: a large 「Tech Phaseへ戻る（マーケット・銘柄検索・速報）」 at the top of the menu, and 「‹ Tech Phase」 in the bar.
+  // Owner, Nov 26 §1: 「‹ Tech Phase」 left the bar; the menu's top card is the way back: green, with the Tech Phase logo and
+  // 「ニュース・株価・リサーチ」 / "News · Prices · Research".
   const shell = await read("../app/resolute/tool-shell.tsx");
-  assert.match(shell, /className=\{h\.tpCard\}>[\s\S]*?\{en\?"Back to Tech Phase":"Tech Phaseへ戻る"\}[\s\S]*?"マーケット・銘柄検索・速報"/);
-  assert.match(shell, /className=\{h\.tpBack\}[^>]*>[\s\S]*?Tech Phase<\/Link>/);
+  assert.match(shell, /className=\{h\.tpCard\}><Image src="\/start\/logo\.png"[^>]*\/>[\s\S]*?\{en\?"Back to Tech Phase":"Tech Phaseへ戻る"\}[\s\S]*?\{en\?"News · Prices · Research":"ニュース・株価・リサーチ"\}/);
+  assert.doesNotMatch(shell, /h\.tpBack/, "the top bar has only the menu and JA/EN");
+  assert.doesNotMatch(shell, /マーケット・銘柄検索・速報/);
+  const css = await read("../app/resolute/tool-shell.module.css");
+  assert.match(css.match(/\.tpCard \{([^}]*)\}/)[1], /border: 1px solid #3fbf8a;[^;]*; background: linear-gradient\(180deg, #12362c, #0f2a24\)/);
+  // The PC menu keeps its 「Tech Phaseへ」.
+  assert.match(shell, /\{en\?"Tech Phase":"Tech Phaseへ"\}/);
   assert.match(await read("../lib/resolute/tech-phase-back.ts"), /TECH_PHASE_HOME = "\/research"/);
 });
 
@@ -171,7 +177,7 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.doesNotMatch(shell, /<footer/, "the bottom band and its small links are gone");
   assert.match(shell, /<header className=\{`\$\{h\.bar\}/);
-  // Owner, Nov 25 §B: 「‹ Tech Phase」 and 「☰ メニュー」 on the left, JA/EN on the right; purchase pages show the logo and JA/EN only.
+  // Owner, Nov 26 §1: 「☰ メニュー」 on the left, JA/EN on the right; purchase pages show the logo and JA/EN only.
   assert.match(shell, /<div className=\{h\.left\}>/);
   assert.match(shell, /if\(variant==="purchase"\) return <header className=\{`\$\{h\.bar\} \$\{h\.purchase\}`\}>/);
   assert.match(shell, /menuOpen\?\(en\?"Close":"閉じる"\)/);

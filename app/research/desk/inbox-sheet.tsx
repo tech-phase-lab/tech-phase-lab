@@ -81,7 +81,7 @@ export default function InboxSheet({ onPick, onClose }: { onPick: (file: File) =
         <div className={styles.when}>
           {renaming === item.id
             ? <input className={styles.titleInput} autoFocus aria-label="音声のタイトル" maxLength={80} value={draft} onChange={event => setDraft(event.target.value)} onKeyDown={event => { if (event.key === "Enter") void save(item); if (event.key === "Escape") setRenaming(""); }} />
-            : <b>{item.title}{item.isNew && <em>NEW</em>}</b>}
+            : <b>{item.title}</b>}
           <small>{fmt(item.at, { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}{item.seconds ? ` ・ ${clock(item.seconds)}` : ""}</small>
         </div>
         {renaming === item.id

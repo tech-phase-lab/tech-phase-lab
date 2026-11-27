@@ -3,12 +3,19 @@ import {Pool} from 'pg';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {riskPool} from './risk-store.mjs';
 import {createNewsReader,withSourceRetry} from './rizel-news-source.mjs';
-import {prepareDailyReview,dailyReviewFailure,reselectStoredDay,selectDailyCandidates,previewSelection} from './rizel-daily-review.mjs';
-import {windowHours} from './risk-job.mjs';
+import {prepareDailyReview,dailyReviewFailure,reselectStoredDay,selectDailyCandidates,previewSelection,readStart} from './rizel-daily-review.mjs';
+
 import {createMovesReader,withThermometerFallback} from './risk-moves.mjs';
 import {judgeDay} from './shock-judge.mjs';
 import {sendOwnerShockMail} from './shock-owner-mail.mjs';
 import {createClerkClient} from '@clerk/backend';
+import {runCandidates,publishPicks,sendCandidatesMail} from './shock-candidates.mjs';
+import {isCandidateRun} from '../../lib/resolute/shock-picks.ts';
+import {isPublishRunHour} from '../../lib/resolute/risk.ts';
+// The owner pick (owner, Nov 27) replaces the automatic selection once RESOLUTE_SHOCK_OWNER_PICK=true (needs migration 030).
+// `node rizel-daily-review-cli.mjs candidates` is the candidate run (06:00 / 06:30 JST); without an argument, the publish run (08:20 JST).
+const ownerPick=process.env.RESOLUTE_SHOCK_OWNER_PICK==='true',mode=process.argv[2]??'publish';
+const mailClerk=()=>{const secretKey=process.env.RESOLUTE_MAIL_CLERK_SECRET_KEY;return secretKey?createClerkClient({secretKey}):null;};
 // The day's AI judgement of the stars (owner, Nov 26) is on unless RESOLUTE_SHOCK_AI_JUDGE=false; it falls back to the numeric rule.
 const judge=process.env.RESOLUTE_SHOCK_AI_JUDGE==='false'?null:judgeDay;
 
@@ -28,10 +35,25 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   selectionPool=new Pool({...config,max:2});selectionPool.on('error',()=>{});budgetPool=riskPool();
   if(process.env.RIZEL_DAILY_REVIEW_DRY_RUN==='true'){
    // Read-only preview (owner check): what today's selection picks under the current rules. No model call, no writes.
-   const now=new Date(),feed=await readFeed({since:now.getTime()-windowHours(now)*3600000});
+   const now=new Date(),feed=await readFeed({since:readStart(now)});
    let intake=selectDailyCandidates(feed,now);const moves=readMoves&&intake.sessions.length?await readMoves(intake.sessions):null;
    if(moves)intake=selectDailyCandidates(feed,now,{moves});
    console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW_PREVIEW',...previewSelection(intake,moves)}));
+  }else if(mode==='candidates'){
+   const now=new Date();
+   if(!ownerPick)console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',state:'owner-pick-off'}));
+   else if(!isCandidateRun(now))console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',state:'not-candidate-time'}));
+   else{const r=await runCandidates({pool:budgetPool,readFeed,readMoves,now,mail:x=>sendCandidatesMail({...x,clerk:mailClerk()})});
+    console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',...r}));}
+  }else if(ownerPick){
+   const now=new Date();
+   if(!isPublishRunHour(now))console.log(JSON.stringify({event:'RIZEL_SHOCK_PUBLISH',state:'outside-window'}));
+   else{const result=await publishPicks({pool:budgetPool,readFeed,readMoves,now});
+    console.log(JSON.stringify({event:'RIZEL_SHOCK_PUBLISH',...result}));
+    if(result.state==='ready'||result.state==='no-candidates'){
+     try{const mail=await sendOwnerShockMail({pool:budgetPool,day:result.day,clerk:mailClerk()});console.log(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,...mail}));}
+     catch{console.error(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,state:'failed'}));}
+    }}
   }else{
   // One-off (owner, Nov 25): re-select today's stored day under the current rules, once (reselectStoredDay).
   try{const r=await reselectStoredDay({publishPool:budgetPool,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,readFeed,readMoves:process.env.RESOLUTE_SHOCK_GAUGE_RESELECT_DAY?withThermometerFallback(readMoves,process.env.TWELVE_DATA_API_KEY):readMoves});
@@ -42,8 +64,7 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW',...result,...(readFeed.stats.attempts?{sourceAttempts:readFeed.stats.attempts}:{})}));
   // The owner's morning mail (off unless RESOLUTE_SHOCK_OWNER_MAIL_ENABLED=true). Only a fixed state is logged, never the address.
   if(['ready','none-today','no-candidates'].includes(result.state)){
-   try{const secretKey=process.env.RESOLUTE_MAIL_CLERK_SECRET_KEY;
-    const mail=await sendOwnerShockMail({pool:budgetPool,day:result.day,clerk:secretKey?createClerkClient({secretKey}):null});
+   try{const mail=await sendOwnerShockMail({pool:budgetPool,day:result.day,withheld:result.withheldStories??[],clerk:mailClerk()});
     console.log(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,...mail}));}
    catch{console.error(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,state:'failed'}));}
   }

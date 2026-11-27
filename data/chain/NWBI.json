@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "NWBI",
+    "name": "ノースウエスト・バンクシェアーズ",
+    "cik": 1471265,
+    "name_en": "Northwest Bancshares"
+  },
+  "rows": [
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CREX",
+      "ticker": "CREX",
+      "name": "クリエイティブ・リアリティーズ",
+      "name_en": "Creative Realities",
+      "sub": "デジタルサイネージ",
+      "sub_en": "Digital signage",
+      "sub_short": "看板",
+      "sub_short_en": "Signage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "新たな貸し手の1行",
+          "text_en": "Northwest Bank is one of its new lenders",
+          "source": {
+            "label": "Creative Realities 10-Q(2026年9月期)",
+            "label_en": "Creative Realities 10-Q (quarter ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1356093/000143774926037242/crex20260930_10q.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "Amended and Restated Credit Agreement On November 6, 2025 (the \"Refinancing Date\"), the Company and certain of its subsidiaries entered into the Amended and Restated Credit Agreement (the \"Amended Credit Agreement\"), with FMB acting as agent (\"Agent\"), and a new syndicate of lenders (\"Lenders\") which included FMB and two additional creditors, Northwest Bank (\"NWB\") and Axos Bank (\"Axos\"; together with NWB, the \"New Lenders\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMS",
+      "ticker": "WMS",
+      "name": "アドバンスト・ドレナージ・システムズ",
+      "name_en": "Advanced Drainage Systems",
+      "sub": "排水管",
+      "sub_en": "Drainage pipes",
+      "sub_short": "配管",
+      "sub_short_en": "Pipes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手の1行",
+          "text_en": "Northwest Bank is one of its lenders",
+          "source": {
+            "label": "Advanced Drainage Systems 8-K(2026年11月)",
+            "label_en": "Advanced Drainage Systems 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000119312526455563/d387290dex101.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "5.00 % HSBC Bank USA, N.A. $ 15,000,000 5.00 % Morgan Stanley Bank, N.A. $ 15,000,000 5.00 % Citizens Bank, N.A. $ 7,500,000 2.50 % The Huntington National Bank $ 67,500,000 22.50 % First National Bank of Pennsylvania $ 50,000,000 16.67 % Northwest Bank $ 5,000,000 1.67 % Total $ 300,000,000.00 100 % Schedule II Schedule 1.1(e) Revolving Commitment Allocations Lender Revolving Commitments Applicable Percentage PNC Bank, National Association $ 165,000,000 15.70 % Bank of"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPHR",
+      "ticker": "SPHR",
+      "name": "スフィア・エンターテインメント",
+      "name_en": "Sphere Entertainment",
+      "sub": "娯楽施設",
+      "sub_en": "Entertainment venues",
+      "sub_short": "娯楽",
+      "sub_short_en": "Venues",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "借入契約の貸し手の1行",
+          "text_en": "Northwest Bank is one of its lenders",
+          "source": {
+            "label": "Sphere Entertainment 8-K(2026年2月)",
+            "label_en": "Sphere Entertainment 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000119312526035571/d76310dex101.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "(ix) if to Northwest Bank, as Lender (Jurisdiction of tax residence: United States), (A) 375 Essjay Road, Suite 100 Williamsville, New York 14221, Attention of Rachelle Brennan (Phone: (716) 730-4288 Ext: 79488, Email: rachelle.brennan@northwest.com), and (B) 100 Liberty Street, P.O."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PENNSWOODS",
+      "ticker": "PENNSWOODS",
+      "name": "ペンズ・ウッズ・バンコープ",
+      "name_en": "Penns Woods Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月に買収",
+          "text_en": "Acquired in July 2025",
+          "source": {
+            "label": "Northwest Bancshares 10-K(2025年度)",
+            "label_en": "Northwest Bancshares 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1471265/000147126526000008/nwbi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Acquisition of Penns Woods On July 25, 2025, the Company completed its acquisition of Penns Woods Bancorp, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MUTUALFIRST",
+      "ticker": "MUTUALFIRST",
+      "name": "ミューチュアルファースト・ファイナンシャル",
+      "name_en": "MutualFirst Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した銀行",
+          "text_en": "An acquired bank",
+          "source": {
+            "label": "Northwest Bancshares 10-K(2025年度)",
+            "label_en": "Northwest Bancshares 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1471265/000147126526000008/nwbi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "At December 31, 2025, Northwest Bancshares, Inc.'s investment in the Trusts totaled $4 million, and the Trusts had assets of $130 million, net of discounts due to fair value adjustments made at the time of acquisition of Union Community Bank and MutualFirst Financial, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

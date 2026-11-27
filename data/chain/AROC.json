@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "AROC",
+    "name": "アークロック",
+    "cik": 1389050,
+    "name_en": "Archrock"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "提携・出資・買収",
+      "en": "Partners, stakes & deals"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NGCS",
+      "ticker": "NGCS",
+      "name": "ナチュラル・ガス・コンプレッション・システムズ",
+      "name_en": "Natural Gas Compression Systems",
+      "sub": "ガス圧縮",
+      "sub_en": "Gas compression",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した会社",
+          "text_en": "An acquired company",
+          "source": {
+            "label": "Archrock 10-K(2025年度)",
+            "label_en": "Archrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000138905026000009/aroc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Critical Audit Matter Description The Company completed the acquisition of NGCS (Natural Gas Compression Systems, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIVOLT",
+      "ticker": "HIVOLT",
+      "name": "ハイボルト・エナジー",
+      "name_en": "HiVolt Energy",
+      "sub": "電力設備",
+      "sub_en": "Power equipment",
+      "sub_short": "電力",
+      "sub_short_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合併契約を結ぶ(2026年11月)",
+          "text_en": "Signed a merger agreement (November 2026)",
+          "source": {
+            "label": "Archrock 8-K(2026年11月)",
+            "label_en": "Archrock 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000110465926125218/tm2629454d1_8k.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "Exhibit Number Description 2.1* Agreement and Plan of Merger, dated as of November 10, 2026, by and among Archrock Services, L.P., Project Avengers 2026 Merger Sub, LLC, HiVolt Energy Holdings, LLC and Shareholder Representative Services LLC, solely in its capacity as the unitholders' representative. 99.1 Press Release dated November 10, 2026. 99.2 Investor Presentation dated November 10, 2026. 104 Cover Page Interactive Data File (embedded within the Inline XBRL document) *"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENERFLEX",
+      "ticker": "ENERFLEX",
+      "name": "エナフレックス",
+      "name_en": "Enerflex",
+      "sub": "ガス圧縮",
+      "sub_en": "Gas compression",
+      "sub_short": "圧縮機",
+      "sub_short_en": "Compress",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収したエクステランと税務協定を引き継ぐ",
+          "text_en": "Took over Exterran, its counterparty in a tax matters agreement",
+          "source": {
+            "label": "Archrock 10-K(2025年度)",
+            "label_en": "Archrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000138905026000009/aroc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Notes to Consolidated Financial Statements (continued) The acquisition of Exterran Corporation by Enerflex, Ltd. in October 2022 had no impact on the Spin-off related agreements discussed above. ​ ​ ​ 27."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Archrock 10-K(2025年度)",
+            "label_en": "Archrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000138905026000009/aroc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Security Agreement, dated as of March 30, 2017, among Archrock Partners Operating LLC and the other Grantors party thereto in favor or JPMorgan Chase Bank, N.A., as Administrative Agent,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RY",
+      "ticker": "RY",
+      "name": "Royal Bank of Canada",
+      "name_en": "Royal Bank of Canada",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Archrock 10-K(2025年度)",
+            "label_en": "Archrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000138905026000009/aroc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Purchase Agreement, dated as of December 16, 2019, by and among Archrock Partners, L.P., Archrock Partners Finance Corp., Archrock, Inc., the other guarantors party thereto and RBC Capital Markets, LLC, as representative of the initial purchasers named therein,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "社債などの引受会社",
+          "text_en": "Underwriter of its securities offering",
+          "source": {
+            "label": "Archrock 10-K(2025年度)",
+            "label_en": "Archrock 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1389050/000138905026000009/aroc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Purchase Agreement, dated as of August 12, 2024, by and among Archrock Partners, L.P., Archrock Partners Finance Corp., Archrock, Inc., the other guarantors party thereto and Wells Fargo Securities, LLC, as representative of the initial purchasers named therein,"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -4,6 +4,20 @@ import { displayClock, zoneLabel } from "./display-time.ts";
  * unknown (null) rather than guessed. Verify and extend it each December. */
 export type MarketSession = "regular" | "pre" | "post" | "closed" | "holiday";
 
+/** NYSE full-day holidays and their names (Japanese / English); an observed day carries the holiday's own name. */
+export const US_MARKET_HOLIDAYS: Readonly<Record<string, { ja: string; en: string }>> = Object.freeze({
+  "2026-01-01": { ja: "元日", en: "New Year's Day" }, "2026-01-19": { ja: "キング牧師記念日", en: "Martin Luther King Jr. Day" },
+  "2026-02-16": { ja: "大統領の日", en: "Presidents' Day" }, "2026-04-03": { ja: "聖金曜日", en: "Good Friday" },
+  "2026-05-25": { ja: "戦没将兵追悼記念日", en: "Memorial Day" }, "2026-06-19": { ja: "ジューンティーンス", en: "Juneteenth" },
+  "2026-07-03": { ja: "独立記念日", en: "Independence Day" }, "2026-09-07": { ja: "労働者の日", en: "Labor Day" },
+  "2026-11-26": { ja: "感謝祭", en: "Thanksgiving" }, "2026-12-25": { ja: "クリスマス", en: "Christmas" },
+  "2027-01-01": { ja: "元日", en: "New Year's Day" }, "2027-01-18": { ja: "キング牧師記念日", en: "Martin Luther King Jr. Day" },
+  "2027-02-15": { ja: "大統領の日", en: "Presidents' Day" }, "2027-03-26": { ja: "聖金曜日", en: "Good Friday" },
+  "2027-05-31": { ja: "戦没将兵追悼記念日", en: "Memorial Day" }, "2027-06-18": { ja: "ジューンティーンス", en: "Juneteenth" },
+  "2027-07-05": { ja: "独立記念日", en: "Independence Day" }, "2027-09-06": { ja: "労働者の日", en: "Labor Day" },
+  "2027-11-25": { ja: "感謝祭", en: "Thanksgiving" }, "2027-12-24": { ja: "クリスマス", en: "Christmas" },
+});
+// The same dates as US_MARKET_HOLIDAYS, kept as a literal list: the Python price-alert calendar test reads it from this file.
 const HOLIDAYS = new Set([
   "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25", "2026-06-19", "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
   "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
@@ -89,4 +103,22 @@ export function closedDayClose(at: Date): ClosedDay | null {
 export function closedDayLine(close: ClosedDay, ja: boolean): string {
   const date = `${close.month}/${close.day}`;
   return ja ? `休場 ・ 米国 ${date}(${"日月火水木金土"[close.weekday]}) の終値` : `Closed · U.S. close of ${WEEKDAYS[close.weekday]} ${date}`;
+}
+
+/** The home notice wording on a day the U.S. market is closed (owner, Nov 27; the exact words are the owner's to change, here only):
+ * a weekend gets the plain line, an NYSE holiday the line with its name ({name}). */
+export const MARKET_CLOSED_NOTICE = {
+  weekend: { ja: "本日の米国市場はお休みです。", en: "U.S. markets are closed today." },
+  holiday: { ja: "本日は{name}のため、米国市場はお休みです。", en: "U.S. markets are closed today for {name}." },
+} as const;
+/** Holidays whose notice gives no name (owner, Nov 27: Memorial Day): the plain line, as on a weekend. */
+const NOTICE_WITHOUT_NAME = new Set(Object.entries(US_MARKET_HOLIDAYS).filter(([, h]) => h.en === "Memorial Day").map(([d]) => d));
+/** The notice for `at`, or null on a trading day. "Today" is the U.S. Eastern calendar date: a Saturday, a Sunday, or an NYSE holiday of
+ * the 2026–2027 calendar (outside the calendar only weekends are known). */
+export function marketClosedNotice(at: Date, lang: "ja" | "en"): string | null {
+  if (!Number.isFinite(at.getTime())) return null;
+  const { date, weekday } = newYorkDay(at);
+  if (weekday === 0 || weekday === 6 || NOTICE_WITHOUT_NAME.has(date)) return MARKET_CLOSED_NOTICE.weekend[lang];
+  const holiday = US_MARKET_HOLIDAYS[date];
+  return holiday ? MARKET_CLOSED_NOTICE.holiday[lang].replace("{name}", holiday[lang]) : null;
 }

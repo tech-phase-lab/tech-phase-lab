@@ -23,18 +23,21 @@ export default function EconomicReleaseItem({ view, title, time, lang, when, wit
   const badge = view.forecast && <span className={calendarStyles.releaseBadge} data-vs={view.forecast.vs}>{badgeText[lang][view.forecast.vs]}</span>;
   // "前月比" / "前期比年率" belongs to a percentage; a job count or an index reads on its own.
   const pctLabel = view.label && view.unit === "pct" ? <span className={calendarStyles.releaseLabel}>{view.label}</span> : null;
-  return <li><details>
-    <summary>{time}<span className={calendarStyles.eventName}>{title}
+  const name = <span className={calendarStyles.eventName}>{title}
       {view.display
         ? <span className={calendarStyles.releaseLine}>{pctLabel}<strong className={calendarStyles.releaseValue}>{view.display}</strong>
           {view.previous && <span className={calendarStyles.releasePrevious}>{arrow(view.value!.value, view.previous.value.value)} {ja ? "前回" : "Prev"} <span className={calendarStyles.nowrap}>{view.previous.display}</span></span>}
           {badge}</span>
         : <small>{text(view.summary)}</small>}
-    </span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
+    </span>;
+  // Nothing to open but a link (owner, Nov 26: "開いて出典だけ、をなくす"): a plain row without ＋. The owner accounts still open it to withdraw.
+  if (!view.expandable && !withdraw) return <li><div className={calendarStyles.plainRow}>{time}{name}</div></li>;
+  return <li><details>
+    <summary>{time}{name}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
     <div className={`${calendarStyles.eventDetails} ${calendarStyles.releaseDetails}`}>
       {view.display && <dl className={calendarStyles.releaseFigures}>
         <div><dt>{ja ? "今回" : "Actual"}</dt><dd>{view.display}</dd></div>
-        {view.previous && <div><dt>{ja ? "前回" : "Previous"}</dt><dd>{view.previous.display}</dd></div>}
+        {view.previous && <div><dt>{view.previous.revised ? (ja ? "前回（改定値）" : "Previous (revised)") : (ja ? "前回" : "Previous")}</dt><dd>{view.previous.display}</dd></div>}
         {view.forecast && <div><dt>{ja ? "予想" : "Forecast"}</dt><dd>{view.forecast.display}</dd></div>}
       </dl>}
       {(view.change || badge) && <p className={calendarStyles.releaseChange}>{view.change && <span>{arrow(view.value!.value, view.previous!.value.value)} {view.change}</span>}{badge && <span>{ja ? "予想比" : "vs forecast"} {badge}</span>}</p>}

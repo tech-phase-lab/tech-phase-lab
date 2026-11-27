@@ -17,6 +17,7 @@ const moves={'2026-10-14':{sox:{previousDate:'2026-10-13',changePercent:-3.2,typ
 const titled=(n,publishedAt,title)=>({...item(n,publishedAt),title:`${title} ${n}`});
 const TITLES={market:'Nasdaq slides as Treasury yields jump',semisA:'Chip stocks drop after export rules tighten',semisB:'Semiconductor stocks fall as memory prices weaken',semisC:'Chipmakers tumble on AI order delays'};
 
+// These fixtures span the old 30-hour window; the edition window (owner, Nov 27) is tested in resolute-shock-owner-pick.test.mjs.
 test('the morning run is 08:00 JST on weekdays, after the thermometer stores the previous close',()=>{
  assert.equal(RISK_POLICY.runHourJst,8);
  assert.equal(isDailyRunHour(now),true);
@@ -60,13 +61,14 @@ test('market-wide first; one story per session (the best explainer holds it); si
  const feed={ok:true,enabled:true,items:[item(1,'2026-10-14T21:30:00Z'),item(2,'2026-10-14T21:20:00Z'),titled(3,'2026-10-14T15:00:00Z',TITLES.semisA),titled(4,'2026-10-14T14:00:00Z',TITLES.market),
   {...item(5,'2026-10-14T21:10:00Z'),title:'Acme warns of AI semiconductor risk 5'},titled(8,'2026-10-14T21:40:00Z',TITLES.semisB),titled(9,'2026-10-14T13:00:00Z',TITLES.semisC)]};
  const limits={stories:3,attempts:5};
- const plain=selectDailyCandidates(feed,now,{limits});
+ const plain=selectDailyCandidates(feed,now,{limits,edition:null});
  // Oct 15: market-wide 4 holds the session; chip-sector 3 and 8 on the same session wait in reserve. Oct 14: 9.
  assert.deepEqual(plain.selected.map(c=>c.title.slice(-1)),['4','9','1']);
  assert.deepEqual(plain.reserve.map(c=>c.title.slice(-1)),['8','3','2','5']);
- const ordered=selectDailyCandidates(feed,now,{moves,limits});
+ const ordered=selectDailyCandidates(feed,now,{moves,limits,edition:null});
  assert.deepEqual(ordered.selected.map(c=>c.title.slice(-1)),['4','9','1']);
- assert.equal(ordered.diagnostics.knownMove,1);assert.equal(ordered.diagnostics.repeated,3);assert.equal(ordered.diagnostics.sessionsHeld,2);
+ // Owner, Nov 27 (one event, one story): 5 «Acme warns of AI semiconductor risk» repeats 1's event too, so four repeats.
+ assert.equal(ordered.diagnostics.knownMove,1);assert.equal(ordered.diagnostics.repeated,4);assert.equal(ordered.diagnostics.sessionsHeld,2);
  assert.deepEqual(ordered.diagnostics.scopes,{market:1,semis:3,company:3});
 });
 
@@ -120,8 +122,8 @@ test('a bearish chip-stock headline is a candidate (real Nov 20 example); it is 
  // Fri Nov 20 14:33 New York, during regular hours: Friday's −10.4% had mostly happened already. Measured on Mon Nov 23.
  const feed={ok:true,enabled:true,items:[{title:'A massive bearish trade just happened in the chip stocks',url:'https://example.com/chips',publishedAt:'2026-11-20T19:33:31Z',bodyEn:'The biggest options trade of the day was a bearish bet on the SMH. Traders are targeting an additional 8% decline.'}]};
  const friday={'2026-11-20':{sox:{previousDate:'2026-11-19',changePercent:-10.4,typicalPercent:2.11,up:0,down:40,total:40},nas100:{previousDate:'2026-11-19',changePercent:-4.6,typicalPercent:0.88,up:8,down:92,total:100}}};
- const r=selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:friday});
+ const r=selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:friday,edition:null});
  assert.equal(r.selected.length,1);assert.equal(r.diagnostics.knownMove,0);assert.deepEqual(r.sessions,['2026-11-23']);
  const monday={'2026-11-23':{sox:{previousDate:'2026-11-20',changePercent:-3,typicalPercent:2.2,up:4,down:36,total:40}}};
- assert.equal(selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:monday}).diagnostics.knownMove,1);
+ assert.equal(selectDailyCandidates(feed,new Date('2026-11-22T23:20:00Z'),{moves:monday,edition:null}).diagnostics.knownMove,1);
 });

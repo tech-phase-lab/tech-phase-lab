@@ -44,7 +44,10 @@ export function inlineFinancialFacts(html: string, cik: string, filing: Financia
   }
   for (const node of root.querySelectorAll("ix\\:nonfraction")) {
     const attrs = node.attributes, name = attrs.name?.split(":"), context = contexts.get(attrs.contextRef), unit = units.get(attrs.unitRef);
-    if (!name || name.length !== 2 || !["us-gaap","ifrs-full"].includes(name[0]) || !context || !unit || attrs["xsi:nil"] === "true" || attrs.continuedAt || node.querySelector("ix\\:exclude")) continue;
+    // A company's own capital-spending line, named plainly (UFPT: ufpt:PaymentsToAcquirePropertyAndEquipmentNet), is read under one
+    // reserved name (EXTENSION_CAPEX in comparison.ts), used only when no standard capital-spending line exists.
+    const extensionCapex = !!name && name.length === 2 && !["us-gaap","ifrs-full","dei","srt"].includes(name[0]) && /^PaymentsToAcquirePropert(?:y|ies)(?:Plant)?AndEquipment(?:Net)?$/.test(name[1]);
+    if (!name || name.length !== 2 || (!["us-gaap","ifrs-full"].includes(name[0]) && !extensionCapex) || !context || !unit || attrs["xsi:nil"] === "true" || attrs.continuedAt || node.querySelector("ix\\:exclude")) continue;
     const format = attrs.format?.split(":")[1];
     if (format && !["num-dot-decimal", "numdotdecimal", "num-comma-decimal", "numcommadecimal", "zerodash", "fixed-zero"].includes(format)) continue;
     let text = node.textContent.trim().replace(/[\s\u00a0]/g, "");
@@ -58,7 +61,7 @@ export function inlineFinancialFacts(html: string, cik: string, filing: Financia
     if (!Number.isInteger(scale) || Math.abs(scale) > 18) continue;
     const val = Number(text) * 10 ** scale * (attrs.sign === "-" ? -1 : 1);
     if (!Number.isFinite(val) || Math.abs(val) > Number.MAX_SAFE_INTEGER) continue;
-    const tag = ((result.facts[name[0]] ??= {})[name[1]] ??= { units: {} });
+    const tag = extensionCapex ? ((result.facts["us-gaap"] ??= {})["TechPhaseExtensionCapex"] ??= { units: {} }) : ((result.facts[name[0]] ??= {})[name[1]] ??= { units: {} });
     (tag.units[unit] ??= []).push({ val, ...context, filed: filing.filed, accn: filing.accession, form: filing.form });
   }
   // A company can disclose contract revenue AND total revenue (including

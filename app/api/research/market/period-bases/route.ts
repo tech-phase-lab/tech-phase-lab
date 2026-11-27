@@ -1,6 +1,7 @@
-import { loadDailyCloses, marketDataConfigured } from "@/lib/research/market-data";
+import { isMarketChartSymbol, loadDailyCloses, marketDataConfigured } from "@/lib/research/market-data";
 import { TICKER_RE } from "@/lib/research/market-quote";
 import { periodBases } from "@/lib/research/period-change";
+import { marketAccess } from "@/lib/research/market-access";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
@@ -10,6 +11,10 @@ export async function GET(request: Request) {
   const ticker = (new URL(request.url).searchParams.get("ticker") ?? "").toUpperCase();
   if (!TICKER_RE.test(ticker)) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
   if (!marketDataConfigured()) return Response.json({ ok: false, error: "not-configured" }, { status: 503 });
+  // Visitors who are not signed in: known symbols only and a per-address limit (lib/research/market-access.ts).
+  const access = await marketAccess(request, "light", isMarketChartSymbol);
+  if (access instanceof Response) return access;
+  if (!access.allowed(ticker)) return Response.json({ ok: false, error: "no-data" }, { status: 404, headers: { "Cache-Control": "no-store" } });
   try {
     const today = easternDay.format(Date.now());
     return Response.json({ ok: true, today, bases: periodBases(await loadDailyCloses(ticker), today) }, { headers: { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=600" } });

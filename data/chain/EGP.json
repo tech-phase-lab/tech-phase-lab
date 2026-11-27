@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "EGP",
+    "name": "イーストグループ・プロパティーズ",
+    "cik": 49600,
+    "name_en": "EastGroup Properties"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "顧客・取引先",
+      "en": "Customers & clients"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SCPX",
+      "ticker": "SCPX",
+      "name": "スコーピアス・ホールディングス",
+      "name_en": "Scorpius Holdings",
+      "sub": "医薬品受託製造",
+      "sub_en": "Contract manufacturing",
+      "sub_short": "受託",
+      "sub_short_en": "CDMO",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "EastGroupの施設を賃借(2023年)",
+          "text_en": "Leased a facility from EastGroup (2023)",
+          "source": {
+            "label": "Scorpius Holdings 10-K(2024年度)",
+            "label_en": "Scorpius Holdings 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476963/000155837025005986/scpx-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-04-30",
+            "quote": "In December 2023, Scorpius Bio entered into a lease agreement with EastGroup Properties, L.P. to lease a 22,262 square foot facility in San Antonio, TX for general office and warehouse purposes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VALION",
+      "ticker": "VALION",
+      "name": "バリオン・バイオ",
+      "name_en": "Valion Bio",
+      "sub": "バイオ",
+      "sub_en": "Biotech",
+      "sub_short": "バイオ",
+      "sub_short_en": "Biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "EastGroupの倉庫を賃借(2026年)",
+          "text_en": "Leased a warehouse from EastGroup (2026)",
+          "source": {
+            "label": "Valion Bio 10-Q(2026年9月期)",
+            "label_en": "Valion Bio 10-Q (quarter ended Sep 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1787740/000143774926038066/vbio20260930_10q.htm",
+            "level": "official",
+            "date": "2026-11-23",
+            "quote": "Warehouse Lease On February 23, 2026, VBI entered into a Lease (the \"Warehouse Lease\") with EastGroup Properties L.P."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "EastGroup Properties 10-K(2025年度)",
+            "label_en": "EastGroup Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49600/000004960026000010/egp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Term Loan Agreement, dated as of November 19, 2025, among EastGroup Properties, L.P., EastGroup Properties, Inc. and PNC Bank, National Association, as Agent, Regions Bank, as Syndication Agent, TD Bank, N.A., as Documentation Agent, PNC Capital Markets LLC, Regions Capital Markets, and TD Bank, N.A., as Joint Lead Arrangers, and PNC Capital Markets LLC, as the Sole Bookrunner, and the lender parties thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RF",
+      "ticker": "RF",
+      "name": "リージョンズ・ファイナンシャル",
+      "name_en": "Regions Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "EastGroup Properties 10-K(2025年度)",
+            "label_en": "EastGroup Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49600/000004960026000010/egp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Term Loan Agreement, dated as of November 19, 2025, among EastGroup Properties, L.P., EastGroup Properties, Inc. and PNC Bank, National Association, as Agent, Regions Bank, as Syndication Agent, TD Bank, N.A., as Documentation Agent, PNC Capital Markets LLC, Regions Capital Markets, and TD Bank, N.A., as Joint Lead Arrangers, and PNC Capital Markets LLC, as the Sole Bookrunner, and the lender parties thereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TD",
+      "ticker": "TD",
+      "name": "TD Bank",
+      "name_en": "TD Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の貸し手",
+          "text_en": "A lender under its credit agreement",
+          "source": {
+            "label": "EastGroup Properties 10-K(2025年度)",
+            "label_en": "EastGroup Properties 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/49600/000004960026000010/egp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Term Loan Agreement, dated as of November 19, 2025, among EastGroup Properties, L.P., EastGroup Properties, Inc. and PNC Bank, National Association, as Agent, Regions Bank, as Syndication Agent, TD Bank, N.A., as Documentation Agent, PNC Capital Markets LLC, Regions Capital Markets, and TD Bank, N.A., as Joint Lead Arrangers, and PNC Capital Markets LLC, as the Sole Bookrunner, and the lender parties thereto"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

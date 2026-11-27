@@ -117,10 +117,10 @@ async function auditTicker(row) {
   const c = { ...company, ...await server.loadComparisonFinancials(row.ticker) };
   now = Date.now();
   // Valuation on price-to-sales: what a comparison with a company lacking a forward P/E uses (forward P/E itself is the provider's statistics).
-  const scored = comparisonScores({ ...c, valuationBasis: "ps" }, now);
+  const scored = comparisonScores(c, now);
   const scores = Object.fromEntries(FACTORS.map(id => [id, scored.find(s => s.id === id)?.value ?? null]));
   const have = FACTORS.filter(id => scores[id] !== null);
-  const missing = Object.fromEntries(FACTORS.filter(id => scores[id] === null).map(id => [id, comparisonMetric({ ...c, valuationBasis: "ps" }, id, "en", now)]));
+  const missing = Object.fromEntries(FACTORS.filter(id => scores[id] === null).map(id => [id, comparisonMetric(c, id, "en", now)]));
   const q = c.quarterRevenue;
   const result = {
     ticker: row.ticker, cik: row.cik, name: row.name, exchange: row.exchange ?? "", status: c.status, basis: q?.basis ?? c.revenue?.basis ?? null,

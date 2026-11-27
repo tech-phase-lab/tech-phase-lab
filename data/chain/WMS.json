@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "WMS",
+    "name": "アドバンスト・ドレナージ・システムズ",
+    "cik": 1604028,
+    "name_en": "Advanced Drainage Systems"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NORMAGROUP",
+      "ticker": "NORMAGROUP",
+      "name": "ノルマ・グループ",
+      "name_en": "Norma Group",
+      "sub": "配管部品",
+      "sub_en": "Pipe fittings",
+      "sub_short": "配管",
+      "sub_short_en": "Piping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "水管理事業を買収",
+          "text_en": "Bought its water management business",
+          "source": {
+            "label": "Advanced Drainage Systems 10-K(2026年3月期)",
+            "label_en": "Advanced Drainage Systems 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000160402826000019/wms-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Critical Audit Matter Description The Company completed the acquisition of the water management business of Norma Group SE, known as National Diversified Sales (\"NDS\") on February 2, 2026."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVERVALLEY",
+      "ticker": "RIVERVALLEY",
+      "name": "リバー・バレー・パイプ",
+      "name_en": "River Valley Pipe",
+      "sub": "配管",
+      "sub_en": "Pipe maker",
+      "sub_short": "配管",
+      "sub_short_en": "Pipe",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に買収",
+          "text_en": "Acquired in May 2025",
+          "source": {
+            "label": "Advanced Drainage Systems 10-K(2026年3月期)",
+            "label_en": "Advanced Drainage Systems 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000160402826000019/wms-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Acquisition of River Valley Pipe - On May 8, 2025, the Company completed its acquisition of the assets of River Valley Pipe LLC (\"River Valley Pipe\"), a privately-owned pipe manufacturing company located in the Midwest region of the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORENCO",
+      "ticker": "ORENCO",
+      "name": "オレンコ・システムズ",
+      "name_en": "Orenco Systems",
+      "sub": "排水処理",
+      "sub_en": "Wastewater",
+      "sub_short": "排水",
+      "sub_short_en": "Wastewtr",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年10月に買収",
+          "text_en": "Acquired in October 2024",
+          "source": {
+            "label": "Advanced Drainage Systems 10-K(2026年3月期)",
+            "label_en": "Advanced Drainage Systems 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000160402826000019/wms-20260331.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Acquisition of Orenco - On October 1, 2024, the Company's wholly-owned subsidiary, Infiltrator, completed the acquisition of Orenco Systems, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Advanced Drainage Systems 8-K(2026年11月)",
+            "label_en": "Advanced Drainage Systems 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000119312526455563/d387290d8k.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "The Fifth Amendment was entered into by the Company and the subsidiary guarantors party thereto, Bank of America, N.A., as administrative agent under the Term Facility and PNC Bank, National Association, as administrative agent under the Revolving Facility and as administrative agent for the Secured Parties (as defined in the Credit Agreement) and the several financial institutions or entities party thereto as lenders."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "借入契約の幹事行",
+          "text_en": "Administrative agent on its credit agreement",
+          "source": {
+            "label": "Advanced Drainage Systems 8-K(2026年11月)",
+            "label_en": "Advanced Drainage Systems 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1604028/000119312526455563/d387290d8k.htm",
+            "level": "official",
+            "date": "2026-11-10",
+            "quote": "The Fifth Amendment was entered into by the Company and the subsidiary guarantors party thereto, Bank of America, N.A., as administrative agent under the Term Facility and PNC Bank, National Association, as administrative agent under the Revolving Facility and as administrative agent for the Secured Parties (as defined in the Credit Agreement) and the several financial institutions or entities party thereto as lenders."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

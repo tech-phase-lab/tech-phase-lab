@@ -3,18 +3,13 @@ import Link from "next/link";
 import ProTag from "../pro-experience/pro-tag";
 import type { Copy } from "@/lib/research/data";
 import type { Dive, DiveCard, DiveHistory, DiveNumbers, DiveSection } from "@/lib/research/watch-earnings";
-import { displayClock } from "@/lib/research/display-time";
 import { diveMoney, divePerShare, diveScaled, diveUnit, type DiveCurrency } from "@/lib/research/dive-money";
 import styles from "./earnings-dive.module.css";
 
 type Lang = "ja" | "en";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-/** "21:05": Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
-const clock = (iso: string | null | undefined, lang: Lang) => iso ? displayClock(iso, lang) : "";
 const releasedLabel = (releasedOn: string, lang: Lang) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(releasedOn); return !m ? "" : lang === "ja" ? `${Number(m[2])}/${Number(m[3])}発表` : `Reported ${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}`; };
 const trim = (value: number, places: number) => { const text = value.toFixed(places); return text.includes(".") ? text.replace(/0+$/, "").replace(/\.$/, "") : text; };
-/** "11/25確認" / "Checked Nov 25": a reviewed file's date in place of the live monitor's clock. */
-const checkedLabel = (day: string, lang: Lang) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day); return !m ? "" : lang === "ja" ? `${Number(m[2])}/${Number(m[3])}確認` : `Checked ${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}`; };
 const pctText = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}%`;
 const LABELS: Record<DiveSection["key"], Copy> = {
   happened: { ja: "何が起きたか", en: "What happened" }, good: { ja: "いい点", en: "The good" }, watch: { ja: "気をつける点", en: "Watch out" },
@@ -133,17 +128,16 @@ type Props = {
   currency?: DiveCurrency;
   /** The quarter on the chart's last bar; MU reads it from its "FQ4 2026" label. */
   periodQuarter?: number;
-  /** A reviewed file: its review date stands in the status pills where MU shows the monitor's clock. */
+  /** A reviewed file's review date. No longer shown: the green "reflected" pills were removed (owner, 11/26). */
   reviewedOn?: string;
   /** The margin and EPS labels from the file's `basis` (TIFRS, US GAAP, non-GAAP…). MU: 調整後粗利益率 / 調整後EPS. */
   marginLabel?: Copy; epsLabel?: Copy;
 };
-export default function EarningsDive({ lang, name, ticker, live, unlocked, history = [], failed, currency = "USD", periodQuarter, reviewedOn, marginLabel = MU_MARGIN, epsLabel = MU_EPS }: Props) {
+export default function EarningsDive({ lang, name, ticker, live, unlocked, history = [], failed, currency = "USD", periodQuarter, marginLabel = MU_MARGIN, epsLabel = MU_EPS }: Props) {
   const ja = lang === "ja";
   const dive = live?.dive ?? null, numbers = dive?.numbers ?? null, summary = dive?.summary ?? null;
   const period = /^FQ([1-4]) (20\d{2})$/.exec(live?.period ?? "");
   const lastQuarter = periodQuarter ?? (period ? Number(period[1]) : 4);
-  const stamp = (iso: string | null | undefined) => reviewedOn ? checkedLabel(reviewedOn, lang) : clock(iso, lang);
   const perShare = (value: number) => divePerShare(value, currency, lang);
   /** "600〜630" (億ドル) / "$60–63B"; under $10B two places ("$0.62–0.65B"). */
   const range = (low: number, high: number) => {
@@ -170,11 +164,10 @@ export default function EarningsDive({ lang, name, ticker, live, unlocked, histo
   ];
   return <section className={styles.dive}>
     {header}
-    <div className={styles.pills} role="status">
-      <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "数字 反映済み" : "Numbers updated"} <b>{stamp(live?.publicAt)}</b></span>
-      {summary ? <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "まとめ 反映済み" : "Summary ready"} <b>{stamp(dive?.summaryAt)}</b></span>
-        : <span className={`${styles.pill} ${styles.wait}`}><i />{dive?.failed ? (ja ? "まとめ 確認中" : "Summary checking") : (ja ? "まとめ 準備中" : "Summary in progress")}</span>}
-    </div>
+    {/* The green "reflected" pills were a maker's check; members see only the waiting pill (owner, 11/26). */}
+    {!summary && <div className={styles.pills} role="status">
+      <span className={`${styles.pill} ${styles.wait}`}><i />{dive?.failed ? (ja ? "まとめ 確認中" : "Summary checking") : (ja ? "まとめ 準備中" : "Summary in progress")}</span>
+    </div>}
     {summary && <section className={`${styles.card} ${styles.takeaway}`} aria-labelledby="dive-takeaway">
       <p className={styles.cardNo} id="dive-takeaway">{ja ? "結論" : "Takeaway"}</p>
       {summary.conclusion.map((paragraph, i) => <p key={i} className={styles.conclusion}>{paragraph[lang]}</p>)}

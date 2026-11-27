@@ -12,18 +12,18 @@ const series = (symbol = "MU", currency = "USD") => ({ adjust: "splits", retriev
   values: [{ datetime: "2026-11-12", close: "120" }, { datetime: "2026-08-12", close: "100" }, { datetime: "2026-08-10", close: "99" }] } });
 const stats = (symbol = "MU", currency = "USD", pe = "11.5") => ({ retrievedAt: "2026-11-13T09:00:00Z", payload: { meta: { symbol, currency }, statistics: { valuations_metrics: { forward_pe: pe } } } });
 
-test("stability comes from the SEC's four quarters, momentum from the live series, valuation from the forward P/E alone", () => {
+test("stability comes from the SEC's four quarters, momentum from the live series; valuation is no longer a provider factor", () => {
   const e = buildSecMarketEvidence(mu(), series(), stats(), NOW);
   assert.equal(e.periodEnd, "2026-09-03");
   assert.equal(e.margins.length, 4);
   assert.ok(Math.abs(e.momentum.changePct - 20) < 1e-9);
   assert.equal(e.statistics.forwardPE, 11.5);
   const f = twelveExtraFactors(e, NOW);
-  assert.equal(f.valuation, 8.7);               // 11 - 11.5/5
+  assert.equal("valuation" in f, false);       // Treasure Hunt's figure since Nov 26 (comparison-value.ts)
   assert.equal(f.momentum, 7);                  // 5 + 20/10
   assert.ok(f.stability > 0 && f.stability <= 10); // four profitable quarters; the spread of margins (45% to 81%) lowers it
   assert.equal(f.financial, null);              // balance-sheet items are the SEC balance's, not the provider's
-  assert.equal(twelveFactorMetric(e, "valuation", "en", NOW), "Forward P/E 11.5×");
+  assert.equal(twelveFactorMetric(e, "valuation", "en", NOW), null);
 });
 
 test("nothing unverified is used: wrong symbol, wrong currency, no/negative P/E or no series leave the factor out", () => {

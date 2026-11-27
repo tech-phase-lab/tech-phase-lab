@@ -39,7 +39,7 @@ test("names: トレジャーハント / Treasure Hunt and Whale Tracks everywher
 
 test("names: production keeps its internal names (switches, API, monitor route, Python module)", () => {
   assert.match(read("../app/research/treasure-hunt/screen.tsx"), /fetch\("\/api\/research\/value-check"/);
-  assert.match(read("../app/api/research/value-check/route.ts"), /\/value-check`/);
+  assert.match(read("../lib/research/value-check-server.ts"), /readMonitor\("\/value-check", 1_500_000/);
   assert.match(read("../lib/research/value-check.ts"), /NEXT_PUBLIC_VALUE_CHECK_ENABLED: process\.env\.NEXT_PUBLIC_VALUE_CHECK_ENABLED/);
   assert.match(read("../lib/research/whale-moves.ts"), /NEXT_PUBLIC_WHALE_MOVES_ENABLED: process\.env\.NEXT_PUBLIC_WHALE_MOVES_ENABLED/);
   const service = read("../scripts/research/service.py");
@@ -258,19 +258,20 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
     assert.match(text(c), ja ? /^サンプル ?PRO機能体験 ?WHALE TRACKS/ : /^Sample ?PRO feature tour ?WHALE TRACKS/);
     assert.equal(c.querySelector("h1").textContent, ja ? "クジラの足あと" : "Whale Tracks");
     const tabs = [...c.querySelectorAll('[role="tab"]')];
-    assert.deepEqual(tabs.map(t => t.textContent), ja ? ["機関", "空売り", "役員売買", "自社株買い"] : ["Institutions", "Short interest", "Insider trades", "Buybacks"]);
+    assert.deepEqual(tabs.map(t => t.textContent), ja ? ["役員売買", "自社株買い", "空売り", "機関"] : ["Insider trades", "Buybacks", "Short interest", "Institutions"]);
+    assert.deepEqual(tabs.map(t => t.getAttribute("aria-selected")), ["true", "false", "false", "false"], "insider trades open first (owner, Nov 26)");
     const order = () => [...c.querySelectorAll("[data-pro-only] [data-logo]")].map(el => el.getAttribute("data-logo"));
     const sorts = () => [...c.querySelectorAll('[role="tabpanel"] [role="group"] button')];
     const panel = () => text(c.querySelector('[role="tabpanel"]'));
     const expected = [
-      [ja ? "2034年12月末時点・13F（四半期ごとに更新）" : "As of end-Dec 2034 · 13F (updated quarterly)",
-        [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
-      [ja ? "2035年2月28日時点・FINRA（月2回更新）" : "As of Feb 28, 2035 · FINRA (updated twice a month)",
-        [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
       [ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days",
         [["MU", "AMD", "ORCL", "INTC", "NVDA"], ["MU", "INTC"], ["AMD", "ORCL", "NVDA"]]],
       [ja ? "10-Q・10-K・8-K（発表から自動で反映）" : "10-Q, 10-K, 8-K (added automatically when filed)",
         [["AAPL", "META", "NVDA", "QCOM", "AVGO"], ["AAPL", "META", "NVDA", "QCOM", "AVGO"]]],
+      [ja ? "2035年2月28日時点・FINRA（月2回更新）" : "As of Feb 28, 2035 · FINRA (updated twice a month)",
+        [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
+      [ja ? "2034年12月末時点・13F（四半期ごとに更新）" : "As of end-Dec 2034 · 13F (updated quarterly)",
+        [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
     ];
     for (const [index, [line, orders]] of expected.entries()) {
       await click(tabs[index]);
@@ -283,9 +284,9 @@ test("Whale Tracks sample: four tabs of five, every sort button reorders, the da
         assert.deepEqual(order(), orders[s], `${lang} tab ${index} sort ${s}`);
       }
     }
-    await click(tabs[2]);
+    await click(tabs[0]);
     assert.match(panel(), ja ? /AMD ?CFO・計画売買/ : /AMD ?CFO · Planned/);
-    await click(tabs[3]);
+    await click(tabs[1]);
     assert.match(panel(), ja ? /AAPL ?3\/9・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Mar 9 · New authorization ?\$110B/);
     assert.match(panel(), ja ? /NVDA ?10〜12月・買い戻した金額 ?142億ドル/ : /NVDA ?Oct–Dec · Repurchased ?\$14B/);
     assert.equal(c.querySelectorAll("[class~=goldCard]").length, 2);
@@ -320,4 +321,46 @@ test("Whale Tracks trial page: the gold note replaces the summary line under the
   assert.ok(count >= 125 && count < 175, `about 150 stocks, got ${count}`);
   const css = read("../app/research/pro-experience/samples/samples.module.css");
   assert.match(css, /\.sampleNote\{[^}]*color:var\(--gold\)[^}]*font-size:14px/);
+});
+
+// Owner, Nov 26: the page took seconds (page, then the browser's membership check, then the API, then the monitor, one after the other).
+test("Treasure Hunt opens with the day's ranking drawn by the server: no waiting for the browser's membership check, no request of its own", async () => {
+  const unsettled = { ...shared, "../member-display-provider": { useMemberDisplay: () => null, useMemberSettled: () => false, useOwnerAccount: () => false } };
+  const Screen = load("../app/research/treasure-hunt/screen.tsx", { ...unsettled, "@/lib/research/value-check": valueLib }).default;
+  const calls = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (...args) => { calls.push(String(args[0])); return new Response("{}", { status: 503 }); };
+  try {
+    const ui = await mount(h(Screen, { initial: treasureHuntSample }));
+    assert.doesNotMatch(text(ui.container), /会員情報を確認中|データを読み込み中/);
+    assert.deepEqual([...ui.container.querySelectorAll("[data-logo]")].map(el => el.getAttribute("data-logo")).slice(0, 3), ["QCOM", "MU", "AMAT"], "podium: 2nd, 1st, 3rd");
+    assert.deepEqual(calls, [], "the screen does not ask the API when the server drew the ranking");
+    await ui.done();
+    // Without a ranking from the server (FREE, signed out, or the copy not ready in time), the screen waits for the check as before.
+    const later = await mount(h(Screen, {}));
+    assert.match(text(later.container), /会員情報を確認中/);
+    await later.done();
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test("Treasure Hunt: one shared copy of the daily ranking (stale-while-revalidate), read only after the server confirms the member", () => {
+  const server = read("../lib/research/value-check-server.ts");
+  assert.match(server, /^import "server-only";/);
+  assert.match(server, /unstable_cache\(readShared, \["value-check-snapshot-v3"\], \{ revalidate: VALUE_SNAPSHOT_REVALIDATE_SECONDS \}\)/);
+  assert.match(server, /readShared\.toString = \(\) => "value-check-snapshot-v3"/, "a fixed key keeps the copy across deployments");
+  assert.match(server, /VALUE_SNAPSHOT_REVALIDATE_SECONDS = 600;/);
+  const route = read("../app/api/research/value-check/route.ts");
+  assert.match(route, /if \(access !== 200\) return fail[^\n]*\n\s*return Response\.json\(await loadValueRanking\(\), \{ headers \}\);/);
+  assert.doesNotMatch(route, /fetch\(|RESEARCH_MONITOR/, "no per-request read of the monitor");
+  assert.match(route, /"Cache-Control": "private, no-store"/, "PRO data is never kept by a shared cache in front of the site");
+  const page = read("../app/research/treasure-hunt/page.tsx");
+  assert.match(page, /if \(member && valueCheckAccess\(member, valueCheckEnabled\(\)\) === 200\) \{\n\s*const ready = loadValueRanking\(\)/, "PRO data only for a member the server confirmed");
+  // The comparison's list (values) stays out of Treasure Hunt's own payload.
+  assert.match(server, /const \{ values, \.\.\.ranking \} = await loadRanking\(\);/);
+  assert.doesNotMatch(server.slice(server.indexOf("export async function loadValueRanking")), /^[^\n]*sharedValues/m, "the ranking never waits on the comparison's list");
+  assert.match(page, /notFound\(\)/);
+  assert.match(page, /<TreasureHuntScreen initial=\{initial\} \/>/);
+  // The owner's accounts always get it (AGENTS.md, operator access), with the switch off too.
+  for (const owner of [{ ownerAccount: true }, { ownerMode: true }]) assert.equal(valueLib.valueCheckAccess({ status: "signed-in", plan: "free", ...owner }, false), 200);
+  for (const member of [{ status: "signed-out", plan: "free" }, { status: "signed-in", plan: "free" }]) assert.notEqual(valueLib.valueCheckAccess(member, true), 200);
 });

@@ -2,10 +2,14 @@ import rosters from './thermometer-rosters.json' with { type: 'json' };
 import { dailyMove, equalWeightLevels, realizedVolatility, sessionFear, sessionShock, sessionIntraday, stockShock, type ShockReading, type FearReading, type IntradayReading, type BasketSeries, type StockShock } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 import { bigDrops, similarDays } from './similar-days.ts';
+import type { TwelveLease } from './twelve-lease.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
 export const THERMOMETER_ROSTERS: ThermometerRosters = { nasdaq100: rosters.nasdaq100.tickers, semiconductors: rosters.semiconductors.tickers };
-export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters };
+/** `lease`: each request of CHUNK symbols is leased from the monitor's allocator and paced first (refresh-thermometer.mts passes one;
+ * without it, as in tests, requests are sent as before). A request not granted before the lease's deadline is not sent: its tickers are
+ * missing, as after a provider error. A 429 pauses the lease to the next minute; nothing is retried. */
+export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters; lease?: TwelveLease };
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
 export const SHOCK_SESSIONS = 10;
@@ -14,9 +18,13 @@ export const SHOCK_SESSIONS = 10;
 export const HISTORY_BARS = 5000;
 /** About three months of sessions for the home chart line (owner, Nov 25: 01 ホーム). */
 export const TRAIL_SESSIONS = 63;
-/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session, rounded to 0.01 (same data, no extra calls). */
+/** The basket's level for the last TRAIL_SESSIONS sessions up to the confirmed session (same data, no extra calls), rebased so the
+ * first session of the line is 100 and rounded to 0.01. The chart only draws the shape, and the rebased line stays small and inside
+ * the reader's bounds however far the 20-year chained level (HISTORY_BARS, since #885) has grown (owner, Nov 26 §2). */
 export function basketTrail(levels: readonly DailyClose[], session: string): DailyClose[] {
-  return levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS).map(bar => ({ date: bar.date, close: Math.round(bar.close * 100) / 100 }));
+  const bars = levels.filter(bar => bar.date <= session).slice(-TRAIL_SESSIONS), base = bars[0]?.close;
+  if (!base || !Number.isFinite(base) || base <= 0) return [];
+  return bars.map(bar => ({ date: bar.date, close: Math.round(bar.close / base * 10000) / 100 }));
 }
 export type ShockSession = { nas100: ShockReading | null; sox: ShockReading | null; fear: FearReading | null };
 /** Sessions for which each rostered stock's own move is kept (single-company news, owner Nov 25). Stored only, never served. */
@@ -62,8 +70,10 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
       const chunk = tickers.slice(i, i + CHUNK);
       const url = new URL('https://api.twelvedata.com/time_series');
       for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: String(HISTORY_BARS), adjust: 'splits', end_date: dayAfter(confirmedSession), apikey: config.apiKey! })) url.searchParams.set(key, value);
+      if (config.lease && !await config.lease.take(chunk.length, 'resolute-thermometer')) { missing.push(...chunk); continue; }
       try {
         const response = await fetcher(url, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(30000) });
+        if (response.status === 429) config.lease?.limited();
         if (!response.ok) { missing.push(...chunk); continue; }
         const parsed = parseStockHistories(await response.json(), chunk);
         reached = true;

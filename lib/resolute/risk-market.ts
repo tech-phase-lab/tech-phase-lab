@@ -101,7 +101,8 @@ export function applyMarketReaction(article: RiskArticle, moves: SessionMoves): 
   const reading: NonNullable<RiskMarket['reading']> = { from, nas100: nas100 ? measureDay(nas100) : null, sox: sox ? measureDay(sox) : null, fearChange: fearChangeOf(entry?.fear ?? null) };
   if (company) { const s = entry?.stocks?.[company.ticker]; reading.company = s && validStock(s) && s.previousDate === from ? measureStock(s) : null; }
   const market: RiskMarket = { index, session, reading, ...keep };
-  return { ...article, market, stars: marketStars(market) };
+  // A story the owner (or the auto pick) published keeps its ★: the measured move is shown as information only (owner, Nov 27).
+  return { ...article, market, stars: article.pick ? article.stars : marketStars(market) };
 }
 function validStock(m: Partial<StockMove>): m is StockMove {
   return typeof m.previousDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(m.previousDate) && finite(m.changePercent, -99.99, 99.99) && finite(m.typicalPercent, 0.01, 50);

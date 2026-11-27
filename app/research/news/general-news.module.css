@@ -42,9 +42,9 @@
 .items{gap:0}
 .items>article{border-top:0;padding-top:0}
 
-/* New items blink green, fast and strong (owner, Oct 14). */
-.tlFresh .tlRail i{animation:newBlink .9s ease-out infinite}
-@keyframes newBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.85),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 10px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
+/* New items blink green, fast and strong (owner, Oct 14); the same pulse as new rows on 速報 (nodeFlash in company-activity.module.css, 11/26). */
+.tlFresh .tlRail i{animation:newBlink .9s infinite}
+@keyframes newBlink{0%{box-shadow:0 0 0 0 rgba(93,255,180,.8),0 0 10px rgba(93,255,180,.8)}70%{box-shadow:0 0 0 11px rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0),0 0 10px rgba(93,255,180,.8)}}
 @media(prefers-reduced-motion:reduce){.tlFresh .tlRail i{animation:none}}
 
 .tlFound{font-size:9.5px;color:#6f7b8c;letter-spacing:0}
@@ -64,6 +64,10 @@
 .topics{display:flex;flex-direction:column;gap:16px;min-width:0;scroll-margin-top:100px;font-variant-numeric:tabular-nums}
 .topicLive{display:flex;align-items:center;gap:6px;margin:-4px 0 0;font-size:12px;line-height:1.4;color:#8e9aaa}
 .topicLive span{flex:none;width:7px;height:7px;border-radius:50%;background:#8fe3c0}
+/* Owner, Nov 26: the dot blinks while a check for new stories runs (the flash of company-activity.module.css); steady otherwise. */
+.topicLive span.topicLiveUpdating{animation:topicLiveFlash .9s infinite}
+@keyframes topicLiveFlash{0%{box-shadow:0 0 0 0 rgba(93,255,180,.8)}70%{box-shadow:0 0 0 11px rgba(93,255,180,0)}100%{box-shadow:0 0 0 0 rgba(93,255,180,0)}}
+@media(prefers-reduced-motion:reduce){.topicLive span.topicLiveUpdating{animation:none}}
 .topicEmpty{margin:0;font-size:13px;line-height:1.7;color:#8e9aaa}
 .topicList{display:flex;flex-direction:column;gap:10px;min-width:0}
 .topicDay{margin:6px 0 0;font-size:12px;font-weight:700;line-height:1.4;color:#c6d0dc}
@@ -83,9 +87,8 @@
 .topicTitle a{color:inherit;text-decoration:none}
 .topicTitle a:hover{text-decoration:underline;text-decoration-color:#4d5b6c;text-decoration-thickness:1px;text-underline-offset:4px}
 .topicTitle a:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px;border-radius:4px}
-/* The summary: three lines, the rest behind 「＋」 (owner, Nov 15). Only the summary is clamped; headlines are never cut. */
-.topicSummaryRow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;min-width:0}
-.topicClamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+/* The summary is behind 「＋」 beside the publisher (owner, Nov 26): a closed card shows its headline only. Nothing is clamped. */
+.topicFoot{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0}
 .topicMore{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border:1px solid #2a3646;border-radius:8px;background:transparent;color:#8fe3c0;font-size:15px;line-height:1;cursor:pointer}
 .topicMore:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
 .topicPublisher{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;overflow-wrap:anywhere}
