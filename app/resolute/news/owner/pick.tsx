@@ -1,5 +1,5 @@
 "use client";
-import {useEffect,useState,type ReactNode} from 'react';
+import {useEffect,useLayoutEffect,useRef,useState,type ReactNode} from 'react';
 import {SUMMARY_QUESTION} from '@/lib/resolute/risk';
 import {candidateNumbers,editedPicks,pickLine,typedLine,type AddedStory,type OwnerPick,type ShockCandidate} from '@/lib/resolute/shock-picks';
 import s from '../../diagnosis.module.css';
@@ -19,9 +19,16 @@ async function shrink(file:File):Promise<string>{
   c.getContext('2d')!.drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',0.85);}finally{URL.revokeObjectURL(url);}
 }
 /** リゼルの一言: one 一言 input and three 箇条書き inputs (owner, Nov 27: the shape members see). Written text is published as written. */
+/** A one-line text that wraps and grows with its text (owner, Nov 27: nothing cut off at 360–390px). Line breaks are not kept. */
+function GrowText({value,maxLength,onChange,disabled}:{value:string;maxLength:number;onChange:(v:string)=>void;disabled:boolean}){
+ const ref=useRef<HTMLTextAreaElement>(null);
+ useLayoutEffect(()=>{const t=ref.current;if(!t)return;t.style.height='auto';t.style.height=`${t.scrollHeight+2}px`;},[value]);
+ return <textarea ref={ref} rows={1} value={value} maxLength={maxLength} disabled={disabled} style={{resize:'none',overflow:'hidden',minHeight:0,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}
+  onChange={e=>onChange(e.target.value.replace(/[\r\n]+/g,' '))}/>;
+}
 function LineFields({title,bullets,onChange,disabled}:{title:string;bullets:string[];onChange:(title:string,bullets:string[])=>void;disabled:boolean}){
- return <><label>リゼルの一言（空欄ならAIが書きます）<input value={title} maxLength={80} onChange={e=>onChange(e.target.value,bullets)} disabled={disabled}/></label>
-  {[0,1,2].map(i=><label key={i}>箇条書き{i+1}<input value={bullets[i]??''} maxLength={120} onChange={e=>onChange(title,bullets.map((b,j)=>j===i?e.target.value:b))} disabled={disabled}/></label>)}</>;
+ return <><label>リゼルの一言（空欄ならAIが書きます）<GrowText value={title} maxLength={80} onChange={v=>onChange(v,bullets)} disabled={disabled}/></label>
+  {[0,1,2].map(i=><label key={i}>箇条書き{i+1}<GrowText value={bullets[i]??''} maxLength={120} onChange={v=>onChange(title,bullets.map((b,j)=>j===i?v:b))} disabled={disabled}/></label>)}</>;
 }
 function Stars({value,onChange,label}:{value:number;onChange:(n:number)=>void;label:string}){
  return <span role="radiogroup" aria-label={label} style={{display:'flex',gap:6,margin:'6px 0 10px'}}>{[1,2,3,4,5].map(n=><button key={n} type="button" role="radio" aria-checked={value===n} className={value===n?s.primary:s.secondary} onClick={()=>onChange(n)} style={{flex:1,minWidth:0,padding:'10px 0'}}>★{n}</button>)}</span>;
@@ -69,7 +76,7 @@ export default function OwnerPickSection({day,onSaved}:{day:ShockDay|null;onSave
  }
  const story=(id:string,title:string,body:ReactNode,suggested:number,locked=false)=>{const n=order.indexOf(id),on=n>=0;
   return <li key={id} className={s.field} style={{listStyle:'none',marginBottom:16}}>
-   <label><input type="checkbox" checked={on} disabled={closed||locked||!on&&order.length>=max} onChange={()=>toggle(id,suggested)}/> {on?`${n+1}番目 `:''}<b>{title}</b></label>
+   <label style={{display:'flex',flexDirection:'row',alignItems:'flex-start',gap:10}}><input type="checkbox" style={{width:22,height:22,flex:'none',margin:'2px 0 0'}} checked={on} disabled={closed||locked||!on&&order.length>=max} onChange={()=>toggle(id,suggested)}/><span>{on?`${n+1}番目 `:''}<b>{title}</b></span></label>
    {body}
    {on?<div><div>衝撃度 <Stars value={starsOf(id,suggested)} onChange={v=>set(id,{stars:v})} label={`${title}の★`}/></div>
     <LineFields title={choice[id]?.rizel??''} bullets={choice[id]?.bullets??EMPTY3} onChange={(rizel,bullets)=>set(id,{rizel,bullets})} disabled={closed}/></div>:null}
