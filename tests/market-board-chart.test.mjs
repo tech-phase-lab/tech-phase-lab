@@ -118,7 +118,7 @@ test("the stock page chart follows the board's rules (owner, Nov 15: a multi-day
   assert.match(detail, /live=\{intraday && now !== null \? \{ phase \} : undefined\}/);
   assert.match(detail, /sessionTicks=\{shownRange === "15m"\}/);
   assert.match(detail, /tag = quote \? \{ price: quote\.price, text: plain\(quote\.price\), tone \}/);
-  assert.match(detail, /<FlashValue scope=\{ticker\} value=\{quote\.price\} className=\{styles\.price\}>\{plain\(quote\.price\)\}/);
+  assert.match(detail, /<FlashValue scope=\{ticker\} value=\{quote\.price\} className=\{styles\.price\} quick>\{plain\(quote\.price\)\}/);
 });
 
 test("a period switch keeps the chart on the screen with a small spinner, and a period read once comes back at once (owner, Nov 15: stock page and market board)", () => {
