@@ -14,3 +14,12 @@ test('regular-session move after the release is labelled as a move from the prev
   assert.deepEqual(reactionLines(null, released), []);
   assert.equal(percentText(-7.1), '-7.10%'); assert.equal(percentText(5), '+5.00%');
 });
+test('an after-hours or pre-market move of ±0.00% is left out, and a line without its value is not shown (owner, Nov 27)', () => {
+  const at = '2026-11-12T21:10:00Z';
+  const flat = { price: 100, percentChange: 3.2, asOf: at, session: 'post', extended: { price: 100, percentChange: 0.004, asOf: at, session: 'post' } };
+  assert.deepEqual(reactionLines(flat, released).map(l => l.label), ['通常取引']);
+  assert.deepEqual(reactionLines({ ...flat, extended: { ...flat.extended, percentChange: -0.0049 } }, released).map(l => l.label), ['通常取引']);
+  assert.deepEqual(reactionLines({ ...flat, extended: { ...flat.extended, percentChange: 0.005 } }, released).map(l => l.label), ['通常取引', '時間外']);
+  assert.deepEqual(reactionLines({ ...flat, percentChange: null, extended: { ...flat.extended, percentChange: undefined } }, released), []);
+  assert.deepEqual(reactionLines({ ...flat, percentChange: undefined, asOf: undefined, extended: { price: 100, percentChange: 1.5, asOf: undefined, session: 'post' } }, released), []);
+});
