@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "OFG",
+    "name": "OFGバンコープ",
+    "cik": 1030469,
+    "name_en": "OFG Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "証券の引受",
+      "en": "Underwriters"
+    },
+    {
+      "ja": "買収した事業",
+      "en": "Acquired operations"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年劣後債の引受幹事",
+          "text_en": "Lead underwriter of its 2026 subordinated notes",
+          "source": {
+            "label": "OFGバンコープ S-1付属の契約(2026年3月)",
+            "label_en": "OFG Bancorp agreement filed with its S-1 (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000114036126008961/ny20066736x4_ex1-1.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "confirms its agreement (the “Agreement”) with Keefe, Bruyette & Woods, Inc. (“KBW”), Piper Sandler & Co. (“Piper Sandler”) and each of the other Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PIPR",
+      "ticker": "PIPR",
+      "name": "パイパー・サンドラー",
+      "name_en": "Piper Sandler",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年劣後債の引受幹事",
+          "text_en": "Lead underwriter of its 2026 subordinated notes",
+          "source": {
+            "label": "OFGバンコープ S-1付属の契約(2026年3月)",
+            "label_en": "OFG Bancorp agreement filed with its S-1 (March 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000114036126008961/ny20066736x4_ex1-1.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "confirms its agreement (the “Agreement”) with Keefe, Bruyette & Woods, Inc. (“KBW”), Piper Sandler & Co. (“Piper Sandler”) and each of the other Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2012年の株式発行の引受幹事",
+          "text_en": "Lead underwriter of its 2012 share offering",
+          "source": {
+            "label": "オリエンタル・ファイナンシャル(現OFG) S-1付属の契約(2012年10月)",
+            "label_en": "Oriental Financial Group (now OFG) agreement filed with its S-1 (October 2012)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000119312512433282/d409560dex11.htm",
+            "level": "official",
+            "date": "2012-10-24",
+            "quote": "JEFFERIES & COMPANY, INC. As Representative of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BNS",
+      "ticker": "BNS",
+      "name": "スコシアバンク",
+      "name_en": "Scotiabank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年にプエルトリコ・米領バージン諸島事業を買収した相手",
+          "text_en": "Sold it its Puerto Rico and USVI operations in 2019",
+          "source": {
+            "label": "OFGバンコープ 10-K(2025年度)",
+            "label_en": "OFG Bancorp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000103046926000008/ofg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the 2019 acquisition of Scotiabank’s Puerto Rico and USVI operations"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBVA",
+      "ticker": "BBVA",
+      "name": "BBVA",
+      "name_en": "BBVA",
+      "sub": "銀行(スペイン)",
+      "sub_en": "Bank (Spain)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2012年にプエルトリコ事業を買収した相手(BBVAPR)",
+          "text_en": "Sold it its Puerto Rico operations (BBVAPR) in 2012",
+          "source": {
+            "label": "オリエンタル・ファイナンシャル(現OFG) 10-K(2013年度)",
+            "label_en": "Oriental Financial Group (now OFG) 10-K (FY2013)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000103046914000009/ofg10k20131231.htm",
+            "level": "official",
+            "date": "2014-03-03",
+            "quote": "The Company acquired all of the outstanding common stock of BBVAPR Holding and BBVA Securities for an aggregate purchase price of $500 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EUROBANK",
+      "ticker": "EUROBANK",
+      "name": "ユーロバンク(プエルトリコ)",
+      "name_en": "Eurobank (Puerto Rico)",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2010年に預金保険公社の支援で事業を引き継いだ破綻銀行",
+          "text_en": "Failed bank it took over in an FDIC-assisted deal",
+          "source": {
+            "label": "OFGバンコープ 10-K(2014年度)",
+            "label_en": "OFG Bancorp 10-K (FY2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1030469/000103046915000010/ofg10k20141231.htm",
+            "level": "official",
+            "date": "2015-02-26",
+            "quote": "The Company accounted for the BBVAPR Acquisition and the FDIC-assisted acquisition of Eurobank"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

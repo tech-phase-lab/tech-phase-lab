@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "JOE",
+    "name": "セント・ジョー",
+    "cik": 745308,
+    "name_en": "The St. Joe Company"
+  },
+  "rows": [
+    {
+      "ja": "大株主・資金調達",
+      "en": "Shareholder & financing"
+    },
+    {
+      "ja": "合弁・土地売却",
+      "en": "Joint ventures & land sale"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "FAIRHOLME",
+      "ticker": "FAIRHOLME",
+      "name": "フェアホルム・キャピタル",
+      "name_en": "Fairholme Capital Management",
+      "sub": "資産運用",
+      "sub_en": "Asset manager",
+      "sub_short": "資産運用",
+      "sub_short_en": "Assets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "株式の約34%を保有する大株主(顧客口座)",
+          "text_en": "Its clients hold about 34% of the shares",
+          "source": {
+            "label": "セント・ジョー 10-K(2025年度)",
+            "label_en": "St. Joe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "clients of Fairholme Capital Management, L.L.C. (“FCM”), an investment advisor registered with the SEC, beneficially owned approximately 33.8% of our common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFC",
+      "ticker": "TFC",
+      "name": "トゥルーイスト",
+      "name_en": "Truist Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "旧融資契約の幹事行(旧BB&T)",
+          "text_en": "Administrative agent of its former credit agreement (then BB&T)",
+          "source": {
+            "label": "セント・ジョー 10-K付属の契約(2011年度)",
+            "label_en": "St. Joe agreement filed with its 10-K (FY2011)",
+            "url": "https://www.sec.gov/Archives/edgar/data/745308/000119312512081993/d259432dex1040.htm",
+            "level": "official",
+            "date": "2012-02-27",
+            "quote": "the LENDERS listed on the signature pages hereof and BRANCH BANKING AND TRUST COMPANY, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MINTO",
+      "ticker": "MINTO",
+      "name": "ミント・コミュニティーズ",
+      "name_en": "Minto Communities USA",
+      "sub": "住宅開発",
+      "sub_en": "Homebuilder",
+      "sub_short": "住宅開発",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大型住宅開発「ラティチュード・マルガリータビル」の合弁パートナー",
+          "text_en": "Joint venture partner in the Latitude Margaritaville Watersound community",
+          "source": {
+            "label": "セント・ジョー 10-K(2025年度)",
+            "label_en": "St. Joe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The community is being developed through our unconsolidated Latitude Margaritaville Watersound JV with our partner Minto Communities USA, a homebuilder and community developer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BUSYBEE",
+      "ticker": "BUSYBEE",
+      "name": "ビジー・ビー",
+      "name_en": "Busy Bee",
+      "sub": "燃料・コンビニ",
+      "sub_en": "Fuel & convenience",
+      "sub_short": "コンビニ",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "燃料・コンビニ店舗の合弁相手",
+          "text_en": "Joint venture partner in a fuel station and convenience store",
+          "source": {
+            "label": "セント・ジョー 10-K(2025年度)",
+            "label_en": "St. Joe 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "a Busy Bee branded fuel station and convenience store, which includes a Starbucks, (SJBB, LLC, the “Busy Bee JV”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AGRESERVES",
+      "ticker": "AGRESERVES",
+      "name": "アグリザーブス",
+      "name_en": "AgReserves",
+      "sub": "農地・林地",
+      "sub_en": "Farm & timberland",
+      "sub_short": "農林地",
+      "sub_short_en": "Land",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に林地を売却した先",
+          "text_en": "Bought its timberland in 2013",
+          "source": {
+            "label": "セント・ジョー 8-K付属の契約(2013年11月)",
+            "label_en": "St. Joe agreement filed with its 8-K (November 2013)",
+            "url": "https://www.sec.gov/Archives/edgar/data/745308/000119312513431541/d626701dex1053.htm",
+            "level": "official",
+            "date": "2013-11-07",
+            "quote": "PURCHASE AND SALE AGREEMENT DATED AS OF NOVEMBER 6, 2013 BETWEEN THE ST. JOE COMPANY as Seller AND AGRESERVES, INC. as Purchaser"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "MTH",
+    "name": "メリテージ・ホームズ",
+    "cik": 833079,
+    "name_en": "Meritage Homes"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MFG",
+      "ticker": "MFG",
+      "name": "みずほフィナンシャルグループ",
+      "name_en": "Mizuho Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行(みずほ銀行)",
+          "text_en": "Administrative agent of its credit agreement (Mizuho Bank)",
+          "source": {
+            "label": "メリテージ・ホームズ 8-K付属の契約(2026年6月)",
+            "label_en": "Meritage Homes agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833079/000083307926000122/ex101twelfthamendmenttocre.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "MIZUHO BANK, LTD., as assignee from JPMorgan Chase Bank, N.A., as administrative agent on behalf of the Lenders"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2025 senior notes",
+          "source": {
+            "label": "メリテージ・ホームズ 8-K付属の契約(2025年3月)",
+            "label_en": "Meritage Homes agreement filed with its 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "J.P. Morgan Securities LLC BofA Securities, Inc. Goldman Sachs & Co. LLC Mizuho Securities USA LLC as Representatives (the “ Representatives ”) of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2025 senior notes",
+          "source": {
+            "label": "メリテージ・ホームズ 8-K付属の契約(2025年3月)",
+            "label_en": "Meritage Homes agreement filed with its 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "J.P. Morgan Securities LLC BofA Securities, Inc. Goldman Sachs & Co. LLC Mizuho Securities USA LLC as Representatives (the “ Representatives ”) of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2025 senior notes",
+          "source": {
+            "label": "メリテージ・ホームズ 8-K付属の契約(2025年3月)",
+            "label_en": "Meritage Homes agreement filed with its 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+            "level": "official",
+            "date": "2025-03-06",
+            "quote": "J.P. Morgan Securities LLC BofA Securities, Inc. Goldman Sachs & Co. LLC Mizuho Securities USA LLC as Representatives (the “ Representatives ”) of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEGENDARYCOMM",
+      "ticker": "LEGENDARYCOMM",
+      "name": "レジェンダリー・コミュニティーズ",
+      "name_en": "Legendary Communities",
+      "sub": "住宅建設",
+      "sub_en": "Homebuilder",
+      "sub_short": "住宅",
+      "sub_short_en": "Homes",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年に買収した住宅会社(東部地域)",
+          "text_en": "Homebuilder acquired in 2014 (East Region)",
+          "source": {
+            "label": "メリテージ・ホームズ 10-K(2015年度)",
+            "label_en": "Meritage Homes 10-K (FY2015)",
+            "url": "https://www.sec.gov/Archives/edgar/data/833079/000083307916000119/mth-10kx2015.htm",
+            "level": "official",
+            "date": "2016-02-17",
+            "quote": "our 2014 acquisition of Legendary Communities"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
