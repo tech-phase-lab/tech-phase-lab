@@ -35,11 +35,12 @@ test("automatic exact-period PCE revisions replace the saved result once and pre
   for (const changes of [{ publisher: "Other" }, { publishedAt: undefined }, { translationJa: undefined }, { url: update.url.replace("august", "unknown") }]) {
     assert.deepEqual(mergeEconomicResults([{ ...update, ...changes }]), initial);
   }
-  const next = mergeEconomicResults([{ ...update, url: update.url.replace("august", "september"), publishedAt: "2026-10-29T12:30:00Z" }]);
+  // November: September and October are already verified rows (lib/research/calendar.ts), so a later month is the new one.
+  const next = mergeEconomicResults([{ ...update, url: update.url.replace("august", "november"), publishedAt: "2026-12-23T13:30:00Z" }]);
   assert.equal(next.length, initial.length + 1);
   // Newest first. A newer row of another kind (the Nov 3 midterms) may sit above it, so check the order rather than the first place.
   const position = id => next.findIndex(item => item.id === id);
-  assert.ok(position("pce-2026-09") >= 0 && position("pce-2026-09") < position("fomc-2026-10"), "the new PCE result is above the older FOMC row");
+  assert.ok(position("pce-2026-11") >= 0 && position("pce-2026-11") < position("fomc-2026-10"), "the new PCE result is above the older FOMC row");
   assert.deepEqual(next.map(item => Date.parse(item.releasedAt)), next.map(item => Date.parse(item.releasedAt)).toSorted((a, b) => b - a), "the list is newest first");
 });
 
@@ -65,15 +66,16 @@ test('employment sources collapse into one localized release and retain the veri
 });
 
 test("U.S. CPI flashes become one Japanese-named calendar row per release", () => {
-  const brief = { id: "1", researchId: "x-result-1", kind: "economic", ticker: "ECON", period: "SEPTEMBER U.S. CPI",
-    titleJa: "米国CPI（9月）：前年比 2.9%", titleEn: "U.S. September CPI: YoY 2.9%",
+  // November: September and October are verified rows already, which a flash never replaces.
+  const brief = { id: "1", researchId: "x-result-1", kind: "economic", ticker: "ECON", period: "NOVEMBER U.S. CPI",
+    titleJa: "米国CPI（11月）：前年比 2.9%", titleEn: "U.S. November CPI: YoY 2.9%",
     facts: [{ key: "cpi-yoy", ja: "CPI（前年比）", en: "CPI (YoY)", value: "2.9%" }],
     url: "https://x.com/wallstengine/status/1", publisher: "Wall St Engine",
-    publishedAt: "2026-10-14T12:30:05Z", observedAt: "2026-10-14T12:30:20Z", publicAt: "2026-10-14T12:30:21Z" };
-  const merged = mergeEconomicResults([], [brief, { ...brief, id: "2", researchId: "x-result-2", publishedAt: "2026-10-14T12:31:00Z" }]);
-  const rows = merged.filter(item => item.id === "cpi-2026-09");
+    publishedAt: "2026-12-10T13:30:05Z", observedAt: "2026-12-10T13:30:20Z", publicAt: "2026-12-10T13:30:21Z" };
+  const merged = mergeEconomicResults([], [brief, { ...brief, id: "2", researchId: "x-result-2", publishedAt: "2026-12-10T13:31:00Z" }]);
+  const rows = merged.filter(item => item.id === "cpi-2026-11");
   assert.equal(rows.length, 1);
-  assert.equal(rows[0].title.ja, "米国CPI（9月）");
+  assert.equal(rows[0].title.ja, "米国CPI（11月）");
   assert.equal(rows[0].result.ja, brief.titleJa);
 });
 
@@ -98,7 +100,7 @@ test("the CPI release read from bls.gov is accepted only at its dated archive pa
   assert.equal(row.result.ja, cpi.translationJa);
   // A flash for the same release does not add a second row.
   const flash = { id: "f1", kind: "economic", ticker: "ECON", period: "U.S. SEPTEMBER CPI", titleJa: "x", titleEn: "x", facts: [], publishedAt: "2026-10-14T12:31:00Z", observedAt: "2026-10-14T12:31:05Z", publicAt: "2026-10-14T12:31:06Z", url: "https://x.com/wallstengine/status/1", publisher: "Wall St Engine" };
-  assert.equal(mergeEconomicResults([cpi], [flash]).filter(event => event.id.startsWith("cpi-")).length, 1);
+  assert.equal(mergeEconomicResults([cpi], [flash]).filter(event => event.id.startsWith("cpi-") && event.releasedAt.startsWith("2026-10-14")).length, 1);
 });
 
 test("a CPI result for a December release names the previous year's January data correctly", () => {
