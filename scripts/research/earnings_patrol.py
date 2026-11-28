@@ -415,6 +415,9 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         except Exception:  # noqa: BLE001 - the 10-Q is read again at the next patrol
             report = None
     since = datetime.strptime(previous['releasedOn'], '%Y-%m-%d').replace(tzinfo=timezone.utc) + timedelta(days=1) if previous else release['accepted']
+    # a deal 8-K filed on the previous release's own day (Lumentum's results and Marvell's agreement to buy it, both Nov 2, 2026) is still
+    # this quarter's news for the next dive: deals are read from the start of that day
+    deals_since = since - timedelta(days=1) if previous else since
     events = []
     for i, form in enumerate(recent['form']):
         accession = recent['accessionNumber'][i]
@@ -422,7 +425,8 @@ def quarter_filings(ticker, filings, release, previous, fetch=None, exhibit=None
         items = recent['items'][i] if i < len(recent['items']) else ''
         # a foreign issuer's other 6-Ks of the results day (a shareholder-return plan, a dividend): read when its dive uses them
         six_k = form == '6-K' and ticker in dive_figures.EVENT_SPECS and release.get('accepted') and abs(accepted - release['accepted']) <= timedelta(days=3)
-        if (form != '8-K' and not six_k) or accession == release['accession'] or accepted < since:
+        deal_items = form == '8-K' and re.search(r'\b(?:1\.01|2\.01)\b', items)
+        if (form != '8-K' and not six_k) or accession == release['accession'] or accepted < (deals_since if deal_items else since):
             continue
         # a leadership change (Item 5.02) is read for a company whose dive reports one (NVIDIA, Nov 2026): its cover document holds the text
         officer = form == '8-K' and ticker in dive_figures.EVENT_SPECS and re.search(r'\b5\.02\b', items)

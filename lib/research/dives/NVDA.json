@@ -51,7 +51,8 @@
     {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm", "quote": "On November 22, 2026, the Board of Directors of NVIDIA Corporation reinstated Jen-Hsun Huang as NVIDIA's President, Chief Executive Officer and member of the Board of Directors, effective immediately."},
     {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm", "quote": "expectations with respect to the ongoing investigation by an independent committee of NVIDIA's board of directors and related matters"},
     {"field": "summary.cards.caution", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "We plan to file our 10-Q in the coming weeks."},
-    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "which includes an additional week, is as follows: • Revenue is expected to be $130.0 billion, plus or minus 3%. We are not assuming any Data Center compute revenue from China in our outlook."}
+    {"field": "summary.cards.next", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "which includes an additional week, is as follows: • Revenue is expected to be $130.0 billion, plus or minus 3%. We are not assuming any Data Center compute revenue from China in our outlook."},
+    {"field": "summary.conclusion[1]", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27cfocommentary.htm", "quote": "GAAP and non-GAAP gross margins decreased slightly sequentially, reflecting the initial Rubin ramp."}
   ],
   "numbers": {
     "revenue": {"current": 115844, "previous": 96221, "yearAgo": 57006},
@@ -75,7 +76,7 @@
   "summary": {
     "conclusion": [
       {"ja": "売上は1,158億ドルで、前期から約2割、前年同期の約2倍に増えました。増えた分のほとんどはデータセンター(1,076億ドル)です。", "en": "Revenue was $115.8B, up about 20% from the previous quarter and about double the year-ago quarter. Almost all of the increase came from Data Center ($107.6B)."},
-      {"ja": "一方で、次期の粗利益率の見通し(71〜72%)は今回の74.9%を下回ります。新製品Vera Rubinの立ち上げ初期にあたるためです。", "en": "Meanwhile, the gross margin outlook for next quarter (71–72%) is below this quarter's 74.9%, as the new Vera Rubin products are in their early ramp."},
+      {"ja": "一方で、次期の粗利益率の見通し(71〜72%)は今回の74.9%を下回ります。今回の粗利益率の小幅な低下について、会社はVera Rubinの立ち上げ初期を理由に挙げています。", "en": "Meanwhile, the gross margin outlook for next quarter (71–72%) is below this quarter's 74.9%. The company attributes this quarter's slight margin dip to the initial Rubin ramp."},
       {"ja": "決算発表の前後に、CEOの辞任(11月11日)と復帰(11月22日)があり、取締役会の独立委員会による調査も続いています。", "en": "Around the report, the CEO resigned (Nov 11) and was reinstated (Nov 22), and an investigation by an independent committee of the board is ongoing."}
     ],
     "cards": {
