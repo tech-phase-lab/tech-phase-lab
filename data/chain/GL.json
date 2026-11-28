@@ -1,0 +1,210 @@
+{
+  "root": {
+    "ticker": "GL",
+    "name": "グローブ・ライフ",
+    "cik": 320335,
+    "name_en": "Globe Life"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CNO"
+  ],
+  "companies": [
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "WELLS FARGO BANK, NATIONAL ASSOCIATION, as Administrative Agent, Swing Line Lender and L/C Administrator"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "BANK OF AMERICA, N.A., REGIONS BANK, and TRUIST BANK, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RF",
+      "ticker": "RF",
+      "name": "リージョンズ・ファイナンシャル",
+      "name_en": "Regions Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "BANK OF AMERICA, N.A., REGIONS BANK, and TRUIST BANK, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFC",
+      "ticker": "TFC",
+      "name": "トゥルーイスト",
+      "name_en": "Truist Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "BANK OF AMERICA, N.A., REGIONS BANK, and TRUIST BANK, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同ドキュメンテーション・エージェント",
+          "text_en": "Co-documentation agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "PNC BANK, NATIONAL ASSOCIATION, and KEYBANK NATIONAL ASSOCIATION, as Co-Documentation Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同ドキュメンテーション・エージェント",
+          "text_en": "Co-documentation agent of its credit agreement",
+          "source": {
+            "label": "グローブ・ライフ 8-K付属の契約(2026年6月)",
+            "label_en": "Globe Life agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "PNC BANK, NATIONAL ASSOCIATION, and KEYBANK NATIONAL ASSOCIATION, as Co-Documentation Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNO",
+      "ticker": "CNO",
+      "name": "CNOファイナンシャル",
+      "name_en": "CNO Financial",
+      "sub": "生命・医療保険",
+      "sub_en": "Life & health insurance",
+      "sub_short": "生保",
+      "sub_short_en": "Life ins",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "通販型の生命保険で競合として同社の10-Kに記載",
+          "text_en": "Names Globe Life a main competitor in direct-marketed life insurance",
+          "source": {
+            "label": "CNOファイナンシャル 10-K(2025年度)",
+            "label_en": "CNO Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1224608/000122460826000017/cno-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our main competitors for life insurance sold through direct marketing channels include Mutual of Omaha, Globe Life, Inc., TruStage, AAA Life Insurance, and Gerber Life."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

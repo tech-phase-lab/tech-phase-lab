@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "MCRI",
+    "name": "モナーク・カジノ&リゾート",
+    "cik": 907242,
+    "name_en": "Monarch Casino & Resort"
+  },
+  "rows": [
+    {
+      "ja": "資金調達・建設",
+      "en": "Financing & construction"
+    },
+    {
+      "ja": "土地・買収",
+      "en": "Land & acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "モナーク・カジノ 10-K付属の契約(2024年度)",
+            "label_en": "Monarch Casino & Resort agreement filed with its 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907242/000155837025002045/mcri-20241231xex10d12.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "THE LENDERS NAMED HEREIN, and WELLS FARGO BANK, NATIONAL ASSOCIATION, as Administrative Agent, L/C Issuer and Swing Line Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PCLCONSTRUCTION",
+      "ticker": "PCLCONSTRUCTION",
+      "name": "PCLコンストラクション",
+      "name_en": "PCL Construction",
+      "sub": "建設",
+      "sub_en": "Construction",
+      "sub_short": "建設",
+      "sub_short_en": "Builder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブラックホーク施設の元請け建設会社(費用を巡り係争)",
+          "text_en": "General contractor of Monarch Black Hawk (in a cost dispute)",
+          "source": {
+            "label": "モナーク・カジノ 10-K(2025年度)",
+            "label_en": "Monarch Casino & Resort 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "our Monarch Black Hawk general contractor, PCL Construction Services, Inc. (“PCL”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLI",
+      "ticker": "BLI",
+      "name": "ビゲスト・リトル・インベストメンツ",
+      "name_en": "Biggest Little Investments",
+      "sub": "不動産",
+      "sub_en": "Real estate",
+      "sub_short": "不動産",
+      "sub_short_en": "Property",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "駐車場用地の貸主(20年リース)",
+          "text_en": "Landlord of its parking lot (20-year lease)",
+          "source": {
+            "label": "モナーク・カジノ 10-K(2025年度)",
+            "label_en": "Monarch Casino & Resort 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On August 28, 2015, we entered into a 20-year lease (the “Parking Lot Lease”) with Biggest Little Investments, L.P. (“BLI”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVIERA",
+      "ticker": "RIVIERA",
+      "name": "リビエラ・ホールディングス",
+      "name_en": "Riviera Holdings",
+      "sub": "カジノ",
+      "sub_en": "Casinos",
+      "sub_short": "カジノ",
+      "sub_short_en": "Casino",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2011年の株式譲渡契約でブラックホークのカジノを取得",
+          "text_en": "Sold it the Black Hawk casino under a 2011 stock purchase agreement",
+          "source": {
+            "label": "モナーク・カジノ 10-K(2025年度)",
+            "label_en": "Monarch Casino & Resort 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Stock Purchase Agreement dated as of September 29, 2011 by and among Monarch Casino & Resort, Inc., Monarch Growth Inc. (a wholly owned subsidiary of Monarch Casino and Resort, Inc.), Riviera Operating Corporation, Riviera Holdings Corporation and Riviera Black Hawk, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -2,10 +2,10 @@
  "about": "Per-ticker build log for the relationship maps (data/chain). Universe: company introductions (lib/research/company-introductions.data.json). Rule (#806, owner update 2026-11-28): the target is five or more companies whose relationship is quoted from an official filing or document; a map with exactly four such companies is also published and marked ready_four (upgrade to five when a fifth is verified); never fewer than four and never an unverified company. Statuses: ready (five or more), ready_four (exactly four; upgrade_target 5), below_five (published before the rule; kept until the owner decides), skipped (tried; fewer than four verified companies; reason recorded), not_attempted.",
  "updated": "2026-11-28",
  "counts": {
-  "ready": 1384,
-  "ready_four": 1,
+  "ready": 1420,
+  "ready_four": 3,
   "below_five": 9,
-  "skipped": 83,
+  "skipped": 45,
   "not_attempted": 0
  },
  "tickers": {
@@ -7607,16 +7607,53 @@
    ]
   },
   "FFIN": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "FHLB Dallas, Frost Bank (holding-company credit line), Kimbell Royalty (borrower); 'First Financial Bank' borrower hits are ambiguous with other banks of the same name"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "CULLENFROST",
+     "name": "Cullen/Frost Bankers",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000119312526071549/ffin-20251231.htm",
+     "label": "First Financial Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBD",
+     "name": "Federal Home Loan Bank of Dallas",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000119312526071549/ffin-20251231.htm",
+     "label": "First Financial Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "TBTBANCSHARES",
+     "name": "TB&T Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000095017023003864/ffin-20221231.htm",
+     "label": "First Financial Bankshares 10-K (FY2022)"
+    },
+    {
+     "id": "COMMERCIALBANCSHARES",
+     "name": "Commercial Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000119312520037760/d876138d10k.htm",
+     "label": "First Financial Bankshares 10-K (FY2019)"
+    },
+    {
+     "id": "FBCBANCSHARES",
+     "name": "FBC Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000119312517047421/d292013d10k.htm",
+     "label": "First Financial Bankshares 10-K (FY2016)"
+    },
+    {
+     "id": "OSBFINANCIAL",
+     "name": "OSB Financial Services",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36029/000119312513077004/d491274dex21.htm",
+     "label": "First Financial Bankshares agreement filed with its 8-K (February 2013)"
+    }
+   ]
   },
   "FFIV": {
    "companies": 12,
@@ -7624,16 +7661,46 @@
    "in_universe": true
   },
   "FHB": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "TriCo (2026 merger agreement), BNP Paribas (former parent), FHLB Des Moines: three verified"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "BNP",
+     "name": "BNP Paribas",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36377/000110465926021544/fhb-20251231x10k.htm",
+     "label": "First Hawaiian 10-K (FY2025)"
+    },
+    {
+     "id": "BANKOFTHEWEST",
+     "name": "Bank of the West",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/36377/000110465916138673/a16-5174_8ex10d2.htm",
+     "label": "First Hawaiian agreement filed with its 8-K (August 2016)"
+    },
+    {
+     "id": "TCBK",
+     "name": "TriCo Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/356171/000110465926083891/tm2620289d8_ex2-1.htm",
+     "label": "TriCo Bancshares agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "MLP",
+     "name": "Maui Land & Pineapple",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/63330/000143774926010765/ex_937553.htm",
+     "label": "Maui Land & Pineapple agreement filed with its 10-K (FY2025)"
+    },
+    {
+     "id": "FHLBDM",
+     "name": "Federal Home Loan Bank of Des Moines",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/36377/000110465926021544/fhb-20251231x10k.htm",
+     "label": "First Hawaiian 10-K (FY2025)"
+    }
+   ]
   },
   "FIBK": {
    "status": "ready",
@@ -7775,15 +7842,60 @@
    "in_universe": true
   },
   "FMC": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Tessenderlo (share sale), Envu (business sale), Citigroup: three; 'leading crop protection companies' list does not say compete"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000119312525124022/d911948dex11.htm",
+     "label": "FMC agreement filed with its 8-K (May 2025)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000119312525124022/d911948dex11.htm",
+     "label": "FMC agreement filed with its 8-K (May 2025)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000119312525124022/d911948dex11.htm",
+     "label": "FMC agreement filed with its 8-K (May 2025)"
+    },
+    {
+     "id": "Tessenderlo",
+     "name": "Tessenderlo Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000095010326009902/dp249374_ex1001.htm",
+     "label": "FMC agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "DD",
+     "name": "DuPont de Nemours",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000003778517000018/fmctransactionagreemente.htm",
+     "label": "FMC agreement filed with its 8-K (April 2017)"
+    },
+    {
+     "id": "ENVU",
+     "name": "Envu",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000003778526000041/fmc-20251231.htm",
+     "label": "FMC 10-K (FY2025)"
+    },
+    {
+     "id": "LIVENT",
+     "name": "Livent",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/37785/000003778521000024/ex1016amendedandrestated.htm",
+     "label": "FMC agreement filed with its 10-K (FY2020)"
+    }
+   ]
   },
   "FMX": {
    "companies": 5,
@@ -7937,15 +8049,53 @@
    "in_universe": true
   },
   "FTDR": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "2-10 HBW (2024 share purchase) only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000095017024138432/ftdr-ex10_1.htm",
+     "label": "Frontdoor agreement filed with its 8-K (December 2024)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000095017024138432/ftdr-ex10_1.htm",
+     "label": "Frontdoor agreement filed with its 8-K (December 2024)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000095017024138432/ftdr-ex10_1.htm",
+     "label": "Frontdoor agreement filed with its 8-K (December 2024)"
+    },
+    {
+     "id": "BNP",
+     "name": "BNP Paribas",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000095017024138432/ftdr-ex10_1.htm",
+     "label": "Frontdoor agreement filed with its 8-K (December 2024)"
+    },
+    {
+     "id": "TWOTENHBW",
+     "name": "2-10 Home Buyers Warranty",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000119312524153652/d843555dex21.htm",
+     "label": "Frontdoor agreement filed with its 8-K (June 2024)"
+    },
+    {
+     "id": "SERVICEMASTER",
+     "name": "ServiceMaster Global Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1727263/000110465918059550/a18-35090_1ex2d1.htm",
+     "label": "Frontdoor agreement filed with its 8-K (October 2018)"
+    }
+   ]
   },
   "FTI": {
    "companies": 10,
@@ -8057,15 +8207,60 @@
    "in_universe": true
   },
   "GAP": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Barclays (card issuer), Mastercard, Baozun (franchise partner), Bank of America: four; Simon tenant list is only in a PDF"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000003991122000058/gap-fourtharablcreditagr.htm",
+     "label": "Gap agreement filed with its 8-K (July 2022)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000003991122000058/gap-fourtharablcreditagr.htm",
+     "label": "Gap agreement filed with its 8-K (July 2022)"
+    },
+    {
+     "id": "SMFG",
+     "name": "Sumitomo Mitsui Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000003991122000058/gap-fourtharablcreditagr.htm",
+     "label": "Gap agreement filed with its 8-K (July 2022)"
+    },
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000162828026018573/gap-20260131.htm",
+     "label": "Gap 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "MA",
+     "name": "Mastercard",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000162828026018573/gap-20260131.htm",
+     "label": "Gap 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "BZUN",
+     "name": "Baozun",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000162828026018573/gap-20260131.htm",
+     "label": "Gap 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "IBM",
+     "name": "IBM",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/39911/000003991113000148/exhibit101msa2.htm",
+     "label": "Gap agreement filed with its 10-Q (September 2013)"
+    }
+   ]
   },
   "GATX": {
    "companies": 10,
@@ -8235,15 +8430,60 @@
    "in_universe": true
   },
   "GGG": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "U.S. Bank (agent) and Ingersoll Rand (names Graco a competitor); ITW Finishing (2012)"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288821000016/amendedandrestatedcreditag.htm",
+     "label": "Graco agreement filed with its 8-K (March 2021)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288821000016/amendedandrestatedcreditag.htm",
+     "label": "Graco agreement filed with its 8-K (March 2021)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288821000016/amendedandrestatedcreditag.htm",
+     "label": "Graco agreement filed with its 8-K (March 2021)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288821000016/amendedandrestatedcreditag.htm",
+     "label": "Graco agreement filed with its 8-K (March 2021)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000004288821000016/amendedandrestatedcreditag.htm",
+     "label": "Graco agreement filed with its 8-K (March 2021)"
+    },
+    {
+     "id": "CSL",
+     "name": "Carlisle Companies",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/42888/000119312514367706/d802223dex21.htm",
+     "label": "Graco agreement filed with its 8-K (October 2014)"
+    },
+    {
+     "id": "IR",
+     "name": "Ingersoll Rand",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+     "label": "Ingersoll Rand 10-K (FY2025)"
+    }
+   ]
   },
   "GIII": {
    "companies": 8,
@@ -8266,15 +8506,60 @@
    "in_universe": true
   },
   "GL": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo, Bank of America, CNO (names Globe Life a competitor): three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "RF",
+     "name": "Regions Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "TFC",
+     "name": "Truist Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "KEY",
+     "name": "KeyCorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000198/a101wellsfargo-globelife.htm",
+     "label": "Globe Life agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "CNO",
+     "name": "CNO Financial",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1224608/000122460826000017/cno-20251231.htm",
+     "label": "CNO Financial 10-K (FY2025)"
+    }
+   ]
   },
   "GLPI": {
    "companies": 7,
@@ -8394,15 +8679,46 @@
    "in_universe": false
   },
   "GRBK": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Flagstar (agent), Greenlight (shareholder), Rainwater joint venture, Challenger (sold stake): four"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "FLG",
+     "name": "Flagstar Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1373670/000162828026011798/grbk-20251231.htm",
+     "label": "Green Brick Partners 10-K (FY2025)"
+    },
+    {
+     "id": "VBTX",
+     "name": "Veritex Holdings",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1373670/000137367023000060/ex1011grbk11thamendmentcon.htm",
+     "label": "Green Brick Partners agreement filed with its 8-K (December 2023)"
+    },
+    {
+     "id": "BTIG",
+     "name": "BTIG",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1373670/000137367021000051/exhibit11grbkpref-underwri.htm",
+     "label": "Green Brick Partners agreement filed with its 8-K (December 2021)"
+    },
+    {
+     "id": "GREENLIGHT",
+     "name": "Greenlight Capital",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1373670/000162828026011798/grbk-20251231.htm",
+     "label": "Green Brick Partners 10-K (FY2025)"
+    },
+    {
+     "id": "CHALLENGERHOMES",
+     "name": "Challenger Homes",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1373670/000162828026011798/grbk-20251231.htm",
+     "label": "Green Brick Partners 10-K (FY2025)"
+    }
+   ]
   },
   "GRMN": {
    "companies": 10,
@@ -8610,16 +8926,46 @@
    "in_universe": true
   },
   "HAFC": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "Central Bancorp (trust preferred guarantee) and FHLB San Francisco only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109242/000119312521251161/d163898dex11.htm",
+     "label": "Hanmi Financial agreement filed with its 8-K (August 2021)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109242/000119312521251161/d163898dex11.htm",
+     "label": "Hanmi Financial agreement filed with its 8-K (August 2021)"
+    },
+    {
+     "id": "DADAVIDSON",
+     "name": "D.A. Davidson",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109242/000119312526326406/d170447dex101.htm",
+     "label": "Hanmi Financial agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "FHLBSF",
+     "name": "Federal Home Loan Bank of San Francisco",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109242/000119312526082425/hafc-20251231.htm",
+     "label": "Hanmi Financial 10-K (FY2025)"
+    },
+    {
+     "id": "CENTRALBANCORP",
+     "name": "Central Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1109242/000162828017002056/hafc201610-kmain.htm",
+     "label": "Hanmi Financial 10-K (FY2016)"
+    }
+   ]
   },
   "HAL": {
    "companies": 18,
@@ -8788,15 +9134,53 @@
    ]
   },
   "HCSG": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Sysco (supplier), Genesis Healthcare (customer), NexDine/Real Artisan Brands (acquisition), PNC: four"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "SYY",
+     "name": "Sysco",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101226000009/hcsg-20251231.htm",
+     "label": "Healthcare Services Group 10-K (FY2025)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101226000015/a300000000secondamendment-.htm",
+     "label": "Healthcare Services Group agreement filed with its 8-K (April 2026)"
+    },
+    {
+     "id": "Genesis",
+     "name": "Genesis Healthcare",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101226000009/hcsg-20251231.htm",
+     "label": "Healthcare Services Group 10-K (FY2025)"
+    },
+    {
+     "id": "REALARTISAN",
+     "name": "Real Artisan Brands",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101226000052/membershipinterestpurchase.htm",
+     "label": "Healthcare Services Group agreement filed with its 8-K (October 2026)"
+    },
+    {
+     "id": "PLATINUMHEALTH",
+     "name": "Platinum Health Services",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101213000061/exhibit21-assetpurchaseagr.htm",
+     "label": "Healthcare Services Group agreement filed with its 8-K (July 2013)"
+    },
+    {
+     "id": "ALIGNENGAGE",
+     "name": "Align+Engage",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/731012/000073101226000009/hcsg-20251231.htm",
+     "label": "Healthcare Services Group 10-K (FY2025)"
+    }
+   ]
   },
   "HD": {
    "companies": 17,
@@ -8898,15 +9282,46 @@
    "in_universe": true
   },
   "HLNE": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "JPMorgan, Russell Investments (investment agreement), Securitize fund loan: three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1433642/000143364226000019/hlne-20260331.htm",
+     "label": "Hamilton Lane 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "FirstRepublic",
+     "name": "First Republic Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1433642/000143364226000042/ex101-hamiltonlanexfacilit.htm",
+     "label": "Hamilton Lane agreement filed with its 10-Q (August 2026)"
+    },
+    {
+     "id": "MS",
+     "name": "Morgan Stanley",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1433642/000143364225000023/hlnewinter2025offering-und.htm",
+     "label": "Hamilton Lane agreement filed with its 8-K (February 2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1433642/000143364225000087/corkxiii-underwritingagree.htm",
+     "label": "Hamilton Lane agreement filed with its 8-K (September 2025)"
+    },
+    {
+     "id": "RUSSELLINV",
+     "name": "Russell Investments",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1433642/000143364226000019/hlne-20260331.htm",
+     "label": "Hamilton Lane 10-K (FY ended Mar 2026)"
+    }
+   ]
   },
   "HLT": {
    "companies": 10,
@@ -9173,27 +9588,109 @@
    "in_universe": true
   },
   "HTH": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "PlainsCapital (2012), Southwest Securities (2015), Bank of River Oaks: three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465915026790/a15-8910_1ex10d1.htm",
+     "label": "Hilltop Holdings agreement filed with its 8-K (April 2015)"
+    },
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465915026790/a15-8910_1ex10d1.htm",
+     "label": "Hilltop Holdings agreement filed with its 8-K (April 2015)"
+    },
+    {
+     "id": "PLAINSCAPITAL",
+     "name": "PlainsCapital Corporation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465926015264/hth-20251231x10k.htm",
+     "label": "Hilltop Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "BORO",
+     "name": "The Bank of River Oaks",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465926015264/hth-20251231x10k.htm",
+     "label": "Hilltop Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "SWSGROUP",
+     "name": "SWS Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465914024889/a14-9438_1ex2d1.htm",
+     "label": "Hilltop Holdings agreement filed with its 425 (April 2014)"
+    },
+    {
+     "id": "FNBEDINBURG",
+     "name": "First National Bank (Edinburg)",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465913070964/a13-20817_1ex2d1.htm",
+     "label": "Hilltop Holdings agreement filed with its 8-K (September 2013)"
+    },
+    {
+     "id": "ALIGNFINANCIAL",
+     "name": "Align Financial Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1265131/000110465920010959/tm206648d1_ex2-1.htm",
+     "label": "Hilltop Holdings agreement filed with its 8-K (February 2020)"
+    }
+   ]
   },
   "HTLD": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "JPMorgan and Wells Fargo only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923322000063/creditagreementaugust312022.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (November 2022)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923322000063/creditagreementaugust312022.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (November 2022)"
+    },
+    {
+     "id": "TFII",
+     "name": "TFI International",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923322000063/stockpurchaseagreementaugu.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (November 2022)"
+    },
+    {
+     "id": "SMITHTRANSPORT",
+     "name": "Smith Transport",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923322000042/smithtransportstockpurchas.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (August 2022)"
+    },
+    {
+     "id": "MILLIS",
+     "name": "Millis Transfer",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923319000042/millistransferacquisit.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (November 2019)"
+    },
+    {
+     "id": "SALTCHUK",
+     "name": "Saltchuk Resources",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799233/000079923317000049/exhibit21stockpurchase.htm",
+     "label": "Heartland Express agreement filed with its 10-Q (November 2017)"
+    }
+   ]
   },
   "HTO": {
    "status": "ready",
@@ -9455,7 +9952,8 @@
     "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
     "Greystone Logistics (borrower) only"
    ],
-   "reason": "Fewer than five verified companies found"
+   "reason": "Fewer than four verified companies found",
+   "retry_2026_11_28": "Re-researched own 10-K/10-Q/8-K history and exhibits (credit, underwriting, merger and purchase agreements) and other filers naming it: Two verified: Greystone Logistics (names IBC as lender) and Baupost (2018 warrant purchase); no underwriting, merger or credit agreements in own filings since 2012"
   },
   "IBP": {
    "status": "ready",
@@ -9951,15 +10449,67 @@
    "in_universe": true
   },
   "IT": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "JPMorgan only; other mentions cite Gartner research"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 8,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "CFG",
+     "name": "Citizens Bank, N.A.",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "PNC",
+     "name": "PNC Financial Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "TD",
+     "name": "TD Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000119312520256749/d75343dex101.htm",
+     "label": "Gartner agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000093041317001086/c87791_ex1-1.htm",
+     "label": "Gartner agreement filed with its 8-K (March 2017)"
+    },
+    {
+     "id": "CEB",
+     "name": "CEB Inc.",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/749251/000074925122000006/it-20211231.htm",
+     "label": "Gartner 10-K (FY2021)"
+    }
+   ]
   },
   "ITGR": {
    "companies": 10,
@@ -10001,15 +10551,67 @@
    "in_universe": true
   },
   "JBGS": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Bank of America and Wells Fargo only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 8,
+   "added_2026_11_28": [
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "COF",
+     "name": "Capital One",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "MS",
+     "name": "Morgan Stanley",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "MTB",
+     "name": "M&T Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "TFC",
+     "name": "Truist Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926102540/tm2624164d1_ex10-1.htm",
+     "label": "JBG SMITH agreement filed with its 8-K (August 2026)"
+    },
+    {
+     "id": "AMZN",
+     "name": "Amazon",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926016450/jbgs-20251231x10k.htm",
+     "label": "JBG SMITH 10-K (FY2025)"
+    },
+    {
+     "id": "VNO",
+     "name": "Vornado Realty Trust",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1689796/000110465926016450/jbgs-20251231x10k.htm",
+     "label": "JBG SMITH 10-K (FY2025)"
+    }
+   ]
   },
   "JBHT": {
    "companies": 8,
@@ -10091,15 +10693,46 @@
    "in_universe": true
   },
   "JJSF": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Hain Celestial (Thinsters purchase), NFI Industries (related-party logistics), Citizens: three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "CFG",
+     "name": "Citizens Bank, N.A.",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/785956/000143774926038299/jjsf20260926_10k.htm",
+     "label": "J&J Snack Foods 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "NFI",
+     "name": "NFI Industries",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/785956/000143774926038299/jjsf20260926_10k.htm",
+     "label": "J&J Snack Foods 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "HAIN",
+     "name": "Hain Celestial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/785956/000143774926038299/jjsf20260926_10k.htm",
+     "label": "J&J Snack Foods 10-K (FY ended Sep 2026)"
+    },
+    {
+     "id": "DIPPINDOTS",
+     "name": "Dippin' Dots",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/785956/000143774923033110/jjsf20230923_10k.htm",
+     "label": "J&J Snack Foods 10-K (FY ended Sep 2023)"
+    },
+    {
+     "id": "ICEEDIST",
+     "name": "ICEE Distributors",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/785956/000143774920024447/jjsf20200926_10k.htm",
+     "label": "J&J Snack Foods 10-K (FY ended Sep 2020)"
+    }
+   ]
   },
   "JKHY": {
    "companies": 8,
@@ -10117,15 +10750,46 @@
    "in_universe": true
   },
   "JOE": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Fairholme (controlling holder); joint-venture partners not named"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "FAIRHOLME",
+     "name": "Fairholme Capital Management",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+     "label": "St. Joe 10-K (FY2025)"
+    },
+    {
+     "id": "TFC",
+     "name": "Truist Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/745308/000119312512081993/d259432dex1040.htm",
+     "label": "St. Joe agreement filed with its 10-K (FY2011)"
+    },
+    {
+     "id": "MINTO",
+     "name": "Minto Communities USA",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+     "label": "St. Joe 10-K (FY2025)"
+    },
+    {
+     "id": "BUSYBEE",
+     "name": "Busy Bee",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/745308/000110465926019676/joe-20251231x10k.htm",
+     "label": "St. Joe 10-K (FY2025)"
+    },
+    {
+     "id": "AGRESERVES",
+     "name": "AgReserves",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/745308/000119312513431541/d626701dex1053.htm",
+     "label": "St. Joe agreement filed with its 8-K (November 2013)"
+    }
+   ]
   },
   "JPM": {
    "companies": 15,
@@ -10682,15 +11346,46 @@
    "in_universe": true
   },
   "LGIH": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo, Evergreen Residential (lender), loanDepot (forward commitments): three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1580670/000158067026000019/lgih-20251231.htm",
+     "label": "LGI Homes 10-K (FY2025)"
+    },
+    {
+     "id": "EVERGREENRES",
+     "name": "Evergreen Residential Capital",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1580670/000158067026000019/lgih-20251231.htm",
+     "label": "LGI Homes 10-K (FY2025)"
+    },
+    {
+     "id": "DB",
+     "name": "Deutsche Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1580670/000158067016000227/ex11equitydistributionagre.htm",
+     "label": "LGI Homes agreement filed with its 8-K (September 2016)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1580670/000158067016000227/ex11equitydistributionagre.htm",
+     "label": "LGI Homes agreement filed with its 8-K (September 2016)"
+    },
+    {
+     "id": "GTIS",
+     "name": "GTIS Partners",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1580670/000119312513445639/d631162dex21.htm",
+     "label": "LGI Homes agreement filed with its 8-K (November 2013)"
+    }
+   ]
   },
   "LGND": {
    "companies": 10,
@@ -10746,7 +11441,8 @@
     "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
     "FHLB Indianapolis and Cetera (brokerage) only"
    ],
-   "reason": "Fewer than five verified companies found"
+   "reason": "Fewer than four verified companies found",
+   "retry_2026_11_28": "Re-researched own 10-K/10-Q/8-K history and exhibits (credit, underwriting, merger and purchase agreements) and other filers naming it: Two verified: FHLB Indianapolis (advances) and Cetera (brokerage); revolving-credit lender unnamed; no acquisitions, underwritings or other counterparties since 2012"
   },
   "LKQ": {
    "companies": 5,
@@ -10783,15 +11479,46 @@
    "in_universe": false
   },
   "LNN": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo, Vision One (cooperation), Modiv (landlord): three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/836157/000119312526428926/lnn-20260831.htm",
+     "label": "Lindsay 10-K (FY ended Aug 2026)"
+    },
+    {
+     "id": "ELECSYS",
+     "name": "Elecsys",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/836157/000156459020047271/lnn-10k_20200831.htm",
+     "label": "Lindsay 10-K (FY ended Aug 2020)"
+    },
+    {
+     "id": "FIELDWISE",
+     "name": "FieldWise",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/836157/000095017023054198/lnn-20230831.htm",
+     "label": "Lindsay 10-K (FY ended Aug 2023)"
+    },
+    {
+     "id": "NETIRRIGATE",
+     "name": "Net Irrigate",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/836157/000156459020047271/lnn-10k_20200831.htm",
+     "label": "Lindsay 10-K (FY ended Aug 2020)"
+    },
+    {
+     "id": "SPFWATER",
+     "name": "SPF Water Engineering",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/836157/000119312516740910/d267725d10k.htm",
+     "label": "Lindsay 10-K (FY ended Aug 2016)"
+    }
+   ]
   },
   "LNT": {
    "status": "ready",
@@ -10921,23 +11648,116 @@
    "in_universe": true
   },
   "LPG": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "tried": [
-    "Own and partners' 10-K/20-F (#806): BW LPG as competitor found"
-   ],
-   "reason": "Fewer than five verified companies (#806)"
+   "companies": 8,
+   "added_2026_11_28": [
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000159699320000024/lpg-20200630ex102a650bb.htm",
+     "label": "Dorian LPG agreement filed with its 10-Q (August 2020)"
+    },
+    {
+     "id": "ABNAMRO",
+     "name": "ABN AMRO",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000159699320000024/lpg-20200630ex102a650bb.htm",
+     "label": "Dorian LPG agreement filed with its 10-Q (August 2020)"
+    },
+    {
+     "id": "JEF",
+     "name": "Jefferies Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000110465924069645/tm2416394d3_ex1-1.htm",
+     "label": "Dorian LPG agreement filed with its 8-K (June 2024)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000110465914034183/a14-7648_6ex1d1.htm",
+     "label": "Dorian LPG agreement filed with its F-1 (May 2014)"
+    },
+    {
+     "id": "UBS",
+     "name": "UBS",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000110465914034183/a14-7648_6ex1d1.htm",
+     "label": "Dorian LPG agreement filed with its F-1 (May 2014)"
+    },
+    {
+     "id": "BWLPG",
+     "name": "BW LPG",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+     "label": "Dorian LPG 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "NYK",
+     "name": "NYK Line",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+     "label": "Dorian LPG 10-K (FY ended Mar 2026)"
+    },
+    {
+     "id": "PETREDEC",
+     "name": "Petredec",
+     "type": "rival",
+     "source": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+     "label": "Dorian LPG 10-K (FY ended Mar 2026)"
+    }
+   ]
   },
   "LPX": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Boise Cascade and BlueLinx list it among suppliers: two"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "AGCREDIT",
+     "name": "American AgCredit",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/60519/000162828022030956/lpxsecondammendedandrest.htm",
+     "label": "Louisiana-Pacific agreement filed with its 8-K (November 2022)"
+    },
+    {
+     "id": "COBANK",
+     "name": "CoBank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/60519/000162828022030956/lpxsecondammendedandrest.htm",
+     "label": "Louisiana-Pacific agreement filed with its 8-K (November 2022)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/60519/000119312516709542/d257427dex101.htm",
+     "label": "Louisiana-Pacific agreement filed with its 8-K (September 2016)"
+    },
+    {
+     "id": "BCC",
+     "name": "Boise Cascade",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1328581/000132858126000006/bcc-20251231.htm",
+     "label": "Boise Cascade 10-K (FY2025)"
+    },
+    {
+     "id": "BXC",
+     "name": "BlueLinx",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/1301787/000162828026011136/bxc-20260103.htm",
+     "label": "BlueLinx 10-K (FY ended Jan 2026)"
+    },
+    {
+     "id": "PACIFICWOODTECH",
+     "name": "Pacific Woodtech",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/60519/000162828022017792/exhibit21.htm",
+     "label": "Louisiana-Pacific agreement filed with its 8-K (June 2022)"
+    }
+   ]
   },
   "LQDT": {
    "status": "ready",
@@ -11189,15 +12009,53 @@
    ]
   },
   "LZB": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo, Culp (customer list), Synchrony (partner): three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/57131/000005713126000019/lzb-20260425.htm",
+     "label": "La-Z-Boy 10-K (FY ended Apr 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/57131/000005713125000054/exhibit41-amendedcreditagr.htm",
+     "label": "La-Z-Boy agreement filed with its 8-K (July 2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/57131/000005713125000054/exhibit41-amendedcreditagr.htm",
+     "label": "La-Z-Boy agreement filed with its 8-K (July 2025)"
+    },
+    {
+     "id": "CULP",
+     "name": "Culp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/723603/000119312526307064/culp-20260503.htm",
+     "label": "Culp 10-K (FY ended May 2026)"
+    },
+    {
+     "id": "FURNICO",
+     "name": "Furnico Furniture",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/57131/000005713123000032/lzb-20230429.htm",
+     "label": "La-Z-Boy 10-K (FY ended Apr 2023)"
+    },
+    {
+     "id": "JOYBIRD",
+     "name": "Joybird (Stitch Industries)",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/57131/000005713120000035/lzb-20200425x10k.htm",
+     "label": "La-Z-Boy 10-K (FY ended Apr 2020)"
+    }
+   ]
   },
   "MA": {
    "companies": 9,
@@ -11378,16 +12236,53 @@
    "in_universe": true
   },
   "MBIN": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "No named counterparties"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+     "label": "Merchants Bancorp agreement filed with its 8-K (September 2022)"
+    },
+    {
+     "id": "MS",
+     "name": "Morgan Stanley",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+     "label": "Merchants Bancorp agreement filed with its 8-K (September 2022)"
+    },
+    {
+     "id": "UBS",
+     "name": "UBS",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+     "label": "Merchants Bancorp agreement filed with its 8-K (September 2022)"
+    },
+    {
+     "id": "HBAN",
+     "name": "Huntington Bancshares",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000155837019007898/mbin-20190630ex101h33835.htm",
+     "label": "Merchants Bancorp agreement filed with its 10-Q (August 2019)"
+    },
+    {
+     "id": "PROVIDENCEBANK",
+     "name": "Providence Bank",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000155837019007898/mbin-20190630ex101h33835.htm",
+     "label": "Merchants Bancorp agreement filed with its 10-Q (August 2019)"
+    },
+    {
+     "id": "BLUESTEM",
+     "name": "Bluestem Development Corporation",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1629019/000104746917006373/a2233443zex-2_2.htm",
+     "label": "Merchants Bancorp agreement filed with its S-1 (October 2017)"
+    }
+   ]
   },
   "MC": {
    "companies": 9,
@@ -11415,26 +12310,82 @@
    "in_universe": true
   },
   "MCRI": {
-   "status": "skipped",
+   "status": "ready_four",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo, PCL Construction, Biggest Little Investments (related-party lease): three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 4,
+   "upgrade_target": 5,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/907242/000155837025002045/mcri-20241231xex10d12.htm",
+     "label": "Monarch Casino & Resort agreement filed with its 10-K (FY2024)"
+    },
+    {
+     "id": "PCLCONSTRUCTION",
+     "name": "PCL Construction",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+     "label": "Monarch Casino & Resort 10-K (FY2025)"
+    },
+    {
+     "id": "BLI",
+     "name": "Biggest Little Investments",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+     "label": "Monarch Casino & Resort 10-K (FY2025)"
+    },
+    {
+     "id": "RIVIERA",
+     "name": "Riviera Holdings",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/907242/000110465926018717/mcri-20251231x10k.htm",
+     "label": "Monarch Casino & Resort 10-K (FY2025)"
+    }
+   ]
   },
   "MCY": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Bank of America, Wells Fargo, BMO, Raymond James: four, all lenders or underwriters"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/64996/000119312526281118/d811201dex101.htm",
+     "label": "Mercury General agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/64996/000119312526281118/d811201dex101.htm",
+     "label": "Mercury General agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "BMO",
+     "name": "BMO Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/64996/000006499626000005/mcy-20251231.htm",
+     "label": "Mercury General 10-K (FY2025)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/64996/000006499626000005/mcy-20251231.htm",
+     "label": "Mercury General 10-K (FY2025)"
+    },
+    {
+     "id": "RJF",
+     "name": "Raymond James Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/64996/000119312526269392/d146636dex11.htm",
+     "label": "Mercury General agreement filed with its 8-K (June 2026)"
+    }
+   ]
   },
   "MDB": {
    "companies": 15,
@@ -11537,37 +12488,158 @@
    "in_universe": true
   },
   "MGY": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Plains (gathering agreement), WildFire Energy (2026 purchase), Citibank: three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000110465926084859/tm2620557d2_ex10-1.htm",
+     "label": "Magnolia Oil & Gas agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000110465926086291/tm2620557d7_ex1-1.htm",
+     "label": "Magnolia Oil & Gas agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000110465926084859/tm2620557d2_ex10-1.htm",
+     "label": "Magnolia Oil & Gas agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000110465926084859/tm2620557d2_ex10-1.htm",
+     "label": "Magnolia Oil & Gas agreement filed with its 8-K (July 2026)"
+    },
+    {
+     "id": "PAA",
+     "name": "Plains All American",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000169899026000005/mgy-20251231.htm",
+     "label": "Magnolia Oil & Gas 10-K (FY2025)"
+    },
+    {
+     "id": "WILDFIRE",
+     "name": "WildFire Energy",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1698990/000110465926084859/tm2620557d2_ex2-1.htm",
+     "label": "Magnolia Oil & Gas agreement filed with its 8-K (July 2026)"
+    }
+   ]
   },
   "MHK": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Wells Fargo and JPMorgan only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+     "label": "Mohawk Industries agreement filed with its 8-K (May 2026)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+     "label": "Mohawk Industries agreement filed with its 8-K (May 2026)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+     "label": "Mohawk Industries agreement filed with its 8-K (May 2026)"
+    },
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+     "label": "Mohawk Industries agreement filed with its 8-K (May 2026)"
+    },
+    {
+     "id": "GODFREYHIRST",
+     "name": "Godfrey Hirst Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000085196820000020/a2019q410-kdocument.htm",
+     "label": "Mohawk Industries 10-K (FY2019)"
+    },
+    {
+     "id": "KAIGROUP",
+     "name": "KAI Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000085196817000020/a201610kdocument.htm",
+     "label": "Mohawk Industries 10-K (FY2016)"
+    },
+    {
+     "id": "IVCGROUP",
+     "name": "IVC Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/851968/000085196817000020/a201610kdocument.htm",
+     "label": "Mohawk Industries 10-K (FY2016)"
+    }
+   ]
   },
   "MHO": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "PNC and JPMorgan only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "PNC",
+     "name": "PNC Financial Services",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000079929225000071/exhibit101seventhamendme.htm",
+     "label": "M/I Homes agreement filed with its 8-K (September 2025)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000079929226000033/usbank_mxifinancial-master.htm",
+     "label": "M/I Homes agreement filed with its 10-Q (October 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000079929225000077/m_i-jpmxmasterrepurchaseag.htm",
+     "label": "M/I Homes agreement filed with its 10-Q (October 2025)"
+    },
+    {
+     "id": "CMA",
+     "name": "Comerica",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000079929223000120/exhibit101firstamendment.htm",
+     "label": "M/I Homes agreement filed with its 10-Q (October 2023)"
+    },
+    {
+     "id": "C",
+     "name": "Citigroup",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000119312513101381/d500329dex11.htm",
+     "label": "M/I Homes agreement filed with its 8-K (March 2013)"
+    },
+    {
+     "id": "PINNACLEHOMES",
+     "name": "Pinnacle Homes",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799292/000079929226000006/mho-20251231.htm",
+     "label": "M/I Homes 10-K (FY2025)"
+    }
+   ]
   },
   "MIDD": {
    "companies": 12,
@@ -11855,15 +12927,46 @@
    ]
   },
   "MRTN": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Walmart (largest customer), Hub Group (bought intermodal), U.S. Bank: three"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/799167/000143774926005971/mrtn20251231_10k.htm",
+     "label": "Marten Transport 10-K (FY2025)"
+    },
+    {
+     "id": "MWLOGISTICS",
+     "name": "MW Logistics",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799167/000143774914003910/mrtn20131231_10k.htm",
+     "label": "Marten Transport 10-K (FY2013)"
+    },
+    {
+     "id": "WMT",
+     "name": "Walmart",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/799167/000143774926005971/mrtn20251231_10k.htm",
+     "label": "Marten Transport 10-K (FY2025)"
+    },
+    {
+     "id": "KHC",
+     "name": "Kraft Heinz",
+     "type": "down",
+     "source": "https://www.sec.gov/Archives/edgar/data/799167/000143774914003910/mrtn20131231_10k.htm",
+     "label": "Marten Transport 10-K (FY2013)"
+    },
+    {
+     "id": "HUBG",
+     "name": "Hub Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/799167/000143774926005971/mrtn20251231_10k.htm",
+     "label": "Marten Transport 10-K (FY2025)"
+    }
+   ]
   },
   "MRVL": {
    "companies": 39,
@@ -12112,15 +13215,46 @@
    "in_universe": true
   },
   "MTH": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "No named counterparties; other mentions are peer tables"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "MFG",
+     "name": "Mizuho Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/833079/000083307926000122/ex101twelfthamendmenttocre.htm",
+     "label": "Meritage Homes agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+     "label": "Meritage Homes agreement filed with its 8-K (March 2025)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+     "label": "Meritage Homes agreement filed with its 8-K (March 2025)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/833079/000119312525048411/d926662dex11.htm",
+     "label": "Meritage Homes agreement filed with its 8-K (March 2025)"
+    },
+    {
+     "id": "LEGENDARYCOMM",
+     "name": "Legendary Communities",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/833079/000083307916000119/mth-10kx2015.htm",
+     "label": "Meritage Homes 10-K (FY2015)"
+    }
+   ]
   },
   "MTN": {
    "companies": 12,
@@ -12143,15 +13277,60 @@
    "in_universe": true
   },
   "MTX": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Pfizer (1992 IPO agreements) and JPMorgan only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 7,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000119312514192038/d724959dex101.htm",
+     "label": "Minerals Technologies agreement filed with its 8-K (May 2014)"
+    },
+    {
+     "id": "BCS",
+     "name": "Barclays",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000119312514192038/d724959dex101.htm",
+     "label": "Minerals Technologies agreement filed with its 8-K (May 2014)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000119312514192038/d724959dex101.htm",
+     "label": "Minerals Technologies agreement filed with its 8-K (May 2014)"
+    },
+    {
+     "id": "SMFG",
+     "name": "Sumitomo Mitsui Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000119312514192038/d724959dex101.htm",
+     "label": "Minerals Technologies agreement filed with its 8-K (May 2014)"
+    },
+    {
+     "id": "PFE",
+     "name": "Pfizer Inc.",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000089101426000067/form10k.htm",
+     "label": "Minerals Technologies 10-K (FY2025)"
+    },
+    {
+     "id": "AMCOL",
+     "name": "AMCOL International",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000089101426000067/form10k.htm",
+     "label": "Minerals Technologies 10-K (FY2025)"
+    },
+    {
+     "id": "CONCEPTPET",
+     "name": "Concept Pet",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/891014/000089101426000067/form10k.htm",
+     "label": "Minerals Technologies 10-K (FY2025)"
+    }
+   ]
   },
   "MTZ": {
    "companies": 8,
@@ -12317,15 +13496,53 @@
    "in_universe": true
   },
   "NBHC": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "Vista Bancshares (2026 acquisition), CV Sciences (borrower) only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000110465926013385/tm264856d8_ex1-1.htm",
+     "label": "National Bank Holdings agreement filed with its 8-K (February 2026)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000119312512393166/d253929dex11.htm",
+     "label": "National Bank Holdings agreement filed with its S-1 (September 2012)"
+    },
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000119312512393166/d253929dex11.htm",
+     "label": "National Bank Holdings agreement filed with its S-1 (September 2012)"
+    },
+    {
+     "id": "VISTABANCSHARES",
+     "name": "Vista Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000110465926019119/nbhc-20251231x10k.htm",
+     "label": "National Bank Holdings 10-K (FY2025)"
+    },
+    {
+     "id": "BOJH",
+     "name": "Bancshares of Jackson Hole",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000155837023002370/nbhc-20221231x10k.htm",
+     "label": "National Bank Holdings 10-K (FY2022)"
+    },
+    {
+     "id": "COMMUNITYBANCORP",
+     "name": "Community Bancorporation (Rock Canyon Bank)",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1475841/000155837023002370/nbhc-20221231x10k.htm",
+     "label": "National Bank Holdings 10-K (FY2022)"
+    }
+   ]
   },
   "NBIS": {
    "companies": 14,
@@ -12494,12 +13711,53 @@
    "in_universe": true
   },
   "NEOG": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "tried": [
-    "Own and partners' 10-K/20-F (#806)"
-   ],
-   "reason": "Fewer than five verified companies (#806)"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "JPM",
+     "name": "JPMorgan Chase",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000114036122027156/ny20004078x16_ex10-9.htm",
+     "label": "Neogen agreement filed with its S-4 (July 2022)"
+    },
+    {
+     "id": "GS",
+     "name": "Goldman Sachs",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000114036122027156/ny20004078x16_ex10-9.htm",
+     "label": "Neogen agreement filed with its S-4 (July 2022)"
+    },
+    {
+     "id": "MMM",
+     "name": "3M",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000095017023042861/neog-20230531.htm",
+     "label": "Neogen 10-K (FY ended May 2023)"
+    },
+    {
+     "id": "MEGAZYME",
+     "name": "Megazyme",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000095017023042861/neog-20230531.htm",
+     "label": "Neogen 10-K (FY ended May 2023)"
+    },
+    {
+     "id": "GENETICVET",
+     "name": "Genetic Veterinary Sciences",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000095017023042861/neog-20230531.htm",
+     "label": "Neogen 10-K (FY ended May 2023)"
+    },
+    {
+     "id": "THAINEO",
+     "name": "Thai-Neo Biotech",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/711377/000095017023042861/neog-20230531.htm",
+     "label": "Neogen 10-K (FY ended May 2023)"
+    }
+   ]
   },
   "NET": {
    "companies": 10,
@@ -12579,15 +13837,53 @@
    "in_universe": true
   },
   "NIC": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "MidWestOne (2026 merger) and Fiserv (core processor) only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "FI",
+     "name": "Fiserv",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485026000077/nic-20251231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "MOFG",
+     "name": "MidWestOne Financial Group",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485026000077/nic-20251231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2025)"
+    },
+    {
+     "id": "CHARTERBANKSHARES",
+     "name": "Charter Bankshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485023000008/nic-20221231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2022)"
+    },
+    {
+     "id": "COUNTYBANCORP",
+     "name": "County Bancorp",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485023000008/nic-20221231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2022)"
+    },
+    {
+     "id": "MACKINAC",
+     "name": "Mackinac Financial",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485023000008/nic-20221231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2022)"
+    },
+    {
+     "id": "ADVANTAGECOMM",
+     "name": "Advantage Community Bancshares",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1174850/000117485023000008/nic-20221231.htm",
+     "label": "Nicolet Bankshares 10-K (FY2022)"
+    }
+   ]
   },
   "NICE": {
    "companies": 9,
@@ -12921,15 +14217,46 @@
    "in_universe": true
   },
   "NSSC": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "HSBC only"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 5,
+   "added_2026_11_28": [
+    {
+     "id": "HSBC",
+     "name": "HSBC",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/69633/000110465926100081/nssc-20260630x10k.htm",
+     "label": "Napco 10-K (FY ended Jun 2026)"
+    },
+    {
+     "id": "NEEDHAM",
+     "name": "Needham & Company",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/69633/000110465924031881/tm247803d5_ex1-1.htm",
+     "label": "Napco agreement filed with its 8-K (March 2024)"
+    },
+    {
+     "id": "COWEN",
+     "name": "Cowen and Company",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/69633/000110465924031881/tm247803d5_ex1-1.htm",
+     "label": "Napco agreement filed with its 8-K (March 2024)"
+    },
+    {
+     "id": "WILLIAMBLAIR",
+     "name": "William Blair",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/69633/000110465923017583/tm236068d1_ex1-1.htm",
+     "label": "Napco agreement filed with its 8-K (February 2023)"
+    },
+    {
+     "id": "RILY",
+     "name": "B. Riley Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/69633/000110465920135267/tm2038152d2_ex1-1.htm",
+     "label": "Napco agreement filed with its 8-K (December 2020)"
+    }
+   ]
   },
   "NTAP": {
    "companies": 14,
@@ -12977,15 +14304,40 @@
    "in_universe": false
   },
   "NVR": {
-   "status": "skipped",
+   "status": "ready_four",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K full-sentence pass (every named organisation next to a relationship word), own 8-K Items 1.01/2.01 and exhibit index",
-    "EDGAR full-text search for the company name and ticker in other filers' 10-K/20-F/10-Q/8-K (2025-2026)",
-    "Bank of America and GTJ REIT (landlord): two"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 4,
+   "upgrade_target": 5,
+   "added_2026_11_28": [
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906163/000090616325000031/nvr-secondarcreditagreement.htm",
+     "label": "NVR agreement filed with its 8-K (March 2025)"
+    },
+    {
+     "id": "USB",
+     "name": "U.S. Bancorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906163/000090616323000108/exhibit101.htm",
+     "label": "NVR agreement filed with its 10-Q (August 2023)"
+    },
+    {
+     "id": "CREDITSUISSE",
+     "name": "Credit Suisse",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/906163/000119312520242209/d36727dex11.htm",
+     "label": "NVR agreement filed with its 8-K (September 2020)"
+    },
+    {
+     "id": "GTJREIT",
+     "name": "GTJ REIT",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1368757/000119312526451587/gttj-20260930.htm",
+     "label": "GTJ REIT 10-Q (November 2026)"
+    }
+   ]
   },
   "NVS": {
    "companies": 7,
@@ -13293,16 +14645,53 @@
    "in_universe": true
   },
   "OFG": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "scan_2026_11_26": "Own latest 10-K/20-F checked for a sentence naming four or more competitors: none found",
-   "tried": [
-    "Own 10-K: acquisitions, Federal Home Loan Bank, brokerage and core-processor partners, competitors named",
-    "Own 8-K Items 1.01/2.01 and exhibit index: merger agreements, underwriters, credit agreements",
-    "Borrower method: EDGAR full-text search for the bank's legal name in other companies' 10-K/10-Q/8-K credit agreements (2024-2026)",
-    "No named counterparties"
-   ],
-   "reason": "Fewer than five verified companies found"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "KBW",
+     "name": "Keefe, Bruyette & Woods",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000114036126008961/ny20066736x4_ex1-1.htm",
+     "label": "OFG Bancorp agreement filed with its S-1 (March 2026)"
+    },
+    {
+     "id": "PIPR",
+     "name": "Piper Sandler",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000114036126008961/ny20066736x4_ex1-1.htm",
+     "label": "OFG Bancorp agreement filed with its S-1 (March 2026)"
+    },
+    {
+     "id": "JEF",
+     "name": "Jefferies Financial Group",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000119312512433282/d409560dex11.htm",
+     "label": "Oriental Financial Group (now OFG) agreement filed with its S-1 (October 2012)"
+    },
+    {
+     "id": "BNS",
+     "name": "Scotiabank",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000103046926000008/ofg-20251231.htm",
+     "label": "OFG Bancorp 10-K (FY2025)"
+    },
+    {
+     "id": "BBVA",
+     "name": "BBVA",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000103046914000009/ofg10k20131231.htm",
+     "label": "Oriental Financial Group (now OFG) 10-K (FY2013)"
+    },
+    {
+     "id": "EUROBANK",
+     "name": "Eurobank (Puerto Rico)",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/1030469/000103046915000010/ofg10k20141231.htm",
+     "label": "OFG Bancorp 10-K (FY2014)"
+    }
+   ]
   },
   "OGE": {
    "status": "ready",
@@ -13711,12 +15100,53 @@
    "in_universe": true
   },
   "PATK": {
-   "status": "skipped",
+   "status": "ready",
    "in_universe": true,
-   "tried": [
-    "Own and partners' 10-K/20-F (#806, Nov 24): RecPro acquisition found"
-   ],
-   "reason": "Fewer than five verified companies (#806)"
+   "companies": 6,
+   "added_2026_11_28": [
+    {
+     "id": "WFC",
+     "name": "Wells Fargo",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660524000177/ex-101xpatkxfiftharcredita.htm",
+     "label": "Patrick Industries agreement filed with its 8-K (October 2024)"
+    },
+    {
+     "id": "BAC",
+     "name": "Bank of America",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660524000177/ex-101xpatkxfiftharcredita.htm",
+     "label": "Patrick Industries agreement filed with its 8-K (October 2024)"
+    },
+    {
+     "id": "TFC",
+     "name": "Truist Financial",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660524000177/ex-101xpatkxfiftharcredita.htm",
+     "label": "Patrick Industries agreement filed with its 8-K (October 2024)"
+    },
+    {
+     "id": "KEY",
+     "name": "KeyCorp",
+     "type": "up",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660524000177/ex-101xpatkxfiftharcredita.htm",
+     "label": "Patrick Industries agreement filed with its 8-K (October 2024)"
+    },
+    {
+     "id": "LCII",
+     "name": "LCI Industries",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000059/marvel-8xkex21mergeragreem.htm",
+     "label": "Patrick Industries agreement filed with its 8-K (June 2026)"
+    },
+    {
+     "id": "RECPRO",
+     "name": "RecPro",
+     "type": "tie",
+     "source": "https://www.sec.gov/Archives/edgar/data/76605/000007660526000013/patk-20251231.htm",
+     "label": "Patrick Industries 10-K (FY2025)"
+    }
+   ]
   },
   "PAYC": {
    "companies": 9,

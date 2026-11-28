@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "LGIH",
+    "name": "LGIホームズ",
+    "cik": 1580670,
+    "name_en": "LGI Homes"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "合弁持分の買い取り",
+      "en": "Joint venture buyout"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の幹事行",
+          "text_en": "Administrative agent of its revolving credit facility",
+          "source": {
+            "label": "LGIホームズ 10-K(2025年度)",
+            "label_en": "LGI Homes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580670/000158067026000019/lgih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "we entered into a Letter Agreement with several financial institutions, and Wells Fargo Bank, National Association, as administrative agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVERGREENRES",
+      "ticker": "EVERGREENRES",
+      "name": "エバーグリーン・レジデンシャル・キャピタル",
+      "name_en": "Evergreen Residential Capital",
+      "sub": "住宅融資",
+      "sub_en": "Residential lending",
+      "sub_short": "融資",
+      "sub_short_en": "Lender",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "賃貸住宅子会社への融資の貸し手",
+          "text_en": "Lender to its single-family rental unit",
+          "source": {
+            "label": "LGIホームズ 10-K(2025年度)",
+            "label_en": "LGI Homes 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580670/000158067026000019/lgih-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "entered into a Loan Agreement (the “LGI Living Loan Agreement”) with Evergreen Residential Capital, LLC, as lender."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DB",
+      "ticker": "DB",
+      "name": "ドイツ銀行",
+      "name_en": "Deutsche Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent for its at-the-market stock offering",
+          "source": {
+            "label": "LGIホームズ 8-K付属の契約(2016年9月)",
+            "label_en": "LGI Homes agreement filed with its 8-K (September 2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580670/000158067016000227/ex11equitydistributionagre.htm",
+            "level": "official",
+            "date": "2016-09-08",
+            "quote": "Deutsche Bank Securities Inc. 60 Wall Street, 4th Floor New York, New York 10005 J.P. Morgan Securities LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent for its at-the-market stock offering",
+          "source": {
+            "label": "LGIホームズ 8-K付属の契約(2016年9月)",
+            "label_en": "LGI Homes agreement filed with its 8-K (September 2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580670/000158067016000227/ex11equitydistributionagre.htm",
+            "level": "official",
+            "date": "2016-09-08",
+            "quote": "Deutsche Bank Securities Inc. 60 Wall Street, 4th Floor New York, New York 10005 J.P. Morgan Securities LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTIS",
+      "ticker": "GTIS",
+      "name": "GTISパートナーズ",
+      "name_en": "GTIS Partners",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investor",
+      "sub_short": "不動産",
+      "sub_short_en": "Investor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に合弁事業の持分を買い取った相手",
+          "text_en": "Sold it joint venture interests in 2013",
+          "source": {
+            "label": "LGIホームズ 8-K付属の契約(2013年11月)",
+            "label_en": "LGI Homes agreement filed with its 8-K (November 2013)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580670/000119312513445639/d631162dex21.htm",
+            "level": "official",
+            "date": "2013-11-18",
+            "quote": "PURCHASE AGREEMENT BY AND BETWEEN GTIS LGI I LP AND LGI HOMES, INC."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

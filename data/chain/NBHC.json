@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "NBHC",
+    "name": "ナショナル・バンク・ホールディングス",
+    "cik": 1475841,
+    "name_en": "National Bank Holdings"
+  },
+  "rows": [
+    {
+      "ja": "証券の引受",
+      "en": "Underwriters"
+    },
+    {
+      "ja": "買収した銀行",
+      "en": "Acquired banks"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PIPR",
+      "ticker": "PIPR",
+      "name": "パイパー・サンドラー",
+      "name_en": "Piper Sandler",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年劣後債の引受会社",
+          "text_en": "Underwriter of its 2026 subordinated notes",
+          "source": {
+            "label": "ナショナル・バンク 8-K付属の契約(2026年2月)",
+            "label_en": "National Bank Holdings agreement filed with its 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000110465926013385/tm264856d8_ex1-1.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "confirms its agreement (the “Agreement”) with Piper Sandler & Co. (the “Underwriter”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2012年の株式公開時の引受幹事",
+          "text_en": "Lead underwriter of its 2012 share offering",
+          "source": {
+            "label": "ナショナル・バンク S-1付属の契約(2012年9月)",
+            "label_en": "National Bank Holdings agreement filed with its S-1 (September 2012)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000119312512393166/d253929dex11.htm",
+            "level": "official",
+            "date": "2012-09-17",
+            "quote": "Goldman, Sachs & Co. Keefe, Bruyette & Woods, Inc. as representatives (the “Representatives”) of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2012年の株式公開時の引受幹事",
+          "text_en": "Lead underwriter of its 2012 share offering",
+          "source": {
+            "label": "ナショナル・バンク S-1付属の契約(2012年9月)",
+            "label_en": "National Bank Holdings agreement filed with its S-1 (September 2012)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000119312512393166/d253929dex11.htm",
+            "level": "official",
+            "date": "2012-09-17",
+            "quote": "Goldman, Sachs & Co. Keefe, Bruyette & Woods, Inc. as representatives (the “Representatives”) of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VISTABANCSHARES",
+      "ticker": "VISTABANCSHARES",
+      "name": "ビスタ・バンクシェアーズ",
+      "name_en": "Vista Bancshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収したテキサスの銀行持株会社",
+          "text_en": "Texas bank holding company it acquired",
+          "source": {
+            "label": "ナショナル・バンク 10-K(2025年度)",
+            "label_en": "National Bank Holdings 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000110465926019119/nbhc-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The acquisition The acquisition of Vista Bancshares, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOJH",
+      "ticker": "BOJH",
+      "name": "バンクシェアーズ・オブ・ジャクソンホール",
+      "name_en": "Bancshares of Jackson Hole",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年10月に買収(バンク・オブ・ジャクソンホール)",
+          "text_en": "Acquired in October 2022 (Bank of Jackson Hole)",
+          "source": {
+            "label": "ナショナル・バンク 10-K(2022年度)",
+            "label_en": "National Bank Holdings 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000155837023002370/nbhc-20221231x10k.htm",
+            "level": "official",
+            "date": "2023-02-28",
+            "quote": "On October 1, 2022, the Company completed its acquisition of Bancshares of Jackson Hole, the bank holding company of Wyoming-based Bank of Jackson Hole (“BOJH”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COMMUNITYBANCORP",
+      "ticker": "COMMUNITYBANCORP",
+      "name": "コミュニティ・バンコーポレーション",
+      "name_en": "Community Bancorporation (Rock Canyon Bank)",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年9月に買収(ロック・キャニオン銀行)",
+          "text_en": "Acquired in September 2022 (Rock Canyon Bank)",
+          "source": {
+            "label": "ナショナル・バンク 10-K(2022年度)",
+            "label_en": "National Bank Holdings 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1475841/000155837023002370/nbhc-20221231x10k.htm",
+            "level": "official",
+            "date": "2023-02-28",
+            "quote": "On September 1, 2022, the Company completed its acquisition of Community Bancorporation, the bank holding company of Utah-based Rock Canyon Bank (“RCB”)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

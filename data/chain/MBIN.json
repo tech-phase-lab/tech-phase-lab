@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "MBIN",
+    "name": "マーチャンツ・バンコープ",
+    "cik": 1629019,
+    "name_en": "Merchants Bancorp"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PIPR",
+      "ticker": "PIPR",
+      "name": "パイパー・サンドラー",
+      "name_en": "Piper Sandler",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2022年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2022 preferred stock offering",
+          "source": {
+            "label": "マーチャンツ・バンコープ 8-K付属の契約(2022年9月)",
+            "label_en": "Merchants Bancorp agreement filed with its 8-K (September 2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+            "level": "official",
+            "date": "2022-09-23",
+            "quote": "PIPER SANDLER & CO. 1251 Avenue of the Americas, 6th Floor New York, New York 10020 Morgan Stanley & Co. LLC 1585 Broadway New York, New York 10036 UBS Securities LLC 1285 Avenue of the Americas New York, New York 10019 as Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "name_en": "Morgan Stanley",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2022年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2022 preferred stock offering",
+          "source": {
+            "label": "マーチャンツ・バンコープ 8-K付属の契約(2022年9月)",
+            "label_en": "Merchants Bancorp agreement filed with its 8-K (September 2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+            "level": "official",
+            "date": "2022-09-23",
+            "quote": "PIPER SANDLER & CO. 1251 Avenue of the Americas, 6th Floor New York, New York 10020 Morgan Stanley & Co. LLC 1585 Broadway New York, New York 10036 UBS Securities LLC 1285 Avenue of the Americas New York, New York 10019 as Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBS",
+      "ticker": "UBS",
+      "name": "UBS",
+      "name_en": "UBS",
+      "sub": "銀行・資産運用",
+      "sub_en": "Bank & wealth management",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2022年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2022 preferred stock offering",
+          "source": {
+            "label": "マーチャンツ・バンコープ 8-K付属の契約(2022年9月)",
+            "label_en": "Merchants Bancorp agreement filed with its 8-K (September 2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000110465922102683/tm2225754d1_ex1-1.htm",
+            "level": "official",
+            "date": "2022-09-23",
+            "quote": "PIPER SANDLER & CO. 1251 Avenue of the Americas, 6th Floor New York, New York 10020 Morgan Stanley & Co. LLC 1585 Broadway New York, New York 10036 UBS Securities LLC 1285 Avenue of the Americas New York, New York 10019 as Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HBAN",
+      "ticker": "HBAN",
+      "name": "ハンチントン・バンクシェアーズ",
+      "name_en": "Huntington Bancshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "持株会社への融資の貸し手",
+          "text_en": "Lender to the holding company",
+          "source": {
+            "label": "マーチャンツ・バンコープ 10-Q付属の契約(2019年8月)",
+            "label_en": "Merchants Bancorp agreement filed with its 10-Q (August 2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000155837019007898/mbin-20190630ex101h33835.htm",
+            "level": "official",
+            "date": "2019-08-09",
+            "quote": "by and among The Huntington National Bank , a national banking association (“Lender”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PROVIDENCEBANK",
+      "ticker": "PROVIDENCEBANK",
+      "name": "プロビデンス銀行",
+      "name_en": "Providence Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同融資への参加銀行",
+          "text_en": "Participant in that loan",
+          "source": {
+            "label": "マーチャンツ・バンコープ 10-Q付属の契約(2019年8月)",
+            "label_en": "Merchants Bancorp agreement filed with its 10-Q (August 2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000155837019007898/mbin-20190630ex101h33835.htm",
+            "level": "official",
+            "date": "2019-08-09",
+            "quote": "and Providence Bank , a Missouri state banking corporation (“Participat"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLUESTEM",
+      "ticker": "BLUESTEM",
+      "name": "ブルーステム・デベロップメント",
+      "name_en": "Bluestem Development Corporation",
+      "sub": "銀行持株会社",
+      "sub_en": "Bank holding company",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に合併契約を結び買収",
+          "text_en": "Acquired under a merger agreement (2017 filing)",
+          "source": {
+            "label": "マーチャンツ・バンコープ S-1付属の契約(2017年10月)",
+            "label_en": "Merchants Bancorp agreement filed with its S-1 (October 2017)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1629019/000104746917006373/a2233443zex-2_2.htm",
+            "level": "official",
+            "date": "2017-10-16",
+            "quote": "by and between MERCHANTS BANCORP, an Indiana corporation (“Merchants”), MB ACQUISITION CORP. (“Acquisition Corp”), an Indiana corporation, and BLUESTEM DEVELOPMENT CORPORATION, an Illinois corporation (“BDC”)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
