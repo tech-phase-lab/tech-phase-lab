@@ -365,8 +365,8 @@
      {
       "key": "good",
       "text": {
-       "ja": "新しいデータセンターの稼働が進み、GPUを貸し出す能力が増えています。会社によると、第3四半期の新しい契約は、前の四半期よりGPU1時間あたりの価格が平均で2割以上高くなりました。",
-       "en": "New data-center capacity is coming online. The company says Q3 deals were priced on average more than 20% higher per GPU-hour than Q2 deals."
+       "ja": "新しいデータセンターの稼働が進み、GPUを貸し出す能力が増えています。会社によると、第3四半期の価格はGPU1時間あたりで前の四半期より平均2割以上上がりました。",
+       "en": "New data-center capacity is coming online. The company says prices in Q3 rose on average more than 20% per GPU-hour versus Q2."
       }
      },
      {

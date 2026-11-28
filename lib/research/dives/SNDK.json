@@ -196,6 +196,11 @@
    "field": "tiles[2].note",
    "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
    "quote": "Datacenter $4,802 $2,977 up 61% $269 *"
+  },
+  {
+   "field": "summary.cards.caution.sections[0]",
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "quote": "pricing trends and fluctuations in average selling prices"
   }
  ],
  "tiles": [
@@ -290,8 +295,8 @@
     "en": "Revenue was $11.03B, up 23% from the previous quarter and about 4.8 times a year earlier. Datacenter led, up 61% from the previous quarter."
    },
    {
-    "ja": "調整後の粗利益率は85.1%と、前年同期の29.9%から大きく上がりました。メモリーの価格が高い局面の数字で、次の四半期の見通しもほぼ同じ水準(84.5〜85.5%)です。",
-    "en": "Non-GAAP gross margin was 85.1%, up from 29.9% a year earlier. These are numbers from a period of high memory prices, and next quarter is guided at about the same level (84.5–85.5%)."
+    "ja": "調整後の粗利益率は85.1%と、前年同期の29.9%から大きく上がりました。次の四半期の見通しもほぼ同じ水準(84.5〜85.5%)です。",
+    "en": "Non-GAAP gross margin was 85.1%, up from 29.9% a year earlier, and next quarter is guided at about the same level (84.5–85.5%)."
    },
    {
     "ja": "1株あたりの数字は株式分割(1株→8株、11月19日実施)前の基準です。",
@@ -405,8 +410,8 @@
      {
       "key": "view",
       "text": {
-       "ja": "1年前の売上は23.08億ドル、粗利益率は約30%でした。メモリー価格の上昇で、同じ会社でも利益の水準がまったく変わっています。",
-       "en": "A year ago revenue was $2.31B with a gross margin near 30%. Higher memory prices have completely changed the company's profit level."
+       "ja": "1年前の売上は23.08億ドル、粗利益率は約30%でした。1年で、同じ会社でも利益の水準がまったく変わっています。",
+       "en": "A year ago revenue was $2.31B with a gross margin near 30%. In one year the company's profit level has changed completely."
       }
      }
     ],
@@ -444,8 +449,8 @@
      {
       "key": "watch",
       "text": {
-       "ja": "前年同期の粗利益率は約30%でした。メモリーは需要と供給で価格が大きく動く製品で、今の85%前後は価格が非常に高い状態を反映しています。価格が下がれば、利益率も大きく下がる可能性があります。",
-       "en": "A year ago gross margin was about 30%. Memory prices swing with supply and demand, and today's ~85% reflects very high prices. If prices fall, margins could drop sharply."
+       "ja": "前年同期の粗利益率は約30%でした。会社は平均販売価格の変動をリスクに挙げています。メモリーは需要と供給で価格が大きく動く製品なので、価格が下がれば、今の85%前後の利益率も大きく下がる可能性があります。",
+       "en": "A year ago gross margin was about 30%. The company lists fluctuations in average selling prices among its risks. Memory prices swing with supply and demand, so if prices fall, today's ~85% margin could drop sharply."
       }
      },
      {
