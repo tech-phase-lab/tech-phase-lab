@@ -291,7 +291,7 @@ export default function MarketBoard({ initialSnapshot = null }: { initialSnapsho
           <span className={styles.colName}>{item.short}</span><span className={styles.colSub}>{ja ? item.sub.ja : item.sub.en}</span>
           <span className={styles.colPrice}>{q ? q.price.toFixed(1) : "—"}</span>
           <span className={`${styles.chip} ${styles[tn]}`}>{q?.percentChange == null ? "—" : `${tn === "up" ? "▲" : tn === "down" ? "▼" : "–"} ${signedPercent(q.percentChange)}`}</span>
-          {!closedDay && itemExt && itemExt.percentChange !== null && <ExtLine id={item.id} ext={itemExt} label={t("時間外 ", "Ext. ")} />}
+          {/* Owner, Nov 28: a 時間外 line that has not moved (±0.00%) is left out. */}{!closedDay && itemExt && itemExt.percentChange !== null && Math.abs(itemExt.percentChange) >= 0.005 && <ExtLine id={item.id} ext={itemExt} label={t("時間外 ", "Ext. ")} />}
         </button>;
       })}</div>
     </section>
