@@ -1,0 +1,212 @@
+{
+  "root": {
+    "ticker": "AGX",
+    "name": "アーガン",
+    "cik": 100591,
+    "name_en": "Argan"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "発電所の発注元",
+      "en": "Power plant customers"
+    },
+    {
+      "ja": "買収した会社",
+      "en": "Acquired companies"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の貸し手",
+          "text_en": "Lender under its credit agreement",
+          "source": {
+            "label": "アーガン 8-K付属の契約(2017年5月)",
+            "label_en": "Argan agreement filed with its 8-K (May 2017)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000110465917033220/a17-13161_1ex10d1.htm",
+            "level": "official",
+            "date": "2017-05-17",
+            "quote": "BANK OF AMERICA, N.A., as the Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GUERNSEYPOWER",
+      "ticker": "GUERNSEYPOWER",
+      "name": "ガーンジー・パワー・ステーション",
+      "name_en": "Guernsey Power Station",
+      "sub": "発電所事業者",
+      "sub_en": "Power plant owner",
+      "sub_short": "発電所",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客(売上の38%、2023年1月期)",
+          "text_en": "Largest customer (38% of revenue, FY ended Jan 2023)",
+          "source": {
+            "label": "アーガン 10-K(2023年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000155837023006056/agx-20230131x10k.htm",
+            "level": "official",
+            "date": "2023-04-17",
+            "quote": "our most significant customer was Guernsey Power Station LLC, the owner of the Guernsey Power Station project, which accounted for approximately 38%, 57% and 67% of our consolidated revenues for the corresponding years."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESB",
+      "ticker": "ESB",
+      "name": "アイルランド電力供給公社(ESB)",
+      "name_en": "Electricity Supply Board (ESB)",
+      "sub": "電力会社(アイルランド)",
+      "sub_en": "Utility (Ireland)",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "アイルランドで発電所3基の建設を受注",
+          "text_en": "Hired it to build three peaker plants in Ireland",
+          "source": {
+            "label": "アーガン 10-K(2023年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000155837023006056/agx-20230131x10k.htm",
+            "level": "official",
+            "date": "2023-04-17",
+            "quote": "In May 2022, APC entered into engineering and construction services contracts with Ireland’s Electricity Supply Board (“ESB”) to construct three 65 MW aero-derivative gas turbine flexible generation power plants"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EPUKI",
+      "ticker": "EPUKI",
+      "name": "EPUKI",
+      "name_en": "EPUKI",
+      "sub": "発電事業(英国)",
+      "sub_en": "Power generation (UK)",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "北アイルランドのガス火力発電所の建設を発注",
+          "text_en": "Hired it to build a gas-fired plant in Northern Ireland",
+          "source": {
+            "label": "アーガン 10-K(2023年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000155837023006056/agx-20230131x10k.htm",
+            "level": "official",
+            "date": "2023-04-17",
+            "quote": "In October 2021, APC entered into an engineering and construction services contract with EPUKI London, U.K., to construct a 2 x 330 MW natural gas-fired power plant in Carrickfergus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROBERTSCO",
+      "ticker": "ROBERTSCO",
+      "name": "ロバーツ・カンパニー",
+      "name_en": "The Roberts Company",
+      "sub": "産業用鉄骨加工",
+      "sub_en": "Industrial fabrication",
+      "sub_short": "鉄骨加工",
+      "sub_short_en": "Steel",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年12月に買収した産業用鉄骨加工会社",
+          "text_en": "Industrial steel fabricator acquired in December 2015",
+          "source": {
+            "label": "アーガン 10-K(2017年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2017)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000110465917022713/a17-6908_110k.htm",
+            "level": "official",
+            "date": "2017-04-11",
+            "quote": "The acquisition of The Roberts Company may not be successful, which could result in significant future losses. On December 4, 2015, we acquired TRC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATLANTICPROJECTS",
+      "ticker": "ATLANTICPROJECTS",
+      "name": "アトランティック・プロジェクツ",
+      "name_en": "Atlantic Projects Company",
+      "sub": "発電所建設(アイルランド)",
+      "sub_en": "Power plant contractor (Ireland)",
+      "sub_short": "建設",
+      "sub_short_en": "Builder",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年5月に買収したアイルランドの発電所建設会社",
+          "text_en": "Irish power plant contractor acquired in May 2015",
+          "source": {
+            "label": "アーガン 10-K(2017年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2017)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000110465917022713/a17-6908_110k.htm",
+            "level": "official",
+            "date": "2017-04-11",
+            "quote": "The future operating results of Atlantic Projects Company may not be favorable, which could adversely affect our consolidated revenues, earnings and cash flows. On May 29, 2015, we acquired APC, a company located near Dublin in the Republic of Ireland"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEETELECOM",
+      "ticker": "LEETELECOM",
+      "name": "リー・テレコミュニケーションズ",
+      "name_en": "Lee Telecommunications",
+      "sub": "通信工事",
+      "sub_en": "Telecom installation",
+      "sub_short": "通信工事",
+      "sub_short_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年1月期に事業を買収した通信工事会社",
+          "text_en": "Telecom installer whose business it bought in FY2022",
+          "source": {
+            "label": "アーガン 10-K(2023年1月期)",
+            "label_en": "Argan 10-K (FY ended Jan 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100591/000155837023006056/agx-20230131x10k.htm",
+            "level": "official",
+            "date": "2023-04-17",
+            "quote": "Late in Fiscal 2022, SMC acquired the business of Lee Telecommunications, Inc. (“LTI”) for consideration of $0.6 million in cash"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -296,3 +296,24 @@ test('every company in every map has a short card label that fits one line of th
   assert.doesNotMatch(css, /\.chips > \.chip:not\(\.root\) \{ padding/);
   assert.match(css, /\.chips > \.chip:not\(\.root\) small \{ white-space: nowrap; \}/);
 });
+
+// Rule #806, owner update Nov 28: five quoted companies is the target; a map with exactly four is published too,
+// marked ready_four so it can be upgraded later. Never fewer than four (maps published before the rule stay below_five).
+test('every published map has at least four quoted companies and its build-log status matches its size', () => {
+  const log = JSON.parse(readFileSync(new URL('../scripts/chain/build-log.json', import.meta.url), 'utf8'));
+  const published = new Set(ALL);
+  assert.match(log.about, /exactly four/);
+  for (const [ticker, entry] of Object.entries(log.tickers)) {
+    if (entry.status === 'skipped' || entry.status === 'not_attempted') { assert.ok(!published.has(ticker), `${ticker} is ${entry.status} but has a map`); continue; }
+    if (!published.has(ticker)) continue;
+    const count = chain.chainDataFor(ticker).companies.length;
+    if (entry.status === 'ready') assert.ok(count >= 5, `${ticker} ready with ${count}`);
+    else if (entry.status === 'ready_four') { assert.equal(count, 4, ticker); assert.equal(entry.upgrade_target, 5, ticker); }
+    else assert.equal(entry.status, 'below_five', ticker);
+    if (entry.status !== 'below_five') assert.equal(entry.companies, count, ticker);
+  }
+  const counts = {};
+  for (const entry of Object.values(log.tickers)) counts[entry.status] = (counts[entry.status] ?? 0) + 1;
+  for (const [status, count] of Object.entries(log.counts)) assert.equal(counts[status] ?? 0, count, status);
+  assert.ok(Object.values(log.tickers).some(entry => entry.status === 'ready_four'));
+});

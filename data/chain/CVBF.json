@@ -1,0 +1,152 @@
+{
+  "root": {
+    "ticker": "CVBF",
+    "name": "CVBファイナンシャル",
+    "cik": 354647,
+    "name_en": "CVB Financial"
+  },
+  "rows": [
+    {
+      "ja": "買収・合併",
+      "en": "Acquisitions & mergers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HTBK",
+      "ticker": "HTBK",
+      "name": "ヘリテージ・コマース",
+      "name_en": "Heritage Commerce",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月に合併契約",
+          "text_en": "Merger agreement signed in December 2025",
+          "source": {
+            "label": "CVBファイナンシャル 10-K(2025年度)",
+            "label_en": "CVB Financial 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354647/000119312526083221/cvbf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "On December 17, 2025, the Company entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Heritage Commerce Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUNCRESTBANK",
+      "ticker": "SUNCRESTBANK",
+      "name": "サンクレスト銀行",
+      "name_en": "Suncrest Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年1月に合併で買収",
+          "text_en": "Acquired by merger in January 2022",
+          "source": {
+            "label": "CVBファイナンシャル 10-K(2022年度)",
+            "label_en": "CVB Financial 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354647/000095017023005167/cvbf-20221231.htm",
+            "level": "official",
+            "date": "2023-02-28",
+            "quote": "On January 7, 2022, the Company completed the merger transaction whereby Suncrest Bank (“Suncrest”), headquartered in Visalia, California, merged with and into the Company’s wholly-owned subsidiary"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COMMUNITYBANKPAS",
+      "ticker": "COMMUNITYBANKPAS",
+      "name": "コミュニティ・バンク(パサデナ)",
+      "name_en": "Community Bank (Pasadena)",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年8月に買収",
+          "text_en": "Acquired in August 2018",
+          "source": {
+            "label": "CVBファイナンシャル 10-K(2019年度)",
+            "label_en": "CVB Financial 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354647/000119312520059185/d872938d10k.htm",
+            "level": "official",
+            "date": "2020-03-02",
+            "quote": "On August 10, 2018, we completed the acquisition of Community Bank (“CB”), a California banking corporation headquartered in Pasadena, California."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VALLEYCOMMERCE",
+      "ticker": "VALLEYCOMMERCE",
+      "name": "バレー・コマース・バンコープ",
+      "name_en": "Valley Commerce Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年3月に買収",
+          "text_en": "Acquired in March 2017",
+          "source": {
+            "label": "CVBファイナンシャル 10-K(2019年度)",
+            "label_en": "CVB Financial 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354647/000119312520059185/d872938d10k.htm",
+            "level": "official",
+            "date": "2020-03-02",
+            "quote": "On March 10, 2017, we completed the acquisition of Valley Commerce Bancorp (“VCBP”), the holding company for Valley Business Bank (“VBB”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SANJOAQUINBANK",
+      "ticker": "SANJOAQUINBANK",
+      "name": "サンホアキン銀行",
+      "name_en": "San Joaquin Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2009年10月に買収",
+          "text_en": "Acquired in October 2009",
+          "source": {
+            "label": "CVBファイナンシャル 10-K(2019年度)",
+            "label_en": "CVB Financial 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/354647/000119312520059185/d872938d10k.htm",
+            "level": "official",
+            "date": "2020-03-02",
+            "quote": "the acquisition of San Joaquin Bank (“SJB”) on October 16, 2009"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
