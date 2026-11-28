@@ -69,7 +69,7 @@ class MicronOutlook(unittest.TestCase):
     def test_both_releases_read_their_business_outlook(self):
         q3 = flash.parse_micron(release('prior-releases', 'MU'))  # Jun 24, 2026 ('highlights' in lower case)
         self.assertEqual(q3['period'], 'Q3 FY2026')
-        self.assertEqual(facts(q3), [('revenue', '$41.456B', '$9.301B'), ('eps', '$24.67', '$1.68'), ('adjusted-eps', '$25.11', None),
+        self.assertEqual(facts(q3), [('revenue', '$41.456B', '$9.301B'), ('eps', '$24.67', '$1.68'), ('adjusted-eps', '$25.11', '$1.91'),
                                      ('net-income', '$28.243B', '$1.885B'), ('operating-income', '$33.318B', '$2.169B'),
                                      ('guidance-revenue', '$50.0B ± $1.0B', None), ('guidance-adjusted-eps', '$31.00 ± $1.00', None)])
         q4 = flash.parse_micron(release('latest-releases', 'MU'))  # Sep 30, 2026

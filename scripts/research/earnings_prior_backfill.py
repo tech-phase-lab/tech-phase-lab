@@ -28,7 +28,7 @@ import issuer_result_flash as flash
 import monitor
 import release_extras
 
-VERSION = 'prior-release-v1'
+VERSION = 'prior-release-v2'  # v2 (Nov 28): Jul/Aug layouts read, next-quarter outlooks, no outlook range taken as an EPS
 INTERVAL = timedelta(hours=6)
 FIRST_DELAY_SECONDS = 600
 LOOKBACK = timedelta(days=200)   # two quarters: the previous release of the latest one, also while the next is not yet out
@@ -82,9 +82,11 @@ def live_holds(db, ticker, period, at):
 def store(db, ticker, accession, payload, now):
     """Insert one release; within 36 hours of a stored one of the same company, the row with more figures stays."""
     at = flash.instant(payload['publishedAt'])
-    for row in db.execute('SELECT key,payload,observed_at FROM earnings_prior_releases WHERE ticker=?', (ticker,)).fetchall():
+    for row in db.execute('SELECT key,payload,observed_at,accession FROM earnings_prior_releases WHERE ticker=?', (ticker,)).fetchall():
         other = flash.instant(row['observed_at'])
-        if other and abs(other - at) <= SAME_EVENT:
+        if row['accession'] == accession:  # the same filing read again by a newer parser version: its new reading replaces it
+            db.execute('DELETE FROM earnings_prior_releases WHERE key=?', (row['key'],))
+        elif other and abs(other - at) <= SAME_EVENT:
             if len(json.loads(row['payload'])['facts']) >= len(payload['facts']):
                 return False
             db.execute('DELETE FROM earnings_prior_releases WHERE key=?', (row['key'],))
