@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from "./use-market";
+import { useLiveQuote } from "./use-live-quote";
+import FlashValue from "./flash-value";
 import { compact, type MarketFacts, nextEarningsText, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { useResearchLanguage } from "../use-research-language";
 import StarButton from "./star-button";
@@ -66,7 +68,18 @@ const eps = (value: number | null | undefined) => value == null ? "—" : value 
 
 /** The price card. `gauge` (today's range + 52-week range, eye button) is for the watched-22 pages; `dial` (position in the 52-week range, no eye
  * button) is for the stock search. Pressing the card opens the full detail page. Sizes follow the design's E sheet. */
-export default function QuoteCard({ ticker, variant, from, name, star = false }: { ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean }) {
+type CardProps = { ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean };
+export default function QuoteCard(props: CardProps) {
+  return props.variant === "gauge" ? <LiveQuoteCard {...props} /> : <PolledQuoteCard {...props} />;
+}
+/** The watched-22 pages (owner, Nov 27: their numbers move in real time): the stock page's live quote — every 15 seconds while U.S. stocks
+ * trade, paused while the tab is hidden — and the price and day change flash mint up / red down (text colour only). */
+function LiveQuoteCard({ ticker, variant, from, name, star = false }: CardProps) {
+  const { quote, failed, loaded } = useLiveQuote(ticker);
+  const facts = useFacts(ticker).data;
+  return <QuoteCardView ticker={ticker} variant={variant} from={from} name={name} star={star} quote={quote ?? undefined} facts={facts} loaded={loaded} failed={failed} live />;
+}
+function PolledQuoteCard({ ticker, variant, from, name, star = false }: CardProps) {
   const { data, failed, loaded } = useQuotes([ticker]);
   const facts = useFacts(ticker).data;
   return <QuoteCardView ticker={ticker} variant={variant} from={from} name={name} star={star} quote={data?.[ticker]} facts={facts} loaded={loaded} failed={failed} />;
@@ -74,9 +87,9 @@ export default function QuoteCard({ ticker, variant, from, name, star = false }:
 
 /** The card itself, from a quote already in hand. The PRO feature tour's 監視22銘柄 sample passes saved made-up figures and `link={false}`
  * (a sample never leaves for the detail page); the live card above passes what it fetched. */
-export function QuoteCardView({ ticker, variant, from, name, star = false, quote, facts, loaded = true, failed = false, link = true }: {
+export function QuoteCardView({ ticker, variant, from, name, star = false, quote, facts, loaded = true, failed = false, link = true, live = false }: {
   ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean;
-  quote: CardQuote | undefined; facts: MarketFacts | null | undefined; loaded?: boolean; failed?: boolean; link?: boolean;
+  quote: CardQuote | undefined; facts: MarketFacts | null | undefined; loaded?: boolean; failed?: boolean; link?: boolean; live?: boolean;
 }) {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
@@ -105,12 +118,13 @@ export function QuoteCardView({ ticker, variant, from, name, star = false, quote
     <div className={styles.who}><h3 className={styles.name}>{title}</h3><span className={styles.state}><Status quote={quote} ja={ja} /></span></div>{eye}
   </div>;
   const priceText = plain(quote.price);
+  const moves = <><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span>
+    <span className={`${styles.amount} ${styles[tone]}`}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></>;
   return <><section className={`${styles.card} ${frame}`} aria-label={`${title} ${ticker}`}>{open}{header}
     {variant === "gauge" ? <>
       <div className={styles.priceRow}>
-        <span className={styles.priceLine}><span className={styles.price}>{priceText}</span><span className={styles.usd}>{quote.currency}</span></span>
-        <span className={styles.moves}><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span>
-          <span className={`${styles.amount} ${styles[tone]}`}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></span>
+        <span className={styles.priceLine}>{live ? <FlashValue scope={ticker} value={quote.price} className={styles.price} quick>{priceText}</FlashValue> : <span className={styles.price}>{priceText}</span>}<span className={styles.usd}>{quote.currency}</span></span>
+        {live ? <FlashValue scope={ticker} value={quote.change} className={styles.moves} quick>{moves}</FlashValue> : <span className={styles.moves}>{moves}</span>}
       </div>
       <Extended quote={quote} ja={ja} />
       <div className={styles.lower}>

@@ -40,3 +40,36 @@ export function useLiveQuote(ticker: string, initial: First = null) {
   const own = state.ticker === ticker ? state : begin(ticker, null);
   return { quote: own.quote, at: own.at, loaded: own.loaded, failed: own.failed };
 }
+
+type ManyState = { key: string; quotes: Record<string, CardQuote>; at: number | null; loaded: boolean; failed: boolean };
+/** Several stocks' quotes in ONE request (the 監視22銘柄 list, owner Nov 27: its numbers move in real time), on the same cadence as
+ * useLiveQuote: every 15 seconds while U.S. stocks trade, paused while the tab is hidden, once outside those hours. Only our quotes route
+ * is read (the shared copy), never the provider. A failed read keeps the prices on the screen. `enabled` false (a fixed sample): no read. */
+export function useLiveQuotes(tickers: readonly string[], enabled = true) {
+  const key = tickers.join(",");
+  const [state, setState] = useState<ManyState>({ key, quotes: {}, at: null, loaded: false, failed: false });
+  const now = useMinute();
+  const ready = enabled && key !== "" && now !== null, trading = now !== null && stocksTrading(now);
+  useEffect(() => {
+    if (!ready) return;
+    let stopped = false;
+    const controller = new AbortController();
+    const read = async () => {
+      let quotes: Record<string, CardQuote> | null = null;
+      try {
+        const response = await fetch(liveQuoteUrl(key.split(",")), { cache: "no-store", signal: controller.signal });
+        const body = await response.json() as { ok?: boolean; quotes?: Record<string, CardQuote> };
+        quotes = response.ok && body.ok === true && body.quotes ? body.quotes : null;
+      } catch { /* the prices on the screen stay */ }
+      if (stopped) return;
+      const at = Date.now();
+      setState(old => {
+        const kept = old.key === key ? old.quotes : {};
+        return quotes ? { key, quotes: { ...kept, ...quotes }, at, loaded: true, failed: false } : { key, quotes: kept, at: old.key === key ? old.at : null, loaded: true, failed: true };
+      });
+    };
+    const stop = startLiveQuote(trading, read, startPolling);
+    return () => { stopped = true; controller.abort(); stop(); };
+  }, [key, ready, trading]);
+  return state.key === key ? state : { key, quotes: {}, at: null, loaded: false, failed: false };
+}

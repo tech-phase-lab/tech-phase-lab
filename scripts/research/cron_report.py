@@ -21,7 +21,7 @@ from urllib.request import Request, urlopen
 
 TOKEN_ENV = "RESEARCH_CRON_REPORT_TOKEN"
 URL_ENV = "RESEARCH_CRON_REPORT_URL"
-JOBS = frozenset({"earnings-selfcheck", "production-watch"})
+JOBS = frozenset({"earnings-selfcheck", "production-watch", "pro-compare"})  # pro-compare: recorded by the monitor itself
 CODE = re.compile(r"[A-Za-z0-9_-]{1,32}")
 MAX_CODES = 8
 INCIDENT_PREFIX = "cron:"
@@ -69,7 +69,7 @@ def record(db, payload, monitor, seen_at=None):
     return monitor.record_operational_incident(db, key, CATEGORY, job, "critical", error_code(job, codes), seen_at=seen_at)
 
 
-JOB_NAMES = {"earnings-selfcheck": "決算セルフチェック", "production-watch": "本番点検"}
+JOB_NAMES = {"earnings-selfcheck": "決算セルフチェック", "production-watch": "本番点検", "pro-compare": "PRO銘柄比較の点検"}
 
 
 def push_message(claim):

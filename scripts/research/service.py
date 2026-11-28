@@ -81,6 +81,7 @@ import mu_earnings_measurement
 import official_channel_probe
 import comparison_warm
 import radar_refresh
+import production_watch
 import web_push
 import voice_inbox
 import event_results
@@ -921,6 +922,7 @@ class AutomaticMonitor:
         self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
         self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.radar_refresh_thread = threading.Thread(target=self.run_radar_refresh, name="radar-refresh-clock", daemon=True)
+        self.pro_compare_thread = threading.Thread(target=self.run_pro_compare, name="pro-compare-check", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
         self.ownership_thread = threading.Thread(target=self.run_ownership, name="ownership-data", daemon=True)
         self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
@@ -1329,6 +1331,32 @@ class AutomaticMonitor:
                 self.state["comparisonWarm"] = {**result, "checkedAt": utc_now()}
             self.stop_event.wait(comparison_warm.seconds_to_next_minute(time.time()))
 
+    def run_pro_compare(self, check=None):
+        """HQ's daily check of the PRO-only Stock Comparison on production (production_watch.monitor_pro_compare): five minutes after
+        start, then once a day (three hours after a failure). Off unless the comparison warm settings are set. A failure opens the
+        operational incident cron:pro-compare, which the existing incident delivery alerts to the owner; a pass resolves it."""
+        check = check or production_watch.monitor_pro_compare
+        if not production_watch.monitor_settings():
+            print("pro-compare off missing=COMPARISON_WARM_URL(https),COMPARISON_WARM_SECRET(32+)", flush=True)
+            return
+        if self.stop_event.wait(production_watch.PRO_COMPARE_START_DELAY):
+            return
+        while not self.stop_event.is_set():
+            wait = production_watch.PRO_COMPARE_INTERVAL
+            try:
+                outcome = check()
+                if outcome:
+                    ok, codes = outcome
+                    with self.db_lock, monitor.connect(self.db_path) as db:
+                        transition = cron_report.record(db, {"job": production_watch.MONITOR_JOB, "ok": ok, "codes": codes}, monitor)
+                    print(json.dumps({"event": "pro-compare", "ok": ok, "transition": transition}, separators=(",", ":")), flush=True)
+                    if not ok:
+                        wait = production_watch.PRO_COMPARE_RETRY
+            except Exception as exc:
+                print(json.dumps({"event": "pro-compare-failed", "error": type(exc).__name__}, separators=(",", ":")), flush=True)
+                wait = production_watch.PRO_COMPARE_RETRY
+            self.stop_event.wait(wait)
+
     def run_radar_refresh(self, now=lambda: datetime.now(timezone.utc)):
         # The Financial Radar: every company calculated again at 08:00 and 22:30 JST (off unless the comparison warm settings are set).
         if not radar_refresh.config():
@@ -1612,6 +1640,7 @@ class AutomaticMonitor:
         self.channel_probe_thread.start()
         self.comparison_warm_thread.start()
         self.radar_refresh_thread.start()
+        self.pro_compare_thread.start()
         self.weekly_thread.start()
         self.ownership_thread.start()
         self.event_results_thread.start()
@@ -1654,6 +1683,7 @@ class AutomaticMonitor:
         self.channel_probe_thread.join(timeout=20)
         self.comparison_warm_thread.join(timeout=60)
         self.radar_refresh_thread.join(timeout=90)
+        self.pro_compare_thread.join(timeout=5)
         self.watch_earnings_thread.join(timeout=10)
         self.earnings_patrol_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
