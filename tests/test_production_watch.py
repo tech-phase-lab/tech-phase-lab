@@ -48,7 +48,8 @@ class ProductionWatchTests(unittest.TestCase):
         self.assertTrue(summary["ok"], summary)
         self.assertEqual(summary["failed"], [])
         self.assertEqual(set(summary["checks"]), {"homeBand", "news", "live", "freshness", "earningsResults",
-                                                  "compareSearch", "monitorHealth"})
+                                                  "compareSearch", "monitorHealth", "proCompare"})
+        self.assertEqual(summary["checks"]["proCompare"], {"ok": True, "skipped": "no-token"})
 
     def test_output_holds_only_flags_counts_and_codes(self):
         out = io.StringIO()
@@ -104,6 +105,99 @@ class ProductionWatchTests(unittest.TestCase):
                 mock.patch.object(watch, "request", side_effect=AssertionError("must not run")), redirect_stdout(out):
             self.assertEqual(watch.main(), 0)
         self.assertTrue(out.getvalue().startswith("DISABLED"))
+
+
+TOKEN = "t" * 40
+
+
+def pro_company(ticker, missing=(), invalid=(), status="ready"):
+    present = [f for f in watch.PRO_FACTORS if f not in missing]
+    return {"ticker": ticker, "status": status, "factors": {"present": present, "missing": list(missing), "kinds": {}},
+            "strengths": [{"id": "revenue-growth", "ja": SECRET, "en": SECRET}], "weaknesses": [], "invalid": list(invalid)}
+
+
+def pro_payload(**changes):
+    pairs = [{"tickers": list(t), "ok": True, "comparable": True, "companies": [pro_company(x) for x in t]}
+             for t in watch.PRO_COMPARE_PAIRS]
+    for index, pair in changes.items():
+        pairs[int(index[1:])] = pair
+    return {"ok": True, "generatedAt": NOW.isoformat(), "pairs": pairs}
+
+
+def authed_fetcher(payloads, pro, seen):
+    public = fetcher(payloads)
+
+    def fetch(url, timeout, token=None):
+        seen.append((url, token))
+        if url.endswith("/api/research/internal/pro-check"):
+            return (200, pro, 4000, None) if token == TOKEN else (404, None, 50, "http-error")
+        assert token is None, "the secret is sent to the pro check only"
+        return public(url, timeout)
+    return fetch
+
+
+class ProCompareTests(unittest.TestCase):
+    def test_all_pairs_complete_pass_and_the_token_goes_only_to_the_site_check(self):
+        seen = []
+        summary = watch.run(fetch=authed_fetcher(healthy(), pro_payload(), seen), now=NOW, token=TOKEN)
+        self.assertTrue(summary["ok"], summary)
+        result = summary["checks"]["proCompare"]
+        self.assertEqual((result["pairs"], result["companies"], result["missingFactors"], result["invalidNumbers"]), (6, 12, 0, 0))
+        self.assertEqual([url for url, token in seen if token], ["https://techphase.app/api/research/internal/pro-check"])
+        self.assertEqual(summary["details"]["proCompare"]["NVDA"], {"missing": [], "invalid": [], "strengths": 1, "weaknesses": 0})
+
+    def test_missing_factor_invalid_number_and_failed_pair_fail(self):
+        broken = pro_payload(p1={"tickers": ["NVDA", "AMD"], "ok": True, "comparable": False,
+                                 "companies": [pro_company("NVDA", missing=("valuation",)),
+                                               pro_company("AMD", invalid=("absurd:quarterOperatingMargin",))]},
+                             p2={"tickers": ["JPM", "GS"], "ok": False, "error": "unavailable"})
+        summary = watch.run(fetch=authed_fetcher(healthy(), broken, []), now=NOW, token=TOKEN)
+        self.assertEqual(summary["failed"], ["proCompare"])
+        result = summary["checks"]["proCompare"]
+        self.assertFalse(result["valid"])
+        self.assertEqual((result["pairs"], result["missingFactors"], result["invalidNumbers"]), (5, 1, 1))
+        self.assertIn("NVDA:missing=valuation", result["problems"])
+        self.assertIn("AMD:invalid=absurd:quarterOperatingMargin", result["problems"])
+        self.assertIn("JPM/GS=unavailable", result["problems"])
+
+    def test_validator_rejects_wrong_shape_absent_companies_and_a_non_ready_company(self):
+        check = watch.check_pro_compare
+        self.assertFalse(check({"ok": True, "pairs": []}, NOW)["valid"])
+        self.assertFalse(check({"ok": False, "pairs": pro_payload()["pairs"]}, NOW)["valid"])
+        absent = pro_payload(p0={"tickers": ["BRK-B", "ORCL"], "ok": True, "companies": [pro_company("BRK-B")]})
+        self.assertIn("ORCL=absent", check(absent, NOW)["problems"])
+        unready = pro_payload(p5={"tickers": ["AAPL", "MSFT"], "ok": True, "companies": [pro_company("AAPL"), pro_company("MSFT", status="unavailable")]})
+        verdict = check(unready, NOW)
+        self.assertFalse(verdict["valid"])
+        self.assertIn("MSFT:invalid=status:unavailable", verdict["problems"])
+        self.assertTrue(check(pro_payload(), NOW)["valid"])
+
+    def test_wrong_token_is_a_failure_and_no_token_or_plain_http_is_skipped(self):
+        summary = watch.run(fetch=authed_fetcher(healthy(), pro_payload(), []), now=NOW, token="x" * 40)
+        self.assertEqual(summary["failed"], ["proCompare"])
+        self.assertEqual(summary["checks"]["proCompare"]["status"], 404)
+        seen = []
+        summary = watch.run(fetch=authed_fetcher(healthy(), pro_payload(), seen), now=NOW, token=TOKEN, site="http://example.test")
+        self.assertEqual(summary["checks"]["proCompare"]["skipped"], "insecure-site")
+        self.assertFalse(any(token for _, token in seen))
+        self.assertTrue(watch.token_allowed("http://localhost:3000"))
+
+    def test_log_lines_hold_no_secret_text_or_token(self):
+        out = io.StringIO()
+        env = {"PRODUCTION_WATCH": "true", "COMPARISON_WARM_SECRET": TOKEN}
+        fetch = authed_fetcher(healthy(datetime.now(timezone.utc)), pro_payload(), [])
+        with mock.patch.dict(os.environ, env, clear=True), mock.patch.object(watch, "request", fetch), redirect_stdout(out):
+            self.assertEqual(watch.main(), 0)
+        text = out.getvalue()
+        self.assertNotIn(TOKEN, text)
+        self.assertNotIn("secret", text)
+        main_line, pro_line = [json.loads(line) for line in text.strip().splitlines()]
+        self.assertEqual(main_line["check"], "production-watch")
+        self.assertNotIn("details", main_line)
+        for value in main_line["checks"]["proCompare"].values():
+            self.assertTrue(value is None or isinstance(value, (bool, int, str)))
+        self.assertEqual(pro_line["check"], "pro-compare")
+        self.assertEqual(set(pro_line["companies"]), {t for pair in watch.PRO_COMPARE_PAIRS for t in pair})
 
 
 # daily_checks.py (report instead of crash, Nov 23) is tested in test_cron_report.py.
