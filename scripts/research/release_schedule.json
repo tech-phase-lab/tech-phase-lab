@@ -782,6 +782,86 @@
       "phase": "release",
       "at": "2026-12-23T13:30:00.000Z",
       "titleJa": "米国PCE物価指数（11月）"
+    },
+    {
+      "id": "adp-2027-01-06",
+      "kind": "economic",
+      "indicator": "adp",
+      "phase": "release",
+      "at": "2027-01-06T13:15:00.000Z",
+      "titleJa": "ADP雇用統計（12月）"
+    },
+    {
+      "id": "jobs-2027-01-08",
+      "kind": "economic",
+      "indicator": "jobs",
+      "phase": "release",
+      "at": "2027-01-08T13:30:00.000Z",
+      "titleJa": "米国雇用統計"
+    },
+    {
+      "id": "cpi-2027-01-13",
+      "kind": "economic",
+      "indicator": "cpi",
+      "phase": "release",
+      "at": "2027-01-13T13:30:00.000Z",
+      "titleJa": "米国CPI（消費者物価指数）"
+    },
+    {
+      "id": "ppi-2027-01-14",
+      "kind": "economic",
+      "indicator": "ppi",
+      "phase": "release",
+      "at": "2027-01-14T13:30:00.000Z",
+      "titleJa": "米国PPI（生産者物価指数）"
+    },
+    {
+      "id": "pce-2026-12",
+      "kind": "economic",
+      "indicator": "pce",
+      "phase": "release",
+      "at": "2027-01-28T13:30:00.000Z",
+      "titleJa": "米国PCE物価指数（12月）"
+    },
+    {
+      "id": "adp-2027-02-03",
+      "kind": "economic",
+      "indicator": "adp",
+      "phase": "release",
+      "at": "2027-02-03T13:15:00.000Z",
+      "titleJa": "ADP雇用統計（1月）"
+    },
+    {
+      "id": "jobs-2027-02-05",
+      "kind": "economic",
+      "indicator": "jobs",
+      "phase": "release",
+      "at": "2027-02-05T13:30:00.000Z",
+      "titleJa": "米国雇用統計"
+    },
+    {
+      "id": "cpi-2027-02-11",
+      "kind": "economic",
+      "indicator": "cpi",
+      "phase": "release",
+      "at": "2027-02-11T13:30:00.000Z",
+      "titleJa": "米国CPI（消費者物価指数）"
+    },
+    {
+      "id": "ppi-2027-02-12",
+      "kind": "economic",
+      "indicator": "ppi",
+      "phase": "release",
+      "at": "2027-02-12T13:30:00.000Z",
+      "titleJa": "米国PPI（生産者物価指数）"
+    },
+    {
+      "id": "pce-2027-01",
+      "kind": "economic",
+      "indicator": "pce",
+      "phase": "release",
+      "at": "2027-02-25T13:30:00.000Z",
+      "titleJa": "米国PCE物価指数（1月）"
     }
   ]
 }

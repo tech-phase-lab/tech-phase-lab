@@ -3,7 +3,7 @@
 import { noBreakUnits } from "@/lib/research/no-break-units";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ResultBrief } from "@/lib/research/market-results";
-import { calendarDateKey, calendarEvents, claimsReleases, dateOnlyEvents } from "@/lib/research/calendar";
+import { calendarDateKey, calendarEvents, claimsReleases, dateOnlyEvents, indicatorReleases } from "@/lib/research/calendar";
 import { parseBackfill, type Backfill } from "@/lib/research/economic-history";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
@@ -30,6 +30,8 @@ const economicSchedule: Scheduled[] = [
   ...dateOnlyEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: `${event.date}T12:00:00-05:00`, dateOnly: true })),
   // weekly jobless claims: 次回 for a weekly indicator too (owner, Nov 28)
   ...claimsReleases,
+  // retail sales, GDP and ISM have no calendar row; their official next dates (lib/research/calendar.ts)
+  ...indicatorReleases,
 ];
 
 /** One copy of each result: the live feed's, then the stored ones of every month read so far; one row per company and quarter. */

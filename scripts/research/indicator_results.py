@@ -136,9 +136,13 @@ def fomc_payload(decision, meeting, url, now):
 
 # ---- GDP ----------------------------------------------------------------------
 
-GDP_LINK = re.compile(r"/news/(20\d{2})/gdp-(advance|second|third)-estimate-(\d)(?:st|nd|rd|th)-quarter(?:-and-year)?-(20\d{2})")
+# Nov 28: BEA's second and third estimates carry more words in their address ("gdp-second-estimate-and-corporate-profits-3rd-quarter-
+# 2026", "gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-2nd", cut short with no year), and the
+# second estimate's page sets "GDP" in bold, so its text reads "(GDP )" (or "( GDP )" when the tag opens inside the bracket).
+# Neither was read, and the Q3 2026 second estimate was missed.
+GDP_LINK = re.compile(r"/news/(20\d{2})/gdp-(advance|second|third)-estimate(?:-[a-z-]+?)?-(\d)(?:st|nd|rd|th)(?:-quarter(?:-and-year)?-(20\d{2}))?(?![\w-])")
 GDP = re.compile(
-    r"Real gross domestic product \(GDP\) (?P<dir>increased|decreased) at an annual rate of (?P<num>\d{1,2}\.\d) percent in the "
+    r"Real gross domestic product \( ?GDP ?\) (?P<dir>increased|decreased) at an annual rate of (?P<num>\d{1,2}\.\d) percent in the "
     r"(?P<quarter>first|second|third|fourth) quarter of (?P<year>20\d{2})[^.]*?according to the (?P<est>advance|second|third) estimate")
 
 
@@ -506,7 +510,9 @@ def _gdp(db, config, now, transport):
         saved = 0
         for link in links:
             match = GDP_LINK.fullmatch(link)
-            year, estimate, quarter = int(match.group(4)), match.group(2), int(match.group(3))
+            estimate, quarter = match.group(2), int(match.group(3))
+            # An address cut short has no year: a fourth quarter's later estimates come out the next year, the others the same year.
+            year = int(match.group(4)) if match.group(4) else int(match.group(1)) - (1 if quarter == 4 else 0)
             if _stored(db, f"gdp-{year}-q{quarter}-{estimate}"):
                 continue
             url = "https://www.bea.gov" + link
