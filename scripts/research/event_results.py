@@ -427,8 +427,10 @@ def active(config, now=None):
 # ---- what the site and the owner see -------------------------------------------
 
 def public_view(db):
-    rows = db.execute("SELECT payload FROM event_results WHERE state='published' ORDER BY published_at DESC LIMIT 20").fetchall()
-    return [json.loads(row["payload"]) for row in rows]
+    # The BLS/BEA results copied for the calendar's history (economic_archive.py) stay out of the news feed: it shows those from the
+    # official headlines, as before.
+    rows = db.execute("SELECT payload FROM event_results WHERE state='published' ORDER BY published_at DESC LIMIT 200").fetchall()
+    return [payload for payload in (json.loads(row["payload"]) for row in rows) if payload.get("archived") != "official"][:20]
 
 
 def owner_view(db):
