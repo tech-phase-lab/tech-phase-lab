@@ -84,7 +84,13 @@ function line(fact: ResultFact, consensus: EpsConsensus | null, consensusKey: st
   if (fact.key.startsWith("guidance-") || fact.key === "capex-guidance") {
     const name = outlookName(fact.ja);
     const perShare = /^\$(-?[\d.]+)(?:-\$(-?[\d.]+))?$/.exec(fact.value);
-    if (fact.key.includes("eps") && perShare) return { mark: "✅", text: `${name} ${perShare[2] ? `${perShare[1]}〜${perShare[2]}` : perShare[1]}ドル` };
+    if (fact.key.includes("eps") && perShare) {
+      const text = `${name} ${perShare[2] ? `${perShare[1]}〜${perShare[2]}` : perShare[1]}ドル`;
+      // against the release's own previous figure for the same year (Dell's 「FY27 Previous」 column), as the results table shows it
+      const revision = guidanceRevision(fact.value, (fact.comparisons as { priorGuidance?: string } | undefined)?.priorGuidance);
+      return revision === "up" || revision === "down" ? { mark: revision === "up" ? "⭕️" : "❌", text: `${text}（${revision === "up" ? "上方修正" : "下方修正"}）` }
+        : { mark: "✅", text: revision === "same" ? `${text}（据え置き）` : text };
+    }
     const now = span(fact.value);
     if (!now) {
       // "$130.0B ± 3%", or another currency: written as the table writes it
@@ -137,7 +143,9 @@ export function buildXPost(brief: Pick<ResultBrief, "ticker" | "period" | "facts
 }
 
 /** Twelve Data /earnings -> the estimate for the report that matches this brief, or null. The provider's `surprise_prc` is ignored (wrong sign for losses). */
-export function pickConsensus(raw: unknown, briefAt: string, issuerEps: number | null): EpsConsensus | null {
+/** `otherEps`: the release's EPS on its other basis (GAAP when `issuerEps` is the adjusted one, and the reverse), when stored. A row whose
+ * reported EPS is at least as close to it is on that other basis: no consensus for this one (NVDA's GAAP $2.70 and adjusted $2.68). */
+export function pickConsensus(raw: unknown, briefAt: string, issuerEps: number | null, otherEps: number | null = null): EpsConsensus | null {
   const rows = (raw as { earnings?: unknown })?.earnings;
   if (!Array.isArray(rows) || issuerEps === null) return null;
   const at = Date.parse(briefAt);
@@ -146,6 +154,7 @@ export function pickConsensus(raw: unknown, briefAt: string, issuerEps: number |
     const day = Date.parse(`${row.date}T12:00:00Z`);
     if (!Number.isFinite(at) || Math.abs(day - at) > 2 * 86_400_000) continue; // a different quarter's row is never used
     if (Math.abs(row.eps_actual - issuerEps) > 0.02) continue; // different EPS basis (GAAP vs adjusted): no comparison
+    if (otherEps !== null && Math.abs(row.eps_actual - otherEps) <= Math.abs(row.eps_actual - issuerEps)) continue; // the other basis's figure
     return { estimate: row.eps_estimate, date: row.date };
   }
   return null;

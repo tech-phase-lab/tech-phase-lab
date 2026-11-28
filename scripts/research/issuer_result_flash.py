@@ -921,12 +921,57 @@ def parse_dell(text, url=None):
             facts.append(('eps', per_share(Decimal(eps[0][0])), per_share(Decimal(eps[0][1]))))
         except (ValueError, InvalidOperation):
             pass
-    guidance = re.findall(r'Full-year FY\d\d revenue guidance of \$(\d+(?:\.\d+)?) billion', t[:3000])
-    if len(guidance) == 1:
-        facts.append(('guidance-revenue', f'${guidance[0]}B', None))
+    # Non-GAAP diluted EPS, from the release's own summary table ("Non-GAAP earnings per share — diluted $ 9.45 $ 2.59 265%"), the
+    # basis Twelve Data reports Dell's EPS on (Nov 28: no 市場予想 was shown because only the GAAP $8.82 was stored).
+    adjusted = re.findall(r'Non-GAAP earnings per share \u2014 diluted \$ (\d+\.\d\d) \$ (\d+\.\d\d) (\d+)% \$ [\d.]+ \$ [\d.]+ \d+%', t)
+    if len(set(adjusted)) == 1:
+        try:
+            consistent(Decimal(adjusted[0][1]), Decimal(adjusted[0][0]), adjusted[0][2] + '%')
+            facts.append(('adjusted-eps', per_share(Decimal(adjusted[0][0])), per_share(Decimal(adjusted[0][1]))))
+        except (ValueError, InvalidOperation):
+            pass
     order = {k: i for i, k in enumerate(ORDER)}
     facts.sort(key=lambda f: order[f[0]])
-    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts + dell_guidance(t, quarter, year)}
+
+
+DELL_PCT = r'\(?-?\d+\)? ?%'
+
+
+def dell_guidance(t, quarter, year):
+    """Dell's 'Guidance Summary' (in billions): the next quarter ('Fourth-Quarter Guidance Q4FY27 (% Y/Y) Revenue $ 56.3 69 % ...
+    Non-GAAP diluted EPS $ 8.40 116 %') and the full year ('FY27 Previous FY27 Updated (% Y/Y) Revenue $ 192.0 $ 202.0 78 % ...').
+    The 'Previous' column is kept as the outlook's previous figure (上方修正 / 下方修正 read from the release itself, Nov 28). The next
+    quarter must be the one after this release's quarter, the full year this fiscal year (or the next one after a Q4 release), and
+    the full-year revenue must equal the summary bullet ("Full-year FY27 revenue guidance of $202.0 billion") when the release has one.
+    Anything else gives no outlook."""
+    start = t.find('Guidance Summary')
+    if start < 0 or 'in billions' not in t[start:start + 80].lower():
+        return []
+    block = t[start:start + 1200]
+    out = []
+    want = (quarter % 4 + 1, year + (quarter == 4))
+    nq = re.findall(r'(?:First|Second|Third|Fourth)-Quarter Guidance Q([1-4]) ?FY(\d\d) \(% Y/Y\) Revenue \$ (\d+(?:\.\d+)?) ' + DELL_PCT
+                    + r' GAAP diluted EPS \$ -?\d+\.\d\d ' + DELL_PCT + r' Non-GAAP diluted EPS \$ (\d+\.\d\d) ' + DELL_PCT, block)
+    if len(nq) == 1 and (int(nq[0][0]), 2000 + int(nq[0][1])) == want:
+        out.append(('guidance-revenue', f'${nq[0][2]}B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
+        out.append(('guidance-adjusted-eps', f'${nq[0][3]}', None, ('次四半期見通し 調整後EPS', 'Next-quarter guidance Adjusted EPS')))
+    cell = r'\$ (\d+(?:\.\d+)?) '
+    fy = re.findall(r'Full-Year Guidance (FY(\d\d) Previous )?FY(\d\d) (?:Updated )?\(% Y/Y\) Revenue (?:' + cell + r')?' + cell + DELL_PCT
+                    + r' (?:AI-Optimized Servers revenue (?:\$ [\d.]+ )?\$ [\d.]+ ' + DELL_PCT + r' )?GAAP diluted EPS (?:\$ -?[\d.]+ )?\$ -?[\d.]+ '
+                    + DELL_PCT + r' Non-GAAP diluted EPS (?:' + cell + r')?' + cell + DELL_PCT, block)
+    if len(fy) == 1:
+        heading, prior_year, fiscal, revenue_before, revenue, eps_before, eps = fy[0]
+        fiscal_year = 2000 + int(fiscal)
+        both = bool(revenue_before) and bool(eps_before)
+        stated = re.findall(r'Full-year FY' + fiscal + r' revenue guidance of \$(\d+(?:\.\d+)?) billion', t[:3000])
+        if fiscal_year in (year, year + 1) and (fiscal_year == year or quarter == 4) and (not heading or (both and prior_year == fiscal)) \
+                and (heading or not revenue_before and not eps_before) and (not stated or set(stated) == {revenue}):
+            out.append(('guidance-fy-revenue', f'${revenue}B', None, ('通期見通し 売上高', 'Full-year guidance Revenue'), None,
+                        f'${revenue_before}B' if heading else None))
+            out.append(('guidance-fy-adjusted-eps', f'${eps}', None, ('通期見通し 調整後EPS', 'Full-year guidance Adjusted EPS'),
+                        None, f'${eps_before}' if heading else None))
+    return out
 
 
 def parse_micron(text, url=None):
@@ -936,7 +981,7 @@ def parse_micron(text, url=None):
     t = clean(text)
     if 'micron technology' not in t.lower():
         raise ValueError('issuer-identity-missing')
-    head = re.findall(r'Fiscal Q([1-4]) (20\d\d) Highlights', t[:3000])
+    head = re.findall(r'Fiscal Q([1-4]) (20\d\d) [Hh]ighlights', t[:3000])  # 'highlights' in the Q3 FY26 release (June 24)
     if len(head) != 1:
         raise ValueError('highlights-heading-missing')
     quarter, year = int(head[0][0]), int(head[0][1])
@@ -973,9 +1018,32 @@ def parse_micron(text, url=None):
     facts = [(key, money_millions(v[0]), money_millions(v[1])) for key, v in metrics.items()]
     if net_ok:
         facts.append(('eps', per_share(eps[0]), per_share(eps[2])))
+    # The highlights' non-GAAP line ("Non-GAAP net income of $38.40 billion, or $33.42 per diluted share"): the basis Twelve Data
+    # reports Micron's EPS on. Kept only when the release states it once, in the quarter's highlights.
+    quarter_head = re.split(f'Fiscal {year} [Hh]ighlights', t[:3000])[0]
+    adjusted = re.findall(r'Non-GAAP net income of \$(\d+(?:\.\d+)?) billion, or \$(\d+\.\d\d) per diluted share', quarter_head)
+    if len(adjusted) == 1:
+        facts.append(('adjusted-eps', per_share(Decimal(adjusted[0][1])), None))
     order = {k: i for i, k in enumerate(ORDER)}
     facts.sort(key=lambda f: order[f[0]])
-    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts + micron_guidance(t, quarter, year)}
+
+
+def micron_guidance(t, quarter, year):
+    """Micron's 'Business Outlook' table for the next fiscal quarter ('FQ1-27 GAAP(1) Outlook Non-GAAP(2) Outlook Revenue $61.5 billion ±
+    $1.5 billion ... Diluted earnings per share $37.84 ± $1.00 $38.15 ± $1.00'), written as the release writes it (a midpoint ± a
+    dollar band). The quarter must be the one after this release's; the GAAP and non-GAAP revenue are the same single figure."""
+    want = (quarter % 4 + 1, (year + (quarter == 4)) % 100)
+    table = re.findall(r'Business Outlook The following table presents Micron\u2019s guidance for the (?:first|second|third|fourth) quarter of (20\d\d): '
+                       r'FQ([1-4])-(\d\d) GAAP(?:\(\d\))? Outlook Non-GAAP(?:\(\d\))? Outlook Revenue \$(\d+(?:\.\d+)?) billion \u00b1 \$(\d+(?:\.\d+)?) billion '
+                       r'.{0,260}?Diluted earnings per share \$\d+\.\d\d \u00b1 \$\d+\.\d\d \$(\d+\.\d\d) \u00b1 \$(\d+\.\d\d)', t)
+    if len(table) != 1:
+        return []
+    fiscal, q, yy, revenue, band, eps, eps_band = table[0]
+    if (int(q), int(yy)) != want or int(fiscal) % 100 != int(yy):
+        return []
+    return [('guidance-revenue', f'${revenue}B \u00b1 ${band}B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')),
+            ('guidance-adjusted-eps', f'${eps} \u00b1 ${eps_band}', None, ('次四半期見通し 調整後EPS', 'Next-quarter guidance Adjusted EPS'))]
 
 
 def prefixed(prefix, value, unit):
@@ -1677,7 +1745,9 @@ def parse_asml(text, url=None):
         facts.append(('net-income', prefixed('\u20ac', net[1] / 1000, 'B'), None))
     if eps and net and eps[1] > 0:
         facts.append(('eps', prefixed('\u20ac', eps[1], ''), None, ('EPS（基本）', 'Basic EPS')))
-    guidance = re.findall(r'We expect fourth-quarter \d{4} total net sales between \u20ac(\d+(?:\.\d+)?) billion and \u20ac(\d+(?:\.\d+)?) billion', t) if quarter == 3 else []
+    # the next quarter's outlook ("We expect third-quarter 2026 total net sales between ..." in the Q2 release; the fourth quarter in Q3's)
+    following = ['first', 'second', 'third', 'fourth'][quarter % 4] + '-quarter ' + str(year + (quarter == 4))
+    guidance = re.findall(r'We expect ' + following + r' total net sales between \u20ac(\d+(?:\.\d+)?) billion and \u20ac(\d+(?:\.\d+)?) billion', t)
     if len(guidance) == 1 and Decimal(guidance[0][0]) < Decimal(guidance[0][1]):
         facts.append(('guidance-revenue', f'\u20ac{guidance[0][0]}B-\u20ac{guidance[0][1]}B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
     order = {k: i for i, k in enumerate(ORDER)}
@@ -1891,9 +1961,14 @@ def build(ticker, url, parsed, observed_at, publisher=None):
     key = hashlib.sha256('\0'.join([ticker, parsed['period'], url]).encode()).hexdigest()
     number = str(int(key[:12], 16))
     # comparisons.yearAgo is the same quarter one year earlier, read from the table's prior-year column (same format as value).
-    facts = [{'key': f[0], 'ja': (f[3] if len(f) > 3 else LABELS[f[0]])[0], 'en': (f[3] if len(f) > 3 else LABELS[f[0]])[1], 'value': f[1],
-              **({'comparisons': {**({'yearAgo': f[2]} if f[2] else {}), **({'growth': f[4]} if len(f) > 4 and f[4] else {})}}
-                 if f[2] or (len(f) > 4 and f[4]) else {})} for f in parsed['facts']]
+    # comparisons.priorGuidance (6th element) is an outlook's previous figure for the same period as the release itself prints it
+    # (Dell's 'FY27 Previous' column), never computed.
+    def comparisons(f):
+        found = {**({'yearAgo': f[2]} if f[2] else {}), **({'growth': f[4]} if len(f) > 4 and f[4] else {}),
+                 **({'priorGuidance': f[5]} if len(f) > 5 and f[5] and f[0].startswith('guidance-') else {})}
+        return {'comparisons': found} if found else {}
+    facts = [{'key': f[0], 'ja': (f[3] if len(f) > 3 and f[3] else LABELS[f[0]])[0], 'en': (f[3] if len(f) > 3 and f[3] else LABELS[f[0]])[1],
+              'value': f[1], **comparisons(f)} for f in parsed['facts']]
     first = facts[:2]
     period = parsed['period']
     return key, {

@@ -283,7 +283,8 @@ class ResearchServiceTests(unittest.TestCase):
             # Nov 26: the Stock Comparison's valuation worker for every comparable company (compare_values.py).
             # Nov 26: the 監視22銘柄 earnings patrol (returns at once when EARNINGS_PATROL=false).
             # Nov 27: the daily PRO Stock Comparison check (returns at once without the comparison warm settings).
-            self.assertEqual(len(observed), 35 + app.translation_workers)
+            # Nov 28: the calendar's previous-release backfill (returns at once when EARNINGS_PRIOR_BACKFILL=false).
+            self.assertEqual(len(observed), 36 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

@@ -9,14 +9,25 @@ import { resultPeriodKey } from "./earnings-results-history.ts";
  */
 export type Horizon = "quarter" | "year";
 
-/** Whether an outlook is for the next quarter or the full year, from its key and its label; null when the label does not say. */
+/** Whether an outlook is for the next quarter or the full year, from its key and its label; null when the label does not say.
+ * A label naming its quarter (CrowdStrike's 「会社予想 売上高（Q4 FY27）」) is a quarter's outlook. */
 export function guidanceHorizon(fact: Pick<ResultFact, "key" | "ja" | "en">): Horizon | null {
   if (!fact.key.startsWith("guidance-") && fact.key !== "capex-guidance") return null;
   const label = `${fact.ja} ${fact.en}`;
   if (fact.key.startsWith("guidance-fy-") || /通期|full[- ]year|fiscal year/i.test(label)) return "year";
-  if (/次四半期|next[- ]quarter|\(next quarter\)/i.test(label)) return "quarter";
+  if (/次四半期|next[- ]quarter|\(next quarter\)/i.test(label) || namedQuarter(fact)) return "quarter";
   return null;
 }
+
+/** The quarter an outlook's label names ("（Q4 FY27）", "(Q4 FY27)"), or null when it names none. */
+function namedQuarter(fact: Pick<ResultFact, "ja" | "en">): { quarter: number; year: number } | null {
+  const m = /[（(](Q[1-4] ?FY ?\d{2,4})[）)]/.exec(`${fact.ja} ${fact.en}`);
+  return m ? quarterOf(m[1]) : null;
+}
+
+/** "guidance-fy-revenue" and a full-year "guidance-revenue" are the same figure (revenue): an outlook is matched by what it forecasts
+ * and its horizon, never by its key alone (Dell's full-year outlook was stored as guidance-revenue before Nov 28). */
+const metricOf = (key: string) => key.replace(/^guidance-(?:fy-)?/, "");
 
 /** "Q3 FY2027" / "Q3 FY27" / "Q3 2026" / "2026Q3" -> quarter and (fiscal) year; null for anything else. */
 export function quarterOf(period: string): { quarter: number; year: number } | null {
@@ -45,12 +56,15 @@ export function priorRelease(brief: Pick<ResultBrief, "ticker" | "period" | "pub
  */
 export function withPriorOutlook(brief: Pick<ResultBrief, "period" | "facts">, prior: ResultBrief | null): { facts: ResultFact[]; revenueGuidance: string | null } {
   if (!prior) return { facts: brief.facts, revenueGuidance: null };
-  const revenueGuidance = prior.facts.find(fact => fact.key === "guidance-revenue" && guidanceHorizon(fact) === "quarter")?.value ?? null;
-  const sameYear = (quarterOf(brief.period)?.quarter ?? 1) > 1;
+  const now = quarterOf(brief.period);
+  // the previous release's outlook for the next quarter, and only for this quarter when its label names one
+  const revenueGuidance = prior.facts.find(fact => metricOf(fact.key) === "revenue" && fact.key.startsWith("guidance-") && guidanceHorizon(fact) === "quarter"
+    && (() => { const named = namedQuarter(fact); return !named || (!!now && named.quarter === now.quarter && named.year === now.year); })())?.value ?? null;
+  const sameYear = (now?.quarter ?? 1) > 1;
   const facts = brief.facts.map(fact => {
     const horizon = guidanceHorizon(fact);
     if ((fact.comparisons as { priorGuidance?: string } | undefined)?.priorGuidance || horizon !== "year" || !sameYear) return fact;
-    const before = prior.facts.find(other => other.key === fact.key && guidanceHorizon(other) === "year");
+    const before = prior.facts.find(other => (other.key === fact.key || other.key.startsWith("guidance-") && fact.key.startsWith("guidance-") && metricOf(other.key) === metricOf(fact.key)) && guidanceHorizon(other) === "year");
     return before ? { ...fact, comparisons: { ...fact.comparisons, priorGuidance: before.value } } : fact;
   });
   return { facts, revenueGuidance };

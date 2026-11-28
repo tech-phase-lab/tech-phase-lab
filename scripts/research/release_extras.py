@@ -36,6 +36,9 @@ LABELS = {
 SENTENCES = (
     ('adjusted-eps', re.compile(r'(?i:non-GAAP (?:diluted )?(?:net income|earnings) per (?:diluted )?share)' + GAP + r' (?:was|of) '
                                 + PER_SHARE + PRIOR_SHARE), 'share'),
+    # "record non-GAAP diluted EPS of $9.45" (Dell), "non-GAAP diluted EPS was $1.22" (KLA): the words right before the figure, so an
+    # outlook ("non-GAAP diluted EPS guidance of $29.68") never matches
+    ('adjusted-eps', re.compile(r'(?<![A-Za-z-])(?i:non-GAAP diluted EPS) (?:was|of) ' + PER_SHARE + PRIOR_SHARE), 'share'),
     ('adjusted-net-income', re.compile(r'(?i:non-GAAP net income)(?: attributable to [A-Za-z .,]{1,40}?)? (?:was|of) ' + AMOUNT
                                        + PRIOR_AMOUNT), 'amount'),
     ('free-cash-flow', re.compile(r'(?i:free cash flow) (?:was|totaled) ' + AMOUNT + PRIOR_AMOUNT), 'amount'),
@@ -79,9 +82,10 @@ def one(matches):
 
 def sentence_facts(head):
     found = []
-    for key, pattern, kind in SENTENCES:
+    # a key may have several wordings: their readings are pooled, so two different figures stay ambiguous and are left out
+    for key, kind in dict.fromkeys((k, kind) for k, _p, kind in SENTENCES):
         rows = []
-        for m in pattern.finditer(head):
+        for m in (m for k, pattern, _k in SENTENCES if k == key for m in pattern.finditer(head)):
             g = m.groups()
             if kind == 'share':
                 value = flash.per_share(Decimal(g[0]))
