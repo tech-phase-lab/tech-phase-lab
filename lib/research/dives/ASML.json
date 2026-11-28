@@ -84,7 +84,7 @@
         "sections": [
           {"key": "happened", "text": {"ja": "新しい露光装置の販売台数は前期の86台から113台に増えました。保守・アップグレードなどの売上(Installed Base Management)も27.62億ユーロから32.89億ユーロに増え、会社の見通しを上回りました。", "en": "New lithography systems sold rose from 86 to 113. Installed Base Management sales (service and upgrades) rose from €2.76B to €3.29B, above the company's guidance."}},
           {"key": "good", "text": {"ja": "装置の売上と、すでに納めた装置からの保守・アップグレード収入の両方が伸びています。会社は、生産性を上げるアップグレードの需要が強いと説明しています。", "en": "Both new systems and service on installed machines grew. The company points to strong demand for productivity upgrades."}},
-          {"key": "watch", "text": {"ja": "装置の売上は、納める台数と時期で四半期ごとに大きく動きます。前年同期は75.16億ユーロ、第4四半期は97.18億ユーロ、第1四半期は87.67億ユーロと、増減をくり返してきました。", "en": "System sales move a lot with the number and timing of shipments. Over the past year sales went €7.52B, €9.72B, €8.77B and €9.33B, rising and falling."}}
+          {"key": "watch", "text": {"ja": "売上は、装置を納める台数と時期で四半期ごとに大きく動きます。売上合計は前年同期が75.16億ユーロ、第4四半期が97.18億ユーロ、第1四半期が87.67億ユーロと、増減をくり返してきました。", "en": "Sales move a lot with the number and timing of system shipments. Over the past year total net sales went €7.52B, €9.72B, €8.77B and €9.33B, rising and falling."}}
         ],
         "segment": null
       },

@@ -24,6 +24,11 @@
    "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026030530/lite_ex991xq3fy26.htm",
    "title": "Lumentum third quarter fiscal 2026 results (8-K Exhibit 99.1)",
    "location": "Financial Overview (GAAP Results)"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+   "title": "Marvell and Lumentum to Combine (Lumentum Form 8-K Exhibit 99.1, November 2, 2026)",
+   "location": "Press release"
   }
  ],
  "evidence": [
@@ -127,6 +132,31 @@
    "field": "tiles[2].note",
    "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
    "quote": "GAAP Results ($ in millions) Q1 Q4 Q1 Change FY 2027 FY 2026 FY 2026 Q/Q Y/Y Net revenue $ 1,262.6 $ 1,006.3 $ 533.8 25.5% 136.5%"
+  },
+  {
+   "field": "summary.cards.change.sections[3]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "quote": "Loss on debt extinguishment — 7,756.6 —"
+  },
+  {
+   "field": "summary.conclusion[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+   "quote": "in an all-stock transaction"
+  },
+  {
+   "field": "summary.conclusion[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+   "quote": "Lumentum stockholders will receive a fixed exchange ratio of 4.500 shares of Marvell common stock for each share of Lumentum common stock they own."
+  },
+  {
+   "field": "summary.conclusion[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+   "quote": "Post-closing, current Marvell stockholders will own approximately 67% of the combined company on a fully diluted basis, while Lumentum stockholders will own approximately 33%."
+  },
+  {
+   "field": "summary.conclusion[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+   "quote": "The transaction is expected to close in the first half of calendar year 2028"
   }
  ],
  "tiles": [
@@ -225,8 +255,8 @@
     "en": "Non-GAAP gross margin rose to 53.2% and non-GAAP operating margin to 42.3%, both higher than last quarter."
    },
    {
-    "ja": "一方で、手元の現金・短期投資は20億ドルと、前期末から7.59億ドル減りました。会社は次の四半期の売上を15.75億〜16.25億ドルと見込んでいます。",
-    "en": "Cash and short-term investments, however, fell $758.8M from last quarter to $2.0B. The company expects next-quarter revenue of $1.575–1.625B."
+    "ja": "11月2日、Marvellが株式交換でLumentumを買収することで合意しました。Lumentum株1株にMarvell株4.500株が渡ります。Lumentum株主は統合後の会社の約33%を持ちます。完了は2028年前半の見込みです。会社は次期の売上を15.75億〜16.25億ドルと見込んでいます。",
+    "en": "On November 2, Marvell agreed to acquire Lumentum in an all-stock deal: 4.500 Marvell shares for each Lumentum share. Lumentum holders would own about 33% of the combined company. Closing is expected in the first half of 2028. The company expects next-quarter revenue of $1.575–1.625B."
    }
   ],
   "cards": {
@@ -328,8 +358,8 @@
      {
       "key": "means",
       "text": {
-       "ja": "前期のGAAP純損失72億ドルは、転換社債の株式化に伴う一時的な損失(78億ドル、現金の支出なし)によるものでした。今期はGAAPでも3.60億ドルの黒字に戻っています。",
-       "en": "Last quarter's $7.2B GAAP net loss came from a one-time, non-cash $7.8B loss on converting notes into equity. This quarter GAAP net income was back to $360.3M."
+       "ja": "前期のGAAP純損失72億ドルは、一時的な債務消滅損(77.57億ドル、会社は調整後の数字から除いています)によるものでした。今期はGAAPでも3.60億ドルの黒字に戻っています。",
+       "en": "Last quarter's $7.2B GAAP net loss came from a one-time $7.76B loss on debt extinguishment, which the company excludes from its non-GAAP results. This quarter GAAP net income was back to $360.3M."
       }
      }
     ]
