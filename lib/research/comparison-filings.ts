@@ -15,6 +15,10 @@ export function financialFilings(payload: unknown, cik: string, now = Date.now()
   }).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
 }
 
+/** The income statement's net result line, in its usual wordings: "net income", "net loss", "net earnings", and with the sign in brackets,
+ *  "net (loss) income" or "net income (loss)" (Nov 28 audit: CRC's statement says "NET (LOSS) INCOME", so its revenue line was never named
+ *  and its quarter, where total revenues of $421m sit below $1,002m of sales after derivative losses, was held as a conflict). */
+const INCOME_STATEMENT_NET = /net\s*\(?\s*(?:income|loss|earnings)/i;
 type SecValue = { val: number; start?: string; end: string; filed: string; accn: string; form: string };
 export type SecFacts = { cik: number; facts: Record<string, Record<string, { units: Record<string, SecValue[]> }>>; primaryRevenueTag?: string };
 /** Read consolidated, standard-taxonomy facts from the original inline filing.
@@ -73,7 +77,7 @@ export function inlineFinancialFacts(html: string, cik: string, filing: Financia
     const text = table.textContent.replace(/\s+/g," ");
     // The income statement: net income (or "net earnings": Devon) with per-share lines; its title need not say "operations" (PSEG: operating
     // revenues, operating expenses, net income).
-    if (!/net (?:income|loss|earnings)/i.test(text) || !/basic.*diluted/i.test(text)) continue;
+    if (!INCOME_STATEMENT_NET.test(text) || !/basic.*diluted/i.test(text)) continue;
     for (const node of table.querySelectorAll("ix\\:nonfraction")) {
       const name = node.getAttribute("name"), context = contexts.get(node.getAttribute("contextRef") ?? "");
       if (name && revenueNames.has(name) && context?.end === filing.end) primary.add(name);
@@ -83,6 +87,149 @@ export function inlineFinancialFacts(html: string, cik: string, filing: Financia
   // The statement shows its sales lines and then their total (Devon: oil, gas and NGL sales, then total revenues, which derivative losses can
   // take below the sales line): the total line is the revenue.
   else if (primary.has("us-gaap:Revenues")) result.primaryRevenueTag = "us-gaap:Revenues";
+  productServiceRevenue(html, cik, filing, result, headerHtml);
+  return result;
+}
+
+const SEGMENT_REVENUE_TAGS = ["us-gaap:Revenues", "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax", "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax", "ifrs-full:Revenue", "ifrs-full:RevenueFromContractsWithCustomers"];
+/** Revenue filed only as its product and service parts (L-2, Nov 28: RERE's 20-F tags net product revenues and net service revenues on
+ *  srt:ProductOrServiceAxis and leaves its total net revenues untagged, so no consolidated revenue was ever read and the company was
+ *  "unreadable"). Product and service are the whole of a company's revenue by definition, so for a period, currency and line with exactly
+ *  those two members (one value each, no other member on that axis, no other dimension) and no consolidated revenue line of any kind in the
+ *  document, their sum is the period's revenue. Anything else (a third member, a segment axis, a consolidated line) adds nothing. */
+function productServiceRevenue(html: string, cik: string, filing: FinancialFiling, consolidated: SecFacts, headerHtml?: string): void {
+  const contexts = new Map<string, { start: string; end: string; member: string }>();
+  for (const source of headerHtml ? [headerHtml, html] : [html]) for (const m of source.matchAll(/<xbrli:context\b([^>]*)>([\s\S]*?)<\/xbrli:context\s*>/gi)) {
+    const id = tagAttributes(m[1]).id, body = m[2];
+    const identifier = /<xbrli:identifier\b([^>]*)>([\s\S]*?)<\/xbrli:identifier\s*>/i.exec(body);
+    if (!id || !identifier || Number(stripTags(identifier[2]).trim()) !== Number(cik) || /<xbrli:scenario\b|<xbrldi:typedMember\b/i.test(body)) continue;
+    const members = [...body.matchAll(/<xbrldi:explicitMember\b([^>]*)>([\s\S]*?)<\/xbrldi:explicitMember\s*>/gi)];
+    if (members.length !== 1 || tagAttributes(members[0][1]).dimension !== "srt:ProductOrServiceAxis") continue;
+    const read = (name: string) => { const found = new RegExp(`<xbrli:${name}\\b[^>]*>([\\s\\S]*?)</xbrli:${name}\\s*>`, "i").exec(body); return found ? stripTags(found[1]).trim() : undefined; };
+    const start = date(read("startDate")), end = date(read("endDate"));
+    if (start && end && start <= end && end <= filing.filed) contexts.set(id, { start, end, member: stripTags(members[0][2]).trim() });
+  }
+  if (!contexts.size) return;
+  const units = new Map<string, string>();
+  for (const source of headerHtml ? [headerHtml, html] : [html]) for (const m of source.matchAll(/<xbrli:unit\b([^>]*)>([\s\S]*?)<\/xbrli:unit\s*>/gi)) {
+    const id = tagAttributes(m[1]).id, measures = [...m[2].matchAll(/<xbrli:measure\b[^>]*>([\s\S]*?)<\/xbrli:measure\s*>/gi)];
+    const name = measures.length === 1 && !/<xbrli:divide\b/i.test(m[2]) ? stripTags(measures[0][1]).trim() : "";
+    if (id && /^iso4217:[A-Z]{3}$/.test(name)) units.set(id, name.split(":")[1]);
+  }
+  const groups = new Map<string, { tag: string; unit: string; start: string; end: string; members: Map<string, Set<number>> }>();
+  for (const m of html.matchAll(/<ix:nonFraction\b([^>]*?)(\/?)>/gi)) {
+    if (m[2]) continue;
+    const attrs = tagAttributes(m[1]), context = contexts.get(attrs.contextRef ?? ""), unit = units.get(attrs.unitRef ?? "");
+    if (!context || !unit || !SEGMENT_REVENUE_TAGS.includes(attrs.name ?? "") || attrs["xsi:nil"] === "true" || attrs.continuedAt || (attrs.sign && attrs.sign !== "-")) continue;
+    const close = html.indexOf("</ix:nonFraction", m.index);
+    const format = attrs.format?.split(":")[1];
+    let text = stripTags(html.slice(m.index + m[0].length, close)).trim().replace(/[\s ]/g, "");
+    if (format && !["num-dot-decimal", "numdotdecimal", "num-comma-decimal", "numcommadecimal"].includes(format)) continue;
+    text = format === "num-comma-decimal" || format === "numcommadecimal" ? text.replaceAll(".", "").replace(",", ".") : text.replaceAll(",", "");
+    const scale = attrs.scale === undefined ? 0 : Number(attrs.scale);
+    if (!/^\d+(?:\.\d+)?$/.test(text) || !Number.isInteger(scale) || Math.abs(scale) > 18) continue;
+    const val = Number(text) * 10 ** scale * (attrs.sign === "-" ? -1 : 1);
+    const key = `${attrs.name}|${unit}|${context.start}|${context.end}`;
+    const group = groups.get(key) ?? { tag: attrs.name!, unit, start: context.start, end: context.end, members: new Map() };
+    groups.set(key, group);
+    (group.members.get(context.member) ?? group.members.set(context.member, new Set()).get(context.member)!).add(val);
+  }
+  const hasConsolidated = (unit: string, start: string, end: string) => SEGMENT_REVENUE_TAGS.some(name => {
+    const [basis, tag] = name.split(":");
+    return (consolidated.facts[basis]?.[tag]?.units[unit] ?? []).some(f => f.start === start && f.end === end);
+  });
+  const added = new Set<string>();
+  for (const g of groups.values()) {
+    const product = g.members.get("us-gaap:ProductMember"), service = g.members.get("us-gaap:ServiceMember");
+    if (g.members.size !== 2 || product?.size !== 1 || service?.size !== 1 || hasConsolidated(g.unit, g.start, g.end)) continue;
+    // One line per period and currency: the first standard line in SEGMENT_REVENUE_TAGS order.
+    const period = `${g.unit}|${g.start}|${g.end}`;
+    if (added.has(period)) continue;
+    const better = [...groups.values()].find(o => o !== g && `${o.unit}|${o.start}|${o.end}` === period && SEGMENT_REVENUE_TAGS.indexOf(o.tag) < SEGMENT_REVENUE_TAGS.indexOf(g.tag)
+      && o.members.size === 2 && o.members.get("us-gaap:ProductMember")?.size === 1 && o.members.get("us-gaap:ServiceMember")?.size === 1);
+    if (better) continue;
+    added.add(period);
+    const [basis, tag] = g.tag.split(":");
+    const val = [...product][0] + [...service][0];
+    if (val <= 0) continue;
+    (((consolidated.facts[basis] ??= {})[tag] ??= { units: {} }).units[g.unit] ??= []).push({ val, start: g.start, end: g.end, filed: filing.filed, accn: filing.accession, form: filing.form });
+  }
+}
+
+const ENTITIES: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: "\"", apos: "'", nbsp: " " };
+const decodeEntities = (s: string) => s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, code: string) => code[0] === "#"
+  ? String.fromCodePoint(code[1] === "x" || code[1] === "X" ? parseInt(code.slice(2), 16) : Number(code.slice(1))) : ENTITIES[code.toLowerCase()] ?? whole);
+const stripTags = (s: string) => decodeEntities(s.replace(/<[^>]*>/g, ""));
+function tagAttributes(raw: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  // A repeated attribute keeps its first value, as an HTML parser does.
+  for (const m of raw.matchAll(/([A-Za-z_][\w:.-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) if (!(m[1] in out)) out[m[1]] = decodeEntities(m[2] ?? m[3] ?? "");
+  return out;
+}
+/** inlineFinancialFacts for a document too large to parse into a tree (L-2, Nov 28: KB's, SHG's, KEP's, AVAL's and six other foreign
+ *  banks' and utilities' 20-F documents are 20 to 40 MB, so their annual figures were never read). The same rules, read with plain
+ *  pattern scans over the text: consolidated contexts of the company's own CIK, single-measure currency or share units, ix:nonFraction
+ *  facts with a supported format, sign and scale, the company's own capital-spending line, and the income statement's revenue line. A
+ *  test holds it to the tree reader's answer on the same documents. */
+export function inlineFinancialFactsText(html: string, cik: string, filing: FinancialFiling, headerHtml?: string): SecFacts {
+  const result: SecFacts = { cik: Number(cik), facts: {} };
+  const sources = headerHtml ? [headerHtml, html] : [html];
+  const contexts = new Map<string, { start?: string; end: string }>();
+  for (const source of sources) for (const m of source.matchAll(/<xbrli:context\b([^>]*)>([\s\S]*?)<\/xbrli:context\s*>/gi)) {
+    const id = tagAttributes(m[1]).id, body = m[2];
+    const identifier = /<xbrli:identifier\b([^>]*)>([\s\S]*?)<\/xbrli:identifier\s*>/i.exec(body);
+    if (!id || !identifier || tagAttributes(identifier[1]).scheme !== "http://www.sec.gov/CIK" || Number(stripTags(identifier[2]).trim()) !== Number(cik) || /<xbrli:(?:segment|scenario)\b/i.test(body)) continue;
+    const read = (name: string) => { const found = new RegExp(`<xbrli:${name}\\b[^>]*>([\\s\\S]*?)</xbrli:${name}\\s*>`, "i").exec(body); return found ? stripTags(found[1]).trim() : undefined; };
+    const start = date(read("startDate")), end = date(read("endDate") ?? read("instant"));
+    if (end && end <= filing.filed && (!start || start <= end)) contexts.set(id, { ...(start ? { start } : {}), end });
+  }
+  const units = new Map<string, string>();
+  for (const source of sources) for (const m of source.matchAll(/<xbrli:unit\b([^>]*)>([\s\S]*?)<\/xbrli:unit\s*>/gi)) {
+    const id = tagAttributes(m[1]).id, measures = [...m[2].matchAll(/<xbrli:measure\b[^>]*>([\s\S]*?)<\/xbrli:measure\s*>/gi)];
+    if (!id || measures.length !== 1 || /<xbrli:divide\b/i.test(m[2])) continue;
+    const name = stripTags(measures[0][1]).trim();
+    if (/^iso4217:[A-Z]{3}$/.test(name)) units.set(id, name.split(":")[1]);
+    if (name === "xbrli:shares") units.set(id, "shares");
+  }
+  // Facts can nest (COP: the same share count for two dates, one ix:nonFraction inside the other): each opening tag is paired with its own
+  // closing tag, and its text is everything between them.
+  const facts: [string, string][] = [];
+  const open: { attrs: string; from: number }[] = [];
+  for (const m of html.matchAll(/<(\/?)ix:nonFraction\b([^>]*?)(\/?)>/gi)) {
+    if (m[1]) { const top = open.pop(); if (top) facts.push([top.attrs, html.slice(top.from, m.index)]); }
+    else if (!m[3]) open.push({ attrs: m[2], from: m.index + m[0].length });
+  }
+  for (const m of facts.map(([attrs, body]) => [undefined, attrs, "", body] as const)) {
+    const attrs = tagAttributes(m[1]), name = attrs.name?.split(":"), context = contexts.get(attrs.contextRef), unit = units.get(attrs.unitRef);
+    const extensionCapex = !!name && name.length === 2 && !["us-gaap","ifrs-full","dei","srt"].includes(name[0]) && /^PaymentsToAcquirePropert(?:y|ies)(?:Plant)?AndEquipment(?:Net)?$/.test(name[1]);
+    if (!name || name.length !== 2 || (!["us-gaap","ifrs-full"].includes(name[0]) && !extensionCapex) || !context || !unit || attrs["xsi:nil"] === "true" || attrs.continuedAt || /<ix:exclude\b/i.test(m[3])) continue;
+    const format = attrs.format?.split(":")[1];
+    if (format && !["num-dot-decimal", "numdotdecimal", "num-comma-decimal", "numcommadecimal", "zerodash", "fixed-zero"].includes(format)) continue;
+    let text = stripTags(m[3]).trim().replace(/[\s ]/g, "");
+    if (["zerodash","fixed-zero"].includes(format) && /^[-–—]$/.test(text)) text = "0";
+    else if (["num-comma-decimal","numcommadecimal"].includes(format)) text = text.replaceAll(".", "").replace(",", ".");
+    else text = text.replaceAll(",", "");
+    if (!/^\d+(?:\.\d+)?$/.test(text) || (attrs.sign && attrs.sign !== "-")) continue;
+    const scale = attrs.scale === undefined ? 0 : Number(attrs.scale);
+    if (!Number.isInteger(scale) || Math.abs(scale) > 18) continue;
+    const val = Number(text) * 10 ** scale * (attrs.sign === "-" ? -1 : 1);
+    if (!Number.isFinite(val) || Math.abs(val) > Number.MAX_SAFE_INTEGER) continue;
+    const tag = extensionCapex ? ((result.facts["us-gaap"] ??= {})["TechPhaseExtensionCapex"] ??= { units: {} }) : ((result.facts[name[0]] ??= {})[name[1]] ??= { units: {} });
+    (tag.units[unit] ??= []).push({ val, ...context, filed: filing.filed, accn: filing.accession, form: filing.form });
+  }
+  const primary = new Set<string>();
+  const revenueNames = new Set(["us-gaap:Revenues","us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax","us-gaap:SalesRevenueNet","us-gaap:RegulatedAndUnregulatedOperatingRevenue","ifrs-full:Revenue","ifrs-full:RevenueFromContractsWithCustomers"]);
+  for (const table of html.matchAll(/<table\b[\s\S]*?<\/table\s*>/gi)) {
+    const text = stripTags(table[0]).replace(/\s+/g, " ");
+    if (!INCOME_STATEMENT_NET.test(text) || !/basic.*diluted/i.test(text)) continue;
+    for (const m of table[0].matchAll(/<ix:nonFraction\b([^>]*)>/gi)) {
+      const attrs = tagAttributes(m[1]), context = contexts.get(attrs.contextRef ?? "");
+      if (attrs.name && revenueNames.has(attrs.name) && context?.end === filing.end) primary.add(attrs.name);
+    }
+  }
+  if (primary.size === 1) result.primaryRevenueTag = [...primary][0];
+  else if (primary.has("us-gaap:Revenues")) result.primaryRevenueTag = "us-gaap:Revenues";
+  productServiceRevenue(html, cik, filing, result, headerHtml);
   return result;
 }
 

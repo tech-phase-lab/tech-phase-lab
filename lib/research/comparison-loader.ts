@@ -1,5 +1,5 @@
 import { emptyFinancials, extractFinancials } from "./comparison.ts";
-import { financialFilings, inlineFinancialFacts, mergeFinancialFacts, tsmQuarterFacts, tsmStatementFacts } from "./comparison-filings.ts";
+import { financialFilings, inlineFinancialFacts, inlineFinancialFactsText, mergeFinancialFacts, tsmQuarterFacts, tsmStatementFacts } from "./comparison-filings.ts";
 import type { FinancialFiling, SecFacts } from "./comparison-filings.ts";
 import type { Financials } from "./comparison.ts";
 import { parse } from "node-html-parser";
@@ -7,9 +7,17 @@ import { parse } from "node-html-parser";
 type FetchText = (url: string, limit: number) => Promise<string>;
 const annualForm = /^(?:10-K|20-F|40-F)(?:\/A)?$/;
 const warning = (ja: string, en: string) => ({ ja, en });
-/** The largest filing document read, bounded for memory and the request's time limit (third review, Nov 26: a 60 MB parse risked both). A
- *  larger document (RERE's 26.2 MB 20-F) is not read: the company is then "unreadable" (fail closed), never "no revenue yet". */
+/** The largest filing document parsed into a tree, bounded for memory and the request's time limit (third review, Nov 26: a 60 MB tree
+ *  parse risked both). A document that cannot be read at all leaves the company "unreadable" (fail closed), never "no revenue yet". */
 const FILING_LIMIT = 20_000_000;
+/** A larger document (up to LARGE_FILING_LIMIT) is read with the text reader (inlineFinancialFactsText), which builds no tree: the same
+ *  facts as the tree reader (a test holds the two to the same answer), in linear time and the document's own memory (L-2, Nov 28: ten
+ *  foreign filers' 20-F documents of 20 to 40 MB, KB, SHG, WF, RDY, KEP, ENIC, IFS, AVAL, RNW and PHI, were never read). */
+const LARGE_FILING_LIMIT = 60_000_000;
+/** A filing document's facts: the tree reader up to FILING_LIMIT, the text reader above it. */
+function readInline(html: string, cik: string, filing: FinancialFiling, headerHtml?: string): SecFacts {
+  return html.length > FILING_LIMIT || (headerHtml?.length ?? 0) > FILING_LIMIT ? inlineFinancialFactsText(html, cik, filing, headerHtml) : inlineFinancialFacts(html, cik, filing, headerHtml);
+}
 /** One path for every SEC-listed issuer, independent of the monitored news list.
  * Check submissions first: companyfacts alone is not proof of freshness.
  */
@@ -67,11 +75,12 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
   let primaryRevenueTag: string | undefined, quarterRevenueTag: string | undefined;
   await Promise.all(wanted.map(async filing => {
     try {
-      const html = await fetchText(filing.url, FILING_LIMIT);
-      let inline = inlineFinancialFacts(html,cik,filing);
+      const html = await fetchText(filing.url, LARGE_FILING_LIMIT);
+      let inline = readInline(html,cik,filing);
       // A foreign filer's 6-K is often a cover page with the tagged statements in another document of the same filing (BTI's half-year
       // report: bti-20260630_d2.htm is the cover, bti-20260630.htm the statements). The largest other inline document is then read.
-      if (!hasRevenue(inline)) inline = await statementDocument(filing, cik, fetchText, html) ?? inline;
+      // A failure there keeps the primary document's facts (an unreachable folder index lost WF's whole 2025 annual report in the audit).
+      if (!hasRevenue(inline)) inline = await statementDocument(filing, cik, fetchText, html).catch(() => null) ?? inline;
       additions.push(inline);
       if (filing === annual) primaryRevenueTag = inline.primaryRevenueTag;
       if (filing === quarter) quarterRevenueTag = inline.primaryRevenueTag;
@@ -100,7 +109,7 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
   if (result.status === "ready" && (result.capexNotReported || (!result.capex && !!result.operatingCash))) {
     const read = new Set(wanted.map(f => f.accession));
     const more = [annual, ...filings.filter(quarterly).slice(0, 2)].filter((f): f is FinancialFiling => !!f && f.inline && !read.has(f.accession));
-    const extra = (await Promise.all(more.map(f => fetchText(f.url, FILING_LIMIT).then(html => inlineFinancialFacts(html, cik, f)).catch(() => null)))).filter((f): f is SecFacts => !!f);
+    const extra = (await Promise.all(more.map(f => fetchText(f.url, LARGE_FILING_LIMIT).then(html => readInline(html, cik, f)).catch(() => null)))).filter((f): f is SecFacts => !!f);
     if (extra.some(f => f.facts["us-gaap"]?.TechPhaseExtensionCapex)) {
       additions.push(...extra);
       result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag,sic);
@@ -116,11 +125,11 @@ async function readSecComparison(ticker: string, cik: string, fetchText: FetchTe
     let revenueFiled = false;
     if (newest?.inline) {
       try {
-        const html = await fetchText(newest.url, FILING_LIMIT).catch(error => { revenueFiled = true; throw error; });
+        const html = await fetchText(newest.url, LARGE_FILING_LIMIT).catch(error => { revenueFiled = true; throw error; });
         if (companyRevenueTagged(html, newest.end)) {
           revenueFiled = true;
           // Its standard revenue lines are read from the filing itself (APA: us-gaap Revenues in the 10-Q, absent from company facts).
-          const inline = inlineFinancialFacts(html, cik, newest);
+          const inline = readInline(html, cik, newest);
           const again = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, [...additions, inline],cik),now,currency,
             newest === annual ? inline.primaryRevenueTag : primaryRevenueTag, newest === quarter ? inline.primaryRevenueTag : quarterRevenueTag, sic);
           if (!again.preRevenue) result = again;
@@ -215,7 +224,7 @@ function factsAccessions(payload: unknown): Set<string> {
   for (const basis of ["us-gaap", "ifrs-full"]) for (const tag of Object.values(facts[basis] ?? {})) for (const values of Object.values(tag?.units ?? {})) if (Array.isArray(values)) for (const v of values) if (typeof v?.accn === "string") out.add(v.accn);
   return out;
 }
-const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating", "RevenueAndOperatingIncome"];
+const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating", "RevenueAndOperatingIncome", "InterestRevenueExpense"];
 const hasRevenue = (facts: SecFacts) => Object.values(facts.facts).some(tags => REVENUE_TAGS.some(tag => tag in tags));
 /** The filing's other inline document with the statements: the largest .htm in its folder besides the primary one (not the rendered R pages
  *  or the index), read only when the primary document has no revenue fact. */
@@ -224,9 +233,9 @@ async function statementDocument(filing: FinancialFiling, cik: string, fetchText
   const folder = new URL(".", filing.url).href, primary = filing.url.slice(folder.length);
   const listing = JSON.parse(await fetchText(`${folder}index.json`, 2_000_000)) as { directory?: { item?: { name?: unknown; size?: unknown }[] } };
   const candidates = (listing.directory?.item ?? []).flatMap(item => typeof item.name === "string" && /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}\.htm$/.test(item.name)
-    && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= FILING_LIMIT ? [{ name: item.name, size: Number(item.size) }] : [])
+    && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= LARGE_FILING_LIMIT ? [{ name: item.name, size: Number(item.size) }] : [])
     .sort((a, b) => b.size - a.size);
   if (!candidates.length) return null;
-  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, FILING_LIMIT), cik, filing, primaryHtml);
+  const facts = readInline(await fetchText(new URL(candidates[0].name, folder).href, LARGE_FILING_LIMIT), cik, filing, primaryHtml);
   return hasRevenue(facts) ? facts : null;
 }
