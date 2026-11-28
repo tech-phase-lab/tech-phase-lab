@@ -152,7 +152,7 @@ export function PriceTargetReconciliation({ report, token }: { report: TargetRec
           <span>理由 {record.reason} · {record.currentRevision ? "現在の版" : "旧版"}</span>
           <small>投稿 {timeLabel(record.publishedAt)} · 取得 {timeLabel(record.observedAt)}</small>
           <small>イベント {record.eventId ?? "未記録"} · SHA {record.sha ?? "未記録"}</small>
-          {url ? <a href={url} target="_blank" rel="noopener noreferrer">投稿元を確認 ↗</a> : <small>安全に開ける投稿元URLなし</small>}
+          {url ? <a href={url} target="_blank" rel="noopener noreferrer">投稿元を確認</a> : <small>安全に開ける投稿元URLなし</small>}
           {record.eventId !== null && <SignalSourceInspection token={token} eventId={record.eventId} />}
         </li>;
       })}</ul> : <p className={styles.note}>対象の記録はありません。</p>}
@@ -244,7 +244,7 @@ function SignalsSession({ token }: { token: string | null }) {
         <ul>{data.xRecent.map(post => <li key={post.url}>
           <strong>{post.published ? "掲載済み" : post.saved ? "保存のみ（未掲載）" : post.reason === "not-roster" ? "対象外（監視銘柄ではない決算投稿）" : post.reason === "not-result" ? "対象外（決算・目標株価の投稿ではない）" : "読み取れず"}</strong>
           <span>経路{post.route} · 投稿 {timeLabel(post.publishedAt)} · 取得 {timeLabel(post.seenAt)}</span>
-          <small><a href={post.url} target="_blank" rel="noopener noreferrer">{post.text.replace(/\s+/g, " ")} ↗</a></small>
+          <small><a href={post.url} target="_blank" rel="noopener noreferrer">{post.text.replace(/\s+/g, " ")}</a></small>
         </li>)}</ul>
       </details>}
       <div className={styles.filters}>
@@ -258,8 +258,8 @@ function SignalsSession({ token }: { token: string | null }) {
         {view === "targets" && targetPreview(item.title, item.tickers) ? <>
           <h3>{targetPreview(item.title, item.tickers)?.heading}</h3>
           <p className={styles.previewSummary}>{targetPreview(item.title, item.tickers)?.summary}</p>
-          <p className={styles.note}><a href={item.url} target="_blank" rel="noopener noreferrer">投稿元を確認 ↗</a> · 原発表未照合・公開不可</p>
-        </> : <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h3>}
+          <p className={styles.note}><a href={item.url} target="_blank" rel="noopener noreferrer">投稿元を確認</a> · 原発表未照合・公開不可</p>
+        </> : <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>}
         <p className={styles.note}>{item.source} · 未確認{item.reuse === "permission-required" ? " · 商用利用条件の確認が必要" : ""}</p>
         <div className={styles.times}><span>X投稿時刻 {publicationLabel(item.publishedAt, item.publishedOn)}</span><span>監視側の取得 {timeLabel(item.observedAt)}</span>{view === "targets" && displayedAt && <span>画面取得 {timeLabel(displayedAt)}</span>}</div>
         <details><summary>関連箇所の原文抜粋</summary><pre>{item.excerpt}</pre><small>機械抽出です。記事全体の要約ではありません。{item.truncated ? " 本文の処理上限に達しています。" : ""}</small></details>

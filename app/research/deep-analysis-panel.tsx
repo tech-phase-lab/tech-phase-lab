@@ -66,6 +66,6 @@ export function DeepAnalysisArticle({ item, lang, format }: { item: DeepAnalysis
         ? <div className={styles.block}><h4>{ja ? "次に見ること" : "What to check next"}</h4><ol>{next.map((check, index) => <li key={index}>{check[lang]}</li>)}</ol></div>
         : <p className={styles.watch}>{ja ? "次に見るべき点：" : "What to watch: "}{next[0][lang]}</p>)}
       {item.reaction && <MarketReactionView reaction={item.reaction} ticker={item.subject} lang={lang} />}
-      <p className={styles.meta}>{ja ? "分析" : "Analysed"} {format(item.publishedAt)} {zoneLabel(lang)} · <a href={item.sourceUrl} target="_blank" rel="noreferrer">{ja ? "元の発表 ↗" : "Source ↗"}</a></p>
+      <p className={styles.meta}>{ja ? "分析" : "Analysed"} {format(item.publishedAt)} {zoneLabel(lang)} · <a href={item.sourceUrl} target="_blank" rel="noreferrer">{ja ? "元の発表" : "Source"}</a></p>
     </article>;
 }

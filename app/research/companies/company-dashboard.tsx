@@ -26,7 +26,7 @@ function EvidenceLinks({ ids, sources, lang }: { ids: string[]; sources: Source[
   return <span className={styles.evidence}>{ids.map((id, index) => {
     const source = sources.find((item) => item.id === id);
     return source ? <a key={id} href={source.url} target="_blank" rel="noreferrer" aria-label={`${lang === "ja" ? "原文" : "Source"}: ${source.title}`} title={`${source.title} · ${source.location}`}>
-      {ids.length > 1 ? `${lang === "ja" ? "原文" : "Source"} ${index + 1}` : lang === "ja" ? "原文" : "Source"} ↗
+      {ids.length > 1 ? `${lang === "ja" ? "原文" : "Source"} ${index + 1}` : lang === "ja" ? "原文" : "Source"}
     </a> : null;
   })}</span>;
 }
@@ -109,7 +109,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
         </li>)}</ol>
       </section>
 
-      <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した資料", "Sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title} <span aria-hidden="true">↗</span></strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
+      <section className={styles.section} aria-labelledby="company-sources"><div className={styles.sectionHeading}><h2 id="company-sources">{t("使用した資料", "Sources used")}</h2></div><div className={styles.sourceList}>{profile.sources.map((source) => <a key={source.id} href={source.url} target="_blank" rel="noreferrer"><strong>{source.title}</strong><span>{source.publisher} · {source.publishedOn}</span><small>{source.location}</small></a>)}</div></section>
     </main>
   </div>;
 }

@@ -112,34 +112,34 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
   const allEconomic = mergeEconomicResults(updates, briefs, events);
   const expectations = events.filter(item => item.id.startsWith("expected-")).map(item => ({ id: item.id, resultJa: item.resultJa, resultEn: item.resultEn }));
   const results = allEconomic.filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
-  const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
   const inPeriod = (at: string) => period === "all" || calendarDateKey(at, zone).startsWith(period);
   // Japanese view never shows English: a release without a checked Japanese title is left out there.
   const earnings = kind === "economic" ? [] : earningsResults(updates, briefs).filter(row => inPeriod(row.releasedAt) && (!ja || row.result.ja));
   if (!earnings.length && (kind === "earnings" || !results.length)) return <p role="status" className={styles.description}>{failed ? (ja ? "結果を取得できません。しばらくしてから再度お試しください。" : "Results are unavailable. Please try again shortly.") : (ja ? "この条件に該当する結果はありません。" : "No results match these filters.")}</p>;
-  const time = (at: string) => <time dateTime={at}>{calendarDateKey(at, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(at))} {zoneLabel}</small></time>;
+  // The date in green and the time under it, small and grey (owner, Nov 28 mocks); the page's time-zone switch names the zone.
+  const time = (at: string) => <time dateTime={at}>{calendarDateKey(at, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(at))}</small></time>;
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={earnings.map(row => {
       // The collapsed line names the key figures in one notation (owner, Nov 23); a row without figures keeps the release's title.
       const summary = headline(row.figures, lang);
       const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(japaneseMoney(row.title[lang])) : row.title[lang]}<small>{summary ? (ja ? noBreakUnits(summary) : summary) : ja ? noBreakUnits(japaneseMoney(row.result.ja ?? "")) : row.result.en}</small></span></>;
-      const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
+      const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name}</a>);
       const text = ja ? (row.body.ja && japaneseMoney(row.body.ja)) : row.body.en;
       // A row opens only when there is something more to read; "the company's
       // own release" alone is not a reason to expand (owner, Oct 14).
       if (!row.figures.length && !row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
-      return <li key={row.id}><details>
+      // Opened, the summary line under the heading is hidden: the table below has the same figures (owner, Nov 28).
+      return <li key={row.id}><details className={calendarStyles.earningsRow}>
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
-        <div className={calendarStyles.eventDetails}>
+        <div className={`${calendarStyles.eventDetails} ${calendarStyles.earningsDetails}`}>
           {!!row.figures.length && (() => {
-            // one table of the figures (項目 / 実績 / 前年比 / 市場予想との差, then the guidance) and the price move in one line (owner, Nov 23)
-            const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && !!b.facts.length && row.sources.some(source => source.url === b.url));
-            return <>
-              <EarningsResultTable ticker={row.ticker} releasedAt={row.releasedAt} facts={row.figures} lang={lang}
-                xPost={consensus => brief ? <>{ownerAccount && <XPostCopyButton brief={brief} lang={lang} consensus={consensus} />}</> : null} />
+            // one table (項目 / 実績 / 前年比, then 次の見通し), the price move in one line, then the copy for X (owner, Nov 28)
+            const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && !!b.facts.length && row.sources.some(source => source.url === b.url)) ?? null;
+            return <EarningsResultTable ticker={row.ticker} releasedAt={row.releasedAt} facts={row.figures} brief={brief} loaded={briefs} lang={lang}
+              xPost={copy => brief && ownerAccount ? <XPostCopyButton brief={brief} lang={lang} consensus={copy.consensus} consensusKey={copy.consensusKey} facts={copy.facts} /> : null}>
               <EarningsReaction ticker={row.ticker} releasedAt={row.releasedAt} lang={lang} />
-            </>;
+            </EarningsResultTable>;
           })()}
           {row.factsFrom === "post" && <p>{ja ? "数値は速報投稿によるもので、会社資料では未確認です。" : "Figures from a results flash post, not yet checked against the company release."}</p>}
           {!row.figures.length && !!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
@@ -158,9 +158,8 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
       const auto = events.find(item => item.id === event.id);
       // Withdrawing an automatic result is an operator action: the owner accounts only, never members (owner, Nov 24).
       const withdraw = auto && ownerAccount ? () => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); } : undefined;
-      return <EconomicReleaseItem key={event.id} lang={lang} title={event.title[lang]} time={time(event.releasedAt)} withdraw={withdraw}
-        view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang)}
-        when={(at, dateOnly) => new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short", ...(dateOnly ? {} : { hour: "2-digit", minute: "2-digit", hour12: false }) }).format(new Date(at)) + (dateOnly ? "" : ` ${zoneLabel}`)} />;
+      return <EconomicReleaseItem key={event.id} lang={lang} zone={zone} time={time(event.releasedAt)} withdraw={withdraw}
+        view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang)} />;
     })} />
   </section></>;
 }

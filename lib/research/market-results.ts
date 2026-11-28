@@ -2,7 +2,9 @@ import type { ResearchEvent } from './data';
 import providers from './providers.json' with { type: 'json' };
 import { deduplicateResearchEvents } from './deduplicate-events.ts';
 
-export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string; growth?: string };
+export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string; growth?: string;
+  /** An outlook's previous figure for the same period, as the release states it ("Previous FY27 $167.0"): 上方修正/下方修正 (Nov 28). */
+  priorGuidance?: string };
 export type ResultFact = { key:string; ja:string; en:string; value:string; comparisons?:ResultComparisons };
 export type ResultBrief = {
   id:string; researchId:string; kind:'earnings'|'economic'; ticker:string; period:string;
@@ -65,6 +67,10 @@ export function parseResultBriefs(value: unknown, max = 20): ResultBrief[] {
         // A growth rate the release itself states ("ARR grew 25% year-over-year"), kept as printed (Nov 23).
         const growth = (o.comparisons as Record<string, unknown>).growth;
         if (typeof growth === 'string' && /^[+-]\d{1,4}(?:\.\d)?%$/.test(growth)) comparisons.growth = growth;
+        // An outlook's previous figure for the same period, when the release states it (Nov 28): a plain amount or range, never a verdict.
+        const prior = (o.comparisons as Record<string, unknown>).priorGuidance;
+        if ((o.key as string).startsWith('guidance-') && typeof prior === 'string' && prior.length <= 40
+          && /^(?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT]?(?:-(?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT]?)?$/i.test(prior)) comparisons.priorGuidance = prior;
       }
       return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string,
         ...(Object.keys(comparisons).length ? {comparisons} : {})};
