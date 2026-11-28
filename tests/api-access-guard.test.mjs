@@ -7,6 +7,7 @@ import { join, relative } from 'node:path';
 // (sign-in, membership, owner, or the monitor's token). A new route that does neither fails here, so a PRO feature cannot ship open by accident.
 const PUBLIC = {
   'research/macro': 'public FRED rates, no member data',
+  'research/economic-history': 'public FRED history of the economic indicators for the calendar bars (FREE; no member data)',
   'research/capital-map': 'public reported 13F / issuer holdings for 資本マップ (FREE), the same data the page draws',
   'research/earnings-consensus': 'public EPS consensus (Twelve Data display licence, attribution shown)',
   'research/market/board': 'public market quotes (Twelve Data display licence)',

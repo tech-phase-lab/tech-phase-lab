@@ -4,6 +4,8 @@
  * expectation when we hold one, a short history, the next scheduled date and one official link. Nothing here makes up a number:
  * every value is read from a stored result; a value we cannot read is simply left out.
  */
+import { shiftMonth, shiftQuarter, shiftWeek, type Backfill } from "./economic-history.ts";
+
 type Lang = "ja" | "en";
 type Copy = { ja: string; en: string };
 export type ReleaseRow = { id: string; title: Copy; releasedAt: string; result: Copy; detail: Copy; sourceName: string; sourceUrl: string; sourceNameEn?: string };
@@ -296,12 +298,15 @@ export type ReleaseView = {
   key: string; known: boolean; unit: Unit | null; name: string; summary: string; value: Value | null; display: string | null;
   /** 「前月比」 / 「前期比年率」 next to a percentage; null for a count, an index or a rate. */
   label: string | null;
-  previous: { row: ReleaseRow; value: Value; display: string; revised?: boolean } | null;
+  /** The period before this one: a stored result (`row`), or FRED's figure (`row` null) when that period was not stored. */
+  previous: { row: ReleaseRow | null; value: Value; display: string; revised?: boolean } | null;
   /** The arrow against the previous figure, green when it moved the good way for this indicator, red the bad way (owner, Nov 28). */
   move: Move | null;
   forecast: { value: Value; display: string; vs: Comparison } | null;
-  /** Up to six releases, oldest first, this one last; `label` is the target period of a monthly release, null for a weekly one. */
-  history: { id: string; label: string | null; releasedAt: string; display: string; value: number; current: boolean }[];
+  /** Six consecutive periods (weeks, months or quarters) ending with this release, oldest first (owner, Nov 28). A period neither stored
+   * nor on FRED is an empty slot (value null) that keeps its label. Empty unless at least four periods have a value. `label` is the
+   * target period; null for a weekly release, whose bar is named by `releasedAt`'s date. */
+  history: HistoryBar[];
   /** The other figures, each 「名前 数字（変化）」, shown in one line. */
   others: OtherFigure[];
   /** Lines of a row that is not an indicator (an election): the rest of its result. */
@@ -322,7 +327,54 @@ function revisedPrevious(row: ReleaseRow, value: Value | null): Value | null {
   return null;
 }
 
-export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Expectation[], schedule: Scheduled[], now: number, lang: Lang): ReleaseView {
+export type HistoryBar = { id: string; label: string | null; releasedAt: string; display: string | null; value: number | null; current: boolean; source: "stored" | "fred" | null };
+
+const MONTH_LABEL_EN = MONTHS_EN.map(month => month.slice(0, 3));
+/** The period a stored result is for: the week-ending day of jobless claims, the quarter of GDP, else the month (ISM's id carries the
+ * month it is released in, one after the month it covers). Null for FOMC (meetings, not periods). */
+export function periodOfRow(id: string): { frequency: "week" | "month" | "quarter"; period: string } | null {
+  const key = indicatorKey(id);
+  if (key === "fomc") return null;
+  if (key === "claims") { const m = /^claims-(\d{4}-\d{2}-\d{2})/.exec(id); return m ? { frequency: "week", period: m[1] } : null; }
+  if (key === "gdp") { const m = /^gdp-(\d{4})-q([1-4])/.exec(id); return m ? { frequency: "quarter", period: `${m[1]}-Q${m[2]}` } : null; }
+  const m = /^[a-z]+-(\d{4}-\d{2})$/.exec(id);
+  if (!m) return null;
+  return { frequency: "month", period: key === "ism" ? shiftMonth(m[1], -1) : m[1] };
+}
+const shiftPeriod = (frequency: "week" | "month" | "quarter", period: string, n: number) => frequency === "week" ? shiftWeek(period, n) : frequency === "month" ? shiftMonth(period, n) : shiftQuarter(period, n);
+function periodText(frequency: "week" | "month" | "quarter", period: string, lang: Lang) {
+  if (frequency === "week") return null;
+  if (frequency === "quarter") { const q = Number(period.slice(6)); return lang === "ja" ? `${q * 3 - 2}〜${q * 3}月期` : `Q${q}`; }
+  const month = Number(period.slice(5, 7));
+  return lang === "ja" ? `${month}月` : MONTH_LABEL_EN[month - 1];
+}
+
+/** The bars (owner, Nov 28): six consecutive periods ending with this release. Each earlier period is the site's stored result when it
+ * has one, else FRED's figure, else an empty slot. This release is always the site's own result. */
+function historyBars(row: ReleaseRow, value: Value, stored: ReleaseRow[], backfill: Backfill, lang: Lang): HistoryBar[] {
+  const key = indicatorKey(row.id), at = periodOfRow(row.id);
+  if (!at) {
+    // FOMC: the last meetings stored, no periods to fill.
+    return [...stored, row].map(item => ({ item, v: readValue(item.id, item.result) })).filter(entry => entry.v).slice(-6)
+      .map(({ item, v }) => ({ id: item.id, label: periodLabel(item.title, lang), releasedAt: item.releasedAt, display: barText(item.id, v!, lang), value: v!.value, current: item.id === row.id, source: "stored" as const }));
+  }
+  const fred = new Map((backfill[key] ?? []).map(point => [point.period, point]));
+  return [-5, -4, -3, -2, -1, 0].map(n => {
+    const period = shiftPeriod(at.frequency, at.period, n);
+    const label = periodText(at.frequency, period, lang);
+    // a weekly bar is named by its release day: the stored one's, else the usual Thursday after the week ends (Saturday + 5 days)
+    const usual = at.frequency === "week" ? new Date(Date.parse(`${period}T12:30:00Z`) + 5 * 86_400_000).toISOString() : row.releasedAt;
+    if (n === 0) return { id: row.id, label, releasedAt: row.releasedAt, display: barText(row.id, value, lang), value: value.value, current: true, source: "stored" as const };
+    const own = stored.find(other => periodOfRow(other.id)?.period === period && readValue(other.id, other.result));
+    const ownValue = own ? readValue(own.id, own.result) : null;
+    if (own && ownValue) return { id: own.id, label, releasedAt: own.releasedAt, display: barText(own.id, ownValue, lang), value: ownValue.value, current: false, source: "stored" as const };
+    const point = fred.get(period);
+    if (point) return { id: `${key}-${period}-fred`, label, releasedAt: usual, display: barText(row.id, { value: point.value, decimals: point.decimals }, lang), value: point.value, current: false, source: "fred" as const };
+    return { id: `${key}-${period}-none`, label, releasedAt: usual, display: null, value: null, current: false, source: null };
+  });
+}
+
+export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Expectation[], schedule: Scheduled[], now: number, lang: Lang, backfill: Backfill = {}): ReleaseView {
   const key = indicatorKey(row.id), spec = INDICATORS[key];
   const value = readValue(row.id, row.result);
   const at = Date.parse(row.releasedAt);
@@ -330,13 +382,17 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   const earlier = sameIndicator.filter(other => Date.parse(other.releasedAt) < at);
   const lastRead = earlier.toReversed().find(other => readValue(other.id, other.result));
   const revised = revisedPrevious(row, value);
-  const previousRow = revised ? row : lastRead;
-  const previousValue = revised ?? (previousRow ? readValue(previousRow.id, previousRow.result) : null);
+  // 前回 is the period just before this one (owner, Nov 28: no skipped month): the stated revision for claims, else the stored result of
+  // that period, else FRED's figure for it; a row without periods (FOMC) takes the last stored result.
+  const at0 = periodOfRow(row.id);
+  const before = at0 ? shiftPeriod(at0.frequency, at0.period, -1) : null;
+  const storedBefore = before ? earlier.find(other => periodOfRow(other.id)?.period === before && readValue(other.id, other.result)) : lastRead;
+  const fredBefore = before && !storedBefore ? (backfill[key] ?? []).find(point => point.period === before) ?? null : null;
+  const previousRow = revised ? row : storedBefore;
+  const previousValue = revised ?? (previousRow ? readValue(previousRow.id, previousRow.result) : fredBefore ? { value: fredBefore.value, decimals: fredBefore.decimals } : null);
   const expected = expectations.find(item => item.id === `expected-${row.id}`);
   const forecastValue = expected && spec ? readValue(row.id, { ja: expected.resultJa, en: expected.resultEn }) : null;
-  // The bars: the stored results only, up to six, oldest on the left (owner, Nov 28); two or more make a chart.
-  const history = value ? [...earlier, row].map(item => ({ item, v: readValue(item.id, item.result) })).filter(entry => entry.v).slice(-6)
-    .map(({ item, v }) => ({ id: item.id, label: periodLabel(item.title, lang), releasedAt: item.releasedAt, display: barText(item.id, v!, lang), value: v!.value, current: item.id === row.id })) : [];
+  const history = value ? historyBars(row, value, earlier, backfill, lang) : [];
   const latest = sameIndicator.at(-1)?.id === row.id;
   const next = spec && latest ? schedule.filter(item => indicatorKey(item.id) === key && Date.parse(item.at) > Math.max(now, at)).toSorted((a, b) => Date.parse(a.at) - Date.parse(b.at))[0] ?? null : null;
   const summaryText = cleanResult(row.result[lang]);
@@ -355,11 +411,12 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   }
   const forecast = value && forecastValue ? { value: forecastValue, display: formatValue(row.id, forecastValue, lang), vs: compare(value, forecastValue) } : null;
   const others = spec && value ? [...otherFigures(row, lastRead, lang), ...(forecast ? [{ label: lang === "ja" ? "予想" : "Forecast", value: forecast.display, note: null }] : [])] : [];
-  const shownHistory = history.length >= 2 ? history : [];
+  // Fewer than four values: no chart, only the figures (owner, Nov 28: no two- or three-bar charts).
+  const shownHistory = history.filter(bar => bar.value !== null).length >= 4 ? history : [];
   return {
     key, known: !!spec, unit: spec?.unit ?? null, name: releaseName(row, lang), summary, value, display: value ? formatValue(row.id, value, lang) : null,
     label: spec && spec.unit === "pct" ? spec.label[lang] : null,
-    previous: previousRow && previousValue ? { row: previousRow, value: previousValue, display: formatValue(previousRow.id, previousValue, lang), ...(revised ? { revised: true } : {}) } : null,
+    previous: previousValue ? { row: previousRow ?? null, value: previousValue, display: formatValue(row.id, previousValue, lang), ...(revised ? { revised: true } : {}) } : null,
     move, forecast, history: shownHistory, others, facts, about: spec ? ABOUT[key]?.[lang] ?? spec.about[lang] : null, next, link,
     expandable: !!(value || facts.length || spec || shownHistory.length || next),
   };

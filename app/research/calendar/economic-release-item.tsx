@@ -48,7 +48,7 @@ export default function EconomicReleaseItem({ view, time, lang, zone, withdraw }
   </span>;
   // Nothing to open but a link (owner, Nov 26: "開いて出典だけ、をなくす"): a plain row without ＋. The owner accounts still open it to withdraw.
   if (!view.expandable && !withdraw) return <li><div className={calendarStyles.plainRow}>{time}{name}</div></li>;
-  const values = view.history.map(item => item.value);
+  const values = view.history.flatMap(item => item.value === null ? [] : [item.value]);
   const low = Math.min(...values), high = Math.max(...values);
   return <li><details className={calendarStyles.release}>
     <summary>{time}{name}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
@@ -61,10 +61,11 @@ export default function EconomicReleaseItem({ view, time, lang, zone, withdraw }
           : <span><span data-tone={move.tone}>{arrows[move.direction]}</span> {move.size}</span>)}
         {view.previous && move?.direction !== "same" && <span>{ja ? "前回" : "Prev"} {view.previous.display}</span>}
       </p>}
-      {view.history.length > 1 && <ol className={calendarStyles.releaseBars} aria-label={ja ? "過去の推移" : "Recent releases"}>
-        {view.history.map(item => <li key={item.id} data-current={item.current || undefined}>
-          <b>{item.display}</b>
-          <i style={{ height: `${high === low ? 40 : Math.round(10 + (item.value - low) / (high - low) * 50)}px` }} aria-hidden="true" />
+      {!!view.history.length && <ol className={calendarStyles.releaseBars} aria-label={ja ? "過去の推移" : "Recent releases"}>
+        {view.history.map(item => <li key={item.id} data-current={item.current || undefined} data-empty={item.value === null || undefined}>
+          {/* a period neither stored nor on FRED keeps its place and its label, with no bar (owner, Nov 28: never close the gap) */}
+          {item.value !== null && <><b>{item.display}</b>
+            <i style={{ height: `${high === low ? 40 : Math.round(10 + (item.value - low) / (high - low) * 50)}px` }} aria-hidden="true" /></>}
           <small>{item.label ?? monthDay(item.releasedAt, zone)}</small>
         </li>)}
       </ol>}

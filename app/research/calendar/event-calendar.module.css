@@ -94,7 +94,8 @@
 .releaseHead strong{color:var(--text);font-size:28px;font-weight:700;line-height:1.2;white-space:nowrap}
 .releaseHead span{white-space:nowrap}
 .releaseBars{display:flex;align-items:flex-end;gap:6px;max-width:560px;list-style:none;margin:0 0 10px;padding:0}
-.releaseBars li{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:11px}
+/* One fixed width, the width of six bars, from the left (owner, Nov 28): fewer bars never get wider. */
+.releaseBars li{flex:0 0 calc((100% - 30px) / 6);min-width:0;align-self:stretch;justify-content:flex-end;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:11px}
 .releaseBars i{display:block;width:100%;border-radius:2px 2px 0 0;background:#2b3742}
 .releaseBars li[data-current] i{background:var(--mint)}.releaseBars li[data-current] b,.releaseBars li[data-current] small{color:var(--mint)}
 .releaseBars b{font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}.releaseBars small{font-size:11px;white-space:nowrap}
@@ -107,7 +108,7 @@
 .releaseSource{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px 10px;margin-left:auto}
 .releaseDetails .releaseFoot a{min-height:32px;margin:0;font-size:12px}
 .withdraw{padding:2px 8px;min-height:28px;border:1px solid #4a3434;border-radius:4px;background:transparent;color:#c99;font:inherit;font-size:10px;cursor:pointer}
-@media(max-width:600px){.releaseValue{font-size:15px}.releaseHead strong{font-size:26px}.releaseBars{gap:4px}.releaseBars b,.releaseBars small{font-size:10px}}
+@media(max-width:600px){.releaseValue{font-size:15px}.releaseHead strong{font-size:26px}.releaseBars{gap:4px}.releaseBars li{flex-basis:calc((100% - 20px) / 6)}.releaseBars b,.releaseBars small{font-size:10px}}
 .earningsDetails>a+a{margin-left:16px}
 .releaseName{flex:1 1 0;min-width:9em}
 @media(max-width:600px){.releaseName{min-width:7.5em}}

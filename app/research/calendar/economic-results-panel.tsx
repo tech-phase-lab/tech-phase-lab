@@ -3,7 +3,8 @@
 import { noBreakUnits } from "@/lib/research/no-break-units";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ResultBrief } from "@/lib/research/market-results";
-import { calendarDateKey, calendarEvents, dateOnlyEvents } from "@/lib/research/calendar";
+import { calendarDateKey, calendarEvents, claimsReleases, dateOnlyEvents } from "@/lib/research/calendar";
+import { parseBackfill, type Backfill } from "@/lib/research/economic-history";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
 import { releaseView, type Scheduled } from "@/lib/research/economic-release-view";
@@ -27,6 +28,8 @@ import { japaneseMoney } from "@/lib/research/money-ja";
 const economicSchedule: Scheduled[] = [
   ...calendarEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: event.startsAt })),
   ...dateOnlyEvents.filter(event => event.kind === "economic").map(event => ({ id: event.id, at: `${event.date}T12:00:00-05:00`, dateOnly: true })),
+  // weekly jobless claims: 次回 for a weekly indicator too (owner, Nov 28)
+  ...claimsReleases,
 ];
 
 /** One copy of each result: the live feed's, then the stored ones of every month read so far; one row per company and quarter. */
@@ -63,6 +66,15 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
   const [failed, setFailed] = useState(false);
   // "Next release" is the next scheduled date after the page opened.
   const [openedAt] = useState(() => Date.now());
+  // Earlier releases from FRED for the opened rows' bars (owner, Nov 28); the stored results win for any period they hold.
+  const [backfill, setBackfill] = useState<Backfill>({});
+  useEffect(() => {
+    if (kind === "earnings") return;
+    const controller = new AbortController();
+    fetch("/api/research/economic-history", { signal: controller.signal }).then(response => response.ok ? response.json() : null)
+      .then(body => { if (body) setBackfill(parseBackfill(body.series)); }).catch(() => {});
+    return () => controller.abort();
+  }, [kind]);
   const [loaded, setLoaded] = useState(initial !== null);
   const drawn = initial !== null;
   useEffect(() => {
@@ -159,7 +171,7 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
       // Withdrawing an automatic result is an operator action: the owner accounts only, never members (owner, Nov 24).
       const withdraw = auto && ownerAccount ? () => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); } : undefined;
       return <EconomicReleaseItem key={event.id} lang={lang} zone={zone} time={time(event.releasedAt)} withdraw={withdraw}
-        view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang)} />;
+        view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang, backfill)} />;
     })} />
   </section></>;
 }

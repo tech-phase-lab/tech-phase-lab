@@ -45,6 +45,12 @@ const blsReleases = [
   ["cpi", "2026-12-10T08:30:00-05:00"],
   ["ppi", "2026-12-15T08:30:00-05:00"],
 ];
+/** Weekly jobless claims (U.S. Department of Labor), every Thursday at 8:30 a.m. ET, for the opened result's 「次回」 line (owner, Nov 28:
+ * claims had no next date). Only the regular Thursdays before the year-end holiday weeks are listed; a holiday-shifted week is added
+ * from DOL's schedule when it is checked. These are not calendar rows. */
+export const claimsReleases: { id: string; at: string }[] = ["2026-12-03", "2026-12-10", "2026-12-17"]
+  .map(day => ({ id: `claims-release-${day}`, at: `${day}T08:30:00-05:00` }));
+
 export const calendarEvents: CalendarEvent[] = [
   // IBM official announcement checked on 2026-10-18 (JST); owner requested a 50th company.
   {
