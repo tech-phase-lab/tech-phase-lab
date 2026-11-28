@@ -55,7 +55,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
   assert.equal(new Set(calendarEvents.map((event) => event.id)).size, calendarEvents.length);
   // ADP's employment report (Wednesday, 8:15 a.m. ET, two days before the BLS jobs report) is on the calendar (owner, Nov 4).
   const adp = calendarEvents.filter((event) => event.id.startsWith("adp-"));
-  assert.deepEqual(adp.map((event) => event.startsAt), ["2026-11-04T08:15:00-05:00", "2026-12-02T08:15:00-05:00"]);
+  assert.deepEqual(adp.map((event) => event.startsAt), ["2026-11-04T08:15:00-05:00", "2026-12-02T08:15:00-05:00", "2027-01-06T08:15:00-05:00", "2027-02-03T08:15:00-05:00"]);
   for (const event of adp) {
     assert.equal(event.kind, "economic");
     const jobs = calendarEvents.find((row) => row.id.startsWith("jobs-") && Date.parse(row.startsAt) > Date.parse(event.startsAt));
@@ -76,10 +76,10 @@ test("registered schedules are ordered, unique and linked to official sources", 
 
 test("PCE schedules and actuals preserve official periods, Eastern DST and price measures", () => {
   const pce = calendarEvents.filter(event => event.id.startsWith("pce-"));
-  assert.deepEqual(pce.map(event => event.id), ["pce-2026-08", "pce-2026-09", "pce-2026-10", "pce-2026-11"]);
+  assert.deepEqual(pce.map(event => event.id), ["pce-2026-08", "pce-2026-09", "pce-2026-10", "pce-2026-11", "pce-2026-12", "pce-2027-01"]);
   const time = date => new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit" }).format(new Date(date));
-  assert.deepEqual(pce.map(event => time(event.startsAt)), ["21:30", "21:30", "22:30", "22:30"]);
-  assert.equal(selectCalendarEvents(pce, "economic", "upcoming", Date.parse("2026-09-30T14:00Z")).length, 3);
+  assert.deepEqual(pce.map(event => time(event.startsAt)), ["21:30", "21:30", "22:30", "22:30", "22:30", "22:30"]);
+  assert.equal(selectCalendarEvents(pce, "economic", "upcoming", Date.parse("2026-09-30T14:00Z")).length, 5);
   const result = economicResults.find(event => event.id === "pce-2026-08");
   assert.equal(result.sourceName, "BEA");
   assert.equal(result.releasedAt, pce[0].startsAt);
@@ -209,7 +209,7 @@ test("FOMC: the October meeting has its clock time; the December meeting stays d
   assert.equal(timed.startsAt, "2026-10-28T14:00:00-04:00");
   assert.equal(timed.kind, "economic");
   const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
-  assert.deepEqual(fomc.map((event) => event.date), ["2026-12-09"]);
+  assert.deepEqual(fomc.map((event) => event.date), ["2026-12-09", "2027-01-27"], "the Fed's calendar, read 2026-11-28");
   // The U.S. midterm elections (Nov 3, 2026) are an economic-calendar date, shown by date only, until the New York day ends.
   const midterm = dateOnlyEvents.find((event) => event.id === "us-midterm-2026-11-03");
   assert.ok(midterm && midterm.kind === "economic" && midterm.date === "2026-11-03" && !("startsAt" in midterm));
@@ -217,7 +217,7 @@ test("FOMC: the October meeting has its clock time; the December meeting stays d
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-11-04T00:42:00Z")).some((event) => event.id === midterm.id), true, "still shown on the evening of Nov 3 in New York (the morning of Nov 4 in Japan)");
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-11-04T06:00:00Z")).some((event) => event.id === midterm.id), false, "gone once Nov 4 begins in New York");
   assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
-  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 3);
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
 });
 
