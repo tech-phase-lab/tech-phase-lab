@@ -19,9 +19,11 @@ function useConsensus(ticker: string, at: string, facts: ResultFact[]): { consen
     if (!signature) return;
     const controller = new AbortController();
     (async () => {
-      for (const part of signature.split("|")) {
+      const parts = signature.split("|");
+      for (const part of parts) {
         const [key, value] = part.split(":");
-        const query = new URLSearchParams({ ticker, at, eps: value });
+        const other = parts.find(p => p !== part)?.split(":")[1];
+        const query = new URLSearchParams({ ticker, at, eps: value, ...(other ? { other } : {}) });
         const body = await fetch(`/api/research/earnings-consensus?${query}`, { signal: controller.signal }).then(r => r.ok ? r.json() : null).catch(() => null);
         if (body?.consensus) { setFound({ consensus: body.consensus, key, for: signature }); return; }
       }

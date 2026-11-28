@@ -40,9 +40,10 @@ SAME_EVENT_SECONDS = 36 * 3600
 
 
 class Client:
-    def __init__(self, per_second=5.0):
+    def __init__(self, per_second=5.0, user_agent=None):
         self.gap = 1.0 / per_second
         self.last = 0.0
+        self.user_agent = user_agent or USER_AGENT  # the monitor passes its own SEC User-Agent (earnings_prior_backfill.py)
 
     def get(self, url, attempts=3):
         for attempt in range(attempts):
@@ -50,7 +51,7 @@ class Client:
             if wait > 0:
                 time.sleep(wait)
             self.last = time.monotonic()
-            request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT, 'Accept-Encoding': 'gzip'})
+            request = urllib.request.Request(url, headers={'User-Agent': self.user_agent, 'Accept-Encoding': 'gzip'})
             try:
                 with urllib.request.urlopen(request, timeout=30) as response:
                     body = response.read()
