@@ -53,6 +53,11 @@ class Fomc(unittest.TestCase):
             self.assertIsNone(ind.parse_fomc(bad, MEETING))
         self.assertIsNone(ind.parse_fomc(FOMC_TEXT, date(2026, 12, 9)), "the page must be the statement of that meeting")
 
+    def test_the_meetings_follow_the_feds_2027_calendar(self):
+        # federalreserve.gov/monetarypolicy/fomccalendars.htm (updated Nov 18, 2026): seven 2027 meetings, none in December.
+        meetings = ind.load_config()["fomcMeetings"]
+        self.assertEqual([m for m in meetings if m.startswith("2027")], ["2027-01-27", "2027-03-17", "2027-04-28", "2027-06-09", "2027-07-28", "2027-09-15", "2027-10-27"])
+
     def test_fractions(self):
         self.assertEqual([ind.fraction(x) for x in ("3-3/4", "4", "1/4", "4-1/4", "0")], [3.75, 4.0, 0.25, 4.25, 0.0])
         self.assertIsNone(ind.fraction("four"))
@@ -74,6 +79,23 @@ class Gdp(unittest.TestCase):
         self.assertEqual(ind.gdp_payload(r, "u", NOW)["resultJa"], "実質GDP 前期比年率-0.5%")
         self.assertIsNone(ind.parse_gdp(GDP_TEXT.replace("3.4 percent", "34.0 percent")))
         self.assertIsNone(ind.parse_gdp(GDP_TEXT.replace("EMBARGOED UNTIL RELEASE AT", "RELEASED")))
+
+    def test_the_second_and_third_estimates_are_found_and_read(self):
+        # Nov 28: BEA's addresses for the later estimates carry more words, and the third estimate's is cut short with no year.
+        links = {"/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026": ("2026", "second", "3", "2026"),
+                 "/news/2026/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-2nd": ("2026", "third", "2", None),
+                 "/news/2026/gdp-advance-estimate-3rd-quarter-2026": ("2026", "advance", "3", "2026"),
+                 "/news/2026/gdp-advance-estimate-4th-quarter-and-year-2025": ("2026", "advance", "4", "2025")}
+        for link, groups in links.items():
+            self.assertEqual(ind.GDP_LINK.fullmatch(link).groups(), groups, link)
+        self.assertIsNone(ind.GDP_LINK.fullmatch("/news/2026/gross-domestic-product-county-and-personal-income-county-2024"))
+        # The second estimate's page sets "GDP" in bold: its text reads "(GDP )".
+        second = ("EMBARGOED UNTIL RELEASE AT 8:30 a.m. EST, Wednesday, November 25, 2026 Real gross domestic product  (GDP</strong>) increased  at an annual rate "
+                  "of 4.3 percent</a> in the third quarter of 2026 (July,  August, and September), according to the second estimate released today")
+        r = ind.parse_gdp(ind.page_text(second))
+        self.assertEqual((r["value"], r["quarter"], r["year"], r["estimate"]), (4.3, 3, 2026, "second"))
+        self.assertEqual(r["at"], datetime(2026, 11, 25, 13, 30, tzinfo=timezone.utc), "8:30 a.m. EST")
+        self.assertEqual(ind.gdp_payload(r, "u", NOW)["id"], "gdp-2026-q3-second", "the id the calendar's verified row uses")
 
 
 class Retail(unittest.TestCase):
@@ -139,6 +161,24 @@ class Running(unittest.TestCase):
         self.assertEqual(ind.run_once(self.path, now=NOW + timedelta(minutes=5), config=self.config, transport=self.transport(pages)), 0, "never stored twice")
         self.assertNotIn("https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm", self.calls, "a stored statement is not fetched again")
         self.assertNotIn("https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026", self.calls)
+
+    def test_the_second_estimate_and_a_third_estimate_without_a_year_are_stored(self):
+        second = "/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026"
+        third = "/news/2027/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-4th"
+        pages = {
+            "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm": "",
+            "https://www.bea.gov/news/current-releases": f'<a href="{second}">GDP</a> <a href="{third}">GDP</a>',
+            "https://www.bea.gov" + second: "<main>EMBARGOED UNTIL RELEASE AT 8:30 a.m. EST, Wednesday, November 25, 2026 Real gross domestic product (<strong>GDP</strong>) "
+                                             "increased at an annual rate of 4.3 percent in the third quarter of 2026 (July, August, and September), according to the second estimate</main>",
+            "https://www.bea.gov" + third: "<main>EMBARGOED UNTIL RELEASE AT 8:30 a.m. EDT, Wednesday, March 31, 2027 Real gross domestic product (GDP) increased at an annual "
+                                            "rate of 1.9 percent in the fourth quarter of 2026 (October, November, and December), according to the third estimate</main>",
+            "https://www.census.gov/retail/sales.html": "",
+        }
+        # read after both releases: a result dated after "now" is not stored
+        self.assertEqual(ind.run_once(self.path, now=datetime(2027, 3, 31, 13, 0, tzinfo=timezone.utc), config=self.config, transport=self.transport(pages)), 2)
+        stored = self.stored()
+        self.assertEqual(sorted(stored), ["gdp-2026-q3-second", "gdp-2026-q4-third"], "a fourth quarter's third estimate comes out the next year")
+        self.assertEqual(stored["gdp-2026-q3-second"][1]["resultJa"], "実質GDP 前期比年率+4.3%")
 
     def test_before_the_release_the_statement_is_not_there_and_that_is_not_a_failure(self):
         self.assertEqual(ind.run_once(self.path, now=NOW, config=self.config, transport=self.transport({"https://www.bea.gov/news/current-releases": "", "https://www.census.gov/retail/sales.html": ""})), 0)

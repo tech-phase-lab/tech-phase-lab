@@ -24,8 +24,9 @@ export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titl
 export type EventResult = { id: string; titleJa: string; titleEn: string; sourceName: string; releasedAt: string; resultJa: string; resultEn: string; detailJa: string; detailEn: string; sourceUrl: string; sources: { publisher: string; title: string; url: string }[]; verifiedOn: string };
 const eventText = (value: unknown, limit = 2000) => { if (typeof value !== "string" || !value.trim() || value.length > limit || value.includes("\0")) throw Error("Invalid event result"); return value; };
 const eventUrl = (value: unknown) => { const url = new URL(eventText(value, 2000)); if (url.protocol !== "https:" || url.username || url.password) throw Error("Invalid event result"); return url.href; };
-/** A result read from an official page, or from the issuer's own release, stands on one source; every other result needs two outlets (owner, Nov 5). */
-const SINGLE_SOURCE_PUBLISHERS = new Set(["Federal Reserve", "BEA", "Census Bureau", "U.S. Department of Labor", "ADP（公式発表）", "ISM（公式発表）"]);
+/** A result read from an official page, or from the issuer's own release, stands on one source; every other result needs two outlets (owner, Nov 5).
+ * BLS: the CPI, PPI and jobs results kept from its official releases (scripts/research/economic_archive.py, Nov 28). */
+const SINGLE_SOURCE_PUBLISHERS = new Set(["Federal Reserve", "BEA", "BLS", "Census Bureau", "U.S. Department of Labor", "ADP（公式発表）", "ISM（公式発表）"]);
 export function parseEventResults(value: unknown): EventResult[] {
   if (!Array.isArray(value) || value.length > 20) throw Error("Invalid event results");
   return value.map(raw => {

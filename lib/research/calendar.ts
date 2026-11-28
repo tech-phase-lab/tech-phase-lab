@@ -27,6 +27,8 @@ export type DateOnlyCalendarEvent = {
 
 export const calendarReviewedOn = "2026-10-31";
 const blsUrl = "https://www.bls.gov/schedule/2026/";
+// BLS's 2027 schedule (bls.gov/schedule/2027/home.htm, read 2026-11-28) for the releases from January 2027.
+const blsUrl2027 = "https://www.bls.gov/schedule/2027/home.htm";
 const labels: Record<string, Copy> = {
   jobs: { ja: "米国雇用統計", en: "U.S. employment report" },
   cpi: { ja: "米国CPI（消費者物価指数）", en: "U.S. Consumer Price Index" },
@@ -44,12 +46,34 @@ const blsReleases = [
   ["jobs", "2026-12-04T08:30:00-05:00"],
   ["cpi", "2026-12-10T08:30:00-05:00"],
   ["ppi", "2026-12-15T08:30:00-05:00"],
+  // BLS 2027 schedule (blsUrl2027), checked 2026-11-28
+  ["jobs", "2027-01-08T08:30:00-05:00"],
+  ["cpi", "2027-01-13T08:30:00-05:00"],
+  ["ppi", "2027-01-14T08:30:00-05:00"],
+  ["jobs", "2027-02-05T08:30:00-05:00"],
+  ["cpi", "2027-02-11T08:30:00-05:00"],
+  ["ppi", "2027-02-12T08:30:00-05:00"],
 ];
 /** Weekly jobless claims (U.S. Department of Labor), every Thursday at 8:30 a.m. ET, for the opened result's 「次回」 line (owner, Nov 28:
- * claims had no next date). Only the regular Thursdays before the year-end holiday weeks are listed; a holiday-shifted week is added
- * from DOL's schedule when it is checked. These are not calendar rows. */
-export const claimsReleases: { id: string; at: string }[] = ["2026-12-03", "2026-12-10", "2026-12-17"]
+ * claims had no next date). DOL's schedule (oui.doleta.gov/unemploy/claims_arch.asp, read 2026-11-28) lists the only releases on a day
+ * other than Thursday: Wednesday, November 25, 2026, then Wednesday, November 10 and November 24, 2027. So every Thursday from
+ * December 3, 2026 through February 25, 2027 is a release day (December 24 and 31 included: the holidays fall on the Fridays).
+ * All before daylight time begins (March 14, 2027), so 8:30 EST. These are not calendar rows. */
+export const claimsReleases: { id: string; at: string }[] = Array.from({ length: 13 }, (_, week) => new Date(Date.UTC(2026, 11, 3 + week * 7)).toISOString().slice(0, 10))
   .map(day => ({ id: `claims-release-${day}`, at: `${day}T08:30:00-05:00` }));
+
+/** The next release dates of the indicators that have no calendar row, for the opened result's 「次回」 line. Not calendar rows.
+ * - Retail sales: the Census Bureau's release schedule (census.gov/retail/release_schedule.html, read 2026-11-28), 8:30 a.m. ET.
+ * - GDP: BEA's release schedules for 2026 and 2027 (bea.gov/news/schedule/full and /news/schedule/next-year, read 2026-11-28):
+ *   Q3 third estimate Dec 23, Q4 advance Jan 28, Q4 second Feb 25, each at 8:30 a.m. ET.
+ * - ISM manufacturing PMI: 10:00 a.m. ET on the first business day of the month. December 1, 2026 is stated in ISM's October report
+ *   (PR Newswire, Nov 2); January 4 (Jan 1 is a holiday, Jan 2-3 a weekend) and February 1, 2027 follow that rule, as ISM's own
+ *   calendar page could not be read (it answers a captcha). */
+export const indicatorReleases: { id: string; at: string }[] = [
+  ["retail", "2026-12-16T08:30:00-05:00"], ["retail", "2027-01-15T08:30:00-05:00"], ["retail", "2027-02-17T08:30:00-05:00"],
+  ["gdp", "2026-12-23T08:30:00-05:00"], ["gdp", "2027-01-28T08:30:00-05:00"], ["gdp", "2027-02-25T08:30:00-05:00"],
+  ["ism", "2026-12-01T10:00:00-05:00"], ["ism", "2027-01-04T10:00:00-05:00"], ["ism", "2027-02-01T10:00:00-05:00"],
+].map(([key, at]) => ({ id: `${key}-release-${at.slice(0, 10)}`, at }));
 
 export const calendarEvents: CalendarEvent[] = [
   // IBM official announcement checked on 2026-10-18 (JST); owner requested a 50th company.
@@ -59,12 +83,14 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://newsroom.ibm.com/2026-10-07-ibm-to-announce-third-quarter-2026-financial-results",
     note: { ja: "説明会の開始予定です。決算資料は説明会前に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. The earnings release is due before the webcast; no exact publication time was announced." },
   },
-  ...blsReleases.map(([type, startsAt]) => ({ id: `${type}-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: labels[type], startsAt, sourceTimezone: "America/New_York", sourceName: "BLS", sourceUrl: blsUrl })),
+  ...blsReleases.map(([type, startsAt]) => ({ id: `${type}-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: labels[type], startsAt, sourceTimezone: "America/New_York", sourceName: "BLS", sourceUrl: startsAt.startsWith("2027") ? blsUrl2027 : blsUrl })),
   // ADP National Employment Report (owner, Nov 4: it was missing from the indicator calendar). It comes on the Wednesday two days before the BLS jobs
-  // report, at 8:15 a.m. ET (Aug 5, Sep 2 and Sep 30 were confirmed on ADP's release pages). The two dates below follow that rhythm from the BLS dates above.
-  ...[["10", "2026-11-04T08:15:00-05:00"], ["11", "2026-12-02T08:15:00-05:00"]].map(([month, startsAt]) => ({
+  // report, at 8:15 a.m. ET (Aug 5, Sep 2 and Sep 30 were confirmed on ADP's release pages). Nov 4 and Dec 2 are stated in ADP's own
+  // September and October releases ("will be released on ..."); Jan 6 and Feb 3, 2027 follow the same rhythm from BLS's 2027 dates
+  // (Jan 8, Feb 5), as ADP's calendar page is drawn by script and could not be read (2026-11-28).
+  ...[["10", "2026-11-04T08:15:00-05:00"], ["11", "2026-12-02T08:15:00-05:00"], ["12", "2027-01-06T08:15:00-05:00"], ["1", "2027-02-03T08:15:00-05:00"]].map(([month, startsAt]) => ({
     id: `adp-${startsAt.slice(0, 10)}`, kind: "economic" as const,
-    title: { ja: `ADP雇用統計（${month}月）`, en: `ADP employment report (${month === "10" ? "October" : "November"})` },
+    title: { ja: `ADP雇用統計（${month}月）`, en: `ADP employment report (${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][Number(month) - 1]})` },
     startsAt, sourceTimezone: "America/New_York", sourceName: "ADP", sourceUrl: "https://mediacenter.adp.com/",
     note: { ja: "民間企業の雇用者数の変化です。BLSの雇用統計（金曜）の2日前、米東部時間8:15に発表されます。発表日は例年の並びに合わせています。", en: "Change in private-sector employment. It comes two days before the BLS jobs report, at 8:15 a.m. ET; the date follows ADP's usual rhythm." },
   })),
@@ -73,6 +99,9 @@ export const calendarEvents: CalendarEvent[] = [
     ["2026-09", "2026-10-29T08:30:00-04:00"],
     ["2026-10", "2026-11-25T08:30:00-05:00"],
     ["2026-11", "2026-12-23T08:30:00-05:00"],
+    // BEA's 2027 schedule (bea.gov/news/schedule/next-year, read 2026-11-28)
+    ["2026-12", "2027-01-28T08:30:00-05:00"],
+    ["2027-01", "2027-02-25T08:30:00-05:00"],
   ].map(([period, startsAt]) => ({
     id: `pce-${period}`, kind: "economic" as const,
     title: { ja: `米国PCE物価指数（${Number(period.slice(5))}月）`, en: `U.S. PCE price index (${period})` },
@@ -401,7 +430,9 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     sourceUrl: "https://www.usa.gov/election-day", checkedOn: "2026-11-04",
     note: { ja: "連邦議会（下院の全議席と上院の一部）などの選挙日です。投票の締め切りと開票の時刻は州ごとに異なるため、日付のみ掲載しています。結果は日本時間の翌日以降に出そろいます。", en: "Election day for Congress (all House seats and part of the Senate) and other offices. Poll-closing and counting times differ by state, so only the date is shown." },
   },
-  ...["2026-12-09"].map((date): DateOnlyCalendarEvent => ({
+  // Final days from the Fed's calendar (federalreserve.gov/monetarypolicy/fomccalendars.htm, last updated Nov 18, read 2026-11-28):
+  // December 8-9, 2026, then January 26-27, 2027 (2027 has seven meetings).
+  ...["2026-12-09", "2027-01-27"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
     title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",
     sourceUrl: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm", checkedOn: calendarReviewedOn,
@@ -418,7 +449,9 @@ export function selectDateOnlyEarnings(period: string, now: number) {
   return selectDateOnlyEvents(dateOnlyEarnings, "earnings", period, now);
 }
 
-// Confirmed official releases, separate from scheduled future events.
+// Confirmed official results, separate from scheduled future events. A fallback only: the monitor keeps every indicator result in
+// event_results for good (scripts/research/economic_archive.py, /api/research/economic-results), and a stored result of the same id
+// replaces the row here. These rows cover the releases from before that store began (2026-11-28) and a monitor that cannot be reached.
 export const economicResults = [{
   // Voting was Nov 3 (U.S.); the calls came on the night of Nov 3 Eastern, i.e. the afternoon of Nov 4 in Japan. Seat counts differed between sources, so no number is shown.
   id: "us-midterm-2026-11-03", title: { ja: "米国中間選挙（現地11月3日投票・日本時間4日に結果）", en: "U.S. midterm elections (voting Nov 3; results the night of Nov 3 ET)" },
@@ -431,10 +464,10 @@ export const economicResults = [{
   id: "fomc-2026-10", title: { ja: "FOMC 政策金利の発表（10月会合）", en: "FOMC rate decision (October 2026)" },
   sourceName: "Federal Reserve", releasedAt: "2026-10-28T14:00:00-04:00",
   result: { ja: "政策金利（誘導目標レンジ3.75〜4.00%）を据え置き。採決は10対2", en: "Target range held at 3.75%-4.00%; vote 10-2" },
-  detail: { ja: "クック理事とハマック・クリーブランド連銀総裁が、0.25ポイントの利上げを主張して反対。声明は「インフレ率は高止まりしている」と指摘。ウォーシュ議長は会見で、2027年から会合の回数を減らすと表明。複数の報道（CNBC、Fox Business、Advisor Perspectives）で確認。連邦準備制度の声明原文との照合は未実施です。",
-    en: "Governor Cook and Cleveland Fed President Hammack dissented, preferring a quarter-point hike. The statement says inflation remains elevated. Chair Warsh said the number of meetings will be reduced from 2027. Confirmed in several press reports (CNBC, Fox Business, Advisor Perspectives); not yet checked against the Federal Reserve's own statement text." },
-  sourceUrl: "https://www.federalreserve.gov/newsevents/pressreleases.htm",
-  verifiedOn: "2026-10-29",
+  detail: { ja: "クック理事とハマック・クリーブランド連銀総裁が、0.25ポイントの利上げを主張して反対。声明は「インフレ率は高止まりしている」と指摘。ウォーシュ議長は会見で、2027年から会合の回数を減らすと表明。金利・採決・反対意見は11月28日にFRBの声明原文と照合済み。会合回数の変更は会見での発言です。",
+    en: "Governor Cook and Cleveland Fed President Hammack dissented, preferring a quarter-point hike. The statement says inflation remains elevated. Chair Warsh said the number of meetings will be reduced from 2027. The rate, the vote and the dissents were checked against the Federal Reserve's statement (2026-11-28); the meeting change was said at the press conference." },
+  sourceUrl: "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+  verifiedOn: "2026-11-28",
 }, {
   // Confirmed on the night of Nov 4 (ADP's own release on PR Newswire, CNBC and others all give +86,000). The automatic reader replaces this row (same id) when it has the same figure from the sources.
   id: "adp-2026-10", title: { ja: "ADP雇用統計（10月）", en: "ADP employment report (October)" },
@@ -458,6 +491,58 @@ export const economicResults = [{
   detail: { ja: "基本給は前年比3.2%増。", en: "Base pay rose 3.2% year over year." },
   sourceUrl: "https://mediacenter.adp.com/2026-09-30-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-90,000-Jobs-in-September",
   verifiedOn: "2026-09-30",
+}, {
+  // Read from BLS's release (2026-11-28); a stored result of the same id replaces it.
+  id: "jobs-2026-10", title: { ja: "米国雇用統計（10月）", en: "U.S. employment report (October 2026)" },
+  sourceName: "BLS", releasedAt: "2026-11-06T08:30:00-05:00",
+  result: { ja: "非農業部門雇用者数 +165,000人／失業率 4.1%", en: "Nonfarm payrolls +165,000; unemployment rate 4.1%" },
+  detail: { ja: "平均時給：前月比+0.4%・前年比+3.1%。雇用者数修正：8月 +133,000人→+186,000人、9月 +29,000人→+60,000人。2か月合計で84,000人の上方修正。BLS公式本文と照合して掲載。", en: "Average hourly earnings: +0.4% MoM and +3.1% YoY. Payroll revisions: August +133,000 to +186,000; September +29,000 to +60,000. Combined upward revision: 84,000. Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/empsit_11062026.htm",
+  verifiedOn: "2026-11-28",
+}, {
+  // BLS could not publish 12-month changes for October 2026: no October 2025 data was collected during the 2025 lapse in appropriations.
+  id: "cpi-2026-10", title: { ja: "米国CPI（消費者物価指数）（10月）", en: "U.S. Consumer Price Index (2026-10)" },
+  sourceName: "BLS", releasedAt: "2026-11-10T08:30:00-05:00",
+  result: { ja: "総合 前月比+0.4%／コア 前月比+0.3%", en: "Headline +0.4% MoM; core +0.3% MoM" },
+  detail: { ja: "2025年10月のデータが政府閉鎖で集計されなかったため、前年比は公表されていません。BLS公式本文と照合して掲載。", en: "No 12-month change was published (October 2025 data were not collected during the 2025 lapse in appropriations). Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/cpi_11102026.htm",
+  verifiedOn: "2026-11-28",
+}, {
+  id: "cpi-2026-09", title: { ja: "米国CPI（消費者物価指数）（9月）", en: "U.S. Consumer Price Index (2026-09)" },
+  sourceName: "BLS", releasedAt: "2026-10-14T08:30:00-04:00",
+  result: { ja: "総合 前月比+0.6%・前年比+3.7%／コア 前月比+0.3%・前年比+2.6%", en: "Headline +0.6% MoM, +3.7% YoY; core +0.3% MoM, +2.6% YoY" },
+  detail: { ja: "BLS公式本文と照合して掲載。", en: "Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/cpi_10142026.htm",
+  verifiedOn: "2026-11-28",
+}, {
+  id: "ppi-2026-10", title: { ja: "米国PPI（生産者物価指数）（10月）", en: "U.S. Producer Price Index (2026-10)" },
+  sourceName: "BLS", releasedAt: "2026-11-13T08:30:00-05:00",
+  result: { ja: "最終需要 前月比+0.3%・前年比+6.5%／コア 前月比+0.5%・前年比+4.9%", en: "Final demand +0.3% MoM, +6.5% YoY; core +0.5% MoM, +4.9% YoY" },
+  detail: { ja: "コアは食品・エネルギー・貿易サービスを除く最終需要。9月は+1.3%から+1.4%に改定。BLS公式本文と照合して掲載。", en: "Core is final demand less foods, energy, and trade services. September was revised from +1.3% to +1.4%. Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/ppi_11132026.htm",
+  verifiedOn: "2026-11-28",
+}, {
+  id: "ppi-2026-09", title: { ja: "米国PPI（生産者物価指数）（9月）", en: "U.S. Producer Price Index (2026-09)" },
+  sourceName: "BLS", releasedAt: "2026-10-15T08:30:00-04:00",
+  result: { ja: "最終需要 前月比+1.3%・前年比+6.3%／コア 前月比+0.5%・前年比+5.0%", en: "Final demand +1.3% MoM, +6.3% YoY; core +0.5% MoM, +5.0% YoY" },
+  detail: { ja: "コアは食品・エネルギー・貿易サービスを除く最終需要。BLS公式本文と照合して掲載。", en: "Core is final demand less foods, energy, and trade services. Checked against the official BLS release." },
+  sourceUrl: "https://www.bls.gov/news.release/archives/ppi_10152026.htm",
+  verifiedOn: "2026-11-28",
+}, {
+  id: "pce-2026-09", title: { ja: "米国PCE物価指数（9月）", en: "U.S. PCE price index (2026-09)" },
+  sourceName: "BEA", releasedAt: "2026-10-29T08:30:00-04:00",
+  result: { ja: "総合：前月比+0.5%・前年比+3.6%", en: "Headline: +0.5% month over month; +3.6% year over year" },
+  detail: { ja: "コア（食品・エネルギー除く）：前月比+0.3%・前年比+3.1%。BEA公式発表を確認して掲載。", en: "Core (excluding food and energy): +0.3% month over month; +3.1% year over year. Checked against the official BEA release." },
+  sourceUrl: "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+  verifiedOn: "2026-11-28",
+}, {
+  // The same id as the GDP reader's (scripts/research/indicator_results.py), which replaces this row once it stores the estimate.
+  id: "gdp-2026-q3-second", title: { ja: "米国GDP（7〜9月期・改定値）", en: "U.S. GDP (Q3 2026, second estimate)" },
+  sourceName: "BEA", releasedAt: "2026-11-25T08:30:00-05:00",
+  result: { ja: "実質GDP 前期比年率+4.3%", en: "Real GDP +4.3% annualized" },
+  detail: { ja: "速報値の+3.4%から0.9ポイントの上方修正。BEA公式発表を確認して掲載。", en: "Revised up 0.9 percentage point from the advance estimate (+3.4%). Checked against the official BEA release." },
+  sourceUrl: "https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026",
+  verifiedOn: "2026-11-28",
 }, {
   id: "pce-2026-08", title: { ja: "米国PCE物価指数（8月）", en: "U.S. PCE price index (August)" },
   sourceName: "BEA", releasedAt: "2026-09-30T08:30:00-04:00",
