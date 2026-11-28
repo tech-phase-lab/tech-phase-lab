@@ -34,8 +34,10 @@ FILINGS = {
     'AMD': {},   # the release alone carries every figure of the hand-made file
     'ANET': {'report': ('https://www.sec.gov/Archives/edgar/data/1596532/000159653226000254/anet-20260930.htm', 'ANET-10q-2026-09-30')},
     'PLTR': {'prior': ('https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm', 'PLTR-release-q2-2026')},
-    'ALAB': {},
-    'LITE': {},
+    'ALAB': {'report': ('https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm', 'ALAB-10q-2026-09-30')},
+    # Marvell's agreement to buy Lumentum: Lumentum's own 8-K (Item 1.01) of its results day, the same joint press release as MRVL's
+    'LITE': {'events': [('https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm', 'LITE-8k-2026-11-02',
+                         datetime(2026, 11, 2, 13, 39, 16, tzinfo=timezone.utc))]},
     'SNDK': {},
     # the deal 8-K's press exhibit (EX-99.1, what the patrol reads) instead of its cover page; the Q2 release for the previous quarter
     'VRT': {'events': [('https://www.sec.gov/Archives/edgar/data/1674101/000162828026067393/exhibit991vrt-q42026102720.htm', 'VRT-8k-2026-10-27-ex991',

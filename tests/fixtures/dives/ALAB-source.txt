@@ -7,3 +7,7 @@ P gross profit $ 422,752 $ 287,567 $ 175,812 $ 945,460 $ 440,786 Stock-based com
 
 @@ https://www.sec.gov/Archives/edgar/data/1736297/000173629726000017/q126exhibit991.htm
 ehensive (loss) income (780) 4,310 Retained earnings 90,648 10,338 Total stockholders’ equity 1,493,948 1,363,634 Total liabilities and stockholders’ equity $ 1,659,215 $ 1,531,823 ASTERA LABS, INC. CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited) (In thousands, except per share amounts) Three Months Ended March 31, 2026 December 31, 2025 March 31, 2025 Revenue $ 308,361 $ 270,583 $ 159,442 Cost of revenue 73,220 66,108 40,031 Gross profit 235,141 204,475 119,411 Operating expenses Research and development 125,634 93,792 64,554 Sales and marketing 21,899 20,104 21,702 General and administrative 25,775 23,621 21,870 Total operating expenses 173,308 137,517 108,126 Operating income 61,8
+
+@@ https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm
+The Company had the following customers that individually comprised 10% or more of its revenue: Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Customer A 53 % 23 % 40 % 21 % Customer B 14 % 24 % 18 % 14 %
+Certain of the customers listed above are manufacturing partners that purchase the Company's products on behalf of the Company's end customers
