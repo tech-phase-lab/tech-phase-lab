@@ -65,6 +65,7 @@ import dart_api
 import dart_watch
 import earnings_announce
 import earnings_history
+import earnings_prior_backfill
 import value_check
 import compare_values
 import twelve_allocator
@@ -918,6 +919,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.earnings_patrol_thread = threading.Thread(target=self.run_earnings_patrol, name="earnings-patrol", daemon=True)
+        self.earnings_prior_thread = threading.Thread(target=self.run_earnings_prior_backfill, name="earnings-prior-backfill", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.channel_probe = official_channel_probe.Probe()
         self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
@@ -1233,6 +1235,21 @@ class AutomaticMonitor:
             except Exception as exc:
                 print("earnings-patrol-failed " + type(exc).__name__, flush=True)
             self.stop_event.wait(60)
+
+    def run_earnings_prior_backfill(self):
+        """Each tracked company's previous quarterly release, read from SEC in the background (earnings_prior_backfill.py): the calendar's
+        会社予想 and 上方修正 are read against it. Ten minutes after start, then every six hours; off with EARNINGS_PRIOR_BACKFILL=false."""
+        if not earnings_prior_backfill.enabled():
+            print("earnings-prior-backfill-disabled", flush=True)
+            return
+        if self.stop_event.wait(earnings_prior_backfill.FIRST_DELAY_SECONDS):
+            return
+        while not self.stop_event.is_set():
+            try:
+                earnings_prior_backfill.run_once(self.db_path, lock=self.db_lock, log=lambda line: print(line, flush=True))
+            except Exception as exc:
+                print("earnings-prior-backfill-failed " + type(exc).__name__, flush=True)
+            self.stop_event.wait(earnings_prior_backfill.INTERVAL.total_seconds())
 
     def run_event_results(self):
         """Big events (an election) and indicators without a reader of their own (ADP, ISM, FOMC, GDP, retail sales).
@@ -1662,6 +1679,7 @@ class AutomaticMonitor:
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.earnings_patrol_thread.start()
+        self.earnings_prior_thread.start()
         self.push_thread.start()
         self.price_alert_thread.start()
         self.value_check_thread.start()
@@ -1702,6 +1720,7 @@ class AutomaticMonitor:
         self.pro_compare_thread.join(timeout=5)
         self.watch_earnings_thread.join(timeout=10)
         self.earnings_patrol_thread.join(timeout=10)
+        self.earnings_prior_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
         self.value_check_thread.join(timeout=15)

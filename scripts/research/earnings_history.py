@@ -3,7 +3,8 @@
 The news feed keeps results for about seven days (and 20 rows), so a month picked in the results view (October) showed nothing
 although the monitor still holds every flash. This reads the same stores for an explicit, bounded range: the issuer-table
 flashes (issuer_result_publications), the companies' own "announced" lines (earnings_announcements) and the verified
-fallbacks (issuer_result_fallbacks). The display floor of the live feed applies per result: an X post is never shown, a
+fallbacks (issuer_result_fallbacks), and each company's previous quarterly release stored in the background from SEC
+(earnings_prior_releases, earnings_prior_backfill.py). The display floor of the live feed applies per result: an X post is never shown, a
 result needs MIN_DISPLAY_FACTS figures, and an "announced" line gives way to figures of the same release.
 
 Read only: the database is opened in read-only mode and nothing is written.
@@ -13,6 +14,7 @@ import sqlite3
 from datetime import datetime, timedelta, timezone
 
 import earnings_announce
+import earnings_prior_backfill
 import issuer_result_flash
 import market_results
 import result_fallback
@@ -62,7 +64,8 @@ def results(db, start, end):
     """Stored earnings results observed in [start, end), newest first, in the shape of the news feed's resultBriefs."""
     since, until = start.isoformat(), end.isoformat()
     items = []
-    for read in (issuer_result_flash.public_feed, earnings_announce.public_feed, result_fallback.public_feed):
+    # earnings_prior_backfill: each company's previous quarterly release read from SEC in the background (会社予想 / 上方修正, Nov 28)
+    for read in (issuer_result_flash.public_feed, earnings_announce.public_feed, result_fallback.public_feed, earnings_prior_backfill.public_feed):
         try:
             items.extend(read(db, since, until))
         except sqlite3.Error:

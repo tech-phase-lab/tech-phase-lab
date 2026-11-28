@@ -91,10 +91,16 @@ function valueOf(key: string, fact: ResultFact): { actual: TableRow["actual"]; p
   return { actual: { ja: moneyJa(parsed.value, parsed.currency || "$"), en: moneyEn(parsed.value, parsed.currency || "$") }, parsed };
 }
 
-/** "$1.5232B-$1.5292B" -> 15.23〜15.29億ドル; "$1.25-$1.26" -> 1.25〜1.26ドル; "$130.0B ± 3%" -> 1,300億ドル±3%. */
+/** "$1.5232B-$1.5292B" -> 15.23〜15.29億ドル; "$1.25-$1.26" -> 1.25〜1.26ドル; "$130.0B ± 3%" -> 1,300億ドル±3%;
+ * "$61.5B ± $1.5B" -> 615億ドル±15億ドル (Micron's midpoint and dollar band, as the release writes it). */
 export function guidanceValue(key: string, value: string): TableRow["actual"] | null {
   const band = /^(.+?) ± (\d+(?:\.\d+)?%)$/.exec(value);
   if (band) { const v = guidanceValue(key, band[1]); return v ? { ja: `${v.ja}±${band[2]}`, en: `${v.en} ± ${band[2]}` } : null; }
+  const dollars = /^(.+?) ± ((?:\$|€|NT\$|₩)\d+(?:\.\d+)?[BMKT]?)$/.exec(value);
+  if (dollars) {
+    const v = guidanceValue(key, dollars[1]), w = guidanceValue(key, dollars[2]);
+    return v && w ? { ja: `${v.ja}±${w.ja}`, en: `${v.en} ± ${w.en}` } : null;
+  }
   const parts = value.split(/-(?=\$|€|NT\$|₩)/);
   const nums = parts.map(parseFigure);
   if (!parts.length || parts.length > 2 || nums.some(n => n === null)) return null;
