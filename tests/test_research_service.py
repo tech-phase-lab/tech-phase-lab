@@ -282,7 +282,8 @@ class ResearchServiceTests(unittest.TestCase):
             # Nov 23: the official-channel reachability probe (idle unless OFFICIAL_CHANNEL_PROBE_ENABLED=true).
             # Nov 26: the Stock Comparison's valuation worker for every comparable company (compare_values.py).
             # Nov 26: the 監視22銘柄 earnings patrol (returns at once when EARNINGS_PATROL=false).
-            self.assertEqual(len(observed), 34 + app.translation_workers)
+            # Nov 27: the daily PRO Stock Comparison check (returns at once without the comparison warm settings).
+            self.assertEqual(len(observed), 35 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

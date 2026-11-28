@@ -21,7 +21,11 @@
 `Authorization: Bearer` で、サイトのホストにだけ（https）送ります。サイト側のルートはこの値と定数時間で照合し、違えば・無ければ・ブラウザーからの
 リクエスト（Origin / Sec-Fetch ヘッダーあり）なら中身のない404を返します。CORSヘッダーなし、会員情報は読まず返しません。比較は会員の比較と同じ
 共有ストアから組み立て（リクエストからデータ提供元は呼びません）、割安性の未取得分を監視に依頼することもしません（読み取りのみ）。
-earnings-selfcheck に `COMPARISON_WARM_SECRET`（監視サービスと同じ値）が無い間は `"proCompare":{"ok":true,"skipped":"no-token"}` と出て、不合格にはしません。
+**実際に毎日動かすのは研究モニター自身です**（11/27、HQ）。モニターはすでに `COMPARISON_WARM_URL` と `COMPARISON_WARM_SECRET` を持ち、
+毎分サイトを呼んでいるので、起動5分後に1回、その後は1日1回（不合格のときは3時間後に再実行）、`COMPARISON_WARM_URL` のホストにだけこの点検を送ります。
+ログには同じ2行（`"source":"monitor"` つき）が出て、不合格なら運用インシデント `cron:pro-compare`（`cron_report.record`、critical）を開き、
+既存の障害通知でオーナーに「🚨 PRO銘柄比較の点検で異常を検知しました」（不合格の項目: `NVDA-missing`、`AMD-invalid`、`pairs` など）を1回、合格に戻ったとき1回送ります。
+変数の追加は不要です。earnings-selfcheck 側には `COMPARISON_WARM_SECRET` が無いため、そちらでは `"proCompare":{"ok":true,"skipped":"no-token"}` と出て、不合格にはしません。
 会社ごとの詳細は2行目 `{"check":"pro-compare","ok":...,"companies":{"NVDA":{"missing":[],"invalid":[],"strengths":3,"weaknesses":1},...}}`
 （項目名・フィールド名・件数のみ）。長所・短所の文言そのものはルートの応答で確認できます。
 

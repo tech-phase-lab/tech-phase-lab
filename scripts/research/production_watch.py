@@ -252,10 +252,11 @@ def checks(site=SITE, monitor=MONITOR):
     ]
 
 
-def run(fetch=None, now=None, site=SITE, monitor=MONITOR, token=None):
+def run(fetch=None, now=None, site=SITE, monitor=MONITOR, token=None, public=True):
+    """public=False: the proCompare check alone (the monitor's own daily run, monitor_pro_compare)."""
     fetch = fetch or request  # looked up at call time
     results, details = {}, {}
-    plan = [(name, url, validator, limit, None) for name, url, validator, limit in checks(site, monitor)]
+    plan = [(name, url, validator, limit, None) for name, url, validator, limit in checks(site, monitor)] if public else []
     if token and token_allowed(site):
         plan.append(("proCompare", f"{site}/api/research/internal/pro-check", check_pro_compare, PRO_COMPARE_LIMIT, token))
     else:
@@ -293,11 +294,65 @@ def check():
     token = os.environ.get("COMPARISON_WARM_SECRET", "").strip()
     summary = run(site=site, monitor=monitor, token=token if len(token) >= 32 else None)
     details = summary.pop("details")
-    print(json.dumps({"check": "production-watch", **summary}, separators=(",", ":")), flush=True)
-    if "proCompare" in details:
-        print(json.dumps({"check": "pro-compare", "ok": summary["checks"]["proCompare"]["ok"], "companies": details["proCompare"]},
-                         separators=(",", ":")), flush=True)
+    print_lines(summary, details)
     return list(summary["failed"])
+
+
+def print_lines(summary, details, source=None):
+    head = {"check": "production-watch", **({"source": source} if source else {}), **summary}
+    print(json.dumps(head, separators=(",", ":")), flush=True)
+    if "proCompare" in details:
+        print(json.dumps({"check": "pro-compare", **({"source": source} if source else {}), "ok": summary["checks"]["proCompare"]["ok"],
+                          "companies": details["proCompare"]}, separators=(",", ":")), flush=True)
+
+
+# Nov 27 (HQ): the research monitor runs proCompare itself, once shortly after it starts and then once a day, because it already holds
+# COMPARISON_WARM_SECRET and calls the site with it every minute (comparison_warm.py). The site is the host of COMPARISON_WARM_URL, so
+# the secret only ever goes where the warm job already sends it. A failure becomes the monitor's operational incident
+# "cron:pro-compare" (cron_report.record), alerted to the owner once when it opens and once when it is resolved.
+PRO_COMPARE_START_DELAY = 300
+PRO_COMPARE_INTERVAL = 24 * HOUR
+PRO_COMPARE_RETRY = 3 * HOUR
+MONITOR_JOB = "pro-compare"
+
+
+def monitor_settings(env=None):
+    """(site base URL, secret) from the warm job's own settings, or None when they are not set."""
+    env = os.environ if env is None else env
+    url = (env.get("COMPARISON_WARM_URL") or "").strip()
+    secret = (env.get("COMPARISON_WARM_SECRET") or "").strip()
+    parts = urlsplit(url)
+    if len(secret) < 32 or parts.scheme != "https" or not parts.hostname or parts.username or parts.password:
+        return None
+    return f"https://{parts.netloc}", secret
+
+
+def incident_codes(result, detail):
+    """Up to eight fixed codes for the owner's alert: "NVDA-missing", "AMD-invalid", "pairs", or the request's error code."""
+    codes = []
+    for ticker, company in sorted((detail or {}).items()):
+        if company.get("missing"):
+            codes.append(ticker + "-missing")
+        if company.get("invalid"):
+            codes.append(ticker + "-invalid")
+    if result.get("pairs") is not None and result["pairs"] < len(PRO_COMPARE_PAIRS):
+        codes.append("pairs")
+    if not codes:
+        codes.append(result.get("error") or ("http-%s" % result["status"] if result.get("status") not in (None, 200) else "proCompare"))
+    return codes if len(codes) <= 8 else codes[:7] + ["more"]
+
+
+def monitor_pro_compare(env=None, fetch=None, now=None):
+    """One run from the monitor: prints the same two lines (with "source":"monitor") and returns (ok, codes), or None when off."""
+    settings = monitor_settings(env)
+    if not settings:
+        return None
+    site, secret = settings
+    summary = run(fetch=fetch, now=now, site=site, token=secret, public=False)
+    details = summary.pop("details")
+    print_lines(summary, details, source="monitor")
+    result = summary["checks"]["proCompare"]
+    return (True, []) if result["ok"] else (False, incident_codes(result, details.get("proCompare")))
 
 
 def main():
