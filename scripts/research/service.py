@@ -86,6 +86,7 @@ import production_watch
 import web_push
 import voice_inbox
 import event_results
+import economic_archive
 import indicator_results
 import price_alerts
 import ownership_data
@@ -1267,7 +1268,22 @@ class AutomaticMonitor:
                 wait = min(wait, indicator_results.next_wait())
             except Exception as error:
                 print(f"indicator-results-unavailable {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
+            try:
+                # at most every five minutes: a result stays in the headlines for seven days
+                if time.monotonic() - getattr(self, "_economic_archive_at", -1e9) >= 300:
+                    self._economic_archive_at = time.monotonic()
+                    self.archive_economic_results()
+            except Exception as error:
+                print(f"economic-archive-unavailable {type(error).__name__}", flush=True)
             self.stop_event.wait(wait)
+
+    def archive_economic_results(self):
+        """Keeps each official BLS/BEA result for good (Nov 28): the news feed shows those headlines for seven days only, and the
+        calendar lost the rows after that. Read-only on the headlines; the copy goes to event_results (economic_archive.py)."""
+        with self.db_lock, stock_news.connect(self.db_path) as indicator_db:
+            updates = signals.public_official_updates(indicator_db, reference=datetime.now(timezone.utc), limit=500, read_only=True)
+        with self.db_lock, event_results.connect(self.db_path) as events_db:
+            return economic_archive.archive(events_db, updates)
 
     def run_weekly(self):
         """Once a minute: is it Saturday morning, and has the owner turned the weekly draft on? Off unless turned on."""
@@ -4475,6 +4491,18 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {"ok": True, "dives": dives})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "company-dives-unavailable"})
+            return
+        if path == "/economic-results":
+            # Nov 28: every stored economic indicator result for the calendar, not only the news feed's newest 20 (and BLS/BEA ones
+            # beyond its seven days). Same token as /news; read only.
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with event_results.connect(self.app.db_path) as db:
+                    self.send_json(200, economic_archive.answer(db))
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "economic-results-unavailable"})
             return
         if path == "/earnings-results":
             # Nov 18 (owner): the calendar's results view reads every stored result of a month, not only the news feed's last
