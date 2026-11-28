@@ -24,7 +24,10 @@ test("a release shows its number, the previous release and the change, read from
   assert.deepEqual(view.link, { url: "https://www.census.gov/retail/sales.html", name: "米国勢調査局", official: true });
   const en = releaseView(retail10, [retail10, retail9], [], [], now, "en");
   assert.deepEqual([en.name, en.label, en.move.size], ["Retail sales (Oct)", "MoM", "0.6 pt"]);
-  assert.equal(releaseView(retail9, [retail10, retail9], [], [], now, "ja").previous, null, "the oldest release has no previous one");
+  // The September release states August as revised (Census, adv2609.pdf: from +1.1% to +1.3%): 前回 even with no August row stored.
+  assert.deepEqual(releaseView(retail9, [retail10, retail9], [], [], now, "ja").previous.display, "+1.3%", "the release's own revised August");
+  const unknown = row("retail-2026-09", "2026-10-15T12:30:00+00:00", "前月比+0.7%", "+0.7% from the previous month");
+  assert.equal(releaseView(unknown, [unknown], [], [], now, "ja").previous, null, "a stated revision is used only for the row that shows that release's own number");
   assert.deepEqual(releaseView(retail9, [retail10, retail9], [], [], now, "ja").history, [], "one release is no chart");
 });
 
@@ -45,8 +48,9 @@ test("the row never carries the outlet count, counts are written in 万, and the
   const view = releaseView(adp, [adp, adp9], [], schedule, now, "ja");
   assert.equal(view.summary, "民間の雇用者数 +86,000人");
   assert.equal(view.display, "+8.6万人", "owner, Nov 28: 86,000人 → 8.6万人");
-  assert.equal(view.previous.display, "+9万人");
-  assert.deepEqual(view.move, { direction: "down", size: "4,000人", tone: "bad" });
+  // ADP's October release revised September from 90,000 to 86,000: 前回 is that, not the stored first figure (+9万人).
+  assert.equal(view.previous.display, "+8.6万人");
+  assert.deepEqual(view.move, { direction: "same", size: null, tone: "neutral" });
   assert.deepEqual([view.facts, view.others], [[], []]);
   assert.equal(view.link.url, "https://adpemploymentreport.com/");
   assert.equal(view.next.at, "2026-12-02T08:15:00-05:00");
@@ -131,14 +135,32 @@ test("a release with nothing to show but its link is not expandable; an event ke
   assert.match(item, /\{!view\.known && <span className=\{calendarStyles\.eventTag\}>\{ja \? "イベント" : "Event"\}<\/span>\}/, "a framed イベント tag");
 });
 
+test("PCE (Oct): 前回 is September as BEA's October release revised it, +0.5%, not +0.3% (owner, Nov 28 audit)", () => {
+  const pce10 = row("pce-2026-10", "2026-11-25T13:30:00+00:00", "米国10月PCE：総合 前月比+0.3%・前年比+3.8%／コア 前月比+0.3%・前年比+3.3%", "U.S. October PCE: headline +0.3% MoM / +3.8% YoY; core +0.3% MoM / +3.3% YoY",
+    { title: { ja: "米国PCE物価指数（10月）", en: "U.S. PCE price index (2026-10)" } });
+  const pce9 = row("pce-2026-09", "2026-10-29T12:30:00+00:00", "総合：前月比+0.4%", "Headline: +0.4% month over month", { title: { ja: "米国PCE物価指数（9月）", en: "U.S. PCE price index (2026-09)" } });
+  // BEA's October table: "PCE price index 0.5 0.3" (September, October). It wins over FRED's figure and over a stored September row.
+  for (const backfill of [{}, { pce: [{ period: "2026-09", value: 0.4, decimals: 1 }, { period: "2026-10", value: 0.3, decimals: 1 }] }]) {
+    const view = releaseView(pce10, [pce10, pce9], [], [], now, "ja", backfill);
+    assert.deepEqual([view.previous.display, view.previous.revised, view.move], ["+0.5%", true, { direction: "down", size: "0.2pt", tone: "good" }]);
+  }
+  const bars = releaseView(pce10, [pce10], [], [], now, "ja", { pce: ["05", "06", "07", "08", "09"].map(m => ({ period: `2026-${m}`, value: 0.1, decimals: 1 })) }).history;
+  assert.equal(bars.find(bar => bar.label === "9月").display, "0.5%", "the September bar shows the same revised figure as 前回");
+});
+
 test("PCE (owner, Nov 28 mock 03): +0.3% 前月比 → 前回と同じ, 前年比・コア前月比・コア前年比 in one line", () => {
   const pce10 = row("pce-2026-10", "2026-11-25T15:00:00+00:00", "米国10月PCE：総合 前月比+0.3%・前年比+3.8%／コア 前月比+0.3%・前年比+3.3%", "U.S. October PCE: headline +0.3% MoM / +3.8% YoY; core +0.3% MoM / +3.3% YoY",
     { title: { ja: "米国PCE物価指数（10月）", en: "U.S. PCE price index (2026-10)" }, detail: { ja: "総合とコアの前月比・前年比をBEA公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BEA release. No consensus comparison." }, sourceUrl: "https://www.bea.gov/news/2026/personal-income-and-outlays-october-2026" });
   const pce8 = row("pce-2026-08", "2026-09-26T12:30:00+00:00", "総合：前月比+0.3%・前年比+3.4%", "Headline: +0.3% month over month; +3.4% year over year",
     { title: { ja: "米国PCE物価指数（8月）", en: "U.S. PCE price index (August)" }, detail: { ja: "コア（食品・エネルギー除く）：前月比+0.2%・前年比+3.0%。BEA公式発表を確認して掲載。", en: "Core (excluding food and energy): +0.2% month over month; +3.0% year over year. Checked against the official BEA release." } });
+  // A November row (no stated revision kept for it) takes October from FRED and never skips back to an older month.
+  const nov = row("pce-2026-11", "2026-12-23T13:30:00+00:00", "米国11月PCE：総合 前月比+0.3%・前年比+3.8%／コア 前月比+0.3%・前年比+3.3%", "U.S. November PCE: headline +0.3% MoM / +3.8% YoY; core +0.3% MoM / +3.3% YoY",
+    { title: { ja: "米国PCE物価指数（11月）", en: "U.S. PCE price index (2026-11)" } });
   const view = releaseView(pce10, [pce10, pce8], [], [], now, "ja", { pce: [{ period: "2026-09", value: 0.3, decimals: 1 }] });
-  assert.deepEqual([view.name, view.display, view.label, view.move], ["PCE物価指数（10月）", "+0.3%", "前月比", { direction: "same", size: null, tone: "neutral" }]);
-  assert.equal(releaseView(pce10, [pce10, pce8], [], [], now, "ja").previous, null, "前回 is September: August is never shown as the previous month");
+  assert.deepEqual([view.name, view.display, view.label], ["PCE物価指数（10月）", "+0.3%", "前月比"]);
+  const same = releaseView(nov, [nov, pce8], [], [], now, "ja", { pce: [{ period: "2026-10", value: 0.3, decimals: 1 }] });
+  assert.deepEqual(same.move, { direction: "same", size: null, tone: "neutral" });
+  assert.equal(releaseView(nov, [nov, pce8], [], [], now, "ja").previous, null, "前回 is October: August is never shown as the previous month");
   assert.deepEqual(view.others.map(o => `${o.label} ${o.value}`), ["前年比 +3.8%", "コア前月比 +0.3%", "コア前年比 +3.3%"]);
   assert.deepEqual(view.history, [], "three values are no chart");
   assert.equal(view.about, "FRBが物価目標（2%）を見るときに一番重視するインフレの数字です。");
@@ -190,9 +212,9 @@ test("FRED fills the five periods before the stored result; stored results win; 
   const pce8 = row("pce-2026-08", "2026-09-30T12:30:00+00:00", "総合：前月比+0.2%・前年比+3.4%", "Headline: +0.2% month over month", { title: { ja: "米国PCE物価指数（8月）", en: "U.S. PCE price index (August)" } });
   const backfill = parseBackfill({ pce: points.filter(p => p.period !== "2026-06"), junk: [1] });
   const view = releaseView(pce10, [pce10, pce8], [], [], now, "ja", backfill);
-  assert.deepEqual(view.history.map(bar => [bar.label, bar.display, bar.source]), [["5月", "0.4%", "fred"], ["6月", null, null], ["7月", "0.6%", "fred"], ["8月", "0.2%", "stored"], ["9月", "0.5%", "fred"], ["10月", "0.3%", "stored"]],
-    "six consecutive months: the stored August (0.2) over FRED's 0.3, an empty June that keeps its label, this month the site's own");
-  assert.deepEqual([view.previous.display, view.move], ["+0.5%", { direction: "down", size: "0.2pt", tone: "good" }], "前回 is September, from FRED");
+  assert.deepEqual(view.history.map(bar => [bar.label, bar.display, bar.source]), [["5月", "0.4%", "fred"], ["6月", null, null], ["7月", "0.6%", "fred"], ["8月", "0.2%", "stored"], ["9月", "0.5%", "stored"], ["10月", "0.3%", "stored"]],
+    "six consecutive months: the stored August (0.2) over FRED's 0.3, an empty June that keeps its label, September as the October release revised it, this month the site's own");
+  assert.deepEqual([view.previous.display, view.move], ["+0.5%", { direction: "down", size: "0.2pt", tone: "good" }], "前回 is September as revised in the October release");
   assert.deepEqual(releaseView(pce10, [pce10], [], [], now, "ja", { pce: [{ period: "2026-09", value: 0.5, decimals: 1 }, { period: "2026-08", value: 0.3, decimals: 1 }] }).history, [], "three values: no chart");
   const claims = (week, at, ja, en) => ({ id: `claims-2026-11-${week}`, releasedAt: at, title: { ja: `米国新規失業保険申請件数（11月${week}日終了週）`, en: `U.S. initial jobless claims (week ending November ${week}, 2026)` }, result: { ja, en }, detail: { ja: "", en: "" }, sourceName: "DOL", sourceUrl: "https://www.dol.gov/ui/data.pdf" });
   const c21 = claims("21", "2026-11-25T13:30:00+00:00", "189,000件（前週改定値から13,000件減）", "189,000 (down 13,000 from the previous week's revised level)");

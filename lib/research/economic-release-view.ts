@@ -4,7 +4,7 @@
  * expectation when we hold one, a short history, the next scheduled date and one official link. Nothing here makes up a number:
  * every value is read from a stored result; a value we cannot read is simply left out.
  */
-import { shiftMonth, shiftQuarter, shiftWeek, type Backfill } from "./economic-history.ts";
+import { ISM_HISTORY, shiftMonth, shiftQuarter, shiftWeek, type Backfill, type BackfillPoint } from "./economic-history.ts";
 
 type Lang = "ja" | "en";
 type Copy = { ja: string; en: string };
@@ -160,7 +160,7 @@ export function releaseName(row: Pick<ReleaseRow, "id" | "title">, lang: Lang) {
   if (!name) return row.title[lang];
   const period = periodLabel(row.title, lang);
   // GDP keeps which estimate it is (速報 / 改定): the same quarter is released three times.
-  const estimate = key === "gdp" ? (lang === "ja" ? /・(速報|改定|確定)/.exec(row.title.ja)?.[1] : /\b(advance|second|third)\b/i.exec(row.title.en)?.[1]?.toLowerCase()) : null;
+  const estimate = key === "gdp" ? (lang === "ja" ? /・(速報|改定|確定|確報)/.exec(row.title.ja)?.[1] : /\b(advance|second|third)\b/i.exec(row.title.en)?.[1]?.toLowerCase()) : null;
   const inside = [period, estimate].filter(Boolean).join(lang === "ja" ? "・" : ", ");
   return inside ? (lang === "ja" ? `${name.ja}（${inside}）` : `${name.en} (${inside})`) : name[lang];
 }
@@ -316,6 +316,58 @@ export type ReleaseView = {
   expandable: boolean;
 };
 
+/**
+ * 前回 as the release itself states it (owner, Nov 28: 前回 is the period just before this one, and the official revised value when the
+ * release gives one). The automatic readers store only this release's own number, so the previous period's figure as revised in the
+ * same release is kept here, per release, each read from the official release named beside it (checked 2026-11-28). It wins over
+ * FRED, whose figure for that period can be revised again by later releases, and over the site's stored result of that period, which
+ * is the figure as first released. `headline` is this release's own number: an entry is used only for a row that shows that number.
+ */
+export const STATED_PREVIOUS: Record<string, { headline: number; value: number; decimals: number }> = {
+  // BEA, Personal Income and Outlays, October 2026 (bea.gov/news/2026/personal-income-and-outlays-october-2026): September PCE price index 0.5
+  "pce-2026-10": { headline: 0.3, value: 0.5, decimals: 1 },
+  // BEA, September 2026 release (personal-income-and-outlays-september-2026): August 0.3
+  "pce-2026-09": { headline: 0.5, value: 0.3, decimals: 1 },
+  // BEA, August 2026 release (personal-income-and-outlays-august-2026): July 0.1
+  "pce-2026-08": { headline: 0.3, value: 0.1, decimals: 1 },
+  // Census, advance retail sales October 2026 (census.gov/retail/marts/www/marts_current.pdf): "The August 2026 to September 2026 percent
+  // change was unrevised from up 0.8 percent"
+  "retail-2026-10": { headline: 0.2, value: 0.8, decimals: 1 },
+  // Census, September 2026 (www2.census.gov/retail/releases/historical/marts/adv2609.pdf): July to August "revised from up 1.1 percent
+  // ... to up 1.3 percent"
+  "retail-2026-09": { headline: 0.8, value: 1.3, decimals: 1 },
+  // ADP, October 2026 release (PR Newswire, Nov 4): September "revised from 90,000 to 86,000"
+  "adp-2026-10": { headline: 86_000, value: 86_000, decimals: 0 },
+  // ADP, September 2026 release (PR Newswire, Sep 30): August "revised from 38,000 to 36,000"
+  "adp-2026-09": { headline: 90_000, value: 36_000, decimals: 0 },
+  // BLS, Employment Situation October 2026 (bls.gov/news.release/archives/empsit_11062026.htm): September revised from +29,000 to +60,000
+  "jobs-2026-10": { headline: 165_000, value: 60_000, decimals: 0 },
+  // BLS, Employment Situation September 2026 (bls.gov/news.release/archives/empsit_10022026.htm): August revised from +162,000 to +133,000
+  "jobs-2026-09": { headline: 29_000, value: 133_000, decimals: 0 },
+  // BLS, CPI October 2026 (bls.gov/news.release/archives/cpi_11102026.htm): "after rising 0.6 percent in September"
+  "cpi-2026-10": { headline: 0.4, value: 0.6, decimals: 1 },
+  // BLS, CPI September 2026 (bls.gov/news.release/archives/cpi_10142026.htm): "after rising 0.4 percent in August"
+  "cpi-2026-09": { headline: 0.6, value: 0.4, decimals: 1 },
+  // BLS, PPI October 2026 (bls.gov/news.release/archives/ppi_11132026.htm): "Final demand prices advanced 1.4 percent in September"
+  // (first released as 1.3)
+  "ppi-2026-10": { headline: 0.3, value: 1.4, decimals: 1 },
+  // BLS, PPI September 2026 (bls.gov/news.release/archives/ppi_10152026.htm): "moved up 0.5 percent in August"
+  "ppi-2026-09": { headline: 1.3, value: 0.5, decimals: 1 },
+  // BEA, GDP advance and second estimates, 3rd quarter 2026: "In the second quarter, real GDP increased 2.2 percent"
+  "gdp-2026-q3-advance": { headline: 3.4, value: 2.2, decimals: 1 },
+  "gdp-2026-q3-second": { headline: 4.3, value: 2.2, decimals: 1 },
+  // ISM, October 2026 Manufacturing PMI report (PR Newswire, Nov 2): "above the September figure of 54.5 percent"
+  "ism-2026-11": { headline: 55.5, value: 54.5, decimals: 1 },
+};
+
+function statedPrevious(id: string, value: Value | null): Value | null {
+  const entry = STATED_PREVIOUS[id];
+  return entry && value && entry.headline === value.value ? { value: entry.value, decimals: entry.decimals } : null;
+}
+
+/** The earlier periods of an indicator: FRED's, or for ISM (not on FRED) the months kept from ISM's own releases. */
+const seriesOf = (key: string, backfill: Backfill): BackfillPoint[] => backfill[key] ?? (key === "ism" ? ISM_HISTORY : []);
+
 /** The previous figure as revised, worked out from the stated change ("189,000件（前週改定値から13,000件減）" → 202,000). */
 function revisedPrevious(row: ReleaseRow, value: Value | null): Value | null {
   const spec = specOf(row.id);
@@ -351,14 +403,14 @@ function periodText(frequency: "week" | "month" | "quarter", period: string, lan
 
 /** The bars (owner, Nov 28): six consecutive periods ending with this release. Each earlier period is the site's stored result when it
  * has one, else FRED's figure, else an empty slot. This release is always the site's own result. */
-function historyBars(row: ReleaseRow, value: Value, stored: ReleaseRow[], backfill: Backfill, lang: Lang): HistoryBar[] {
+function historyBars(row: ReleaseRow, value: Value, stored: ReleaseRow[], backfill: Backfill, lang: Lang, statedBefore: Value | null = null): HistoryBar[] {
   const key = indicatorKey(row.id), at = periodOfRow(row.id);
   if (!at) {
     // FOMC: the last meetings stored, no periods to fill.
     return [...stored, row].map(item => ({ item, v: readValue(item.id, item.result) })).filter(entry => entry.v).slice(-6)
       .map(({ item, v }) => ({ id: item.id, label: periodLabel(item.title, lang), releasedAt: item.releasedAt, display: barText(item.id, v!, lang), value: v!.value, current: item.id === row.id, source: "stored" as const }));
   }
-  const fred = new Map((backfill[key] ?? []).map(point => [point.period, point]));
+  const fred = new Map(seriesOf(key, backfill).map(point => [point.period, point]));
   return [-5, -4, -3, -2, -1, 0].map(n => {
     const period = shiftPeriod(at.frequency, at.period, n);
     const label = periodText(at.frequency, period, lang);
@@ -366,6 +418,8 @@ function historyBars(row: ReleaseRow, value: Value, stored: ReleaseRow[], backfi
     const usual = at.frequency === "week" ? new Date(Date.parse(`${period}T12:30:00Z`) + 5 * 86_400_000).toISOString() : row.releasedAt;
     if (n === 0) return { id: row.id, label, releasedAt: row.releasedAt, display: barText(row.id, value, lang), value: value.value, current: true, source: "stored" as const };
     const own = stored.find(other => periodOfRow(other.id)?.period === period && readValue(other.id, other.result));
+    // the period just before shows the figure this release states for it (claims: 203,000 first, 202,000 as revised), like 前回
+    if (n === -1 && statedBefore) return { id: `${key}-${period}-revised`, label, releasedAt: own?.releasedAt ?? usual, display: barText(row.id, statedBefore, lang), value: statedBefore.value, current: false, source: "stored" as const };
     const ownValue = own ? readValue(own.id, own.result) : null;
     if (own && ownValue) return { id: own.id, label, releasedAt: own.releasedAt, display: barText(own.id, ownValue, lang), value: ownValue.value, current: false, source: "stored" as const };
     const point = fred.get(period);
@@ -381,19 +435,24 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   const sameIndicator = spec ? all.filter(other => indicatorKey(other.id) === key).toSorted((a, b) => Date.parse(a.releasedAt) - Date.parse(b.releasedAt)) : [];
   const earlier = sameIndicator.filter(other => Date.parse(other.releasedAt) < at);
   const lastRead = earlier.toReversed().find(other => readValue(other.id, other.result));
-  const revised = revisedPrevious(row, value);
-  // 前回 is the period just before this one (owner, Nov 28: no skipped month): the stated revision for claims, else the stored result of
-  // that period, else FRED's figure for it; a row without periods (FOMC) takes the last stored result.
+  const latest = sameIndicator.at(-1)?.id === row.id;
+  // 前回 is the period just before this one (owner, Nov 28: no skipped month), as revised when the release says so:
+  // 1. the figure this release states for it (claims' stated change, else STATED_PREVIOUS);
+  // 2. for the latest release, FRED's figure once FRED carries this release's own period (FRED then holds this release's revision);
+  // 3. the stored result of that period (as first released); 4. FRED's figure. A row without periods (FOMC) takes the last stored result.
+  const revised = revisedPrevious(row, value) ?? statedPrevious(row.id, value);
   const at0 = periodOfRow(row.id);
   const before = at0 ? shiftPeriod(at0.frequency, at0.period, -1) : null;
+  const series = seriesOf(key, backfill);
   const storedBefore = before ? earlier.find(other => periodOfRow(other.id)?.period === before && readValue(other.id, other.result)) : lastRead;
-  const fredBefore = before && !storedBefore ? (backfill[key] ?? []).find(point => point.period === before) ?? null : null;
-  const previousRow = revised ? row : storedBefore;
-  const previousValue = revised ?? (previousRow ? readValue(previousRow.id, previousRow.result) : fredBefore ? { value: fredBefore.value, decimals: fredBefore.decimals } : null);
+  const fredPoint = before ? series.find(point => point.period === before) ?? null : null;
+  const fredCurrent = !!fredPoint && latest && series.some(point => point.period === at0?.period);
+  const previousRow = revised ? row : fredCurrent ? undefined : storedBefore;
+  const previousValue = revised ?? (previousRow ? readValue(previousRow.id, previousRow.result) : fredPoint ? { value: fredPoint.value, decimals: fredPoint.decimals } : null);
   const expected = expectations.find(item => item.id === `expected-${row.id}`);
   const forecastValue = expected && spec ? readValue(row.id, { ja: expected.resultJa, en: expected.resultEn }) : null;
-  const history = value ? historyBars(row, value, earlier, backfill, lang) : [];
-  const latest = sameIndicator.at(-1)?.id === row.id;
+  // the bar of the period before always shows the same figure as 前回 when that is not a stored row's own
+  const history = value ? historyBars(row, value, earlier, backfill, lang, revised ?? (fredCurrent ? previousValue : null)) : [];
   const next = spec && latest ? schedule.filter(item => indicatorKey(item.id) === key && Date.parse(item.at) > Math.max(now, at)).toSorted((a, b) => Date.parse(a.at) - Date.parse(b.at))[0] ?? null : null;
   const summaryText = cleanResult(row.result[lang]);
   const summary = spec ? summaryText : summaryText.split(/｜| \| /)[0].trim();

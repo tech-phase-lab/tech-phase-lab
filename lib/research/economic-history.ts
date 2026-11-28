@@ -32,8 +32,17 @@ export function readFredCsv(text: string): { date: string; value: number }[] {
     .sort((a, b) => a.date.localeCompare(b.date));
 }
 
+// A quarter from its month: Jan–Mar Q1 … Oct–Dec Q4 (FRED dates a quarter by its first month, but any month of it reads the same).
 const periodOf = (date: string, frequency: "week" | "month" | "quarter") => frequency === "week" ? date
-  : frequency === "month" ? date.slice(0, 7) : `${date.slice(0, 4)}-Q${Math.floor(Number(date.slice(5, 7)) / 3) + 1}`;
+  : frequency === "month" ? date.slice(0, 7) : `${date.slice(0, 4)}-Q${Math.floor((Number(date.slice(5, 7)) - 1) / 3) + 1}`;
+
+/** Rounded to one decimal, half away from zero, the way BLS, BEA and the Census Bureau print a percent change. `toFixed` on the raw
+ * float can round a true half down (0.25 is stored as 0.2499…), so a tiny tolerance is added before rounding. */
+export function roundHalfAway(value: number, decimals = 1) {
+  const scale = 10 ** decimals;
+  const rounded = Math.round(Math.abs(value) * scale + 1e-9) / scale;
+  return value < 0 && rounded !== 0 ? -rounded : rounded;
+}
 
 /** The indicator's headline per period from the series' observations: a level as is, a month-over-month change in % (one decimal, as
  * the agencies publish it), or the change in persons from the month before. A change needs the month just before it. */
@@ -46,7 +55,7 @@ export function fromObservations(key: string, rows: { date: string; value: numbe
     if (spec.transform === "level") { out.push({ period, value: row.value, decimals: key === "gdp" ? 1 : 0 }); return; }
     const before = rows[index - 1];
     if (!before || periodOf(before.date, "month") !== shiftMonth(period, -1)) return;
-    if (spec.transform === "mom-pct") { if (before.value) out.push({ period, value: Number(((row.value / before.value - 1) * 100).toFixed(1)), decimals: 1 }); return; }
+    if (spec.transform === "mom-pct") { if (before.value) out.push({ period, value: roundHalfAway((row.value / before.value - 1) * 100), decimals: 1 }); return; }
     out.push({ period, value: Math.round((row.value - before.value) * (spec.transform === "change-thousands" ? 1000 : 1)), decimals: 0 });
   });
   return out;
@@ -66,6 +75,13 @@ export function shiftQuarter(period: string, n: number) {
 export function shiftWeek(day: string, n: number) {
   return new Date(Date.parse(`${day}T12:00:00Z`) + n * 7 * 86_400_000).toISOString().slice(0, 10);
 }
+
+/** ISM's Manufacturing PMI is not on FRED, so its earlier months are kept here, each from ISM's own monthly release on PR Newswire
+ * (prnewswire.com/news/institute-for-supply-management/, "Manufacturing PMI® at X%; <Month> 2026 ISM® Manufacturing PMI® Report",
+ * read 2026-11-28). Keyed by the month the index covers. */
+export const ISM_HISTORY: BackfillPoint[] = [
+  ["2026-03", 52.7], ["2026-04", 52.7], ["2026-05", 54.0], ["2026-06", 53.3], ["2026-07", 55.6], ["2026-08", 54.6], ["2026-09", 54.5], ["2026-10", 55.5],
+].map(([period, value]) => ({ period: period as string, value: value as number, decimals: 1 }));
 
 /** Only what the bars need: the last 14 points per indicator, numbers only. */
 export function parseBackfill(value: unknown): Backfill {
