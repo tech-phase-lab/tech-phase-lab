@@ -242,11 +242,11 @@
   "failure": null
  },
  "CRWD": {
-  "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+  "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000035/crwd-20261123xex991.htm",
   "form": "8-K",
-  "accepted": "2026-08-26T20:07:02+00:00",
+  "accepted": "2026-11-23T11:04:51+00:00",
   "status": "figures",
-  "period": "Q2 FY2027",
+  "period": "Q3 FY2027",
   "facts": [
    "revenue",
    "eps",
@@ -272,17 +272,21 @@
   "failure": null
  },
  "DELL": {
-  "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm",
+  "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000050/exhibit991earnings8kq3fy27.htm",
   "form": "8-K",
-  "accepted": "2026-09-01T20:10:14+00:00",
+  "accepted": "2026-11-24T21:09:13+00:00",
   "status": "figures",
-  "period": "Q2 FY2027",
+  "period": "Q3 FY2027",
   "facts": [
    "revenue",
    "eps",
+   "adjusted-eps",
    "net-income",
    "operating-income",
-   "guidance-revenue"
+   "guidance-revenue",
+   "guidance-adjusted-eps",
+   "guidance-fy-revenue",
+   "guidance-fy-adjusted-eps"
   ],
   "failure": null
  },

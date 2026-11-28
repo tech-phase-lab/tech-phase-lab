@@ -34,7 +34,7 @@ function MacroCards({ ja, initial }: { ja: boolean; initial: MacroQuote[] | null
       const oil = item.id === "DCOILWTICO";
       const change = value !== undefined && quote?.previous !== undefined ? value - quote.previous : null;
       return <article className={styles.macroCard} key={item.id}>
-        <a href={`https://fred.stlouisfed.org/series/${item.id}`} target="_blank" rel="noopener noreferrer">{item.name}<span aria-hidden="true">↗</span></a>
+        <a href={`https://fred.stlouisfed.org/series/${item.id}`} target="_blank" rel="noopener noreferrer">{item.name}</a>
         <p className={styles.macroUnit}>{item.unit}</p>
         <p className={styles.macroValue}>{value === undefined ? "—" : `${oil ? "$" : ""}${value.toFixed(2)}${oil ? "" : "%"}`}</p>
         <p className={styles.macroChange}>{change === null ? (quotes === null ? (ja ? "読込中…" : "Loading…") : (ja ? "取得できませんでした" : "Data unavailable")) : `${ja ? "前回比" : "Change"} ${change > 0 ? "+" : ""}${oil ? change.toFixed(2) + " USD" : (change * 100).toFixed(0) + " bp"}`}</p>
@@ -42,7 +42,7 @@ function MacroCards({ ja, initial }: { ja: boolean; initial: MacroQuote[] | null
       </article>;
     })}</div>
     <p className={styles.note}>{ja ? <>出典：FRED（FRB・EIA）<br />掲載日付時点の値です。</> : "Source: FRED (Federal Reserve / EIA). Values as of the dates shown."}</p>
-    <a className={styles.treasury} href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">{ja ? "米国債利回り · 米財務省の公式データ" : "Treasury yields · Official U.S. Treasury data"} ↗</a>
+    <a className={styles.treasury} href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">{ja ? "米国債利回り · 米財務省の公式データ" : "Treasury yields · Official U.S. Treasury data"}</a>
   </section>;
 }
 

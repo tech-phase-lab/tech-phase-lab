@@ -139,7 +139,7 @@ function NewsEditor({ item, busy, generationEnabled, run }: { item: Item; busy: 
   return <details className={styles.article}>
     <summary><span>{item.tickers.join(" · ")} · {labels[item.review.status] ?? "要確認"}</span><strong>{item.title}</strong></summary>
     <p className={styles.note}>{item.publisher} · 発表 {time(item.publishedAt)} · 取得 {time(item.observedAt)}</p>
-    <a href={item.url} target="_blank" rel="noopener noreferrer">配信元の記事を確認 ↗</a>
+    <a href={item.url} target="_blank" rel="noopener noreferrer">配信元の記事を確認</a>
     <details><summary>保存済みの原文（配信元から取得した範囲）</summary><pre className={styles.source}>{item.text}</pre></details>
     <fieldset disabled={busy} className={styles.fields}>
       <legend>日英下書き</legend>

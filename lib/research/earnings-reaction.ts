@@ -18,3 +18,20 @@ export function reactionLines(quote: ReactionQuote | null | undefined, releasedA
   return out;
 }
 export const percentText = (p: number) => `${p >= 0 ? "+" : "-"}${Math.abs(p).toFixed(2)}%`;
+
+const nyParts = (at: string) => Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23", weekday: "short" })
+  .formatToParts(new Date(at)).map(part => [part.type, part.value]));
+/** Which session a regular-session move belongs to (owner, Nov 28: 「翌日の株価」): "next" when it is the first weekday session after a
+ * release made after the close (or on a weekend), "same" for a release before or during that day's session, "later" for any later
+ * day (named by its date instead). Market holidays are not assumed: a session after one is "later". */
+export function reactionDay(quoteAt: string, releasedAt: string): "same" | "next" | "later" | null {
+  if (!Number.isFinite(Date.parse(quoteAt)) || !Number.isFinite(Date.parse(releasedAt))) return null;
+  const r = nyParts(releasedAt), q = nyParts(quoteAt);
+  const day = (p: Record<string, string>) => `${p.year}-${p.month}-${p.day}`;
+  const weekend = r.weekday === "Sat" || r.weekday === "Sun";
+  if (!weekend && Number(r.hour) < 16) return day(q) === day(r) ? "same" : "later";
+  // the first weekday after the release day
+  let next = Date.parse(`${day(r)}T12:00:00Z`) + 86_400_000;
+  while ([0, 6].includes(new Date(next).getUTCDay())) next += 86_400_000;
+  return day(q) === new Date(next).toISOString().slice(0, 10) ? "next" : "later";
+}

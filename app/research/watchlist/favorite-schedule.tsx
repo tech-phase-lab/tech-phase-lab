@@ -26,10 +26,10 @@ export default function FavoriteSchedule({ favorites, lang }: { favorites: strin
       <ol className={styles.scheduleList}>{timed.map((event) => <li key={event.id}>
         <time dateTime={event.startsAt}>{stamp(event.startsAt)}<small>{zoneLabel(lang)}</small></time>
         <h3>{event.title[lang]}</h3>
-        <a href={event.sourceUrl} target="_blank" rel="noreferrer" aria-label={t(`${event.ticker}の公式決算日程`, `Official ${event.ticker} earnings schedule`)}>{t("公式日程 ↗", "Official ↗")}</a>
+        <a href={event.sourceUrl} target="_blank" rel="noreferrer" aria-label={t(`${event.ticker}の公式決算日程`, `Official ${event.ticker} earnings schedule`)}>{t("公式日程", "Official")}</a>
       </li>)}{dated.map((event) => <li key={event.id}>
         <time dateTime={event.date}>{event.date}<small>{t("時刻未公表・現地日付", "Local date; time pending")}</small></time>
-        <h3>{event.title[lang]}</h3><a href={event.sourceUrl} target="_blank" rel="noreferrer" aria-label={t(`${event.ticker}の公式決算日程`, `Official ${event.ticker} earnings schedule`)}>{t("公式日程 ↗", "Official ↗")}</a>
+        <h3>{event.title[lang]}</h3><a href={event.sourceUrl} target="_blank" rel="noreferrer" aria-label={t(`${event.ticker}の公式決算日程`, `Official ${event.ticker} earnings schedule`)}>{t("公式日程", "Official")}</a>
       </li>)}</ol>
       <details className={styles.scheduleDetails}><summary>{t("日程の確認状況", "Schedule details")}</summary>
         <p>{t("公式予定の確認日", "Schedule checked")}: {calendarReviewedOn}</p>

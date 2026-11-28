@@ -74,8 +74,12 @@ class Parsers(unittest.TestCase):
         text=fixture('dell-results-q2fy27.txt')
         parsed=flash.parse_dell(text)
         self.assertEqual(parsed['period'],'Q2 FY2027')
-        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$46.971B','$29.776B'),('eps','$6.34','$1.70'),
-            ('net-income','$4.133B','$1.164B'),('operating-income','$5.385B','$1.773B'),('guidance-revenue','$192.0B',None)])
+        # Nov 28: the non-GAAP EPS (Twelve Data's basis), the next quarter's outlook and the full year with its 'Previous' column
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$46.971B','$29.776B'),('eps','$6.34','$1.70'),('adjusted-eps','$7.04','$2.32'),
+            ('net-income','$4.133B','$1.164B'),('operating-income','$5.385B','$1.773B'),('guidance-revenue','$49.0B',None),('guidance-adjusted-eps','$6.50',None),
+            ('guidance-fy-revenue','$192.0B',None),('guidance-fy-adjusted-eps','$25.50',None)])
+        self.assertEqual([f[5] if len(f)>5 else None for f in parsed['facts']][-4:],[None,None,'$167.0B','$17.90'])
+        self.assertEqual([f[3][0] for f in parsed['facts'][-4:]],['次四半期見通し 売上高','次四半期見通し 調整後EPS','通期見通し 売上高','通期見通し 調整後EPS'])
         with self.assertRaises(ValueError): flash.parse_dell(text.replace('Total net revenue 46,971 29,776 58%','Total net revenue 46,971 29,776 38%',1))
         with self.assertRaises(ValueError): flash.parse_dell(__import__('re').sub('(?i)dell technologies','Other Company',text))
         bad=text.replace('Net income $ 4,133 $ 1,164 255%','Net income $ 4,133 $ 1,164 155%')
@@ -108,8 +112,10 @@ class Parsers(unittest.TestCase):
         text=fixture('micron-results-q4fy26.txt')
         parsed=flash.parse_micron(text)
         self.assertEqual(parsed['period'],'Q4 FY2026')
-        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$54.229B','$11.315B'),('eps','$32.87','$2.83'),
-            ('net-income','$37.701B','$3.201B'),('operating-income','$43.751B','$3.654B')])
+        # Nov 28: the highlights' non-GAAP EPS and the Business Outlook for FQ1-27, written as the release writes it
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$54.229B','$11.315B'),('eps','$32.87','$2.83'),('adjusted-eps','$33.42','$3.03'),
+            ('net-income','$37.701B','$3.201B'),('operating-income','$43.751B','$3.654B'),('guidance-revenue','$61.5B \u00b1 $1.5B',None),
+            ('guidance-adjusted-eps','$38.15 \u00b1 $1.00',None)])
         with self.assertRaises(ValueError): flash.parse_micron(text.replace('Revenue $ 54,229','Revenue $ 55,229'))
         keys=lambda x:[f[0] for f in flash.parse_micron(x)['facts']]
         self.assertNotIn('operating-income',keys(text.replace('Operating income 43,751','Operating income 43,851')))

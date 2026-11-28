@@ -65,6 +65,8 @@ import dart_api
 import dart_watch
 import earnings_announce
 import earnings_history
+import earnings_prior_backfill
+import earnings_refill
 import value_check
 import compare_values
 import twelve_allocator
@@ -85,6 +87,7 @@ import production_watch
 import web_push
 import voice_inbox
 import event_results
+import economic_archive
 import indicator_results
 import price_alerts
 import ownership_data
@@ -917,6 +920,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.earnings_patrol_thread = threading.Thread(target=self.run_earnings_patrol, name="earnings-patrol", daemon=True)
+        self.earnings_prior_thread = threading.Thread(target=self.run_earnings_prior_backfill, name="earnings-prior-backfill", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.channel_probe = official_channel_probe.Probe()
         self.channel_probe_thread = threading.Thread(target=self.run_channel_probe, name="official-channel-probe", daemon=True)
@@ -1233,6 +1237,25 @@ class AutomaticMonitor:
                 print("earnings-patrol-failed " + type(exc).__name__, flush=True)
             self.stop_event.wait(60)
 
+    def run_earnings_prior_backfill(self):
+        """Each tracked company's previous quarterly release, read from SEC in the background (earnings_prior_backfill.py): the calendar's
+        会社予想 and 上方修正 are read against it. Ten minutes after start, then every six hours; off with EARNINGS_PRIOR_BACKFILL=false."""
+        if not earnings_prior_backfill.enabled():
+            print("earnings-prior-backfill-disabled", flush=True)
+            return
+        if self.stop_event.wait(earnings_prior_backfill.FIRST_DELAY_SECONDS):
+            return
+        while not self.stop_event.is_set():
+            try:
+                earnings_prior_backfill.run_once(self.db_path, lock=self.db_lock, log=lambda line: print(line, flush=True))
+            except Exception as exc:
+                print("earnings-prior-backfill-failed " + type(exc).__name__, flush=True)
+            try:  # then the blanks of older stored results (earnings_refill.py): payloads only, once per parser version
+                earnings_refill.run_once(self.db_path, lock=self.db_lock, log=lambda line: print(line, flush=True))
+            except Exception as exc:
+                print("earnings-refill-failed " + type(exc).__name__, flush=True)
+            self.stop_event.wait(earnings_prior_backfill.INTERVAL.total_seconds())
+
     def run_event_results(self):
         """Big events (an election) and indicators without a reader of their own (ADP, ISM, FOMC, GDP, retail sales).
         Headline feeds are read while a watch is open; the three official pages (FRB, BEA, Census) on their own, faster around release times."""
@@ -1250,7 +1273,22 @@ class AutomaticMonitor:
                 wait = min(wait, indicator_results.next_wait())
             except Exception as error:
                 print(f"indicator-results-unavailable {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
+            try:
+                # at most every five minutes: a result stays in the headlines for seven days
+                if time.monotonic() - getattr(self, "_economic_archive_at", -1e9) >= 300:
+                    self._economic_archive_at = time.monotonic()
+                    self.archive_economic_results()
+            except Exception as error:
+                print(f"economic-archive-unavailable {type(error).__name__}", flush=True)
             self.stop_event.wait(wait)
+
+    def archive_economic_results(self):
+        """Keeps each official BLS/BEA result for good (Nov 28): the news feed shows those headlines for seven days only, and the
+        calendar lost the rows after that. Read-only on the headlines; the copy goes to event_results (economic_archive.py)."""
+        with self.db_lock, stock_news.connect(self.db_path) as indicator_db:
+            updates = signals.public_official_updates(indicator_db, reference=datetime.now(timezone.utc), limit=500, read_only=True)
+        with self.db_lock, event_results.connect(self.db_path) as events_db:
+            return economic_archive.archive(events_db, updates)
 
     def run_weekly(self):
         """Once a minute: is it Saturday morning, and has the owner turned the weekly draft on? Off unless turned on."""
@@ -1341,10 +1379,18 @@ class AutomaticMonitor:
             return
         if self.stop_event.wait(production_watch.PRO_COMPARE_START_DELAY):
             return
+        deferred = False   # the previous run was a first 404, not recorded
         while not self.stop_event.is_set():
             wait = production_watch.PRO_COMPARE_INTERVAL
             try:
                 outcome = check()
+                if outcome and not outcome[0] and list(outcome[1]) == ["http-404"] and not deferred:
+                    # The site may not have deployed the route yet: asked again in 30 minutes; a second failure in a row is alerted.
+                    deferred = True
+                    print(json.dumps({"event": "pro-compare", "ok": False, "transition": "deferred", "code": "http-404"}, separators=(",", ":")), flush=True)
+                    self.stop_event.wait(production_watch.PRO_COMPARE_NOT_FOUND_RETRY)
+                    continue
+                deferred = False
                 if outcome:
                     ok, codes = outcome
                     with self.db_lock, monitor.connect(self.db_path) as db:
@@ -1646,6 +1692,7 @@ class AutomaticMonitor:
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.earnings_patrol_thread.start()
+        self.earnings_prior_thread.start()
         self.push_thread.start()
         self.price_alert_thread.start()
         self.value_check_thread.start()
@@ -1686,6 +1733,7 @@ class AutomaticMonitor:
         self.pro_compare_thread.join(timeout=5)
         self.watch_earnings_thread.join(timeout=10)
         self.earnings_patrol_thread.join(timeout=10)
+        self.earnings_prior_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
         self.value_check_thread.join(timeout=15)
@@ -4448,6 +4496,18 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {"ok": True, "dives": dives})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "company-dives-unavailable"})
+            return
+        if path == "/economic-results":
+            # Nov 28: every stored economic indicator result for the calendar, not only the news feed's newest 20 (and BLS/BEA ones
+            # beyond its seven days). Same token as /news; read only.
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with event_results.connect(self.app.db_path) as db:
+                    self.send_json(200, economic_archive.answer(db))
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "economic-results-unavailable"})
             return
         if path == "/earnings-results":
             # Nov 18 (owner): the calendar's results view reads every stored result of a month, not only the news feed's last

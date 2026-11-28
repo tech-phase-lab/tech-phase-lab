@@ -111,7 +111,7 @@ export function TerminalReviewOverview({ data, token }: { data?: TerminalReviews
         <p>要確認の理由: {item.review.reason}</p>
         <p className={styles.note}>判定 {time(item.review.decidedAt)}</p>
         <SourceAcquisitionClocks item={item} />
-        {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>}
+        {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元のページを確認</a>}
         {validEvent(item.eventId) && <SignalSourceInspection token={token} eventId={item.eventId} />}
         <details><summary>現在の原文版</summary>
           <pre className={styles.source}>{`Source SHA: ${item.currentSha}\nBody SHA: ${item.bodySha}`}</pre>
@@ -153,7 +153,7 @@ export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: 
           <p>投稿ID {postId ?? "未記録"} · イベント {record.eventId ?? "未作成"}{record.representativeEventId && record.representativeEventId !== record.eventId ? ` · 対応する代表イベント ${record.representativeEventId}` : ""}</p>
           <p className={styles.note}>投稿 {time(record.publishedAt)} · 初回取得 {time(record.firstSeenAt)} · 最終再観測 {time(record.lastSeenAt)}</p>
           <pre className={styles.source}>{`Source SHA: ${record.sha}\nBody SHA: ${record.bodySha ?? "未記録"}`}</pre>
-          {url && <a href={url.href} target="_blank" rel="noopener noreferrer">投稿元を確認 ↗</a>}
+          {url && <a href={url.href} target="_blank" rel="noopener noreferrer">投稿元を確認</a>}
           {record.url && <RetainedSourceProofInspection token={token} sourceId={record.sourceId} url={record.url} sourceSha={record.sha} />}
           {eventId !== null && <SignalSourceInspection token={token} eventId={eventId} />}
         </article>;
@@ -183,7 +183,7 @@ export function NewsPipelineOverview({ data, token }: { data?: Pipeline; token: 
           <p>準備理由: {record.preparationReason} · 生成・掲載状態: {record.generationDisposition} · 適格性理由: {record.generationEligibilityReason}</p>
           {record.companyRoleEvidence && <p>発表主体 {record.companyRoleEvidence.issuer ?? "未確認"} · 対象 {record.companyRoleEvidence.monitoredTicker ?? "未確認"} · 役割 {record.companyRoleEvidence.role ?? "確認できない"}</p>}
           <pre className={styles.source}>{`Source SHA: ${record.sourceSha}\nBody SHA: ${record.bodySha ?? "未記録"}`}</pre>
-          {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元を確認 ↗</a>}
+          {url && <a href={url.href} target="_blank" rel="noopener noreferrer">発信元を確認</a>}
           {validEvent(record.eventId) && <SignalSourceInspection token={token} eventId={record.eventId} />}
         </article>;
       })}
@@ -271,7 +271,7 @@ export function OfficialResearchResults({ data, token }: { data: Queue; token: s
       <div className={styles.items}>{data.items.map(item => <article key={item.eventId} className={styles.article}>
         <h3>{item.ticker} · {item.title}</h3>
         <p className={styles.note}>イベント {item.eventId} · {item.sourceId}</p>
-        <a href={item.url} target="_blank" rel="noopener noreferrer">発信元のページを確認 ↗</a>
+        <a href={item.url} target="_blank" rel="noopener noreferrer">発信元のページを確認</a>
         <SourceAcquisitionClocks item={item} />
         <p>状態: {item.status === "validated-publication" ? "現在版の保存記事は有効" : "未公開"} · 公開カード用ID {item.publication.publicId ?? "未確認"}{item.publication.researchId ? ` · 詳細記事ID ${item.publication.researchId}` : ""}</p>
         <p className={styles.note}>IDは保存記事の公開経路との対応です。現在のフィードへの収録・ブラウザー配信の確認ではありません。</p>

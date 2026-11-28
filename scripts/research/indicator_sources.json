@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "fomcMeetings": ["2026-10-28", "2026-12-09", "2027-01-27", "2027-03-17", "2027-04-28", "2027-06-09", "2027-07-28", "2027-09-15", "2027-10-27", "2027-12-08"],
+  "fomcMeetings": ["2026-10-28", "2026-12-09", "2027-01-27", "2027-03-17", "2027-04-28", "2027-06-09", "2027-07-28", "2027-09-15", "2027-10-27"],
   "notes": {
-    "fomcMeetings": "Final day of each meeting. 2026-12-09 is in the calendar; the 2027 dates are the Fed's tentative calendar (federalreserve.gov/monetarypolicy/fomccalendars.htm, checked 2026-11-05).",
+    "fomcMeetings": "Final day of each meeting. 2026-12-09 is in the calendar; the 2027 dates are the Fed's tentative calendar (federalreserve.gov/monetarypolicy/fomccalendars.htm, last updated Nov 18; checked 2026-11-28: seven meetings, none in December 2027, so 2027-12-08 was removed; November 16-17 is listed as a Monetary Policy Strategy Meeting and is not added).",
     "claims": {"source": "https://www.dol.gov/ui/data.pdf", "reason": "DOL's weekly claims release PDF answers our plainly named reader (HTTP 200, published 8:30 a.m. ET; checked 2026-11-21). The dol.gov news pages still answer HTTP 403 and are not read; the oui.doleta.gov table was weeks behind (2026-11-05).", "checkedOn": "2026-11-21"},
     "skipped": []
   }

@@ -46,7 +46,7 @@ function BriefEvidence({ brief, evidenceIds, lang, label, documentUrl }: { brief
   return <details className={filingStyles.pointEvidence}>
     <summary>{lang === "ja" ? "根拠の原文を見る" : "Show source evidence"}<span className={filingStyles.srOnly}> — {label}</span><small>{evidence.length}{lang === "ja" ? "件" : " quotes"}</small></summary>
     {evidence.map((item) => <blockquote key={item.id} lang="en">{item.quote}</blockquote>)}
-    <a href={documentUrl} target="_blank" rel="noreferrer">{lang === "ja" ? "年次報告書を開く ↗" : "Open annual filing ↗"}</a>
+    <a href={documentUrl} target="_blank" rel="noreferrer">{lang === "ja" ? "年次報告書を開く" : "Open annual filing"}</a>
   </details>;
 }
 
@@ -327,8 +327,8 @@ export default function StockDirectory({ sectors, focus }: { sectors?: Record<st
         <summary>{t("企業情報・公式資料", "Company details & filings")}<span>＋</span></summary>
         <div><p>{profile.name} · {exchangeLabel(profile.exchange)}</p>
           {profile.sicDescription && <p>{t("業種", "Industry")}: {profile.sicDescription}</p>}
-          <ul>{profile.recentFilings.map((filing) => <li key={filing.accessionNumber}><time dateTime={filing.filingDate}>{filing.filingDate}</time><a href={filing.documentUrl} target="_blank" rel="noreferrer">{filingLabel(filing.form, lang)} ↗</a></li>)}</ul>
-          <a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("公式資料をすべて見る（SEC）↗", "All official filings (SEC) ↗")}</a>
+          <ul>{profile.recentFilings.map((filing) => <li key={filing.accessionNumber}><time dateTime={filing.filingDate}>{filing.filingDate}</time><a href={filing.documentUrl} target="_blank" rel="noreferrer">{filingLabel(filing.form, lang)}</a></li>)}</ul>
+          <a href={profile.secProfileUrl} target="_blank" rel="noreferrer">{t("公式資料をすべて見る（SEC）", "All official filings (SEC)")}</a>
         </div>
       </details>}
       {!start && <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t(SOURCES_NOTE.ja, SOURCES_NOTE.en)}</p></footer>}

@@ -95,7 +95,7 @@ export default function EventCalendar({ initial = null, drawnAt = null }: { init
           {event.note && <p>{event.note[lang]}</p>}
           {event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}
           <details className={calendarStyles.sourceDetails}><summary>{t("日時・出典", "Time & source")}</summary><small>{stamp(event.startsAt, zone)} · {zoneLabel(zone)} · {calendarDateKey(event.startsAt, zone).slice(0, 4)}<br />{stamp(event.startsAt, otherZone)} · {zoneLabel(otherZone)}</small>
-          <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details>
+          <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName}</a></details>
         </div>
       </details>
     </li>)}</ol>
@@ -105,7 +105,7 @@ export default function EventCalendar({ initial = null, drawnAt = null }: { init
       <ol className={calendarStyles.agenda}>{visibleDateOnly.map((event) => <li key={event.id}><details>
         <summary><time dateTime={event.date}>{event.date.slice(5).replace("-", "/")}<small>{t("時刻未定", "Time TBD")}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}</span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
-          <IndicatorGuide id={event.id} lang={lang} />{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><details className={calendarStyles.sourceDetails}><summary>{t("日付・出典", "Date & source")}</summary><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a></details></div>
+          <IndicatorGuide id={event.id} lang={lang} />{event.ticker && earningsFocus[event.ticker] && <p>{earningsFocus[event.ticker][lang]}</p>}<p>{event.note?.[lang] ?? t("公式掲載日です。時刻未公表のためET/JSTへの日付換算はしていません。", "Official calendar date; not converted to ET/JST because no time has been confirmed.")}</p><details className={calendarStyles.sourceDetails}><summary>{t("日付・出典", "Date & source")}</summary><small>{event.date}</small><a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName}</a></details></div>
       </details></li>)}</ol></>}
 
     </section>

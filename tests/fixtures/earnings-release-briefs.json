@@ -1,0 +1,536 @@
+{
+ "DELL": {
+  "prior": {
+   "id": "252749567387695",
+   "researchId": "ir-flash-252749567387695",
+   "kind": "earnings",
+   "ticker": "DELL",
+   "period": "Q2 FY2027",
+   "titleJa": "DELL Q2 FY2027決算：売上高$46.971B、EPS（希薄化後）$6.34",
+   "titleEn": "DELL Q2 FY2027 earnings: Revenue $46.971B, Diluted EPS $6.34",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$46.971B",
+     "comparisons": {
+      "yearAgo": "$29.776B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$6.34",
+     "comparisons": {
+      "yearAgo": "$1.70"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$7.04",
+     "comparisons": {
+      "yearAgo": "$2.32"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$4.133B",
+     "comparisons": {
+      "yearAgo": "$1.164B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$5.385B",
+     "comparisons": {
+      "yearAgo": "$1.773B"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$49.0B"
+    },
+    {
+     "key": "guidance-adjusted-eps",
+     "ja": "次四半期見通し 調整後EPS",
+     "en": "Next-quarter guidance Adjusted EPS",
+     "value": "$6.50"
+    },
+    {
+     "key": "guidance-fy-revenue",
+     "ja": "通期見通し 売上高",
+     "en": "Full-year guidance Revenue",
+     "value": "$192.0B",
+     "comparisons": {
+      "priorGuidance": "$167.0B"
+     }
+    },
+    {
+     "key": "guidance-fy-adjusted-eps",
+     "ja": "通期見通し 調整後EPS",
+     "en": "Full-year guidance Adjusted EPS",
+     "value": "$25.50",
+     "comparisons": {
+      "priorGuidance": "$17.90"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm",
+   "publisher": "Dell Technologies IR (SEC 8-K)",
+   "publishedAt": "2026-09-01T20:10:14Z",
+   "observedAt": "2026-09-01T20:10:14Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-09-01T20:10:14Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  },
+  "latest": {
+   "id": "42976819092163",
+   "researchId": "ir-flash-42976819092163",
+   "kind": "earnings",
+   "ticker": "DELL",
+   "period": "Q3 FY2027",
+   "titleJa": "DELL Q3 FY2027決算：売上高$54.937B、EPS（希薄化後）$8.82",
+   "titleEn": "DELL Q3 FY2027 earnings: Revenue $54.937B, Diluted EPS $8.82",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$54.937B",
+     "comparisons": {
+      "yearAgo": "$27.005B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$8.82",
+     "comparisons": {
+      "yearAgo": "$2.28"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$9.45",
+     "comparisons": {
+      "yearAgo": "$2.59"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$5.673B",
+     "comparisons": {
+      "yearAgo": "$1.548B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$7.442B",
+     "comparisons": {
+      "yearAgo": "$2.119B"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$56.3B"
+    },
+    {
+     "key": "guidance-adjusted-eps",
+     "ja": "次四半期見通し 調整後EPS",
+     "en": "Next-quarter guidance Adjusted EPS",
+     "value": "$8.40"
+    },
+    {
+     "key": "guidance-fy-revenue",
+     "ja": "通期見通し 売上高",
+     "en": "Full-year guidance Revenue",
+     "value": "$202.0B",
+     "comparisons": {
+      "priorGuidance": "$192.0B"
+     }
+    },
+    {
+     "key": "guidance-fy-adjusted-eps",
+     "ja": "通期見通し 調整後EPS",
+     "en": "Full-year guidance Adjusted EPS",
+     "value": "$29.68",
+     "comparisons": {
+      "priorGuidance": "$25.50"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000050/exhibit991earnings8kq3fy27.htm",
+   "publisher": "Dell Technologies IR (SEC 8-K)",
+   "publishedAt": "2026-11-24T21:09:13Z",
+   "observedAt": "2026-11-24T21:09:13Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-11-24T21:09:13Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  }
+ },
+ "NVDA": {
+  "prior": {
+   "id": "259182290007630",
+   "researchId": "ir-flash-259182290007630",
+   "kind": "earnings",
+   "ticker": "NVDA",
+   "period": "Q2 FY2027",
+   "titleJa": "NVDA Q2 FY2027決算：売上高$96.221B、粗利益率75.0%",
+   "titleEn": "NVDA Q2 FY2027 earnings: Revenue $96.221B, Gross margin 75.0%",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$96.221B",
+     "comparisons": {
+      "yearAgo": "$46.743B"
+     }
+    },
+    {
+     "key": "gross-margin",
+     "ja": "粗利益率",
+     "en": "Gross margin",
+     "value": "75.0%",
+     "comparisons": {
+      "yearAgo": "72.4%"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.46",
+     "comparisons": {
+      "yearAgo": "$1.08"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$2.22",
+     "comparisons": {
+      "yearAgo": "$1.01"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$59.688B",
+     "comparisons": {
+      "yearAgo": "$26.422B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$63.734B",
+     "comparisons": {
+      "yearAgo": "$28.44B"
+     }
+    },
+    {
+     "key": "data-center-revenue",
+     "ja": "データセンター売上高",
+     "en": "Data Center revenue",
+     "value": "$89B",
+     "comparisons": {
+      "growth": "+117%"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$108.0B ± 2%"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+   "publisher": "NVIDIA IR",
+   "publishedAt": "2026-08-26T20:21:19Z",
+   "observedAt": "2026-08-26T20:21:19Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-08-26T20:21:19Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  },
+  "latest": {
+   "id": "37946516730190",
+   "researchId": "ir-flash-37946516730190",
+   "kind": "earnings",
+   "ticker": "NVDA",
+   "period": "Q3 FY2027",
+   "titleJa": "NVDA Q3 FY2027決算：売上高$115.8B、粗利益率74.8%",
+   "titleEn": "NVDA Q3 FY2027 earnings: Revenue $115.8B, Gross margin 74.8%",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$115.8B",
+     "comparisons": {
+      "yearAgo": "$57B"
+     }
+    },
+    {
+     "key": "gross-margin",
+     "ja": "粗利益率",
+     "en": "Gross margin",
+     "value": "74.8%",
+     "comparisons": {
+      "yearAgo": "73.4%"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.70",
+     "comparisons": {
+      "yearAgo": "$1.30"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$2.68",
+     "comparisons": {
+      "yearAgo": "$1.27"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$65.3B",
+     "comparisons": {
+      "yearAgo": "$31.9B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$77.5B",
+     "comparisons": {
+      "yearAgo": "$36B"
+     }
+    },
+    {
+     "key": "data-center-revenue",
+     "ja": "データセンター売上高",
+     "en": "Data Center revenue",
+     "value": "$107.6B",
+     "comparisons": {
+      "growth": "+110%"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$130.0B ± 3%"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
+   "publisher": "NVIDIA IR",
+   "publishedAt": "2026-11-17T21:20:51Z",
+   "observedAt": "2026-11-17T21:20:51Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-11-17T21:20:51Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  }
+ },
+ "MU": {
+  "prior": {
+   "id": "247470439503143",
+   "researchId": "ir-flash-247470439503143",
+   "kind": "earnings",
+   "ticker": "MU",
+   "period": "Q3 FY2026",
+   "titleJa": "MU Q3 FY2026決算：売上高$41.456B、EPS（希薄化後）$24.67",
+   "titleEn": "MU Q3 FY2026 earnings: Revenue $41.456B, Diluted EPS $24.67",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$41.456B",
+     "comparisons": {
+      "yearAgo": "$9.301B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$24.67",
+     "comparisons": {
+      "yearAgo": "$1.68"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$25.11",
+     "comparisons": {
+      "yearAgo": "$1.91"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$28.243B",
+     "comparisons": {
+      "yearAgo": "$1.885B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$33.318B",
+     "comparisons": {
+      "yearAgo": "$2.169B"
+     }
+    },
+    {
+     "key": "adjusted-net-income",
+     "ja": "調整後純利益",
+     "en": "Adjusted net income",
+     "value": "$28.86B"
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$50.0B ± $1.0B"
+    },
+    {
+     "key": "guidance-adjusted-eps",
+     "ja": "次四半期見通し 調整後EPS",
+     "en": "Next-quarter guidance Adjusted EPS",
+     "value": "$31.00 ± $1.00"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/a2026q3ex991-pressrelease.htm",
+   "publisher": "Micron IR (SEC 8-K)",
+   "publishedAt": "2026-06-24T20:02:01Z",
+   "observedAt": "2026-06-24T20:02:01Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-06-24T20:02:01Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  },
+  "latest": {
+   "id": "52941266226187",
+   "researchId": "ir-flash-52941266226187",
+   "kind": "earnings",
+   "ticker": "MU",
+   "period": "Q4 FY2026",
+   "titleJa": "MU Q4 FY2026決算：売上高$54.229B、EPS（希薄化後）$32.87",
+   "titleEn": "MU Q4 FY2026 earnings: Revenue $54.229B, Diluted EPS $32.87",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$54.229B",
+     "comparisons": {
+      "yearAgo": "$11.315B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$32.87",
+     "comparisons": {
+      "yearAgo": "$2.83"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$33.42",
+     "comparisons": {
+      "yearAgo": "$3.03"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$37.701B",
+     "comparisons": {
+      "yearAgo": "$3.201B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$43.751B",
+     "comparisons": {
+      "yearAgo": "$3.654B"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$61.5B ± $1.5B"
+    },
+    {
+     "key": "guidance-adjusted-eps",
+     "ja": "次四半期見通し 調整後EPS",
+     "en": "Next-quarter guidance Adjusted EPS",
+     "value": "$38.15 ± $1.00"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm",
+   "publisher": "Micron IR (SEC 8-K)",
+   "publishedAt": "2026-09-30T20:02:22Z",
+   "observedAt": "2026-09-30T20:02:22Z",
+   "method": "deterministic-issuer-table",
+   "publicAt": "2026-09-30T20:02:22Z",
+   "processingMs": 0,
+   "sourceToDetectionMs": null,
+   "detectionToPublicMs": null
+  }
+ }
+}

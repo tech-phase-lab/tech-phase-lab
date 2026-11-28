@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { reactionLines, percentText } from '../lib/research/earnings-reaction.ts';
 
 const released = '2026-11-12T13:00:00Z';
@@ -22,4 +23,15 @@ test('an after-hours or pre-market move of ±0.00% is left out, and a line witho
   assert.deepEqual(reactionLines({ ...flat, extended: { ...flat.extended, percentChange: 0.005 } }, released).map(l => l.label), ['通常取引', '時間外']);
   assert.deepEqual(reactionLines({ ...flat, percentChange: null, extended: { ...flat.extended, percentChange: undefined } }, released), []);
   assert.deepEqual(reactionLines({ ...flat, percentChange: undefined, asOf: undefined, extended: { price: 100, percentChange: 1.5, asOf: undefined, session: 'post' } }, released), []);
+});
+test('翌日の株価 only for the first session after the release; a later day is named by its date (owner, Nov 28)', async () => {
+  const { reactionDay } = await import('../lib/research/earnings-reaction.ts');
+  const dell = '2026-11-24T21:10:05Z'; // Tuesday after the close
+  assert.equal(reactionDay('2026-11-25T20:59:00Z', dell), 'next');
+  assert.equal(reactionDay('2026-11-27T18:00:00Z', dell), 'later');
+  assert.equal(reactionDay('2026-11-24T20:00:00Z', '2026-11-24T12:00:00Z'), 'same', 'a release before the open moves the same day');
+  assert.equal(reactionDay('2026-11-30T20:00:00Z', '2026-11-27T22:00:00Z'), 'next', 'Friday after the close: Monday');
+  const card = readFileSync(new URL('../app/research/calendar/earnings-reaction.tsx', import.meta.url), 'utf8');
+  assert.match(card, /"翌日の株価"/);
+  assert.doesNotMatch(card, /JST時点|通常取引 <b/, 'one line, not the two 「通常取引 …（… JST時点）」 lines');
 });

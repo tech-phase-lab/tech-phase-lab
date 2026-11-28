@@ -113,7 +113,7 @@ test('the calendar reads stored results by month and lists their months', () => 
 test('the X post copy is shown to the owner accounts only (server-decided ownerAccount)', () => {
   const panel = source('app/research/calendar/economic-results-panel.tsx');
   assert.match(panel, /const ownerAccount = useOwnerAccount\(\);/);
-  assert.match(panel, /\{ownerAccount && <XPostCopyButton /);
+  assert.match(panel, /brief && ownerAccount \? <XPostCopyButton /);
   assert.equal(panel.match(/<XPostCopyButton /g).length, 1);
   assert.match(source('lib/membership/server.ts'), /ownerAccount: isOwnerAccount\(userId\)/);
   assert.match(source('lib/membership/entitlements.ts'), /return userId === OWNER_ACCOUNT_ID \|\| userId === PRODUCTION_OWNER_ACCOUNT_ID;/);

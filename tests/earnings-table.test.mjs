@@ -38,7 +38,8 @@ test('the CrowdStrike card: every figure with its change, and the company guidan
   assert.deepEqual(rows['net-income'], ['純利益', '531万ドル', '黒字転換']);
   assert.deepEqual(rows['operating-income'], ['営業損失', '3,323万ドル', '赤字縮小']);
   assert.deepEqual(rows['operating-margin'], ['営業利益率', '−2.3%', null]);
-  assert.deepEqual(rows['adjusted-eps'], ['調整後EPS', '0.31ドル', '+35%']);
+  assert.deepEqual(rows['adjusted-eps'], ['EPS（調整後）', '0.31ドル', '+35%'], 'owner, Nov 28: 「EPS」, and 「EPS（調整後）」 only for the adjusted figure');
+  assert.deepEqual(rows.eps, ['EPS', '0.01ドル', '黒字転換']);
   assert.deepEqual(rows.arr, ['ARR', '58.4億ドル', '+25%']);
   assert.deepEqual(rows['free-cash-flow'], ['フリーCF', '3.77億ドル', '+33%']);
   assert.deepEqual(guidance.map(r => [r.label.ja, r.actual.ja]), [
@@ -49,14 +50,23 @@ test('the CrowdStrike card: every figure with its change, and the company guidan
   assert.equal(guidance[0].actual.en, '$1.52B–$1.53B');
 });
 
-test('the consensus difference sits on the EPS basis it matched', () => {
+test('the market forecast is written small under the EPS it matched, with no verdict word (owner, Nov 28)', () => {
   const { results } = earningsTable(crwd, { estimate: 0.29, date: '2026-08-26' }, 'adjusted-eps');
   const row = results.find(r => r.key === 'adjusted-eps');
-  assert.equal(row.versus.ja, '上回る（予想0.29ドル・+7%）');
-  assert.equal(row.versus.en, 'Beat (est. $0.29, +7%)');
-  assert.equal(row.tone, 'up');
-  assert.equal(results.find(r => r.key === 'eps').versus, null);
-  assert.ok(earningsTable(crwd).results.every(r => r.versus === null), 'no consensus: no difference column');
+  assert.deepEqual(row.note, { ja: '（市場予想 0.29ドル）', en: '(Consensus $0.29)' });
+  assert.equal(results.find(r => r.key === 'eps').note, null);
+  assert.ok(results.filter(r => r.key !== 'adjusted-eps').every(r => r.note === null), 'a figure without a forecast has nothing under it');
+  assert.ok(earningsTable(crwd).results.every(r => r.note === null));
+  assert.doesNotMatch(JSON.stringify(results), /上回る|下回る|Beat|Missed|範囲内/);
+});
+
+test('the company forecast under revenue is the outlook for this quarter from the previous release; an outlook says 上方修正 against its previous figure', () => {
+  const { results, guidance } = earningsTable([f('revenue', '売上高', 'Revenue', '$54.937B', { yearAgo: '$27.005B' }), f('guidance-revenue', '通期見通し 売上高', 'Full-year guidance Revenue', '$202.0B', { priorGuidance: '$192.0B' })], null, null, '$54.0B-$56.0B');
+  assert.deepEqual(results[0].note, { ja: '（会社予想 540〜560億ドル）', en: '(Guidance $54B–$56B)' });
+  assert.deepEqual([guidance[0].label.ja, guidance[0].actual.ja, guidance[0].note.ja, guidance[0].tone], ['通期売上', '2,020億ドル', '従来予想を上方修正', 'up']);
+  const lowered = earningsTable([f('guidance-revenue', '通期見通し 売上高', 'Full-year guidance Revenue', '$180.0B', { priorGuidance: '$192.0B' })]).guidance[0];
+  assert.deepEqual([lowered.note.ja, lowered.tone], ['従来予想を下方修正', 'down']);
+  assert.equal(earningsTable([f('guidance-revenue', '通期見通し 売上高', 'Full-year guidance Revenue', '$202.0B')]).guidance[0].note, null);
 });
 
 test('collapsed line and X post copy (only with revenue + EPS + guidance)', () => {
@@ -65,13 +75,15 @@ test('collapsed line and X post copy (only with revenue + EPS + guidance)', () =
   assert.equal(postable(crwd.filter(x => !x.key.startsWith('guidance-'))), false);
   assert.equal(postable(crwd.filter(x => x.key !== 'revenue')), false);
   const text = buildXPost({ ticker: 'CRWD', period: 'Q2 FY2027', facts: crwd }, null, 'short');
-  assert.match(text, /売上高14\.71億ドル（前年比\+26％）/);
-  assert.match(text, /調整後EPS0\.31ドル/);
-  assert.match(text, /純利益531万ドル/);
-  assert.match(text, /ARR58\.4億ドル（前年比\+25％）/);
-  assert.match(text, /会社予想 売上高（Q3 FY27）15\.23〜15\.29億ドル/);
-  assert.match(text, /会社予想 調整後EPS（Q3 FY27）0\.31ドル/);
+  assert.match(text, /^【CRWD 決算速報】\n\n/);
+  assert.match(text, /✅売上高 14\.71億ドル（前年比\+26%）/);
+  assert.match(text, /✅EPS（調整後） 0\.31ドル（前年比\+35%）/);
+  assert.match(text, /✅純利益 531万ドル/);
+  assert.match(text, /✅ARR 58\.4億ドル（前年比\+25%）/);
+  assert.match(text, /✅売上高見通し（Q3 FY27） 15\.23〜15\.29億ドル/);
+  assert.match(text, /✅調整後EPS見通し（Q3 FY27） 0\.31ドル/);
   assert.doesNotMatch(text, /フリーキャッシュフロー|Twelve/);
+  assert.ok(text.split('\n').slice(2).every(line => /^(⭕️|❌|⚠️|✅)/.test(line)), 'every line carries a mark');
 });
 
 test('the issuer flash may carry up to 16 figures, new keys and a stated growth rate', () => {
