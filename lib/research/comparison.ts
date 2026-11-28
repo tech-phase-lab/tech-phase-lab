@@ -497,10 +497,14 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       const instruments = counted.length;
       // Senior and subordinated notes are added (RJF's $3.5bn of senior notes beside its advances; COLB's and HNVR's subordinated debt) unless
       // a notes-payable or current-debt line already holds them (reviewer, Nov 26: PHM's $1.78bn of senior notes inside its $1.81bn of notes
-      // payable were counted twice). Unsecured and senior notes are never added to each other.
+      // payable were counted twice).
       const unsecured = family("UnsecuredDebt", "UnsecuredDebtCurrent", "UnsecuredLongTermDebt");
       const contains = (value: number) => !currentIsSenior && ((notes !== null && value <= notes) || (debtCurrent !== null && value <= debtCurrent));
-      const classified = unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior;
+      // Senior notes are unsecured, so an unsecured total at least as large holds them (SUI: both $1,788m): the larger counts once. An unsecured
+      // figure below the senior notes cannot be their total; it is a line of its own (DLR's 10-Q, Nov 28 audit: unsecured term loans of $424m
+      // beside unsecured senior notes of $15,809m on the balance sheet), and both count.
+      const classified = unsecured !== null && senior !== null
+        ? (unsecured < senior * 0.995 ? unsecured + senior : Math.max(unsecured, senior)) : unsecured ?? senior;
       if (classified !== null && (currentIsSenior || !contains(classified))) add(classified);
       // Secured debt (mortgage notes, secured financing) is its own line beside the others (L-1, Nov 28: ELS's $2.7bn, SLG's $2.5bn and CACC's
       // $5.4bn were dropped because a credit line was filed too; EQR's $1.6bn of mortgage notes beside its notes and commercial paper). It is

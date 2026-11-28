@@ -77,6 +77,14 @@ test("L-1: secured debt beside other borrowing lines is added, unless it repeats
   assert.equal(debtOf("X", { SecuredDebt: 2_000e6, LineOfCredit: 500e6 }, 1_900e6), null);
 });
 
+test("Audit: unsecured term loans below the senior notes are a line of their own; an unsecured total holds the notes (DLR, EXR, SUI)", () => {
+  // DLR's 10-Q balance sheet: revolver $1,640m, unsecured term loans $424m, unsecured senior notes $15,809m, secured and other $1,620m.
+  assert.equal(debtOf("DLR", { LineOfCredit: 1_640_466e3, UnsecuredDebt: 424_364e3, SeniorNotes: 15_809_482e3, SecuredDebt: 1_620_303e3 }, 26_284_010e3).value, 19_494_615e3);
+  assert.equal(debtOf("EXR", { LineOfCredit: 1_424e6, OtherNotesPayable: 1_070e6, UnsecuredDebt: 1_496e6, SeniorNotes: 9_416e6 }, 15_201e6).value, 13_406e6);
+  assert.equal(debtOf("SUI", { UnsecuredDebt: 1_788.4e6, SeniorNotes: 1_788.4e6, LoansPayable: 1_950.2e6 }).value, 1_950.2e6 + 1_788.4e6);
+  assert.equal(debtOf("X", { UnsecuredDebt: 5_000e6, SeniorNotes: 4_000e6 }).value, 5_000e6);
+});
+
 test("matchesLines: one line, or the sum of two or three, within 0.5%", () => {
   assert.equal(matchesLines(100, [100.4]), true);
   assert.equal(matchesLines(100, [60, 40]), true);

@@ -313,6 +313,10 @@ def print_lines(summary, details, source=None):
 PRO_COMPARE_START_DELAY = 300
 PRO_COMPARE_INTERVAL = 24 * HOUR
 PRO_COMPARE_RETRY = 3 * HOUR
+# A 404 from the site is not alerted the first time: the site may not have deployed the route yet when the monitor starts (Nov 28, 01:03Z:
+# the first run, five minutes after the monitor's deploy, opened the incident). It is asked again after this long, and a second failure
+# in a row, of any kind, is alerted.
+PRO_COMPARE_NOT_FOUND_RETRY = 30 * 60
 MONITOR_JOB = "pro-compare"
 
 
@@ -338,7 +342,9 @@ def incident_codes(result, detail):
     if result.get("pairs") is not None and result["pairs"] < len(PRO_COMPARE_PAIRS):
         codes.append("pairs")
     if not codes:
-        codes.append(result.get("error") or ("http-%s" % result["status"] if result.get("status") not in (None, 200) else "proCompare"))
+        # The HTTP status first when the site answered with one ("http-404": the route may not be deployed yet, service.run_pro_compare).
+        status = result.get("status")
+        codes.append("http-%s" % status if isinstance(status, int) and status != 200 else result.get("error") or "proCompare")
     return codes if len(codes) <= 8 else codes[:7] + ["more"]
 
 
