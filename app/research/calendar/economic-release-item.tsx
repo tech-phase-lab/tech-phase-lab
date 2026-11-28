@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { noBreakUnits } from "@/lib/research/no-break-units";
 import type { ReleaseView } from "@/lib/research/economic-release-view";
+import { techImpact } from "@/lib/research/economic-tech-impact";
 import calendarStyles from "./event-calendar.module.css";
 
 type Lang = "ja" | "en";
@@ -27,7 +28,9 @@ const monthDay = (at: string, zone: string) => {
  * indicator (an election) carries a small framed 「イベント」 tag and its result in one line.
  * Opened, every indicator has the same shape: the number large with the change and the previous number beside it, the bars of up to
  * six stored releases (oldest on the left, this one green, heights from the six's own minimum to maximum), the other figures in one
- * line, one sentence on what the indicator is, and the next date with the official source. Withdrawing an automatic result is the
+ * line, one sentence on what the indicator is, and the next date with the official source. Right under the number, an indicator of the
+ * rule table carries one box 「ハイテク株にとって」 with a 追い風 / 中立 / 逆風 badge and a fixed sentence (owner, Nov 28,
+ * econ-tech-impact-1128; lib/research/economic-tech-impact.ts); the collapsed row carries no badge. Withdrawing an automatic result is the
  * owner accounts' own small button, right of the source.
  */
 export default function EconomicReleaseItem({ view, time, lang, zone, withdraw }: {
@@ -50,6 +53,7 @@ export default function EconomicReleaseItem({ view, time, lang, zone, withdraw }
   if (!view.expandable && !withdraw) return <li><div className={calendarStyles.plainRow}>{time}{name}</div></li>;
   const values = view.history.flatMap(item => item.value === null ? [] : [item.value]);
   const low = Math.min(...values), high = Math.max(...values);
+  const impact = view.display ? techImpact(view.key, view.value, view.previous?.value ?? null, lang) : null;
   return <li><details className={calendarStyles.release}>
     <summary>{time}{name}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
     <div className={`${calendarStyles.eventDetails} ${calendarStyles.releaseDetails}`}>
@@ -61,6 +65,10 @@ export default function EconomicReleaseItem({ view, time, lang, zone, withdraw }
           : <span><span data-tone={move.tone}>{arrows[move.direction]}</span> {move.size}</span>)}
         {view.previous && move?.direction !== "same" && <span>{ja ? "前回" : "Prev"} {view.previous.display}</span>}
       </p>}
+      {impact && <div className={calendarStyles.techImpact}>
+        <p><span>{impact.label}</span><b data-badge={impact.badge}>{impact.badgeText}</b></p>
+        <p>{impact.text}</p>
+      </div>}
       {!!view.history.length && <ol className={calendarStyles.releaseBars} aria-label={ja ? "過去の推移" : "Recent releases"}>
         {view.history.map(item => <li key={item.id} data-current={item.current || undefined} data-empty={item.value === null || undefined}>
           {/* a period neither stored nor on FRED keeps its place and its label, with no bar (owner, Nov 28: never close the gap) */}
