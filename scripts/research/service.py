@@ -1379,10 +1379,18 @@ class AutomaticMonitor:
             return
         if self.stop_event.wait(production_watch.PRO_COMPARE_START_DELAY):
             return
+        deferred = False   # the previous run was a first 404, not recorded
         while not self.stop_event.is_set():
             wait = production_watch.PRO_COMPARE_INTERVAL
             try:
                 outcome = check()
+                if outcome and not outcome[0] and list(outcome[1]) == ["http-404"] and not deferred:
+                    # The site may not have deployed the route yet: asked again in 30 minutes; a second failure in a row is alerted.
+                    deferred = True
+                    print(json.dumps({"event": "pro-compare", "ok": False, "transition": "deferred", "code": "http-404"}, separators=(",", ":")), flush=True)
+                    self.stop_event.wait(production_watch.PRO_COMPARE_NOT_FOUND_RETRY)
+                    continue
+                deferred = False
                 if outcome:
                     ok, codes = outcome
                     with self.db_lock, monitor.connect(self.db_path) as db:

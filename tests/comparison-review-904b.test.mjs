@@ -65,8 +65,9 @@ test("H-2: long-term notes and loans, and the current debt line, are read (ORCL 
   assert.equal(debtOf("ORCL", { LongTermNotesAndLoans: 117_712e6, NotesPayableCurrent: 7_625e6 }).value, 125_337e6);
   assert.equal(debtOf("PG", { LongTermDebtNoncurrent: 21_897e6, DebtCurrent: 17_028e6 }).value, 38_925e6);
   assert.equal(debtOf("XOM", { LongTermDebtAndCapitalLeaseObligations: 29_727e6, DebtCurrent: 4_523e6 }).value, 34_250e6);
-  // OPRT: warehouse borrowings are read; as a lender it is scored on its equity ratio, never cash against debt.
-  assert.equal(debtOf("OPRT", { WarehouseAgreementBorrowings: 449_718e3, SecuredDebt: 94_754e3 }).value, 449_718e3);
+  // OPRT: warehouse borrowings are read; as a lender it is scored on its equity ratio, never cash against debt. Its secured debt ($94.8m of
+  // asset-backed notes, a balance-sheet line of its own beside the $449.7m of secured financing) is added too (L-1, Nov 28).
+  assert.equal(debtOf("OPRT", { WarehouseAgreementBorrowings: 449_718e3, SecuredDebt: 94_754e3 }).value, 449_718e3 + 94_754e3);
 });
 
 test("L-3: equal amounts in different instrument families are both counted; only a bank's borrowings filed twice count once", () => {

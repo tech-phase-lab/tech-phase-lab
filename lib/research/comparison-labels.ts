@@ -3,6 +3,10 @@
 type Copy = { ja: string; en: string };
 const signed = (n: number, digits = 1) => `${n > 0 ? "+" : ""}${n.toFixed(digits)}`;
 
+/** The name of a company's latest period (Financials.periodMonths): a foreign filer's fiscal year or half-year is never called a quarter
+ *  (Nov 28 audit: the growth notes said 「…終了の四半期」 / "the quarter ended" for 20-F filers' annual figures). */
+export const periodName = (months?: number): Copy => months === 12 ? { ja: "年度", en: "fiscal year" } : months === 6 ? { ja: "半期", en: "half-year" } : { ja: "四半期", en: "quarter" };
+
 export const ALTERNATIVE_LABELS = {
   runway: {
     months: (m: number): Copy => ({ ja: `資金の持ち期間 約${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)}か月`, en: `Cash runway ~${m >= 100 ? "100+" : m.toFixed(m < 10 ? 1 : 0)} months` }),

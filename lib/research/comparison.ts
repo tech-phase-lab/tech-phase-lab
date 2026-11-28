@@ -140,6 +140,8 @@ export const LENDER_REVENUE = "TechPhaseLenderRevenue";
 export const LEASE_REVENUE = "TechPhaseLeaseRevenue";
 /** An IFRS bank (20-F): net interest income plus net fee and commission income of the same period and filing. */
 export const IFRS_BANK_REVENUE = "TechPhaseIfrsBankRevenue";
+/** An IFRS filer's one revenue line that names what it sells (telecommunication services, sales of gold), when the period has no other. */
+export const IFRS_SOLE_REVENUE = "TechPhaseIfrsSoleRevenue";
 /** A company's own (extension) capital-spending line in its inline XBRL, named plainly as payments for property and equipment. */
 export const EXTENSION_CAPEX = "TechPhaseExtensionCapex";
 /** Codes inside the finance range whose companies run ordinary businesses (fourth review, Nov 26): payment processors (6099, "functions related
@@ -164,7 +166,7 @@ const LAST_REVENUE_FALLBACK = "RevenueAndOperatingIncome";
 // A gas or electric utility that tags only its regulated operating revenue (Southwest Gas, ONE Gas) uses that line when it has no total.
 // An advisory firm that tags its revenue only as investment banking revenue (Moelis: $425.6m for Q3 2026, its total revenues line) uses it
 // when the period has no other revenue line; after a lender's net interest income, so a bank's fee line is never read as its revenue.
-const REVENUE_FALLBACKS: string[] = [BANK_REVENUE, "GrossInvestmentIncomeOperating", "RevenueFromSaleOfGoods", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue", IFRS_BANK_REVENUE, "InsuranceRevenue", LAST_REVENUE_FALLBACK];
+const REVENUE_FALLBACKS: string[] = [BANK_REVENUE, "GrossInvestmentIncomeOperating", "RevenueFromSaleOfGoods", LENDER_REVENUE, "InvestmentBankingRevenue", LEASE_REVENUE, "RegulatedOperatingRevenue", IFRS_BANK_REVENUE, "InsuranceRevenue", IFRS_SOLE_REVENUE, LAST_REVENUE_FALLBACK];
 const PRETAX_TAGS = ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments"];
 /** The same figure filed in full and rounded (differing by at most 0.05%) is one figure: the most precise row (fewest trailing zeros) alone.
  *  Rows that differ more are returned as they are, so the caller still holds them as a conflict. */
@@ -179,6 +181,19 @@ function roundedOnce<T extends { value: number }>(values: T[]): T[] {
  *  advances): lines that add up (within 0.5%) to a total filed beside them are its parts; a line marked as a part of a total that is filed
  *  and at least as large is inside it; and an amount equal (within 0.1%) to one already kept is the same borrowing filed twice, except for a
  *  line of its own kind (distinct: a credit line), which only ever counts as a part of a sum. The amounts to add are returned. */
+/** True when `value` equals (within 0.5%) one of `lines` or the sum of two or three of them. */
+export function matchesLines(value: number, lines: number[]): boolean {
+  const near = (sum: number) => Math.abs(sum - value) <= 0.005 * Math.max(Math.abs(value), Math.abs(sum));
+  const n = lines.length;
+  for (let i = 0; i < n; i++) {
+    if (near(lines[i])) return true;
+    for (let j = i + 1; j < n; j++) {
+      if (near(lines[i] + lines[j])) return true;
+      for (let k = j + 1; k < n; k++) if (near(lines[i] + lines[j] + lines[k])) return true;
+    }
+  }
+  return false;
+}
 export function overlappingLines(lines: { value: number | null; total?: boolean; partOf?: (number | null)[]; distinct?: boolean }[]): number[] {
   type Line = { value: number; total?: boolean; partOf?: (number | null)[]; distinct?: boolean };
   let kept = lines.filter((l): l is Line => l.value !== null);
@@ -331,10 +346,33 @@ function supplementIfrs(ifrs: Record<string, unknown>): Record<string, unknown> 
     }
     if (Object.keys(out).length) facts[IFRS_BANK_REVENUE] = { units: out };
   }
+  // An IFRS filer whose only revenue line names what it sells (Nov 28 audit: VIV's telecommunication services, R$59.6bn for 2025; BTG's sales
+  // of gold; BWLP's transport services) had no revenue at all. Such a line is the period's revenue only when it is the one revenue line of
+  // that period, filing and currency (no total, no sales of goods, no second kind of sale, no related party's).
+  {
+    const standard = ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", "RevenueAndOperatingIncome"];
+    const keyOf = (unit: string, f: RawFact) => `${unit}|${f.accn}|${f.start ?? ""}|${f.end}`;
+    const taken = new Set(standard.flatMap(tag => Object.entries(obj(obj(facts[tag]).units)).flatMap(([unit, values]) => Array.isArray(values) ? (values as RawFact[]).map(f => keyOf(unit, f)) : [])));
+    const byPeriod = new Map<string, { unit: string; tag: string; fact: RawFact }[]>();
+    for (const tag of Object.keys(facts).filter(t => /^RevenueFrom(?:RenderingOf[A-Za-z]*Services|SaleOf(?!Goods)[A-Za-z]+)$/.test(t) && !/RelatedParty/.test(t)))
+      for (const [unit, values] of Object.entries(obj(obj(facts[tag]).units))) if (Array.isArray(values)) for (const f of values as RawFact[]) {
+        if (!f.start || typeof f.val !== "number" || f.val <= 0 || taken.has(keyOf(unit, f))) continue;
+        const key = keyOf(unit, f), list = byPeriod.get(key) ?? [];
+        list.push({ unit, tag, fact: f });
+        byPeriod.set(key, list);
+      }
+    const out: Record<string, RawFact[]> = {};
+    for (const lines of byPeriod.values()) if (new Set(lines.map(l => l.tag)).size === 1 && new Set(lines.map(l => l.fact.val)).size === 1) (out[lines[0].unit] ??= []).push(lines[0].fact);
+    // A line the company no longer files (SLSR: $1.5m of copper sales in 2024, no revenue in its 2025 report) says nothing about its latest
+    // year; it is not used at all, so a company with no revenue now stays measured as one.
+    const newest = (rows: RawFact[]) => rows.reduce((m, f) => f.start && f.end > m ? f.end : m, "");
+    const profitEnd = newest(Object.values(obj(obj(facts.ProfitLoss).units)).flatMap(v => Array.isArray(v) ? v as RawFact[] : []));
+    if (Object.keys(out).length && newest(Object.values(out).flat()) >= profitEnd) facts[IFRS_SOLE_REVENUE] = { units: out };
+  }
   const rows = (tag: string): [string, RawFact[]][] => Object.entries(obj(obj(facts[tag]).units)).flatMap(([unit, values]) => Array.isArray(values) ? [[unit, values as RawFact[]]] : []);
   const key = (unit: string, f: RawFact) => `${unit}|${f.accn}|${f.start ?? ""}|${f.end}`;
   const stated = new Set(rows("ProfitLossFromOperatingActivities").flatMap(([unit, values]) => values.map(f => key(unit, f))));
-  const revenue = new Set(["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", "RevenueAndOperatingIncome"].flatMap(tag => rows(tag).flatMap(([unit, values]) => values.map(f => key(unit, f)))));
+  const revenue = new Set(["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", IFRS_SOLE_REVENUE, "RevenueAndOperatingIncome"].flatMap(tag => rows(tag).flatMap(([unit, values]) => values.map(f => key(unit, f)))));
   const pre: Record<string, RawFact[]> = {};
   for (const [unit, values] of rows("ProfitLossBeforeTax")) for (const f of values) {
     if (typeof f.val === "number" && f.start && revenue.has(key(unit, f)) && !stated.has(key(unit, f))) (pre[unit] ??= []).push(f);
@@ -364,7 +402,7 @@ const tags = {
     // The company's own capital-spending line, read from its inline filing (comparison-filings.ts: UFPT's ufpt:PaymentsToAcquirePropertyAndEquipmentNet).
     EXTENSION_CAPEX], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   // IFRS filers (20-F/40-F/6-K): the pre-tax line only where no operating line is tagged (banks, insurers), shown as a pre-tax margin as for US filers.
-  "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", "RevenueAndOperatingIncome"], operatingIncome: ["ProfitLossFromOperatingActivities", DERIVED_PRETAX], operatingCash: ["CashFlowsFromUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivitiesContinuingOperations"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "PurchaseOfPropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: ["AdjustedWeightedAverageShares"] },
+  "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", IFRS_BANK_REVENUE, "InsuranceRevenue", IFRS_SOLE_REVENUE, "RevenueAndOperatingIncome"], operatingIncome: ["ProfitLossFromOperatingActivities", DERIVED_PRETAX], operatingCash: ["CashFlowsFromUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivitiesContinuingOperations"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "PurchaseOfPropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: ["AdjustedWeightedAverageShares"] },
 } as const;
 const REVENUE_TOTALS = ["Revenues", "Revenue", "RegulatedAndUnregulatedOperatingRevenue", "RevenuesNetOfInterestExpense"];
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -459,13 +497,26 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       const instruments = counted.length;
       // Senior and subordinated notes are added (RJF's $3.5bn of senior notes beside its advances; COLB's and HNVR's subordinated debt) unless
       // a notes-payable or current-debt line already holds them (reviewer, Nov 26: PHM's $1.78bn of senior notes inside its $1.81bn of notes
-      // payable were counted twice). Unsecured and senior notes are never added to each other.
+      // payable were counted twice).
       const unsecured = family("UnsecuredDebt", "UnsecuredDebtCurrent", "UnsecuredLongTermDebt");
       const contains = (value: number) => !currentIsSenior && ((notes !== null && value <= notes) || (debtCurrent !== null && value <= debtCurrent));
-      const classified = unsecured !== null && senior !== null ? Math.max(unsecured, senior) : unsecured ?? senior;
+      // Senior notes are unsecured, so an unsecured total at least as large holds them (SUI: both $1,788m): the larger counts once. An unsecured
+      // figure below the senior notes cannot be their total; it is a line of its own (DLR's 10-Q, Nov 28 audit: unsecured term loans of $424m
+      // beside unsecured senior notes of $15,809m on the balance sheet), and both count.
+      const classified = unsecured !== null && senior !== null
+        ? (unsecured < senior * 0.995 ? unsecured + senior : Math.max(unsecured, senior)) : unsecured ?? senior;
       if (classified !== null && (currentIsSenior || !contains(classified))) add(classified);
-      // Secured debt is a classification of the instruments above when any is filed; it is added only when none is.
-      if (!instruments) add(family("SecuredDebt", "SecuredDebtCurrent", "SecuredLongTermDebt"));
+      // Secured debt (mortgage notes, secured financing) is its own line beside the others (L-1, Nov 28: ELS's $2.7bn, SLG's $2.5bn and CACC's
+      // $5.4bn were dropped because a credit line was filed too; EQR's $1.6bn of mortgage notes beside its notes and commercial paper). It is
+      // only a classification of the lines above when it equals one of them or the sum of two or three (AAT's secured note, WTFC's and HST's
+      // other borrowings), and then not added again. Where adding it would take the debt above the total liabilities, it holds the other lines
+      // (ICON: $34.8m of secured debt beside a $21.0m finance lease, $37.1m of liabilities): the larger of the two is the debt.
+      const secured = family("SecuredDebt", "SecuredDebtCurrent", "SecuredLongTermDebt");
+      if (secured !== null && (!instruments || !matchesLines(secured, counted.slice(0, instruments)))) {
+        const before = counted.reduce((a, b) => a + b, 0), liabilities = m("Liabilities")?.value;
+        if (instruments && liabilities !== undefined && before + secured > liabilities && Math.max(before, secured) <= liabilities) { counted.length = 0; add(Math.max(before, secured)); }
+        else add(secured);
+      }
       const subordinated = family("SubordinatedDebt", "SubordinatedDebtCurrent", "SubordinatedLongTermDebt") ?? family("JuniorSubordinatedNotes", "JuniorSubordinatedLongTermNotes");
       if (subordinated !== null && !contains(subordinated)) add(subordinated);
       return counted.length ? counted.reduce((a, b) => a + b, 0) : null;
@@ -479,14 +530,47 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     function debtForms(): BalanceSnapshot["debtTotal"] {
       if (basis !== "us-gaap") return ifrsDebt();
       // Short-term borrowings under whichever line the filing uses (SCHW and KEY: other short-term borrowings; NTES: short-term bank loans).
-      const m = balanceMetric, short = (m("ShortTermBorrowings") ?? m("ShortTermBankLoansAndNotesPayable") ?? m("OtherShortTermBorrowings"))?.value ?? 0;
+      const m = balanceMetric;
       const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
-      if (current && noncurrent) return { value: current.value + noncurrent.value, source: "split" };   // the same figure as before
+      // Short-term borrowings beside the long-term debt (L-1, Nov 28: the split form left them out, AAPL's $2.0bn of commercial paper, WMT's
+      // $10.5bn and CEG's $5.2bn of short-term borrowings, NEE's $6.6bn of commercial paper and other short-term debt): short-term borrowings
+      // under whichever line the filing uses (SCHW and KEY: other short-term borrowings; NTES: short-term bank loans), commercial paper and
+      // current credit-line borrowings, each part of a short-term total filed beside it counted once (LIN: commercial paper $4.3bn and other
+      // $0.3bn inside short-term borrowings of $4.6bn), and none that repeats the current long-term debt (ICE, DVN, LITE, DOV, BRO tag one line
+      // as both).
+      // A short-term borrowings figure equal to one of those lines is that line, not their total (LNT: its $704m of commercial paper is also
+      // tagged as short-term borrowings in a note, beside $400m of other short-term borrowings on the balance sheet: $1,104m).
+      const sameAmount = (a: number, b: number) => Math.abs(a - b) <= 0.001 * Math.max(Math.abs(a), Math.abs(b));
+      const repeatsCurrent = (value: number | null) => value !== null && current !== null && noncurrent !== null && sameAmount(value, current.value) ? null : value;
+      const shortParts = ["ShortTermBankLoansAndNotesPayable", "OtherShortTermBorrowings", "ShortTermNonBankLoansAndNotesPayable", "CommercialPaper", "LinesOfCreditCurrent"].map(name => m(name)?.value ?? null);
+      const filedTotal = m("ShortTermBorrowings")?.value ?? null;
+      // Within 1%: NOW's $2,086m of short-term borrowings is its $2,100m of commercial paper at carrying value.
+      const shortTotal = filedTotal !== null && shortParts.some(v => v !== null && Math.abs(v - filedTotal) <= 0.01 * Math.max(v, filedTotal)) ? null : filedTotal;
+      const short = overlappingLines([{ value: repeatsCurrent(shortTotal), total: true }, ...shortParts.map(v => ({ value: repeatsCurrent(v), partOf: [shortTotal] }))]).reduce((a, v) => a + v, 0);
+      // The current debt line, where filed, is the whole current side (current maturities and short-term borrowings: PFE, BMY, EMR, BG).
+      const debtCurrentLine = m("DebtCurrent");
+      // Short-term borrowings that would take the debt above the total liabilities are inside the current debt already (RENX: $20.6m of
+      // short-term borrowings within $21.1m of current debt, $32.3m of liabilities); the split figure alone is the debt then.
+      const fits = (value: number) => { const liabilities = m("Liabilities")?.value; return liabilities === undefined || value <= liabilities; };
+      if (current && noncurrent) {
+        const split = noncurrent.value + (debtCurrentLine && debtCurrentLine.value >= current.value ? debtCurrentLine.value : current.value + short);
+        return { value: fits(split) ? split : noncurrent.value + current.value, source: "split" };
+      }
       const total = m("LongTermDebt");
-      if (total) return { value: total.value + short, source: "total" };
+      // A long-term debt total that is the secured plus unsecured debt (CPT: $4.2bn of notes payable, its $0.6bn of commercial paper inside
+      // the unsecured notes), or those and the short-term lines (VMRK: $13.9bn unsecured, $2.0bn secured and $1.0bn of commercial paper make
+      // its $17.0bn of notes payable), is all of the debt.
+      const classifiedAll = (() => {
+        const secured = m("SecuredDebt")?.value, unsecured = m("UnsecuredDebt")?.value;
+        return !!total && secured !== undefined && unsecured !== undefined && [secured + unsecured, secured + unsecured + short].some(sum => Math.abs(sum - total.value) <= 0.005 * total.value);
+      })();
+      // Over the liabilities with every short-term line, the short-term borrowings line alone is tried, as before this audit (HKD: $176.8m of
+      // bank loans and $83.3m of short-term borrowings are its $260.1m of current and long-term debt; its other short-term borrowings line is not).
+      const shortLine = (m("ShortTermBorrowings") ?? m("ShortTermBankLoansAndNotesPayable") ?? m("OtherShortTermBorrowings"))?.value ?? 0;
+      if (total) return { value: classifiedAll ? total.value : [total.value + short, total.value + shortLine].find(fits) ?? total.value, source: "total" };
       // The current debt line (current maturities and short-term borrowings) when no current part of long-term debt is filed (reviewer, Nov 26:
       // PG's $17.0bn, XOM's $4.5bn were left out); it already holds the short-term borrowings.
-      const debtCurrent = current ? null : m("DebtCurrent");
+      const debtCurrent = current ? null : debtCurrentLine;
       const currentPart = (fallback: number) => current?.value ?? debtCurrent?.value ?? fallback;
       if (noncurrent) return { value: noncurrent.value + (debtCurrent ? debtCurrent.value : short), source: "noncurrent" };
       // Long-term notes and loans as the noncurrent line (reviewer, Nov 26: ORCL's $117.7bn, TEVA's $12.7bn), with the current part.

@@ -58,7 +58,7 @@ class MonitorProCompareTests(unittest.TestCase):
         self.assertEqual(cron_report.parse({"job": "pro-compare", "ok": False, "codes": codes})[0], "pro-compare")
         with redirect_stdout(io.StringIO()):
             _, refused = watch.monitor_pro_compare(ENV, fetch=lambda url, timeout, token=None: (404, None, 40, "http-error"), now=NOW)
-        self.assertEqual(refused, ["http-error"])
+        self.assertEqual(refused, ["http-404"])
         many = {t: {"missing": ["cash"], "invalid": []} for t in "ABCDEFGHIJ"}
         self.assertEqual(len(watch.incident_codes({"ok": False}, many)), 8)
 
@@ -105,6 +105,28 @@ class MonitorLaneTests(unittest.TestCase):
             transitions = [r[0] for r in db.execute("SELECT transition FROM incident_notification_outbox ORDER BY id")]
         self.assertEqual(tuple(row), ("cron-check", "pro-compare", "resolved", "cron-check-failed:pro-compare:NVDA-missing"))
         self.assertEqual(transitions, ["opened", "resolved"])
+
+    def test_a_first_404_is_retried_in_30_minutes_without_an_incident(self):
+        # The site's route may not be deployed yet when the monitor starts: a 404 then a pass opens and sends nothing.
+        results = iter([(False, ["http-404"]), (True, [])])
+        waits, out = self.lane(lambda: next(results), 2)
+        self.assertEqual(watch.PRO_COMPARE_NOT_FOUND_RETRY, 1800)
+        self.assertEqual(waits, [watch.PRO_COMPARE_START_DELAY, watch.PRO_COMPARE_NOT_FOUND_RETRY, watch.PRO_COMPARE_INTERVAL])
+        events = [json.loads(line) for line in out.splitlines() if line.startswith('{"event"')]
+        self.assertEqual(events[0]["transition"], "deferred")
+        with monitor.connect(self.app.db_path) as db:
+            self.assertIsNone(db.execute("SELECT 1 FROM operational_incidents WHERE incident_key='cron:pro-compare' AND status='open'").fetchone())
+            self.assertEqual(db.execute("SELECT count(*) FROM incident_notification_outbox").fetchone()[0], 0)
+
+    def test_a_second_failure_in_a_row_after_a_404_is_alerted(self):
+        for second in (["http-404"], ["NVDA-missing"]):
+            with self.subTest(second=second):
+                self.setUp()
+                results = iter([(False, ["http-404"]), (False, list(second))])
+                waits, out = self.lane(lambda: next(results), 2)
+                self.assertEqual(waits[:3], [watch.PRO_COMPARE_START_DELAY, watch.PRO_COMPARE_NOT_FOUND_RETRY, watch.PRO_COMPARE_RETRY])
+                events = [json.loads(line) for line in out.splitlines() if line.startswith('{"event"')]
+                self.assertEqual([e["transition"] for e in events], ["deferred", "opened"])
 
     def test_an_exception_is_logged_by_name_and_retried(self):
         def boom():
