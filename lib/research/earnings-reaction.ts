@@ -10,9 +10,11 @@ export function reactionLines(quote: ReactionQuote | null | undefined, releasedA
   const since = Date.parse(releasedAt);
   if (!quote || !Number.isFinite(since)) return [];
   const out: ReactionLine[] = [];
-  if (quote.percentChange !== null && Number.isFinite(quote.percentChange) && Date.parse(quote.asOf) >= since) out.push({ label: "通常取引", labelEn: "Regular session", percent: quote.percentChange, at: quote.asOf, base: "前日終値比", baseEn: "vs. previous close" });
+  // A line without its value is not shown (owner, Nov 27).
+  if (typeof quote.percentChange === "number" && Number.isFinite(quote.percentChange) && Date.parse(quote.asOf) >= since) out.push({ label: "通常取引", labelEn: "Regular session", percent: quote.percentChange, at: quote.asOf, base: "前日終値比", baseEn: "vs. previous close" });
   const x = quote.extended;
-  if (x && Number.isFinite(x.percentChange) && Date.parse(x.asOf) >= since) out.push({ label: x.session === "pre" ? "プレマーケット" : "時間外", labelEn: x.session === "pre" ? "Pre-market" : "After hours", percent: x.percentChange, at: x.asOf, base: "通常取引の終値比", baseEn: "vs. regular-session close" });
+  // A pre-market / after-hours move of ±0.00% is left out, as on the market board (owner, Nov 27).
+  if (x && typeof x.percentChange === "number" && Number.isFinite(x.percentChange) && Math.abs(x.percentChange) >= 0.005 && Date.parse(x.asOf) >= since) out.push({ label: x.session === "pre" ? "プレマーケット" : "時間外", labelEn: x.session === "pre" ? "Pre-market" : "After hours", percent: x.percentChange, at: x.asOf, base: "通常取引の終値比", baseEn: "vs. regular-session close" });
   return out;
 }
 export const percentText = (p: number) => `${p >= 0 ? "+" : "-"}${Math.abs(p).toFixed(2)}%`;

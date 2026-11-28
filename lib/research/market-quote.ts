@@ -14,6 +14,10 @@ export type MarketQuote = {
   week52Low: number | null; week52High: number | null; asOf: string; marketOpen: boolean;
   /** Pre-market / after-hours price (prepost=true), when the provider has one. */
   extended: { price: number; change: number | null; percentChange: number | null; asOf: string; session: "pre" | "post" } | null;
+  /** The provider's session date (`datetime`, YYYY-MM-DD): the day the change and volume belong to. Absent in copies stored before Nov 27. */
+  session?: string | null;
+  /** The last trade's time (`last_quote_at`) when the provider gives one; never the day bar's opening `timestamp`. */
+  lastTradeAt?: string | null;
 };
 export type Bar = { at: string; open: number; high: number; low: number; close: number; volume: number | null };
 export type ChartRange = "1d" | "1w" | "1m" | "3m" | "6m" | "ytd" | "1y" | "3y" | "5y";
@@ -29,7 +33,7 @@ export function parseQuote(raw: unknown, ticker: string): MarketQuote | null {
   if (q.status === "error" || (typeof q.symbol === "string" && q.symbol.toUpperCase() !== ticker.toUpperCase())) return null;
   const price = n(q.close);
   // `timestamp` is the OPENING time of the day's bar; `last_quote_at` is the last quote (owner screenshot, Nov 11: "23:30 JST" after the close).
-  const seconds = n(q.last_quote_at) ?? n(q.timestamp);
+  const lastTrade = n(q.last_quote_at), seconds = lastTrade ?? n(q.timestamp);
   if (price === null || price <= 0) return null;
   const at = seconds !== null && seconds > 0 ? seconds * 1000 : Date.parse(`${String(q.datetime)}T20:00:00Z`);
   if (!Number.isFinite(at)) return null;
@@ -44,6 +48,8 @@ export function parseQuote(raw: unknown, ticker: string): MarketQuote | null {
     price, change: n(q.change), percentChange: n(q.percent_change), previousClose: positive(q.previous_close),
     open: positive(q.open), high: positive(q.high), low: positive(q.low), volume: n(q.volume),
     week52Low: positive(year.low), week52High: positive(year.high), asOf: new Date(at).toISOString(), marketOpen: q.is_market_open === true, extended,
+    session: typeof q.datetime === "string" && /^\d{4}-\d{2}-\d{2}/.test(q.datetime) ? q.datetime.slice(0, 10) : null,
+    lastTradeAt: lastTrade !== null && lastTrade > 0 ? new Date(lastTrade * 1000).toISOString() : null,
   };
 }
 /** A multi-symbol /quote answer is keyed by symbol; a single-symbol answer is the quote itself. */

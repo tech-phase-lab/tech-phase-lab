@@ -11,7 +11,9 @@ export type ShockCandidate = {
   /** The source headline and tickers (to measure the story again at the publish run). */
   source: { title: string; tickers: string[]; publisher: string | null };
   ja: RiskCopy; en: RiskCopy; market: RiskMarket;
-  suggested: { stars: number; reason: { ja: string; en: string }; by: 'ai' | 'rule' };
+  /** stars null = not judged (owner, Nov 28): the AI ranking failed and the session has no measured numbers, so the owner sets the ★;
+   * such a story is never published automatically. */
+  suggested: { stars: number | null; reason: { ja: string; en: string }; by: 'ai' | 'rule' };
   /** A must-capture story whose summary was withheld (the reason code): listed for the owner, never pickable or published. */
   withheld?: string;
 };
@@ -38,7 +40,7 @@ export function parseCandidate(v: unknown): ShockCandidate {
   const u = new URL(x.url); if (u.protocol !== 'https:' || u.username || u.password || u.href.length > 2048) throw Error('INVALID_CANDIDATE');
   const s = x.source, g = x.suggested;
   if (!s || typeof s.title !== 'string' || !TEXT.test(s.title) || !Array.isArray(s.tickers) || s.tickers.length > 30 || !s.tickers.every(t => typeof t === 'string' && /^[A-Z][A-Z0-9.]{0,9}$/.test(t)) || !(s.publisher === null || typeof s.publisher === 'string' && TEXT.test(s.publisher))) throw Error('INVALID_CANDIDATE');
-  if (!g || !isStars(g.stars) || !['ai', 'rule'].includes(g.by) || !g.reason || typeof g.reason.ja !== 'string' || typeof g.reason.en !== 'string' || !TEXT.test(g.reason.ja) || !TEXT.test(g.reason.en)) throw Error('INVALID_CANDIDATE');
+  if (!g || !(g.stars === null || isStars(g.stars)) || !['ai', 'rule'].includes(g.by) || !g.reason || typeof g.reason.ja !== 'string' || typeof g.reason.en !== 'string' || !TEXT.test(g.reason.ja) || !TEXT.test(g.reason.en)) throw Error('INVALID_CANDIDATE');
   return { id: x.id, url: u.href, publishedAt: x.publishedAt, group: x.group, rank: x.rank, source: { title: s.title, tickers: [...s.tickers], publisher: s.publisher },
     ja: parseRiskCopy(x.ja), en: parseRiskCopy(x.en), market: parseRiskMarket(x.market), suggested: { stars: g.stars, reason: { ja: g.reason.ja, en: g.reason.en }, by: g.by },
     ...(typeof x.withheld === 'string' && /^[a-z-]{1,30}$/.test(x.withheld) ? { withheld: x.withheld } : {}) };
@@ -72,11 +74,11 @@ export function parsePicks(v: unknown, candidates: readonly { id: string; withhe
     return line ? { id: x.id, stars: x.stars, rizel: line } : { id: x.id, stars: x.stars };
   });
 }
-/** The service's own picks when the owner did not answer: autoStories in rank order, at least autoMinMarket market-wide when
+/** The service's own picks when the owner did not answer (never a story whose ★ is not judged): autoStories in rank order, at least autoMinMarket market-wide when
  * there are that many, the rest by rank (market-wide first within the same rank), each with the suggested ★. */
 export function autoPicks(candidates: readonly ShockCandidate[]): OwnerPick[] {
   const { autoStories, autoMinMarket } = RISK_POLICY.ownerPicks;
-  const ranked = candidates.filter(c => !c.withheld).sort((a, b) => a.rank - b.rank || (a.group === 'market' ? 0 : 1) - (b.group === 'market' ? 0 : 1));
+  const ranked = candidates.filter((c): c is ShockCandidate & { suggested: { stars: number } } => !c.withheld && c.suggested.stars !== null).sort((a, b) => a.rank - b.rank || (a.group === 'market' ? 0 : 1) - (b.group === 'market' ? 0 : 1));
   const market = ranked.filter(c => c.group === 'market').slice(0, autoMinMarket), taken = new Set(market.map(c => c.id));
   const rest = ranked.filter(c => !taken.has(c.id)).slice(0, Math.max(0, autoStories - market.length));
   const chosen = new Set([...market, ...rest].map(c => c.id));
@@ -115,14 +117,55 @@ export function answerDay(now: Date): string | null {
 }
 /** The measured numbers as text lines (the card's table), none when the story's session has no measured move. */
 export const candidateNumbers = (c: { market: RiskMarket }, locale: 'ja' | 'en') => readingParts(c.market, locale).map(l => l.text);
+/** Why a story has no numbers (owner, Nov 28: 「まだありません（取引がまだ終わっていないか、休場です）」 was shown for every story
+ * although Friday's session had closed). Null when it has numbers. */
+export const NO_NUMBERS = {
+  notClosed: { ja: 'まだありません（このニュースのあとの米国市場の取引が、まだ終わっていません）', en: 'None yet (the U.S. session after this news has not closed yet).' },
+  notMeasured: { ja: 'ありません（値動きのデータを取得できませんでした）', en: 'None (the session\'s moves could not be read).' },
+  unlisted: { ja: 'ありません（この銘柄の値動きは測っていません）', en: 'None (this stock\'s move is not measured).' },
+} as const;
+/** A story whose ★ is not judged (owner, Nov 28): shown as it is in the mail and on the owner page. */
+export const UNJUDGED = { ja: '★は未判定。オーナーが決めてください', en: 'Stars not judged: the owner decides.' } as const;
+export function numbersNote(c: { market: RiskMarket }, locale: 'ja' | 'en' = 'ja'): string | null {
+  if (readingParts(c.market, locale).length) return null;
+  const m = c.market;
+  if (m.index === 'company' && !m.company) return NO_NUMBERS.unlisted[locale];
+  return (m.session ? NO_NUMBERS.notMeasured : NO_NUMBERS.notClosed)[locale];
+}
+/** The AI's RIZEL note is at most this many characters (owner, Nov 28; the owner's own note may use RIZEL_MAX_CHARS). */
+export const RIZEL_AI_MAX_CHARS = 100;
+/** Stock phrases that came out for nearly every story (owner, Nov 28): 「まず自分のルールを確認」「見出しに流されず」「判断は手順で」… */
+export const RIZEL_CLICHES = /(?:まず|先に)?自分の(?:ルール|基準|手順|ルールと[^。]{0,12})を(?:確認|確かめ|見直)|見出し(?:だけ)?に(?:流され|振り回され|飛びつ)|判断は手順|手順で(?:整え|判断)|ニュースは材料|見出しより先に|本文と自分のルール|様子見|\bcheck (?:your|one's) (?:own )?rules\b|\bdon[’']t (?:chase|follow) the headline/i;
+/** A price call (owner, Nov 28: no 「上がる」「下がる」 stated as a prediction). */
+const PRICE_CALL = /(?:株価|株|相場|指数|価格)[^。]{0,8}(?:上が|下が|上昇す|下落す|反発す|戻)(?:る|ります)(?:はず|だろう|でしょう|と思う|。|$)|\b(?:will|is going to|should) (?:rise|fall|rally|drop|rebound|go (?:up|down))\b/i;
+const GENERIC_TERMS = new Set(['ニュース', '記事', '発表', '報道', '見出し', '速報', '市場', '株価', '株式', '相場', '指数', '投資', '投資家', '米国', '日本', '米株', '米国株', '下落', '上昇', '急落', '急騰', '懸念', '企業', '会社', '影響', '取引', '終値', '自分', '判断', '手順', '基準', '材料', '今日', '本日', '今回', '動き', '値動き', '一言', '発言', '関連']);
+/** The concrete words of a story a note can name (owner, Nov 28: a company, a product, a country, an event): katakana words, kanji
+ * words of two or more characters and Latin names (GB300, NVIDIA) from the headline and the summary, without generic market words. */
+export function storyTerms(...texts: string[]): string[] {
+  const t = texts.filter(x => typeof x === 'string').join(' ').normalize('NFKC');
+  return [...new Set(t.match(/[\p{Script=Katakana}ー]{2,}|\p{Script=Han}{2,}|[A-Za-z][A-Za-z0-9&.-]*[A-Za-z0-9]/gu) ?? [])].filter(w => !GENERIC_TERMS.has(w) && !/^(?:The|A|An|And|Of|In|On|To|For|By|At|As|It|Is|Was|Will|Says?|Said|U\.S|US)$/i.test(w));
+}
+/** The story an AI note is about: its Japanese headline and summary, the English headline, and the notes already used today. */
+export type RizelStory = { title: string; summary?: string; titleEn?: string; avoid?: readonly string[] };
 /** Fixed codes for an AI-written RIZEL line that breaks the rules: the RIZEL wording rules (quoteIssues), the summary wording rules
- * (summaryIssues), numbers and length. The owner's own line is never checked (owner, Nov 27). */
-export function rizelIssues(line: { ja?: unknown; en?: unknown } | null | undefined): string[] {
+ * (summaryIssues), numbers and length. With the story (owner, Nov 28): at most RIZEL_AI_MAX_CHARS characters, it must name at least
+ * one concrete word of the story (storyTerms; 'generic'), no stock phrase ('cliche'), no price call ('price-call'), not a note already
+ * used today ('repeat'), and numbers only as the story itself gives them. Without the story every number is refused. The owner's own
+ * line is never checked (owner, Nov 27). */
+export function rizelIssues(line: { ja?: unknown; en?: unknown } | null | undefined, story?: RizelStory): string[] {
   const ja = typeof line?.ja === 'string' ? normalizeNote(line.ja) : '', en = typeof line?.en === 'string' ? normalizeNote(line.en) : '';
   // One note of 1–3 short sentences (owner, Nov 27), in at most three lines.
-  if (!ja || !en || [...ja.replace(/\n/g, '')].length > RIZEL_MAX_CHARS || en.length > 200 || /[<>\u0000]/.test(ja + en)) return ['shape'];
+  const max = story ? RIZEL_AI_MAX_CHARS : RIZEL_MAX_CHARS;
+  if (!ja || !en || [...ja.replace(/\n/g, '')].length > max || en.length > 200 || /[<>\u0000]/.test(ja + en)) return ['shape'];
   const codes = [...quoteIssues({ ja: { title: ja, reasons: [] }, en: { title: en, reasons: [] } }), ...summaryIssues(ja, en)];
-  if (/[0-9０-９]/.test(ja + en)) codes.push('number');
+  if (!story) { if (/[0-9０-９]/.test(ja + en)) codes.push('number'); return [...new Set(codes)]; }
+  const source = [story.title, story.summary ?? '', story.titleEn ?? ''].join(' ').normalize('NFKC');
+  if (((ja + ' ' + en).normalize('NFKC').match(/\d+(?:[.,]\d+)*/g) ?? []).some(n => !source.includes(n))) codes.push('number');
+  const terms = storyTerms(story.title, story.summary ?? '', story.titleEn ?? '');
+  if (!terms.some(w => ja.normalize('NFKC').includes(w))) codes.push('generic');
+  if (RIZEL_CLICHES.test(ja) || RIZEL_CLICHES.test(en)) codes.push('cliche');
+  if (PRICE_CALL.test(ja) || PRICE_CALL.test(en)) codes.push('price-call');
+  if ((story.avoid ?? []).some(a => normalizeNote(a) === ja)) codes.push('repeat');
   return [...new Set(codes)];
 }
 /** The `edit` query of the owner page (one story from the morning mail), or null when it is not a story id. */

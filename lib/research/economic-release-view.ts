@@ -155,12 +155,125 @@ export function periodLabel(title: Copy, lang: Lang) {
   return month ? month.slice(0, 3) : /\((Q\d)/.exec(title.en)?.[1] ?? null;
 }
 
+/** One line of the opened row's table (owner, Nov 27): 今回 / 前回 / 予想 (only the headline holds one) / 変化. */
+export type FigureRow = { key: string; label: string; now: string; previous: string | null; forecast: string | null;
+  change: { direction: "up" | "down" | "same"; text: string } | null };
+
+type FigureUnit = "pct" | "level" | "count" | "persons" | "billion";
+/** A stated change from the previous figure ("前週比1,500件減" / "down 1,500 from the previous week"): the signed amount, 0 for unchanged. */
+type Stated = number | null;
+type Read = { value: Value; stated: Stated } | null;
+type Figure = { key: string; label: Copy; unit: FigureUnit; read: (text: Copy) => Read; fact: RegExp };
+
+const pctRe = "([+\\-−]?\\d+(?:\\.\\d+)?)";
+const plain = (match: RegExpExecArray | null): Read => match ? { value: { value: toNumber(match[1]), decimals: decimalsOf(match[1]) }, stated: null } : null;
+/** The English text first, then the Japanese. */
+const either = (en: (text: string) => Read, ja: (text: string) => Read) => (text: Copy) => en(text.en) ?? ja(text.ja);
+/** The headline part of an inflation result (before "core" / "コア") and the core part. */
+const coreAt = (text: string) => text.search(/\bcore\b|コア/i);
+const headPart = (text: string) => coreAt(text) < 0 ? text : text.slice(0, coreAt(text));
+const corePart = (text: string) => coreAt(text) < 0 ? "" : text.slice(coreAt(text));
+const momEn = new RegExp(`${pctRe}% (?:MoM|month over month|from the previous month)`, "i"), momJa = new RegExp(`前月比\\s*${pctRe}%`);
+const yoyEn = new RegExp(`${pctRe}% (?:YoY|year over year)`, "i"), yoyJa = new RegExp(`前年比\\s*${pctRe}%`);
+const statedEn = (dir?: string, size?: string, same?: string): Stated => same ? 0 : dir && size ? toNumber(size) * (dir.toLowerCase() === "up" ? 1 : -1) : null;
+const statedJa = (size?: string, dir?: string, same?: string): Stated => same ? 0 : size && dir ? toNumber(size) * (dir === "増" ? 1 : -1) : null;
+const counted = (match: RegExpExecArray | null, stated: (m: RegExpExecArray) => Stated): Read => match ? { value: { value: toNumber(match[1]), decimals: 0 }, stated: stated(match) } : null;
+const shortPct = /^[+\-−]?[\d.]+% (?:YoY|MoM|year over year|month over month)$/i;
+
+const inflation: Figure[] = [
+  { key: "yoy", label: { ja: "前年比", en: "YoY" }, unit: "pct", read: either(t => plain(yoyEn.exec(headPart(t))), t => plain(yoyJa.exec(headPart(t)))),
+    fact: /^前年比\s*[+\-−]?[\d.]+%$|^[+\-−]?[\d.]+% (?:YoY|year over year)$/i },
+  { key: "core-mom", label: { ja: "コア前月比", en: "Core MoM" }, unit: "pct", read: either(t => plain(momEn.exec(corePart(t))), t => plain(momJa.exec(corePart(t)))), fact: /^(?:コア|core\b)/i },
+  { key: "core-yoy", label: { ja: "コア前年比", en: "Core YoY" }, unit: "pct", read: either(t => plain(yoyEn.exec(corePart(t))), t => plain(yoyJa.exec(corePart(t)))), fact: shortPct },
+];
+/** The figures after the headline, per indicator, read from the stored result and detail. A figure we cannot read is left out. */
+const FIGURES: Record<string, Figure[]> = {
+  pce: inflation, cpi: inflation, ppi: inflation,
+  retail: [{ key: "sales", label: { ja: "売上高", en: "Sales" }, unit: "billion",
+    read: either(t => plain(/\(\$(\d[\d,]*(?:\.\d+)?) billion\)/.exec(t)),
+      t => { const m = /売上高\s*(\d[\d,]*(?:\.\d+)?)億ドル/.exec(t); return m ? { value: { value: toNumber(m[1]) / 10, decimals: decimalsOf(m[1]) + 1 }, stated: null } : null; }),
+    fact: /^売上高 |^\$[\d,.]+ billion$/ }],
+  claims: [
+    { key: "average", label: { ja: "4週平均", en: "4-week average" }, unit: "count",
+      read: either(t => counted(new RegExp(`4-week average: ${num}(?: \\((?:(up|down) ([\\d,]+)|(unchanged)) from the previous week\\))?`, "i").exec(t), m => statedEn(m[2], m[3], m[4])),
+        t => counted(new RegExp(`4週平均：${num}件(?:（(?:前週比([\\d,]+)件(増|減)|前週から(変わらず))）)?`).exec(t), m => statedJa(m[2], m[3], m[4]))),
+      fact: /^4週平均|^4-week average/i },
+    { key: "continuing", label: { ja: "継続受給者数", en: "Continuing claims" }, unit: "persons",
+      read: either(t => counted(new RegExp(`Continuing claims: ${num} \\(week ending [A-Za-z]+ \\d+(?:, (?:(up|down) ([\\d,]+)|(unchanged)) from the previous week)?\\)`, "i").exec(t), m => statedEn(m[2], m[3], m[4])),
+        t => counted(new RegExp(`継続受給者数：${num}人（\\d+月\\d+日終了週(?:・(?:前週比([\\d,]+)人(増|減)|前週から(変わらず)))?）`).exec(t), m => statedJa(m[2], m[3], m[4]))),
+      fact: /^継続受給者数|^Continuing claims/i },
+  ],
+  jobs: [
+    { key: "unemployment", label: { ja: "失業率", en: "Unemployment rate" }, unit: "level",
+      read: either(t => plain(/unemployment rate (\d+(?:\.\d+)?)%/i.exec(t)), t => plain(/失業率\s*(\d+(?:\.\d+)?)%/.exec(t))), fact: /^失業率|^unemployment rate/i },
+    { key: "wages-mom", label: { ja: "平均時給 前月比", en: "Hourly earnings MoM" }, unit: "pct",
+      read: either(t => plain(new RegExp(`average hourly earnings:? ${pctRe}% (?:m/m|MoM|month over month)`, "i").exec(t)), t => plain(new RegExp(`平均時給[：\\s]*前月比\\s*${pctRe}%`).exec(t))),
+      fact: /^平均時給|^average hourly earnings/i },
+    { key: "wages-yoy", label: { ja: "平均時給 前年比", en: "Hourly earnings YoY" }, unit: "pct",
+      read: either(t => plain(new RegExp(`average hourly earnings(?:(?!\\. )[^;\\n])*?${pctRe}% \\(?(?:y/y|YoY|year over year)`, "i").exec(t)), t => plain(new RegExp(`平均時給[^。／\\n]*?前年比\\s*${pctRe}%`).exec(t))),
+      fact: /^前年比\s*[+\-−]?[\d.]+%$|^[+\-−]?[\d.]+% y\/y$/i },
+  ],
+};
+/** The headline row's label where the table names it differently from the collapsed line. */
+const HEADLINE_LABEL: Record<string, Copy> = { claims: { ja: "件数", en: "Claims" } };
+
+const textOf = (row: ReleaseRow): Copy => ({ ja: `${cleanResult(row.result.ja)}\n${row.detail.ja}`, en: `${cleanResult(row.result.en)}\n${row.detail.en}` });
+
+function formatFigure(unit: FigureUnit, v: Value, lang: Lang) {
+  const fixed = (n: number, d = v.decimals) => Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  if (unit === "billion") return lang === "ja" ? `${fixed(v.value * 10, Math.max(0, v.decimals - 1))}億ドル` : `$${fixed(v.value)}B`;
+  if (unit === "count") return `${fixed(v.value, 0)}${lang === "ja" ? "件" : ""}`;
+  if (unit === "persons") return `${fixed(v.value, 0)}${lang === "ja" ? "人" : ""}`;
+  if (unit === "level") return `${fixed(v.value)}%`;
+  return `${v.value > 0 ? "+" : v.value < 0 ? "−" : ""}${fixed(v.value)}%`;
+}
+
+/** The difference from the previous figure, rounded to the figures' own decimals; "same" when it rounds to zero. */
+export function figureChange(unit: Unit | FigureUnit, now: Value, before: Value, lang: Lang): FigureRow["change"] {
+  const decimals = Math.max(now.decimals, before.decimals);
+  const diff = Number((now.value - before.value).toFixed(decimals));
+  if (diff === 0) return { direction: "same", text: lang === "ja" ? "変わらず" : "Unchanged" };
+  const size = (n: number, d = decimals) => Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const text = unit === "billion" ? (lang === "ja" ? `${size(diff * 10, Math.max(0, decimals - 1))}億ドル` : `$${size(diff)}B`)
+    : unit === "count" ? `${size(diff, 0)}${lang === "ja" ? "件" : ""}`
+    : unit === "persons" || unit === "jobs" ? `${size(diff, 0)}${lang === "ja" ? "人" : ""}`
+    : unit === "index" ? size(diff)
+    : lang === "ja" ? `${size(diff)}pt` : `${size(diff)} pts`;
+  return { direction: diff > 0 ? "up" : "down", text };
+}
+
+/** The figures table: the headline (with the forecast when we hold one), then the indicator's other stated figures. */
+function figureTable(row: ReleaseRow, previousRow: ReleaseRow | undefined, headline: { value: Value | null; previous: Value | null; forecast: Value | null }, lang: Lang): FigureRow[] {
+  const key = indicatorKey(row.id), spec = INDICATORS[key];
+  if (!spec || !headline.value) return [];
+  const rows: FigureRow[] = [{ key: "headline", label: (HEADLINE_LABEL[key] ?? spec.label)[lang], now: formatValue(row.id, headline.value, lang),
+    previous: headline.previous ? formatValue(row.id, headline.previous, lang) : null, forecast: headline.forecast ? formatValue(row.id, headline.forecast, lang) : null,
+    change: headline.previous ? figureChange(spec.unit, headline.value, headline.previous, lang) : null }];
+  const before = previousRow ? textOf(previousRow) : null;
+  for (const figure of FIGURES[key] ?? []) {
+    const read = figure.read(textOf(row));
+    if (!read) continue;
+    // A stated change gives the previous figure as the release states it; otherwise the previous release's own figure.
+    const previous = read.stated !== null ? { value: read.value.value - read.stated, decimals: read.value.decimals } : before ? figure.read(before)?.value ?? null : null;
+    rows.push({ key: figure.key, label: figure.label[lang], now: formatFigure(figure.unit, read.value, lang), previous: previous ? formatFigure(figure.unit, previous, lang) : null,
+      forecast: null, change: previous ? figureChange(figure.unit, read.value, previous, lang) : null });
+  }
+  return rows;
+}
+/** The stated figures the table already shows, so they are not listed again under it. */
+function tableFacts(row: ReleaseRow, table: FigureRow[]) {
+  const shown = new Set(table.map(item => item.key));
+  return (FIGURES[indicatorKey(row.id)] ?? []).filter(figure => shown.has(figure.key)).map(figure => figure.fact);
+}
+
 export type ReleaseView = {
   key: string; known: boolean; unit: Unit | null; summary: string; value: Value | null; display: string | null; label: string | null;
   previous: { row: ReleaseRow; value: Value; display: string; revised?: boolean } | null; change: string | null;
   forecast: { value: Value; display: string; vs: Comparison } | null;
   history: { id: string; label: string | null; releasedAt: string; display: string; value: number; current: boolean }[];
   facts: string[]; about: string | null; next: Scheduled | null; link: { url: string; name: string; official: boolean } | null;
+  /** 今回 / 前回 / 予想 / 変化 per figure (owner, Nov 27); empty when the headline number cannot be read. */
+  table: FigureRow[];
   /** False when opening the row would show nothing but a link: the row is then not expandable (owner, Nov 26). */
   expandable: boolean;
 };
@@ -199,14 +312,16 @@ export function releaseView(row: ReleaseRow, all: ReleaseRow[], expectations: Ex
   const host = (() => { try { return new URL(row.sourceUrl).hostname; } catch { return ""; } })();
   if (spec) link = spec.official.host.test(host) ? { url: row.sourceUrl, name: spec.official.name[lang], official: true } : { url: spec.official.url, name: spec.official.name[lang], official: true };
   else if (host && !/(^|\.)(news\.google\.com|x\.com|twitter\.com)$/.test(host)) link = { url: row.sourceUrl, name: host.replace(/^www\./, ""), official: false };
-  const allFacts = [...new Set(facts)];
+  const table = figureTable(row, earlier.toReversed().find(other => readValue(other.id, other.result)), { value, previous: previousValue, forecast: value ? forecastValue : null }, lang);
+  const consumed = tableFacts(row, table);
+  const allFacts = [...new Set(facts)].filter(fact => !consumed.some(pattern => pattern.test(fact.replace(/。$/, "").trim())));
   const shownHistory = history.length >= 3 ? history : [];
   return {
     key, known: !!spec, unit: spec?.unit ?? null, summary, value, display: value ? formatValue(row.id, value, lang) : null, label: spec ? spec.label[lang] : null,
     previous: previousRow && previousValue ? { row: previousRow, value: previousValue, display: formatValue(previousRow.id, previousValue, lang), ...(revised ? { revised: true } : {}) } : null,
     change: value && previousValue ? describeChange(row.id, value, previousValue, lang) : null,
     forecast: value && forecastValue ? { value: forecastValue, display: formatValue(row.id, forecastValue, lang), vs: compare(value, forecastValue) } : null,
-    history: shownHistory, facts: allFacts, about: spec ? spec.about[lang] : null, next, link,
+    history: shownHistory, facts: allFacts, table, about: spec ? spec.about[lang] : null, next, link,
     expandable: !!(value || allFacts.length || spec || shownHistory.length || next),
   };
 }
