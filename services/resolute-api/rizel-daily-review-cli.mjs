@@ -5,7 +5,7 @@ import {riskPool} from './risk-store.mjs';
 import {createNewsReader,withSourceRetry} from './rizel-news-source.mjs';
 import {prepareDailyReview,dailyReviewFailure,reselectStoredDay,selectDailyCandidates,previewSelection,readStart} from './rizel-daily-review.mjs';
 
-import {createMovesReader,withThermometerFallback} from './risk-moves.mjs';
+import {createMovesReader,withThermometerFallback,withSessionMovesFallback} from './risk-moves.mjs';
 import {judgeDay} from './shock-judge.mjs';
 import {sendOwnerShockMail} from './shock-owner-mail.mjs';
 import {createClerkClient} from '@clerk/backend';
@@ -43,12 +43,14 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
    const now=new Date();
    if(!ownerPick)console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',state:'owner-pick-off'}));
    else if(!isCandidateRun(now))console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',state:'not-candidate-time'}));
-   else{const r=await runCandidates({pool:budgetPool,readFeed,readMoves,now,mail:x=>sendCandidatesMail({...x,clerk:mailClerk()})});
+   // The latest closed session's moves (owner, Nov 28): the snapshot is written at 07:30 JST, after this run, so a session it lacks is
+   // measured here through the Twelve Data lease (background tier; TWELVE_DATA_API_KEY on this service). Nothing is stored.
+   else{const r=await runCandidates({pool:budgetPool,readFeed,readMoves:withSessionMovesFallback(readMoves,process.env.TWELVE_DATA_API_KEY),now,mail:x=>sendCandidatesMail({...x,clerk:mailClerk()})});
     console.log(JSON.stringify({event:'RIZEL_SHOCK_CANDIDATES',...r}));}
   }else if(ownerPick){
    const now=new Date();
    if(!isPublishRunHour(now))console.log(JSON.stringify({event:'RIZEL_SHOCK_PUBLISH',state:'outside-window'}));
-   else{const result=await publishPicks({pool:budgetPool,readFeed,readMoves,now});
+   else{const result=await publishPicks({pool:budgetPool,readFeed,readMoves:withSessionMovesFallback(readMoves,process.env.TWELVE_DATA_API_KEY),now});
     console.log(JSON.stringify({event:'RIZEL_SHOCK_PUBLISH',...result}));
     if(result.state==='ready'||result.state==='no-candidates'){
      try{const mail=await sendOwnerShockMail({pool:budgetPool,day:result.day,clerk:mailClerk()});console.log(JSON.stringify({event:'RIZEL_SHOCK_OWNER_MAIL',day:result.day,...mail}));}

@@ -12,6 +12,13 @@ anonymous GET a visitor's browser makes.
 It runs from the earnings self-check's cron container (scripts/research/daily_checks.py), which already has
 EARNINGS_SELFCHECK=true; that flag enables it too. PRODUCTION_WATCH=false turns it off. Without either it prints DISABLED and
 exits 0. PRODUCTION_WATCH_SITE_URL and PRODUCTION_WATCH_MONITOR_URL override the two hosts (for a local check only).
+
+Nov 27 (HQ): one check is not anonymous. `proCompare` reads the PRO-only Stock Comparison of six fixed large-cap pairs from the site's
+internal check route (app/api/research/internal/pro-check, read-only, 404 without the token) with `Authorization: Bearer
+<COMPARISON_WARM_SECRET>`, the secret the monitor already sends to the comparison's warm job. It passes when every company has all seven
+factors and no invalid figure. The secret is sent only to the site host over https (or a local http host) and never printed. Without it
+the check is skipped (shown as "skipped":"no-token", not a failure). Its per-company detail is a second line:
+{"check":"pro-compare","companies":{"NVDA":{"missing":[],"invalid":[],"strengths":3,"weaknesses":1},...}} (factor ids, field codes and counts).
 """
 import json
 import os
@@ -19,6 +26,7 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
@@ -29,6 +37,9 @@ MAX_BYTES = 6_000_000
 HOUR = 3600
 ET = ZoneInfo("America/New_York")
 NEWS_TRADING_HOURS = 72
+PRO_COMPARE_PAIRS = (("BRK-B", "ORCL"), ("NVDA", "AMD"), ("JPM", "GS"), ("PG", "KO"), ("MET", "PRU"), ("AAPL", "MSFT"))
+PRO_FACTORS = ("financial", "profitability", "valuation", "stability", "momentum", "growth", "cash")
+PRO_COMPARE_LIMIT = 60
 
 
 def enabled(env=None):
@@ -58,11 +69,14 @@ def fresh(age, window):
     return age is not None and -300 <= age <= window
 
 
-def request(url, timeout):
+def request(url, timeout, token=None):
     """(status, payload or None, milliseconds, error code or None). Error codes are fixed words, never exception text."""
     started = time.monotonic()
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    if token:
+        headers["Authorization"] = "Bearer " + token
     try:
-        with urlopen(Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}), timeout=timeout) as response:
+        with urlopen(Request(url, headers=headers), timeout=timeout) as response:
             body = response.read(MAX_BYTES + 1)
             status = response.status
     except HTTPError as exc:
@@ -180,6 +194,51 @@ def check_monitor_health(data, now):
             "issues": len(issues), "cycleAgeSeconds": age}
 
 
+def check_pro_compare(data, now):
+    """The PRO-only Stock Comparison of the fixed pairs (site's internal check route): every pair built, every company with all seven
+    factors and no invalid figure. "detail" (factor ids, field codes, counts) goes to its own log line, not into the summary."""
+    pairs = [pair for pair in (data.get("pairs") or []) if isinstance(pair, dict)]
+    by_tickers = {tuple(pair.get("tickers") or ()): pair for pair in pairs}
+    detail, problems, missing_total, invalid_total, failed_pairs = {}, [], 0, 0, []
+    for tickers in PRO_COMPARE_PAIRS:
+        pair = by_tickers.get(tickers)
+        if not pair or pair.get("ok") is not True:
+            failed_pairs.append("/".join(tickers))
+            problems.append("/".join(tickers) + "=" + str((pair or {}).get("error") or "absent"))
+            continue
+        companies = {c.get("ticker"): c for c in (pair.get("companies") or []) if isinstance(c, dict)}
+        for ticker in tickers:
+            company = companies.get(ticker)
+            if not company:
+                failed_pairs.append("/".join(tickers))
+                problems.append(ticker + "=absent")
+                continue
+            factors = company.get("factors") or {}
+            present = [f for f in (factors.get("present") or []) if f in PRO_FACTORS]
+            missing = [f for f in PRO_FACTORS if f not in present]
+            invalid = [str(code) for code in (company.get("invalid") or [])][:10]
+            if company.get("status") != "ready" and not any(code.startswith("status:") for code in invalid):
+                invalid.append("status:" + str(company.get("status")))
+            missing_total += len(missing)
+            invalid_total += len(invalid)
+            if missing:
+                problems.append(ticker + ":missing=" + ",".join(missing))
+            if invalid:
+                problems.append(ticker + ":invalid=" + ",".join(invalid))
+            detail[ticker] = {"missing": missing, "invalid": invalid, "strengths": len(company.get("strengths") or []),
+                              "weaknesses": len(company.get("weaknesses") or [])}
+    complete = len(detail) == sum(len(t) for t in PRO_COMPARE_PAIRS)
+    return {"valid": data.get("ok") is True and complete and not failed_pairs and missing_total == 0 and invalid_total == 0,
+            "pairs": len(PRO_COMPARE_PAIRS) - len(set(failed_pairs)), "companies": len(detail), "missingFactors": missing_total,
+            "invalidNumbers": invalid_total, "problems": ";".join(problems)[:600], "detail": detail}
+
+
+def token_allowed(site):
+    """The secret goes only to the site over https, or to a local host for a local check."""
+    parts = urlsplit(site)
+    return parts.scheme == "https" or (parts.scheme == "http" and parts.hostname in ("localhost", "127.0.0.1"))
+
+
 def checks(site=SITE, monitor=MONITOR):
     """(name, url, validator, response-time limit in seconds)."""
     return [
@@ -193,17 +252,26 @@ def checks(site=SITE, monitor=MONITOR):
     ]
 
 
-def run(fetch=None, now=None, site=SITE, monitor=MONITOR):
+def run(fetch=None, now=None, site=SITE, monitor=MONITOR, token=None, public=True):
+    """public=False: the proCompare check alone (the monitor's own daily run, monitor_pro_compare)."""
     fetch = fetch or request  # looked up at call time
-    results = {}
-    for name, url, validator, limit in checks(site, monitor):
-        status, data, ms, error = fetch(url, limit + 10)
+    results, details = {}, {}
+    plan = [(name, url, validator, limit, None) for name, url, validator, limit in checks(site, monitor)] if public else []
+    if token and token_allowed(site):
+        plan.append(("proCompare", f"{site}/api/research/internal/pro-check", check_pro_compare, PRO_COMPARE_LIMIT, token))
+    else:
+        results["proCompare"] = {"ok": True, "skipped": "no-token" if not token else "insecure-site"}
+    for name, url, validator, limit, secret in plan:
+        status, data, ms, error = fetch(url, limit + 10, secret) if secret else fetch(url, limit + 10)
         result = {"status": status, "ms": ms, "fast": ms <= limit * 1000}
         if error:
             result["error"] = error
         if isinstance(data, dict):
             try:
-                result.update(validator(data, now or datetime.now(timezone.utc)))
+                verdict = validator(data, now or datetime.now(timezone.utc))
+                if "detail" in verdict:
+                    details[name] = verdict.pop("detail")
+                result.update(verdict)
             except Exception:
                 result["valid"] = False
                 result["error"] = "unexpected-shape"
@@ -212,7 +280,7 @@ def run(fetch=None, now=None, site=SITE, monitor=MONITOR):
         result["ok"] = status == 200 and result["valid"] and result["fast"] and not error
         results[name] = result
     failed = [name for name, result in results.items() if not result["ok"]]
-    return {"ok": not failed, "failed": failed, "checks": results,
+    return {"ok": not failed, "failed": failed, "checks": results, "details": details,
             "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
 
@@ -223,9 +291,68 @@ def check():
         return None
     site = os.environ.get("PRODUCTION_WATCH_SITE_URL", "").strip().rstrip("/") or SITE
     monitor = os.environ.get("PRODUCTION_WATCH_MONITOR_URL", "").strip().rstrip("/") or MONITOR
-    summary = run(site=site, monitor=monitor)
-    print(json.dumps({"check": "production-watch", **summary}, separators=(",", ":")), flush=True)
+    token = os.environ.get("COMPARISON_WARM_SECRET", "").strip()
+    summary = run(site=site, monitor=monitor, token=token if len(token) >= 32 else None)
+    details = summary.pop("details")
+    print_lines(summary, details)
     return list(summary["failed"])
+
+
+def print_lines(summary, details, source=None):
+    head = {"check": "production-watch", **({"source": source} if source else {}), **summary}
+    print(json.dumps(head, separators=(",", ":")), flush=True)
+    if "proCompare" in details:
+        print(json.dumps({"check": "pro-compare", **({"source": source} if source else {}), "ok": summary["checks"]["proCompare"]["ok"],
+                          "companies": details["proCompare"]}, separators=(",", ":")), flush=True)
+
+
+# Nov 27 (HQ): the research monitor runs proCompare itself, once shortly after it starts and then once a day, because it already holds
+# COMPARISON_WARM_SECRET and calls the site with it every minute (comparison_warm.py). The site is the host of COMPARISON_WARM_URL, so
+# the secret only ever goes where the warm job already sends it. A failure becomes the monitor's operational incident
+# "cron:pro-compare" (cron_report.record), alerted to the owner once when it opens and once when it is resolved.
+PRO_COMPARE_START_DELAY = 300
+PRO_COMPARE_INTERVAL = 24 * HOUR
+PRO_COMPARE_RETRY = 3 * HOUR
+MONITOR_JOB = "pro-compare"
+
+
+def monitor_settings(env=None):
+    """(site base URL, secret) from the warm job's own settings, or None when they are not set."""
+    env = os.environ if env is None else env
+    url = (env.get("COMPARISON_WARM_URL") or "").strip()
+    secret = (env.get("COMPARISON_WARM_SECRET") or "").strip()
+    parts = urlsplit(url)
+    if len(secret) < 32 or parts.scheme != "https" or not parts.hostname or parts.username or parts.password:
+        return None
+    return f"https://{parts.netloc}", secret
+
+
+def incident_codes(result, detail):
+    """Up to eight fixed codes for the owner's alert: "NVDA-missing", "AMD-invalid", "pairs", or the request's error code."""
+    codes = []
+    for ticker, company in sorted((detail or {}).items()):
+        if company.get("missing"):
+            codes.append(ticker + "-missing")
+        if company.get("invalid"):
+            codes.append(ticker + "-invalid")
+    if result.get("pairs") is not None and result["pairs"] < len(PRO_COMPARE_PAIRS):
+        codes.append("pairs")
+    if not codes:
+        codes.append(result.get("error") or ("http-%s" % result["status"] if result.get("status") not in (None, 200) else "proCompare"))
+    return codes if len(codes) <= 8 else codes[:7] + ["more"]
+
+
+def monitor_pro_compare(env=None, fetch=None, now=None):
+    """One run from the monitor: prints the same two lines (with "source":"monitor") and returns (ok, codes), or None when off."""
+    settings = monitor_settings(env)
+    if not settings:
+        return None
+    site, secret = settings
+    summary = run(fetch=fetch, now=now, site=site, token=secret, public=False)
+    details = summary.pop("details")
+    print_lines(summary, details, source="monitor")
+    result = summary["checks"]["proCompare"]
+    return (True, []) if result["ok"] else (False, incident_codes(result, details.get("proCompare")))
 
 
 def main():
