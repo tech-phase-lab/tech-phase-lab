@@ -8,6 +8,7 @@ import { join, relative } from 'node:path';
 const PUBLIC = {
   'research/macro': 'public FRED rates, no member data',
   'research/economic-history': 'public FRED history of the economic indicators for the calendar bars (FREE; no member data)',
+  'research/economic-results': 'public stored economic indicator results for the calendar (FREE under the Oct 25 policy; official figures, no member data)',
   'research/capital-map': 'public reported 13F / issuer holdings for 資本マップ (FREE), the same data the page draws',
   'research/earnings-consensus': 'public EPS consensus (Twelve Data display licence, attribution shown)',
   'research/market/board': 'public market quotes (Twelve Data display licence)',

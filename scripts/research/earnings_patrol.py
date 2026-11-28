@@ -96,7 +96,7 @@ def per_share(text):
 
 
 def guidance(text):
-    """'$130.0B ± 3%', '€14.2B-€15.2B', '$60B–$63B', '$65B' -> (currency, low, high) in millions; else None."""
+    """'$130.0B ± 3%', '$61.5B ± $1.5B', '€14.2B-€15.2B', '$60B–$63B', '$65B' -> (currency, low, high) in millions; else None."""
     text = (text or '').strip()
     band = re.match(r'^(\S+)\s*±\s*(\d+(?:\.\d+)?)%$', text)
     if band:
@@ -105,6 +105,10 @@ def guidance(text):
             p = Decimal(band[2]) / 100
             return a[0], a[1] * (1 - p), a[1] * (1 + p)
         return None
+    dollars = re.match(r'^(\S+)\s*±\s*(\S+)$', text)  # Micron: a midpoint and a band in dollars
+    if dollars:
+        a, b = amount(dollars[1]), amount(dollars[2])
+        return (a[0], a[1] - b[1], a[1] + b[1]) if a and b and a[0] == b[0] else None
     pair = re.match(r'^(\S+?)\s*[-–〜]\s*(\S+)$', text)
     if pair:
         a, b = amount(pair[1]), amount(pair[2])

@@ -17,6 +17,6 @@ const read = (ticker: string) => unstable_cache(async () => {
   return body;
 }, ["earnings-raw-v1", ticker], { revalidate: 600 })();
 
-export async function loadEpsConsensus(ticker: string, briefAt: string, issuerEps: number | null): Promise<EpsConsensus | null> {
-  try { return pickConsensus(await read(ticker), briefAt, issuerEps); } catch { return null; }
+export async function loadEpsConsensus(ticker: string, briefAt: string, issuerEps: number | null, otherEps: number | null = null): Promise<EpsConsensus | null> {
+  try { return pickConsensus(await read(ticker), briefAt, issuerEps, otherEps); } catch { return null; }
 }

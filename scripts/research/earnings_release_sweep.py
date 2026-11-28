@@ -9,6 +9,7 @@ documented reason.
 
 Usage (public data only; ≤ 5 requests a second; generic User-Agent):
   python3 scripts/research/earnings_release_sweep.py --from 2026-06-01 --to 2026-11-19 --out tests/fixtures/latest-releases
+  python3 scripts/research/earnings_release_sweep.py --from 2026-05-01 --to 2026-11-28 --previous --out tests/fixtures/prior-releases
 """
 import argparse
 import gzip
@@ -40,9 +41,10 @@ class CachedClient(backfill.Client):
         return body, kind
 
 
-def latest(client, ticker, cik, start, end, log=print):
-    """(filing, url, text, parsed, code) of the company's latest results release in the range, or None."""
-    found = None
+def latest(client, ticker, cik, start, end, log=print, previous=False):
+    """(filing, url, text, parsed, code) of the company's latest results release in the range (`previous`: the one before it, the
+    previous quarter's release that the calendar's 会社予想 and 上方修正 are read from), or None."""
+    found, before = None, None
     for filing in sorted(backfill.filings(client, cik, start, end), key=lambda f: f['accepted']):
         try:
             url, text = backfill.read_filing(client, ticker, cik, filing)
@@ -55,11 +57,13 @@ def latest(client, ticker, cik, start, end, log=print):
         if found and parsed is None and found[3] is not None \
                 and (filing['accepted'] - found[0]['accepted']).total_seconds() <= backfill.SAME_EVENT_SECONDS:
             continue  # the same results again without figures (an 8-K/A, a shareholder letter): the read filing stays
+        if found and (filing['accepted'] - found[0]['accepted']).total_seconds() > backfill.SAME_EVENT_SECONDS:
+            before = found
         found = (filing, url, text, parsed, code)
-    return found
+    return before if previous else found
 
 
-def sweep(start, end, out, cache=None, tickers=None, log=print):
+def sweep(start, end, out, cache=None, tickers=None, log=print, previous=False):
     client = CachedClient(cache)
     coverage = json.loads(backfill.COVERAGE.read_text())
     ciks = {v['ticker']: v['cik_str'] for v in json.loads(client.get('https://www.sec.gov/files/company_tickers.json')[0]).values()}
@@ -69,7 +73,7 @@ def sweep(start, end, out, cache=None, tickers=None, log=print):
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     for ticker in tickers or [c['ticker'] for c in coverage]:
         old = manifest.get(ticker, {})
-        found = latest(client, ticker, ciks[ticker], start, end, log) if ticker in ciks else None
+        found = latest(client, ticker, ciks[ticker], start, end, log, previous) if ticker in ciks else None
         if not found:
             manifest[ticker] = {'status': 'no-release', **({'reason': old['reason']} if old.get('reason') else {})}
             log(f'{ticker} no results release in range')
@@ -94,8 +98,9 @@ def main(argv=None):
     parser.add_argument('--out', required=True)
     parser.add_argument('--cache')
     parser.add_argument('--ticker', action='append')
+    parser.add_argument('--previous', action='store_true', help="the release before each company's latest (tests/fixtures/prior-releases)")
     args = parser.parse_args(argv)
-    manifest = sweep(args.start, args.end, args.out, args.cache, args.ticker)
+    manifest = sweep(args.start, args.end, args.out, args.cache, args.ticker, previous=args.previous)
     counts = {}
     for entry in manifest.values():
         counts[entry['status']] = counts.get(entry['status'], 0) + 1
