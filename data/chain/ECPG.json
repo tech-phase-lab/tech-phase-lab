@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "ECPG",
+    "name": "アンコール・キャピタル・グループ",
+    "cik": 1084961,
+    "name_en": "Encore Capital Group"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収した債権回収会社",
+      "en": "Acquired debt collectors"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TFC",
+      "ticker": "TFC",
+      "name": "トゥルーイスト",
+      "name_en": "Truist Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2028年変動利付債の担保代理人",
+          "text_en": "Security agent for its 2028 floating rate notes",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2025年度)",
+            "label_en": "Encore Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000009/ecpg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Citibank, N.A., London Branch as trustee and Truist Bank as security agent for Encore 2028 Floating Rate Notes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2028年変動利付債の受託会社(シティバンク・ロンドン支店)",
+          "text_en": "Trustee for its 2028 floating rate notes (Citibank, London Branch)",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2025年度)",
+            "label_en": "Encore Capital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000009/ecpg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Citibank, N.A., London Branch as trustee and Truist Bank as security agent for Encore 2028 Floating Rate Notes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASSETACCEPTANCE",
+      "ticker": "ASSETACCEPTANCE",
+      "name": "アセット・アクセプタンス",
+      "name_en": "Asset Acceptance Capital",
+      "sub": "債権回収",
+      "sub_en": "Debt recovery",
+      "sub_short": "債権回収",
+      "sub_short_en": "Debt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年6月に合併した債権回収会社",
+          "text_en": "Debt recovery company merged in June 2013",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2022年度)",
+            "label_en": "Encore Capital 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496123000014/ecpg-20221231.htm",
+            "level": "official",
+            "date": "2023-02-22",
+            "quote": "In June 2013, we completed our merger with Asset Acceptance Capital Corp., which was another leading provider of debt recovery solutions in the United States."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WESCOT",
+      "ticker": "WESCOT",
+      "name": "ウェスコット・クレジット・サービシズ",
+      "name_en": "Wescot Credit Services",
+      "sub": "債権回収(英)",
+      "sub_en": "Debt collection (UK)",
+      "sub_short": "債権回収",
+      "sub_short_en": "Debt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年11月に英子会社が買収",
+          "text_en": "Acquired by its UK unit in November 2017",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2022年度)",
+            "label_en": "Encore Capital 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496123000014/ecpg-20221231.htm",
+            "level": "official",
+            "date": "2023-02-22",
+            "quote": "In November 2017, CCM completed the acquisition of Wescot Credit Services Limited (“Wescot”), a leading UK contingency debt collection and BPO services company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HILLESDEN",
+      "ticker": "HILLESDEN",
+      "name": "ヒルズデン・セキュリティーズ",
+      "name_en": "Hillesden Securities",
+      "sub": "債権回収(英)",
+      "sub_en": "Debt collection (UK)",
+      "sub_short": "債権回収",
+      "sub_short_en": "Debt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年6月に英子会社が買収(dlc)",
+          "text_en": "Acquired by its UK unit in June 2015 (dlc)",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2016年度)",
+            "label_en": "Encore Capital 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496117000019/ecpg-20161231x10k.htm",
+            "level": "official",
+            "date": "2017-02-23",
+            "quote": "On June 1, 2015, Cabot continued to expand in the United Kingdom with its acquisition of Hillesden Securities Ltd and its subsidiaries (“dlc”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATLANTICCREDIT",
+      "ticker": "ATLANTICCREDIT",
+      "name": "アトランティック・クレジット&ファイナンス",
+      "name_en": "Atlantic Credit & Finance",
+      "sub": "債権買取",
+      "sub_en": "Debt purchasing",
+      "sub_short": "債権回収",
+      "sub_short_en": "Debt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した債権回収会社",
+          "text_en": "Debt purchaser it acquired",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2016年度)",
+            "label_en": "Encore Capital 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496117000019/ecpg-20161231x10k.htm",
+            "level": "official",
+            "date": "2017-02-23",
+            "quote": "acquired in connection with the acquisition of Atlantic Credit & Finance, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MARLINFINANCIAL",
+      "ticker": "MARLINFINANCIAL",
+      "name": "マーリン・ファイナンシャル",
+      "name_en": "Marlin Financial Group",
+      "sub": "債権買取(英)",
+      "sub_en": "Debt purchasing (UK)",
+      "sub_short": "債権回収",
+      "sub_short_en": "Debt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "英子会社キャボットが買収",
+          "text_en": "Acquired by its UK unit Cabot",
+          "source": {
+            "label": "アンコール・キャピタル 10-K(2016年度)",
+            "label_en": "Encore Capital 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496117000019/ecpg-20161231x10k.htm",
+            "level": "official",
+            "date": "2017-02-23",
+            "quote": "in connection with Cabot’s acquisition of Marlin Financial Group Limited (“Marlin”)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

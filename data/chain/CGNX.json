@@ -1,0 +1,184 @@
+{
+  "root": {
+    "ticker": "CGNX",
+    "name": "コグネックス",
+    "cik": 851205,
+    "name_en": "Cognex"
+  },
+  "rows": [
+    {
+      "ja": "買収した会社",
+      "en": "Acquired companies"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ZBRA"
+  ],
+  "companies": [
+    {
+      "id": "MORITEX",
+      "ticker": "MORITEX",
+      "name": "モリテックス",
+      "name_en": "Moritex",
+      "sub": "光学部品(日本)",
+      "sub_en": "Optical components (Japan)",
+      "sub_short": "光学部品",
+      "sub_short_en": "Optics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年10月に約2.7億ドルで買収した光学部品会社(日本)",
+          "text_en": "Japanese optical components maker acquired for about $270 million in October 2023",
+          "source": {
+            "label": "コグネックス 10-K(2025年度)",
+            "label_en": "Cognex 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120526000012/cgnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On October 18, 2023, the Company acquired all the outstanding shares of Moritex Corporation (\"Moritex\"), a global provider of premium optical components based in Japan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SACSIRIUS",
+      "ticker": "SACSIRIUS",
+      "name": "SACシリウス・アドバンスト・サイバネティクス",
+      "name_en": "SAC Sirius Advanced Cybernetics",
+      "sub": "計算照明技術(独)",
+      "sub_en": "Computational lighting (Germany)",
+      "sub_short": "照明技術",
+      "sub_short_en": "Lighting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年12月に買収した計算照明技術の会社(独)",
+          "text_en": "German computational lighting company acquired in December 2022",
+          "source": {
+            "label": "コグネックス 10-K(2022年度)",
+            "label_en": "Cognex 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120523000004/cgnx-20221231.htm",
+            "level": "official",
+            "date": "2023-02-16",
+            "quote": "On December 7, 2022, the Company acquired all of the outstanding shares of SAC Sirius Advanced Cybernetics GmbH (\"SAC\"), a leader in computational lighting technology based in Germany."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SUALAB",
+      "ticker": "SUALAB",
+      "name": "スアラボ",
+      "name_en": "Sualab",
+      "sub": "画像AIソフト(韓国)",
+      "sub_en": "Vision AI software (Korea)",
+      "sub_short": "画像AI",
+      "sub_short_en": "AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に買収した深層学習ソフト会社(韓国)",
+          "text_en": "Korean deep-learning software company acquired in 2019",
+          "source": {
+            "label": "コグネックス 10-K(2022年度)",
+            "label_en": "Cognex 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120523000004/cgnx-20221231.htm",
+            "level": "official",
+            "date": "2023-02-16",
+            "quote": "The total consideration for the 2019 acquisition of Sualab Co., Ltd. included deferred payments"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GVIVENTURES",
+      "ticker": "GVIVENTURES",
+      "name": "GViベンチャーズ",
+      "name_en": "GVi Ventures",
+      "sub": "画像検査ソフト",
+      "sub_en": "Vision software",
+      "sub_short": "検査",
+      "sub_short_en": "Software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に買収",
+          "text_en": "Acquired in 2017",
+          "source": {
+            "label": "コグネックス 10-K(2022年度)",
+            "label_en": "Cognex 10-K (FY2022)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120523000004/cgnx-20221231.htm",
+            "level": "official",
+            "date": "2023-02-16",
+            "quote": "the Company's acquisition of GVi Ventures, Inc. in 2017"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENSHAPE",
+      "ticker": "ENSHAPE",
+      "name": "エンシェイプ",
+      "name_en": "EnShape",
+      "sub": "3Dセンサー(独)",
+      "sub_en": "3D sensors (Germany)",
+      "sub_short": "3Dセンサ",
+      "sub_short_en": "3D",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年10月に買収した3Dセンサー会社(独)",
+          "text_en": "German 3D sensor company acquired in October 2016",
+          "source": {
+            "label": "コグネックス 10-K(2016年度)",
+            "label_en": "Cognex 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851205/000085120517000003/cgnx-20161231x10xk.htm",
+            "level": "official",
+            "date": "2017-02-16",
+            "quote": "EnShape GmbH On October 27, 2016, the Company acquired all of the outstanding shares of EnShape GmbH, a privately-held 3D sensor provider based in Germany."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZBRA",
+      "ticker": "ZBRA",
+      "name": "ゼブラ・テクノロジーズ",
+      "name_en": "Zebra Technologies",
+      "sub": "バーコード・自動認識",
+      "sub_en": "Barcode & auto-ID",
+      "sub_short": "読取機器",
+      "sub_short_en": "Barcode",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "固定式スキャナー・マシンビジョンの競合として同社の10-Kに記載",
+          "text_en": "Names Cognex as a competitor in fixed scanning and machine vision",
+          "source": {
+            "label": "ゼブラ・テクノロジーズ 10-K(2025年度)",
+            "label_en": "Zebra Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/877212/000162828026007668/zbra-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors in our fixed industrial scanning and machine vision business include Cognex, Keyence, and SICK."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
