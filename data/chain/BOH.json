@@ -1,0 +1,178 @@
+{
+  "root": {
+    "ticker": "BOH",
+    "name": "バンク・オブ・ハワイ",
+    "cik": 46195,
+    "name_en": "Bank of Hawaii"
+  },
+  "rows": [
+    {
+      "ja": "優先株の引受",
+      "en": "Preferred stock underwriters"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2024 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2024年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312524165835/d831633dex11.htm",
+            "level": "official",
+            "date": "2024-06-21",
+            "quote": "BofA Securities, Inc. One Bryant Park New York, New York 10036 J.P. Morgan Securities LLC 383 Madison Avenue New York, New York 10179 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 Wells Fargo Securities, LLC 550 South Tryon Street, 5th Floor Charlotte, North Carolina 28202 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2024 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2024年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312524165835/d831633dex11.htm",
+            "level": "official",
+            "date": "2024-06-21",
+            "quote": "BofA Securities, Inc. One Bryant Park New York, New York 10036 J.P. Morgan Securities LLC 383 Madison Avenue New York, New York 10179 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 Wells Fargo Securities, LLC 550 South Tryon Street, 5th Floor Charlotte, North Carolina 28202 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2024 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2024年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312524165835/d831633dex11.htm",
+            "level": "official",
+            "date": "2024-06-21",
+            "quote": "BofA Securities, Inc. One Bryant Park New York, New York 10036 J.P. Morgan Securities LLC 383 Madison Avenue New York, New York 10179 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 Wells Fargo Securities, LLC 550 South Tryon Street, 5th Floor Charlotte, North Carolina 28202 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2024 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2024年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312524165835/d831633dex11.htm",
+            "level": "official",
+            "date": "2024-06-21",
+            "quote": "BofA Securities, Inc. One Bryant Park New York, New York 10036 J.P. Morgan Securities LLC 383 Madison Avenue New York, New York 10179 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 Wells Fargo Securities, LLC 550 South Tryon Street, 5th Floor Charlotte, North Carolina 28202 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2021 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2021年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312521186851/d127501dex11.htm",
+            "level": "official",
+            "date": "2021-06-09",
+            "quote": "Goldman Sachs & Co. LLC 200 West Street New York, New York 10282-2198 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 UBS Securities LLC 1285 Avenue of the Americas New York, New York 10019 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBS",
+      "ticker": "UBS",
+      "name": "UBS",
+      "name_en": "UBS",
+      "sub": "銀行・資産運用",
+      "sub_en": "Bank & wealth management",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2021 preferred stock offering",
+          "source": {
+            "label": "バンク・オブ・ハワイ 8-K付属の契約(2021年6月)",
+            "label_en": "Bank of Hawaii agreement filed with its 8-K (June 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46195/000119312521186851/d127501dex11.htm",
+            "level": "official",
+            "date": "2021-06-09",
+            "quote": "Goldman Sachs & Co. LLC 200 West Street New York, New York 10282-2198 Keefe, Bruyette & Woods, Inc. 787 Seventh Avenue New York, New York 10019 UBS Securities LLC 1285 Avenue of the Americas New York, New York 10019 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

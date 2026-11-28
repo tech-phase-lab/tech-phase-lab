@@ -1,0 +1,260 @@
+{
+  "root": {
+    "ticker": "BBWI",
+    "name": "バス&ボディワークス",
+    "cik": 701985,
+    "name_en": "Bath & Body Works"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "分離・買収",
+      "en": "Spin-off & acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の幹事行",
+          "text_en": "Administrative agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "The Lenders Party Hereto and JPMORGAN CHASE BANK, N.A., as Administrative Agent and Collateral Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HSBC",
+      "ticker": "HSBC",
+      "name": "HSBC",
+      "name_en": "HSBC",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資枠の共同シンジケーション・エージェント",
+          "text_en": "Co-syndication agent of its revolving credit facility",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex10-6.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "GOLDMAN SACHS BANK USA, BANK OF AMERICA, N.A., CITIBANK, N.A., HSBC BANK USA, N.A., WELLS FARGO BANK, NATIONAL ASSOCIATION and BARCLAYS BANK PLC, as Co-Syndication Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "VSCO",
+      "ticker": "VSCO",
+      "name": "ヴィクトリアズ・シークレット",
+      "name_en": "Victoria's Secret",
+      "sub": "下着・衣料",
+      "sub_en": "Lingerie",
+      "sub_short": "下着",
+      "sub_short_en": "Lingerie",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に分離・独立させた旧子会社",
+          "text_en": "Former unit spun off in 2021",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 8-K付属の契約(2021年8月)",
+            "label_en": "L Brands (now Bath & Body Works) agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000114036121026658/nt10026698x7_ex2-1.htm",
+            "level": "official",
+            "date": "2021-08-03",
+            "quote": "SEPARATION AND DISTRIBUTION AGREEMENT by and between L BRANDS, INC. and VICTORIA’S SECRET & CO."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMERICANBEAUTY",
+      "ticker": "AMERICANBEAUTY",
+      "name": "アメリカン・ビューティー",
+      "name_en": "American Beauty Limited",
+      "sub": "美容品の販売(中国)",
+      "sub_en": "Beauty retail (China)",
+      "sub_short": "美容小売",
+      "sub_short_en": "Beauty",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年4月に買収",
+          "text_en": "Acquired in April 2016",
+          "source": {
+            "label": "Lブランズ(現バス&ボディワークス) 10-K(2017年1月期)",
+            "label_en": "L Brands (now Bath & Body Works) 10-K (FY ended Jan 2017)",
+            "url": "https://www.sec.gov/Archives/edgar/data/701985/000070198517000022/lb128201710k.htm",
+            "level": "official",
+            "date": "2017-03-17",
+            "quote": "On April 18, 2016, the Company completed the acquisition of 100% of the shares of American Beauty Limited for a total purchase price of $44 million"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

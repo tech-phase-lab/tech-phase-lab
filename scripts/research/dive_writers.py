@@ -707,8 +707,8 @@ def asml(f, url, before_previous, report=None, events=None, previous=None):
                                                 f'New lithography systems sold went from {s1} to {s0}. Installed Base Management sales (service and upgrades) went from {eur(i1)["en"]} to {eur(i0)["en"]}.')},
                   {'key': 'good', 'text': c('新しい装置と、設置済みの装置向けのサービスの両方が伸びました。', 'Both new systems and service on installed machines grew.') if s0 >= s1 and i0 >= i1 else
                    c('装置とサービスの動きが分かれました。', 'Systems and service moved in different directions.')},
-                  {'key': 'watch', 'text': c(f'装置の売上は出荷の台数と時期で大きく動きます。この1年の売上は{eur(h[0])["ja"]}、{eur(h[1])["ja"]}、{eur(h[2])["ja"]}、{eur(h[3])["ja"]}と上下しています。',
-                                             f'System sales move a lot with the number and timing of shipments. Over the past year sales went {eur(h[0])["en"]}, {eur(h[1])["en"]}, {eur(h[2])["en"]} and {eur(h[3])["en"]}.')}]}
+                  {'key': 'watch', 'text': c(f'売上は装置の出荷の台数と時期で大きく動きます。この1年の売上合計は{eur(h[0])["ja"]}、{eur(h[1])["ja"]}、{eur(h[2])["ja"]}、{eur(h[3])["ja"]}と上下しています。',
+                                             f'Sales move a lot with the number and timing of system shipments. Over the past year total net sales went {eur(h[0])["en"]}, {eur(h[1])["en"]}, {eur(h[2])["en"]} and {eur(h[3])["en"]}.')}]}
     om = f['om'].values
     changes = {'headline': c(f'売上は前期比 {sign(qoq)}、粗利益率は{"上昇" if gm.values[1] > gm.values[0] else "低下"}', f'Revenue {"up" if qoq >= 0 else "down"} {format(abs(q(qoq)), "f")}% QoQ, gross margin {"also higher" if gm.values[1] > gm.values[0] else "lower"}'),
                'chips': [{'tone': 'up' if qoq >= 0 else 'down', 'text': c(f'売上 前期比 {sign(qoq)}', f'Revenue {sign(qoq)} QoQ')},

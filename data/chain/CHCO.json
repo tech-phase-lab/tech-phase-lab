@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "CHCO",
+    "name": "シティ・ホールディング",
+    "cik": 726854,
+    "name_en": "City Holding"
+  },
+  "rows": [
+    {
+      "ja": "株式の販売代理",
+      "en": "Stock sales agent"
+    },
+    {
+      "ja": "買収・売却",
+      "en": "Acquisitions & sales"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "株式の市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent for its at-the-market stock offering",
+          "source": {
+            "label": "シティ・ホールディング 8-K付属の契約(2016年12月)",
+            "label_en": "City Holding agreement filed with its 8-K (December 2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685416000116/exhibit11salesagreement.htm",
+            "level": "official",
+            "date": "2016-12-19",
+            "quote": "At Market Issuance Sales Agreement December 19 , 2016 KEEFE, BRUYETTE & WOODS, INC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CITIZENSCOMMERCE",
+      "ticker": "CITIZENSCOMMERCE",
+      "name": "シチズンズ・コマース・バンクシェアーズ",
+      "name_en": "Citizens Commerce Bancshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年第1四半期に買収",
+          "text_en": "Acquired in the first quarter of 2023",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2025年度)",
+            "label_en": "City Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685426000062/chco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The acquisition of Citizens Commerce Bancshares, Inc., and its subsidiary, Citizens Commerce Bank (“Citizens”) of Versailles, Kentucky, during the first quarter of 2023"
+          }
+        }
+      ]
+    },
+    {
+      "id": "POAGE",
+      "ticker": "POAGE",
+      "name": "ポージ・バンクシェアーズ",
+      "name_en": "Poage Bankshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年12月に買収",
+          "text_en": "Acquired in December 2018",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2019年度)",
+            "label_en": "City Holding 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685420000044/chco12-31x1910xk.htm",
+            "level": "official",
+            "date": "2020-02-27",
+            "quote": "In December 2018, the Company acquired Poage Bankshares, Inc., of Ashland, Kentucky and its principal banking subsidiary, Town Square Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FARMERSDEPOSIT",
+      "ticker": "FARMERSDEPOSIT",
+      "name": "ファーマーズ・デポジット・バンコープ",
+      "name_en": "Farmers Deposit Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年12月に買収",
+          "text_en": "Acquired in December 2018",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2019年度)",
+            "label_en": "City Holding 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685420000044/chco12-31x1910xk.htm",
+            "level": "official",
+            "date": "2020-02-27",
+            "quote": "Farmers Deposit Bancorp, Inc., of Cynthiana, Kentucky and its principal banking subsidiary, Farmers Deposit Bank"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLASSICBANCSHARES",
+      "ticker": "CLASSICBANCSHARES",
+      "name": "クラシック・バンクシェアーズ",
+      "name_en": "Classic Bancshares",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2005年に買収",
+          "text_en": "Acquired in 2005",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2025年度)",
+            "label_en": "City Holding 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685426000062/chco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "prior to the acquisition of Classic Bancshares (\"Classic\") in 2005"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMERICANFOUNDERS",
+      "ticker": "AMERICANFOUNDERS",
+      "name": "アメリカン・ファウンダーズ銀行",
+      "name_en": "American Founders Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年に3支店を買収した相手",
+          "text_en": "Sold it three branches in 2015",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2016年度)",
+            "label_en": "City Holding 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685417000011/chco12-31x1610xk.htm",
+            "level": "official",
+            "date": "2017-02-27",
+            "quote": "On November 6, 2015 , the Company consummated the acquisition of three branch locations from American Founders Bank, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SELECTBANK",
+      "ticker": "SELECTBANK",
+      "name": "セレクト・バンク&トラスト",
+      "name_en": "Select Bank & Trust",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年に支店を売却した先",
+          "text_en": "Bought one of its branches in 2019",
+          "source": {
+            "label": "シティ・ホールディング 10-K(2019年度)",
+            "label_en": "City Holding 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726854/000072685420000044/chco12-31x1910xk.htm",
+            "level": "official",
+            "date": "2020-02-27",
+            "quote": "In July 2019, the Company sold its Virginia Beach, Virginia, branch to Select Bank & Trust Company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

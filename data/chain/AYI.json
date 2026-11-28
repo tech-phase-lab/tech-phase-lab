@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "AYI",
+    "name": "アキュイティ",
+    "cik": 1144215,
+    "name_en": "Acuity Inc."
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収した会社",
+      "en": "Acquired companies"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "QSC",
+      "ticker": "QSC",
+      "name": "QSC",
+      "name_en": "QSC",
+      "sub": "音響・映像機器",
+      "sub_en": "Audio & video systems",
+      "sub_short": "音響映像",
+      "sub_short_en": "AV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に12億ドルで買収した音響・映像機器会社",
+          "text_en": "Audio, video and control company acquired for $1.2 billion in January 2025",
+          "source": {
+            "label": "アキュイティ 10-K(2026年8月期)",
+            "label_en": "Acuity 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000114421526000052/ayi-20260831.htm",
+            "level": "official",
+            "date": "2026-10-23",
+            "quote": "On January 1, 2025, we acquired all of the equity interests of QSC, LLC (“QSC”), a leader in the design, engineering, and manufacturing of audio, video, and control solutions and services, for $ 1.2 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "M3INNOVATION",
+      "ticker": "M3INNOVATION",
+      "name": "M3イノベーション",
+      "name_en": "M3 Innovation",
+      "sub": "スポーツ照明",
+      "sub_en": "Sports lighting",
+      "sub_short": "照明",
+      "sub_short_en": "Lighting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に資産を買収したスポーツ照明の新興企業",
+          "text_en": "Sports lighting startup whose assets it bought in May 2025",
+          "source": {
+            "label": "アキュイティ 10-K(2026年8月期)",
+            "label_en": "Acuity 10-K (FY ended Aug 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000114421526000052/ayi-20260831.htm",
+            "level": "official",
+            "date": "2026-10-23",
+            "quote": "M3 Innovation, LLC On May 1, 2025, we acquired certain assets of M3 Innovation, LLC, a sports lighting startup that uses innovative technology to lower the overall cost of the installation and operation of sports lighting solutions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KE2THERM",
+      "ticker": "KE2THERM",
+      "name": "KE2サーム・ソリューションズ",
+      "name_en": "KE2 Therm Solutions",
+      "sub": "冷凍設備の制御",
+      "sub_en": "Refrigeration controls",
+      "sub_short": "制御機器",
+      "sub_short_en": "Controls",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年5月に買収",
+          "text_en": "Acquired in May 2023",
+          "source": {
+            "label": "アキュイティ 10-K(2023年8月期)",
+            "label_en": "Acuity 10-K (FY ended Aug 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000114421523000090/ayi-20230831.htm",
+            "level": "official",
+            "date": "2023-10-26",
+            "quote": "On May 15, 2023, using cash on hand, we acquired all of the equity interests of KE2 Therm Solutions, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LUMINAIRESGROUP",
+      "ticker": "LUMINAIRESGROUP",
+      "name": "ルミネアーズ・グループ",
+      "name_en": "The Luminaires Group",
+      "sub": "業務用照明器具",
+      "sub_en": "Commercial luminaires",
+      "sub_short": "照明",
+      "sub_short_en": "Lighting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年9月に買収した業務用照明器具メーカー",
+          "text_en": "Commercial luminaire maker acquired in September 2019",
+          "source": {
+            "label": "アキュイティ 10-K(2020年8月期)",
+            "label_en": "Acuity 10-K (FY ended Aug 2020)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000114421520000125/ayi-20200831x10k.htm",
+            "level": "official",
+            "date": "2020-10-23",
+            "quote": "On September 17, 2019, using cash on hand and borrowings under available existing credit arrangements, we acquired all of the equity interests of The Luminaires Group (“TLG”), a leading provider of specification-grade luminaires for commercial, institutional, hospitality, and municipal markets, all of which complement our current and dynamic lighting portfolio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "アキュイティ 8-K付属の契約(2026年5月)",
+            "label_en": "Acuity agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000119312526221945/d63196dex101.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A., as Administrative Agent, BANK OF AMERICA, N.A., as Syndication Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約のシンジケーション・エージェント",
+          "text_en": "Syndication agent of its credit agreement",
+          "source": {
+            "label": "アキュイティ 8-K付属の契約(2026年5月)",
+            "label_en": "Acuity agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144215/000119312526221945/d63196dex101.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A., as Administrative Agent, BANK OF AMERICA, N.A., as Syndication Agent"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

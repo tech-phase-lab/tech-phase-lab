@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "DNOW",
+    "name": "DNOW",
+    "cik": 1599617,
+    "name_en": "DNOW Inc."
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "分離元・買収",
+      "en": "Former parent & acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "DNOW 8-K付属の契約(2025年11月)",
+            "label_en": "DNOW agreement filed with its 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599617/000119312525269726/d66585dex101.htm",
+            "level": "official",
+            "date": "2025-11-06",
+            "quote": "AMENDED AND RESTATED CREDIT AGREEMENT by and among WELLS FARGO BANK, NATIONAL ASSOCIATION, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRC",
+      "ticker": "MRC",
+      "name": "MRCグローバル",
+      "name_en": "MRC Global",
+      "sub": "配管・バルブ流通",
+      "sub_en": "Pipe & valve distribution",
+      "sub_short": "配管流通",
+      "sub_short_en": "Valves",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月に買収",
+          "text_en": "Acquired in November 2025",
+          "source": {
+            "label": "DNOW 10-K(2025年度)",
+            "label_en": "DNOW 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599617/000119312526072828/dnow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On November 6, 2025 (the “Closing Date”), DNOW completed its acquisition of MRC Global."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WHITCO",
+      "ticker": "WHITCO",
+      "name": "ウィトコ・サプライ",
+      "name_en": "Whitco Supply",
+      "sub": "産業資材の流通",
+      "sub_en": "Industrial supply",
+      "sub_short": "資材流通",
+      "sub_short_en": "Supply",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "DNOW 10-K(2025年度)",
+            "label_en": "DNOW 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599617/000119312526072828/dnow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "During 2024, the Company completed its acquisition of Whitco Supply, LLC and Trojan Rentals, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TROJANRENTALS",
+      "ticker": "TROJANRENTALS",
+      "name": "トロージャン・レンタルズ",
+      "name_en": "Trojan Rentals",
+      "sub": "ポンプのレンタル",
+      "sub_en": "Pump rentals",
+      "sub_short": "レンタル",
+      "sub_short_en": "Rentals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年に買収",
+          "text_en": "Acquired in 2024",
+          "source": {
+            "label": "DNOW 10-K(2025年度)",
+            "label_en": "DNOW 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599617/000119312526072828/dnow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "During 2024, the Company completed its acquisition of Whitco Supply, LLC and Trojan Rentals, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOV",
+      "ticker": "NOV",
+      "name": "NOV(旧ナショナル・オイルウェル・バーコ)",
+      "name_en": "NOV (National Oilwell Varco)",
+      "sub": "油田機器",
+      "sub_en": "Oilfield equipment",
+      "sub_short": "油田機器",
+      "sub_short_en": "Oilfield",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2014年に同社から分離・独立",
+          "text_en": "Spun off from it in 2014",
+          "source": {
+            "label": "NOW Inc.(現DNOW) 8-K付属の契約(2014年5月)",
+            "label_en": "NOW Inc. (now DNOW) agreement filed with its 8-K (May 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1599617/000119312514220143/d735822dex21.htm",
+            "level": "official",
+            "date": "2014-05-30",
+            "quote": "SEPARATION AND DISTRIBUTION AGREEMENT BY AND BETWEEN NATIONAL OILWELL VARCO, INC. AND NOW INC."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

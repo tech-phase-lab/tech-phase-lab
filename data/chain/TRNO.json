@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "TRNO",
+    "name": "テレノ・リアルティ",
+    "cik": 1476150,
+    "name_en": "Terreno Realty"
+  },
+  "rows": [
+    {
+      "ja": "融資・株式引受",
+      "en": "Lending & underwriting"
+    },
+    {
+      "ja": "株式の販売代理人",
+      "en": "Sales agents"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KEY",
+      "ticker": "KEY",
+      "name": "キーコープ",
+      "name_en": "KeyCorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行・株式引受の共同幹事",
+          "text_en": "Administrative agent of its credit agreement and co-lead underwriter",
+          "source": {
+            "label": "テレノ 8-K付属の契約(2026年1月)",
+            "label_en": "Terreno agreement filed with its 8-K (January 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476150/000119312526006930/d60454dex101.htm",
+            "level": "official",
+            "date": "2026-01-08",
+            "quote": "the Lenders party thereto and KeyBank National Association, as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年株式売出しの共同引受幹事",
+          "text_en": "Co-representative of the underwriters of its 2024 share offering",
+          "source": {
+            "label": "テレノ 8-K付属の契約(2024年3月)",
+            "label_en": "Terreno agreement filed with its 8-K (March 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476150/000119312524078828/d809308dex11.htm",
+            "level": "official",
+            "date": "2024-03-27",
+            "quote": "Goldman Sachs & Co. LLC, KeyBanc Capital Markets Inc., As representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年の株式市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent of its 2026 at-the-market share program",
+          "source": {
+            "label": "テレノ 8-K(2026年11月) 8-K(2026年11月)",
+            "label_en": "Terreno 8-K (Nov 2026) 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476150/000119312526472600/d169713d8k.htm",
+            "level": "official",
+            "date": "2026-11-23",
+            "quote": "Huntington Securities, Inc., Jefferies LLC, Piper Sandler & Co., Regions Securities LLC, Scotia Capital (USA) Inc. and Truist Securities, Inc., as sales agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PIPR",
+      "ticker": "PIPR",
+      "name": "パイパー・サンドラー",
+      "name_en": "Piper Sandler",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年の株式市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent of its 2026 at-the-market share program",
+          "source": {
+            "label": "テレノ 8-K(2026年11月) 8-K(2026年11月)",
+            "label_en": "Terreno 8-K (Nov 2026) 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476150/000119312526472600/d169713d8k.htm",
+            "level": "official",
+            "date": "2026-11-23",
+            "quote": "Huntington Securities, Inc., Jefferies LLC, Piper Sandler & Co., Regions Securities LLC, Scotia Capital (USA) Inc. and Truist Securities, Inc., as sales agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFC",
+      "ticker": "TFC",
+      "name": "トゥルーイスト",
+      "name_en": "Truist Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年の株式市場売出し(ATM)の販売代理人",
+          "text_en": "Sales agent of its 2026 at-the-market share program",
+          "source": {
+            "label": "テレノ 8-K(2026年11月) 8-K(2026年11月)",
+            "label_en": "Terreno 8-K (Nov 2026) 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1476150/000119312526472600/d169713d8k.htm",
+            "level": "official",
+            "date": "2026-11-23",
+            "quote": "Huntington Securities, Inc., Jefferies LLC, Piper Sandler & Co., Regions Securities LLC, Scotia Capital (USA) Inc. and Truist Securities, Inc., as sales agents"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

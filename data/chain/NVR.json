@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "NVR",
+    "name": "NVR",
+    "cik": 906163,
+    "name_en": "NVR, Inc."
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "家主(相手の資料に記載)",
+      "en": "Landlord (named in its filing)"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "NVR 8-K付属の契約(2025年3月)",
+            "label_en": "NVR agreement filed with its 8-K (March 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906163/000090616325000031/nvr-secondarcreditagreement.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "BANK OF AMERICA, N.A., as Administrative Agent and L/C Issuer, and The Other Lenders Party Hereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "住宅ローン子会社の買戻し契約のエージェント",
+          "text_en": "Agent of its mortgage unit's repurchase facility",
+          "source": {
+            "label": "NVR 10-Q付属の契約(2023年8月)",
+            "label_en": "NVR agreement filed with its 10-Q (August 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906163/000090616323000108/exhibit101.htm",
+            "level": "official",
+            "date": "2023-08-02",
+            "quote": "U.S. BANK NATIONAL ASSOCIATION, as agent (in such capacity, the “ Agent ”) and a Buyer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CREDITSUISSE",
+      "ticker": "CREDITSUISSE",
+      "name": "クレディ・スイス",
+      "name_en": "Credit Suisse",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2020年社債の引受会社",
+          "text_en": "Underwriter of its 2020 senior notes",
+          "source": {
+            "label": "NVR 8-K付属の契約(2020年9月)",
+            "label_en": "NVR agreement filed with its 8-K (September 2020)",
+            "url": "https://www.sec.gov/Archives/edgar/data/906163/000119312520242209/d36727dex11.htm",
+            "level": "official",
+            "date": "2020-09-09",
+            "quote": "agrees with Credit Suisse Securities (USA) LLC (“ Credit Suisse ”), as underwriter, to issue and sell to Credit Suisse $250,000,000 principal amount of its 3.000% Senior Notes due 2030"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GTJREIT",
+      "ticker": "GTJREIT",
+      "name": "GTJ REIT",
+      "name_en": "GTJ REIT",
+      "sub": "不動産REIT",
+      "sub_en": "Real estate REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "フロリダの新築建物をNVRに賃貸(相手の10-Qに記載)",
+          "text_en": "Leases a new Florida building to NVR (named in its 10-Q)",
+          "source": {
+            "label": "GTJ REIT 10-Q(2026年11月)",
+            "label_en": "GTJ REIT 10-Q (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368757/000119312526451587/gttj-20260930.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "The building is leased to NVR, Inc., a homebuilder with brand names such as Ryan Homes, NVHomes & Heartland Homes."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

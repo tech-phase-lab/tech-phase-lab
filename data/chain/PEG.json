@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "PEG",
+    "name": "パブリック・サービス・エンタープライズ・グループ(PSEG)",
+    "cik": 788784,
+    "name_en": "Public Service Enterprise Group (PSEG)"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "運営受託・共同発電所",
+      "en": "Operating contract & co-owned plant"
+    },
+    {
+      "ja": "事業売却",
+      "en": "Business sale"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BCS",
+      "ticker": "BCS",
+      "name": "Barclays",
+      "name_en": "Barclays",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2026 senior notes",
+          "source": {
+            "label": "PSEG 8-K付属の契約(2026年6月)",
+            "label_en": "PSEG agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526255562/d38824dex1.htm",
+            "level": "official",
+            "date": "2026-06-03",
+            "quote": "BARCLAYS CAPITAL INC. CITIGROUP GLOBAL MARKETS INC. GOLDMAN SACHS & CO. LLC c/o Goldman Sachs & Co. LLC 200 West Street New York, New York 10282 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2026 senior notes",
+          "source": {
+            "label": "PSEG 8-K付属の契約(2026年6月)",
+            "label_en": "PSEG agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526255562/d38824dex1.htm",
+            "level": "official",
+            "date": "2026-06-03",
+            "quote": "BARCLAYS CAPITAL INC. CITIGROUP GLOBAL MARKETS INC. GOLDMAN SACHS & CO. LLC c/o Goldman Sachs & Co. LLC 200 West Street New York, New York 10282 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年社債の引受幹事",
+          "text_en": "Lead underwriter of its 2026 senior notes",
+          "source": {
+            "label": "PSEG 8-K付属の契約(2026年6月)",
+            "label_en": "PSEG agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526255562/d38824dex1.htm",
+            "level": "official",
+            "date": "2026-06-03",
+            "quote": "BARCLAYS CAPITAL INC. CITIGROUP GLOBAL MARKETS INC. GOLDMAN SACHS & CO. LLC c/o Goldman Sachs & Co. LLC 200 West Street New York, New York 10282 As Representatives of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIPA",
+      "ticker": "LIPA",
+      "name": "ロングアイランド電力公社(LIPA)",
+      "name_en": "Long Island Power Authority (LIPA)",
+      "sub": "公営電力",
+      "sub_en": "Public power utility",
+      "sub_short": "電力",
+      "sub_short_en": "Utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "送配電網の運営を受託(ロングアイランド電力公社)",
+          "text_en": "Its Long Island unit operates LIPA's grid under contract",
+          "source": {
+            "label": "PSEG 10-K(2025年度)",
+            "label_en": "PSEG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526077446/peg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "PSEG Long Island LLC (PSEG LI), which operates the Long Island Power Authority’s (LIPA) electric transmission and distribution (T&D) system under a contractual agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "Constellation",
+      "name_en": "Constellation Energy",
+      "sub": "発電",
+      "sub_en": "Power generation",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "50%保有するピーチボトム原発の運営者",
+          "text_en": "Operator of the Peach Bottom nuclear plant it half-owns",
+          "source": {
+            "label": "PSEG 10-K(2025年度)",
+            "label_en": "PSEG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526077446/peg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Peach Bottom 2 & 3 (A) PA 2,549 50 % 1,275 Total Nuclear 6,003 3,758 (A) Operated by Constellation Energy Generation, LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GENBRIDGE",
+      "ticker": "GENBRIDGE",
+      "name": "ジェネレーション・ブリッジII",
+      "name_en": "Generation Bridge II",
+      "sub": "発電事業",
+      "sub_en": "Power generation",
+      "sub_short": "発電",
+      "sub_short_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年に化石燃料発電事業を売却した先",
+          "text_en": "Bought its fossil generation business in 2021",
+          "source": {
+            "label": "PSEG 8-K付属の契約(2021年8月)",
+            "label_en": "PSEG agreement filed with its 8-K (August 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312521246157/d166527dex101.htm",
+            "level": "official",
+            "date": "2021-08-13",
+            "quote": "is by and between PSEG Power LLC, a Delaware limited liability company (“ Seller ”), Generation Bridge II, LLC, a Delaware limited liability company (“ Purchaser ”)"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

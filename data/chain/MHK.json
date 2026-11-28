@@ -1,0 +1,208 @@
+{
+  "root": {
+    "ticker": "MHK",
+    "name": "モホーク・インダストリーズ",
+    "cik": 851968,
+    "name_en": "Mohawk Industries"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "モホーク 8-K付属の契約(2026年5月)",
+            "label_en": "Mohawk Industries agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A. and J.P. MORGAN SE , as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "モホーク 8-K付属の契約(2026年5月)",
+            "label_en": "Mohawk Industries agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A. , BOFA SECURITIES, INC. , U.S. BANK NATIONAL ASSOCIATION , UNICREDIT BANK GMBH, NEW YORK BRANCH and WELLS FARGO SECURITIES LLC , as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USB",
+      "ticker": "USB",
+      "name": "USバンコープ",
+      "name_en": "U.S. Bancorp",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "モホーク 8-K付属の契約(2026年5月)",
+            "label_en": "Mohawk Industries agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A. , BOFA SECURITIES, INC. , U.S. BANK NATIONAL ASSOCIATION , UNICREDIT BANK GMBH, NEW YORK BRANCH and WELLS FARGO SECURITIES LLC , as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "モホーク 8-K付属の契約(2026年5月)",
+            "label_en": "Mohawk Industries agreement filed with its 8-K (May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000110465926060295/tm2614381d1_ex10-1.htm",
+            "level": "official",
+            "date": "2026-05-13",
+            "quote": "JPMORGAN CHASE BANK, N.A. , BOFA SECURITIES, INC. , U.S. BANK NATIONAL ASSOCIATION , UNICREDIT BANK GMBH, NEW YORK BRANCH and WELLS FARGO SECURITIES LLC , as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GODFREYHIRST",
+      "ticker": "GODFREYHIRST",
+      "name": "ゴッドフリー・ハースト",
+      "name_en": "Godfrey Hirst Group",
+      "sub": "床材(豪州)",
+      "sub_en": "Flooring (Australia)",
+      "sub_short": "床材",
+      "sub_short_en": "Flooring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年7月に買収した豪州・NZの床材大手",
+          "text_en": "Australian and New Zealand flooring leader acquired in July 2018",
+          "source": {
+            "label": "モホーク 10-K(2019年度)",
+            "label_en": "Mohawk Industries 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000085196820000020/a2019q410-kdocument.htm",
+            "level": "official",
+            "date": "2020-02-28",
+            "quote": "On July 2, 2018 , the Company completed its acquisition of Godfrey Hirst Group, the leading flooring company in Australia and New Zealand"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KAIGROUP",
+      "ticker": "KAIGROUP",
+      "name": "KAIグループ",
+      "name_en": "KAI Group",
+      "sub": "タイル(欧州)",
+      "sub_en": "Ceramic tile (Europe)",
+      "sub_short": "タイル",
+      "sub_short_en": "Tile",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約1.9億ドルで買収",
+          "text_en": "Acquired for about $195 million",
+          "source": {
+            "label": "モホーク 10-K(2016年度)",
+            "label_en": "Mohawk Industries 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000085196817000020/a201610kdocument.htm",
+            "level": "official",
+            "date": "2017-02-27",
+            "quote": "The Company completed the acquisition of the KAI Group for $194,613 ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IVCGROUP",
+      "ticker": "IVCGROUP",
+      "name": "IVCグループ",
+      "name_en": "IVC Group",
+      "sub": "床材(ベルギー)",
+      "sub_en": "Flooring (Belgium)",
+      "sub_short": "床材",
+      "sub_short_en": "Flooring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "買収した床材メーカー",
+          "text_en": "Flooring maker it acquired",
+          "source": {
+            "label": "モホーク 10-K(2016年度)",
+            "label_en": "Mohawk Industries 10-K (FY2016)",
+            "url": "https://www.sec.gov/Archives/edgar/data/851968/000085196817000020/a201610kdocument.htm",
+            "level": "official",
+            "date": "2017-02-27",
+            "quote": "recorded with the IVC Group acquisition"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

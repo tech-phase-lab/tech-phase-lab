@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "LPG",
+    "name": "ドリアンLPG",
+    "cik": 1596993,
+    "name_en": "Dorian LPG"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合(大型LPG船)",
+      "en": "Competitors (VLGC shipping)"
+    }
+  ],
+  "rivals": [
+    "BWLPG",
+    "NYK",
+    "PETREDEC"
+  ],
+  "companies": [
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "name_en": "Citigroup",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "船舶融資の輸出信用(ECA)エージェント",
+          "text_en": "ECA agent of its vessel financing facility",
+          "source": {
+            "label": "ドリアンLPG 10-Q付属の契約(2020年8月)",
+            "label_en": "Dorian LPG agreement filed with its 10-Q (August 2020)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699320000024/lpg-20200630ex102a650bb.htm",
+            "level": "official",
+            "date": "2020-08-04",
+            "quote": "CITIBANK N.A., LONDON BRANCH , as ECA Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABNAMRO",
+      "ticker": "ABNAMRO",
+      "name": "ABNアムロ",
+      "name_en": "ABN AMRO",
+      "sub": "銀行(オランダ)",
+      "sub_en": "Bank (Netherlands)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "船舶融資の幹事",
+          "text_en": "Administrative agent of its vessel financing facility",
+          "source": {
+            "label": "ドリアンLPG 10-Q付属の契約(2020年8月)",
+            "label_en": "Dorian LPG agreement filed with its 10-Q (August 2020)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699320000024/lpg-20200630ex102a650bb.htm",
+            "level": "official",
+            "date": "2020-08-04",
+            "quote": "ABN AMRO CAPITAL USA LLC , as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JEF",
+      "ticker": "JEF",
+      "name": "ジェフリーズ",
+      "name_en": "Jefferies Financial Group",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年の株式発行の引受幹事",
+          "text_en": "Lead underwriter of its 2024 share offering",
+          "source": {
+            "label": "ドリアンLPG 8-K付属の契約(2024年6月)",
+            "label_en": "Dorian LPG agreement filed with its 8-K (June 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000110465924069645/tm2416394d3_ex1-1.htm",
+            "level": "official",
+            "date": "2024-06-07",
+            "quote": "JEFFERIES LLC As Representative of the several Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年の新規株式公開(IPO)の引受幹事",
+          "text_en": "Lead underwriter of its 2014 IPO",
+          "source": {
+            "label": "ドリアンLPG F-1付属の契約(2014年5月)",
+            "label_en": "Dorian LPG agreement filed with its F-1 (May 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000110465914034183/a14-7648_6ex1d1.htm",
+            "level": "official",
+            "date": "2014-05-02",
+            "quote": "J. P. Morgan Securities LLC UBS Securities LLC As Representatives of the several Underwriters listed in Schedule 1 hereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBS",
+      "ticker": "UBS",
+      "name": "UBS",
+      "name_en": "UBS",
+      "sub": "銀行・資産運用",
+      "sub_en": "Bank & wealth management",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年の新規株式公開(IPO)の引受幹事",
+          "text_en": "Lead underwriter of its 2014 IPO",
+          "source": {
+            "label": "ドリアンLPG F-1付属の契約(2014年5月)",
+            "label_en": "Dorian LPG agreement filed with its F-1 (May 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000110465914034183/a14-7648_6ex1d1.htm",
+            "level": "official",
+            "date": "2014-05-02",
+            "quote": "J. P. Morgan Securities LLC UBS Securities LLC As Representatives of the several Underwriters listed in Schedule 1 hereto"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWLPG",
+      "ticker": "BWLPG",
+      "name": "BW LPG",
+      "name_en": "BW LPG",
+      "sub": "LPG船(ノルウェー上場)",
+      "sub_en": "LPG shipping",
+      "sub_short": "LPG船",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大型LPG船(VLGC)の最大級の競合",
+          "text_en": "One of its largest competitors in VLGC shipping",
+          "source": {
+            "label": "ドリアンLPG 10-K(2026年3月期)",
+            "label_en": "Dorian LPG 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors for VLGC shipping services include BW LPG Ltd., or BWLPG; Nippon Yusen Kabushiki Kaisha, or NYK Line; and Petredec Pte. Ltd., or Petredec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NYK",
+      "ticker": "NYK",
+      "name": "日本郵船",
+      "name_en": "NYK Line",
+      "sub": "海運(日本)",
+      "sub_en": "Shipping (Japan)",
+      "sub_short": "海運",
+      "sub_short_en": "Shipping",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大型LPG船(VLGC)の最大級の競合",
+          "text_en": "One of its largest competitors in VLGC shipping",
+          "source": {
+            "label": "ドリアンLPG 10-K(2026年3月期)",
+            "label_en": "Dorian LPG 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors for VLGC shipping services include BW LPG Ltd., or BWLPG; Nippon Yusen Kabushiki Kaisha, or NYK Line; and Petredec Pte. Ltd., or Petredec."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PETREDEC",
+      "ticker": "PETREDEC",
+      "name": "ペトレデック",
+      "name_en": "Petredec",
+      "sub": "LPG取引・海運",
+      "sub_en": "LPG trading & shipping",
+      "sub_short": "LPG",
+      "sub_short_en": "LPG",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大型LPG船(VLGC)の最大級の競合",
+          "text_en": "One of its largest competitors in VLGC shipping",
+          "source": {
+            "label": "ドリアンLPG 10-K(2026年3月期)",
+            "label_en": "Dorian LPG 10-K (FY ended Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596993/000159699326000025/lpg-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors for VLGC shipping services include BW LPG Ltd., or BWLPG; Nippon Yusen Kabushiki Kaisha, or NYK Line; and Petredec Pte. Ltd., or Petredec."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

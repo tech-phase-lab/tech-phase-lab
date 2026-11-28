@@ -1,0 +1,160 @@
+{
+  "root": {
+    "ticker": "CBSH",
+    "name": "コマース・バンクシェアーズ",
+    "cik": 22356,
+    "name_en": "Commerce Bancshares"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "融資先(相手の資料に記載)",
+      "en": "Borrowers (named in their filings)"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisitions"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "name_en": "Morgan Stanley",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "sub_short": "投資銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年優先株の引受幹事",
+          "text_en": "Manager of its 2014 preferred stock offering",
+          "source": {
+            "label": "コマース・バンクシェアーズ 8-K付属の契約(2014年6月)",
+            "label_en": "Commerce Bancshares agreement filed with its 8-K (June 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22356/000119312514238099/d742422dex11.htm",
+            "level": "official",
+            "date": "2014-06-17",
+            "quote": "without the prior written consent of Morgan Stanley & Co. LLC, Merrill Lynch, Pierce, Fenner & Smith Incorporated and J.P. Morgan Securities LLC on behalf of the Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年優先株の引受幹事",
+          "text_en": "Manager of its 2014 preferred stock offering",
+          "source": {
+            "label": "コマース・バンクシェアーズ 8-K付属の契約(2014年6月)",
+            "label_en": "Commerce Bancshares agreement filed with its 8-K (June 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22356/000119312514238099/d742422dex11.htm",
+            "level": "official",
+            "date": "2014-06-17",
+            "quote": "without the prior written consent of Morgan Stanley & Co. LLC, Merrill Lynch, Pierce, Fenner & Smith Incorporated and J.P. Morgan Securities LLC on behalf of the Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2014年優先株の引受幹事",
+          "text_en": "Manager of its 2014 preferred stock offering",
+          "source": {
+            "label": "コマース・バンクシェアーズ 8-K付属の契約(2014年6月)",
+            "label_en": "Commerce Bancshares agreement filed with its 8-K (June 2014)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22356/000119312514238099/d742422dex11.htm",
+            "level": "official",
+            "date": "2014-06-17",
+            "quote": "without the prior written consent of Morgan Stanley & Co. LLC, Merrill Lynch, Pierce, Fenner & Smith Incorporated and J.P. Morgan Securities LLC on behalf of the Underwriters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ESE",
+      "ticker": "ESE",
+      "name": "ESCOテクノロジーズ",
+      "name_en": "ESCO Technologies Inc.",
+      "sub": "航空・防衛部品",
+      "sub_en": "Aerospace & defense products",
+      "sub_short": "航空部品",
+      "sub_short_en": "Aero",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "融資団の共同ドキュメンテーション・エージェント(相手の資料に記載)",
+          "text_en": "Names Commerce Bank as a co-documentation agent on its credit agreement",
+          "source": {
+            "label": "エスコ・テクノロジーズ 8-K(2026年10月)",
+            "label_en": "ESCO Technologies 8-K (October 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866706/000110465926113300/tm2626186d1_8k.htm",
+            "level": "official",
+            "date": "2026-10-02",
+            "quote": "BMO Capital Markets Corp., Commerce Bank, Regions Capital Markets, a Division of Regions Bank, TD Bank, N.A. and Wells Fargo Bank, National Association as co-documentation agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FINEMARK",
+      "ticker": "FINEMARK",
+      "name": "ファインマーク",
+      "name_en": "FineMark Holdings",
+      "sub": "銀行・資産管理",
+      "sub_en": "Bank & wealth management",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に買収",
+          "text_en": "Acquired in January 2026",
+          "source": {
+            "label": "コマース・バンクシェアーズ 10-K(2025年度)",
+            "label_en": "Commerce Bancshares 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/22356/000002235626000069/cbsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "On January 1, 2026, the Company completed its acquisition FineMark Holdings, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

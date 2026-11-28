@@ -74,7 +74,7 @@
   "summary": {
     "conclusion": [
       {"ja": "売上は14.43億ドルで、前期から約12%、前年同期から27%増えました。伸びを引っ張ったのはライセンス等の収入(+50%)です。", "en": "Revenue was $1.44B, up about 12% from the previous quarter and 27% from a year ago, led by license and other revenue (+50%)."},
-      {"ja": "一方で、チップの出荷に応じて入るロイヤルティ収入は6.70億ドルと前期の7.15億ドルから減りました。会社はスマートフォン市場でのメモリー価格の影響を挙げています。", "en": "Meanwhile, royalty revenue, which follows chip shipments, fell to $670M from $715M last quarter. The company cited the impact of memory pricing on the smartphone market."},
+      {"ja": "一方で、チップの出荷に応じて入るロイヤルティ収入は6.70億ドルと前期の7.15億ドルから減りました。会社は、スマートフォン市場でのメモリー価格の影響が前年同期比の伸びを一部打ち消したと説明しています。", "en": "Meanwhile, royalty revenue, which follows chip shipments, fell to $670M from $715M last quarter. The company said the impact of memory pricing on the smartphone market partly offset year-over-year royalty growth."},
       {"ja": "会社は次期の売上を15.4億ドル±5,000万ドルと見込んでいます。", "en": "The company expects next-quarter revenue of $1.54B plus or minus $50M."}
     ],
     "cards": {
@@ -112,7 +112,7 @@
           {"tone": "down", "text": {"ja": "前年同期比 +22% → +8%", "en": "YoY growth +22% → +8%"}}
         ],
         "sections": [
-          {"key": "happened", "text": {"ja": "ロイヤルティ収入は前期の7.15億ドルから6.70億ドルに減りました。前年同期比の伸びも、前期の22%から8%に小さくなっています。会社はスマートフォン市場でのメモリー価格の影響を理由に挙げています。", "en": "Royalty revenue fell from $715M to $670M. Year-over-year growth slowed from 22% last quarter to 8%. The company cited the impact of memory pricing on the smartphone market."}},
+          {"key": "happened", "text": {"ja": "ロイヤルティ収入は前期の7.15億ドルから6.70億ドルに減りました。前年同期比の伸びも、前期の22%から8%に小さくなっています。会社は、スマートフォン市場でのメモリー価格の影響が前年同期比の伸びを一部打ち消したと説明しています。", "en": "Royalty revenue fell from $715M to $670M. Year-over-year growth slowed from 22% last quarter to 8%. The company said the impact of memory pricing on the smartphone market partly offset year-over-year royalty growth."}},
           {"key": "watch", "text": {"ja": "ロイヤルティはArmの売上の土台となる収入です。スマートフォンの出荷が弱いと、新しい設計の採用が進んでも伸びが抑えられます。また売上14.43億ドルのうち4.24億ドルは関連当事者(会社と特別な関係にある取引先)からの売上です。", "en": "Royalties are the base of Arm's revenue. Weak smartphone shipments can hold back growth even as newer designs are adopted. Also, $424M of the $1.44B in revenue came from related parties."}},
           {"key": "means", "text": {"ja": "今期は大型ライセンスが伸びを補いましたが、ライセンスは四半期ごとのぶれが大きい収入です。", "en": "Large license deals made up for it this quarter, but license revenue is volatile from quarter to quarter."}},
           {"key": "view", "text": {"ja": "1四半期の減少だけでは傾向とは言えません。次の決算でロイヤルティが前期比で戻るかどうかが、見るところです。", "en": "One quarter's decline is not a trend. What matters is whether royalties recover sequentially in the next report."}}
