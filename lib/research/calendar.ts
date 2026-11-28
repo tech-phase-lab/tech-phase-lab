@@ -449,7 +449,9 @@ export function selectDateOnlyEarnings(period: string, now: number) {
   return selectDateOnlyEvents(dateOnlyEarnings, "earnings", period, now);
 }
 
-// Confirmed official releases, separate from scheduled future events.
+// Confirmed official results, separate from scheduled future events. A fallback only: the monitor keeps every indicator result in
+// event_results for good (scripts/research/economic_archive.py, /api/research/economic-results), and a stored result of the same id
+// replaces the row here. These rows cover the releases from before that store began (2026-11-28) and a monitor that cannot be reached.
 export const economicResults = [{
   // Voting was Nov 3 (U.S.); the calls came on the night of Nov 3 Eastern, i.e. the afternoon of Nov 4 in Japan. Seat counts differed between sources, so no number is shown.
   id: "us-midterm-2026-11-03", title: { ja: "米国中間選挙（現地11月3日投票・日本時間4日に結果）", en: "U.S. midterm elections (voting Nov 3; results the night of Nov 3 ET)" },
@@ -490,7 +492,7 @@ export const economicResults = [{
   sourceUrl: "https://mediacenter.adp.com/2026-09-30-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-90,000-Jobs-in-September",
   verifiedOn: "2026-09-30",
 }, {
-  // Read from BLS's release (2026-11-28). The automatic BLS reader's row of the same id replaces this one while it is in the feed.
+  // Read from BLS's release (2026-11-28); a stored result of the same id replaces it.
   id: "jobs-2026-10", title: { ja: "米国雇用統計（10月）", en: "U.S. employment report (October 2026)" },
   sourceName: "BLS", releasedAt: "2026-11-06T08:30:00-05:00",
   result: { ja: "非農業部門雇用者数 +165,000人／失業率 4.1%", en: "Nonfarm payrolls +165,000; unemployment rate 4.1%" },

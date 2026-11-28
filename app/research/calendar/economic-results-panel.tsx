@@ -6,6 +6,7 @@ import type { ResultBrief } from "@/lib/research/market-results";
 import { calendarDateKey, calendarEvents, claimsReleases, dateOnlyEvents, indicatorReleases } from "@/lib/research/calendar";
 import { parseBackfill, type Backfill } from "@/lib/research/economic-history";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
+import { parseArchive, withArchive } from "@/lib/research/economic-results-archive";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
 import { releaseView, type Scheduled } from "@/lib/research/economic-release-view";
 import EconomicReleaseItem from "./economic-release-item";
@@ -70,13 +71,19 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
   const [openedAt] = useState(() => Date.now());
   // Earlier releases from FRED for the opened rows' bars (owner, Nov 28); the stored results win for any period they hold.
   const [backfill, setBackfill] = useState<Backfill>({});
+  // Stored results the live feed no longer carries (lib/research/economic-results-archive.ts).
+  const [archive, setArchive] = useState<EventResult[]>([]);
   useEffect(() => {
     if (kind === "earnings") return;
     const controller = new AbortController();
     fetch("/api/research/economic-history", { signal: controller.signal }).then(response => response.ok ? response.json() : null)
       .then(body => { if (body) setBackfill(parseBackfill(body.series)); }).catch(() => {});
+    // Every stored indicator result (Nov 28): the feed carries only its newest 20, and BLS/BEA headlines for seven days.
+    fetch("/api/research/economic-results", { signal: controller.signal }).then(response => response.ok ? response.json() : null)
+      .then(body => { if (body) setArchive(parseArchive(body.eventResults)); }).catch(() => {});
     return () => controller.abort();
   }, [kind]);
+  const allEvents = useMemo(() => withArchive(events, archive), [events, archive]);
   const [loaded, setLoaded] = useState(initial !== null);
   const drawn = initial !== null;
   useEffect(() => {
@@ -117,14 +124,14 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
   // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).
   useEffect(() => {
     // Posted economic releases count too, keyed "econ:ppi" etc., so their calendar row goes away (owner, Oct 15).
-    onReported?.(reportedRows(updates, briefs, events, ja));
+    onReported?.(reportedRows(updates, briefs, allEvents, ja));
     // Said after the rows above, in the same step, so the agenda never lists a call that is already posted.
     if (loaded) onSettled?.();
-  }, [updates, briefs, events, ja, onReported, onSettled, loaded]);
+  }, [updates, briefs, allEvents, ja, onReported, onSettled, loaded]);
   if (!active) return null;
   // Every stored release, not only this period's: the previous release, the history and the forecast are read from them.
-  const allEconomic = mergeEconomicResults(updates, briefs, events);
-  const expectations = events.filter(item => item.id.startsWith("expected-")).map(item => ({ id: item.id, resultJa: item.resultJa, resultEn: item.resultEn }));
+  const allEconomic = mergeEconomicResults(updates, briefs, allEvents);
+  const expectations = allEvents.filter(item => item.id.startsWith("expected-")).map(item => ({ id: item.id, resultJa: item.resultJa, resultEn: item.resultEn }));
   const results = allEconomic.filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const inPeriod = (at: string) => period === "all" || calendarDateKey(at, zone).startsWith(period);
   // Japanese view never shows English: a release without a checked Japanese title is left out there.
@@ -169,9 +176,9 @@ export default function EconomicResultsPanel({ initial = null, lang, zone, perio
     <h2>{ja ? "経済指標の結果" : "Economic releases"}</h2>
     {failed && <p role="status" className={styles.description}>{ja ? "最新の結果を取得できません。保存済みの公式確認結果を表示しています。" : "Latest results are unavailable. Showing saved, verified results."}</p>}
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={results.map(event => {
-      const auto = events.find(item => item.id === event.id);
+      const auto = allEvents.find(item => item.id === event.id);
       // Withdrawing an automatic result is an operator action: the owner accounts only, never members (owner, Nov 24).
-      const withdraw = auto && ownerAccount ? () => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); } : undefined;
+      const withdraw = auto && ownerAccount ? () => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) { setEvents(current => current.filter(item => item.id !== auto.id)); setArchive(current => current.filter(item => item.id !== auto.id)); } }); } : undefined;
       return <EconomicReleaseItem key={event.id} lang={lang} zone={zone} time={time(event.releasedAt)} withdraw={withdraw}
         view={releaseView(event, allEconomic, expectations, economicSchedule, openedAt, lang, backfill)} />;
     })} />
