@@ -24,6 +24,11 @@
    "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000017/q126exhibit991.htm",
    "title": "Astera Labs first quarter 2026 financial results (8-K Exhibit 99.1)",
    "location": "Condensed consolidated statements of operations"
+  },
+  {
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm",
+   "title": "Astera Labs Form 10-Q for Q3 2026",
+   "location": "Notes to the financial statements (concentration of customers)"
   }
  ],
  "evidence": [
@@ -135,6 +140,16 @@
    "field": "tiles[2].note",
    "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
    "quote": "September 30, 2026 June 30, 2026 September 30, 2025 September 30, 2026 September 30, 2025 Revenue $ 584,899 $ 392,400 $ 230,575"
+  },
+  {
+   "field": "summary.cards.growth.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm",
+   "quote": "The Company had the following customers that individually comprised 10% or more of its revenue: Three Months Ended September 30, Nine Months Ended September 30, 2026 2025 2026 2025 Customer A 53 % 23 % 40 % 21 % Customer B 14 % 24 % 18 % 14 %"
+  },
+  {
+   "field": "summary.cards.growth.sections[2]",
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000045/alab-20260930.htm",
+   "quote": "Certain of the customers listed above are manufacturing partners that purchase the Company's products on behalf of the Company's end customers"
   }
  ],
  "tiles": [
@@ -277,8 +292,8 @@
      {
       "key": "watch",
       "text": {
-       "ja": "リリースには製品別・顧客別の売上の内訳がありません。AI向けの大口顧客にどれだけ頼っているかは、10-Qなどで確かめる必要があります。",
-       "en": "The release gives no revenue split by product or customer. How much the company relies on a few large AI customers needs to be checked in the 10-Q."
+       "ja": "10-Qによると、この四半期の売上の53%を最大の直接顧客が、14%を次の顧客が占めました。最大の顧客の比率は前年同期の23%から上がっています。この中には最終顧客の代わりに買う製造委託先も含まれますが、少数の買い手への依存は高い状態です。",
+       "en": "Per the 10-Q, the largest direct customer was 53% of revenue this quarter (23% a year earlier) and the next 14%. Some of these are manufacturing partners buying for end customers, but reliance on a few buyers is high."
       }
      },
      {

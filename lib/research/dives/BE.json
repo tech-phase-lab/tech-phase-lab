@@ -338,8 +338,8 @@
      {
       "tone": "down",
       "text": {
-       "ja": "契約資産 1.79億 → 7.93億ドル",
-       "en": "Contract assets $179M → $793M"
+       "ja": "流動の契約資産 1.79億 → 7.93億ドル",
+       "en": "Current contract assets $179M → $793M"
       }
      },
      {
@@ -361,8 +361,8 @@
      {
       "key": "watch",
       "text": {
-       "ja": "売上として計上したものの、まだ請求できていない「契約資産」が、2025年末の1.79億ドルから7.93億ドルに増えました。売掛金も3.72億ドルから6.35億ドルに増え、新たに「顧客対価資産」も計3.07億ドル計上されています。",
-       "en": "Contract assets (revenue booked but not yet billable) rose from $179M at the end of 2025 to $793M. Receivables rose from $372M to $635M, and a new \"customer consideration asset\" totals $307M."
+       "ja": "売上として計上したものの、まだ請求できていない流動資産の「契約資産」が、2025年末の1.79億ドルから7.93億ドルに増えました。売掛金も3.72億ドルから6.35億ドルに増え、新たに「顧客対価資産」も計3.07億ドル計上されています。",
+       "en": "Current contract assets (revenue booked but not yet billable) rose from $179M at the end of 2025 to $793M. Receivables rose from $372M to $635M, and a new \"customer consideration asset\" totals $307M."
       }
      },
      {

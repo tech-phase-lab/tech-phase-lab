@@ -552,6 +552,10 @@ def alab(f, url, before_previous, report=None, events=None, previous=None):
     leader = f.get('leader')
     if leader:
         ev.add('summary.cards.growth.sections[0]', leader)
+    cust, partners = (report or {}).get('customers'), (report or {}).get('partners')
+    for x in (cust, partners if cust else None):
+        if x:
+            ev.add('summary.cards.growth.sections[2]', x)
     new = [x for x in (('ariesSampling', 'Aries 7は{}にサンプル出荷を始め', 'Aries 7 begins sampling in {}'), ('orion', 'Orionは{}から提供が始まります', 'Orion becomes available from {}')) if x[0] in f]
     for k, _, _ in new:
         ev.add('summary.cards.growth.sections[3]', f[k])
@@ -562,7 +566,12 @@ def alab(f, url, before_previous, report=None, events=None, previous=None):
             f'Revenue {rose(d)} from {usd(r1)["en"]} to {usd(r0)["en"]}, a change of {usd(abs(d))["en"]}.' + (f' The company says {leader.values[0]} became its largest product family by revenue.' if leader else '')),
         sec('good', f'利益も出ています。調整後の営業利益は{usd(oin.values[0])["ja"]}で利益率は{pc(om.values[0])}、GAAPでも営業利益は{usd(opi.values[0])["ja"]}で利益率{pc(omg.values[0])}、純利益は{usd(ni.values[0])["ja"]}でした。',
             f'Profit is solid: non-GAAP operating income was {usd(oin.values[0])["en"]} ({pc(om.values[0])} margin), and on a GAAP basis operating income was {usd(opi.values[0])["en"]} ({pc(omg.values[0])}) and net income {usd(ni.values[0])["en"]}.'),
-        sec('watch', '決算発表には、製品別・顧客別の売上の内訳がありません。少数の大口AI顧客にどこまで頼っているかは、10-Qで確かめる必要があります。',
+        # the 10-Q's customer table once it is filed (days after the release); until then the release alone, which has no split
+        sec('watch', (f'10-Qによると、この四半期の売上の{cust.values[0]}%を最大の直接顧客が、{cust.values[2]}%を次の顧客が占めました。最大の顧客の比率は、前年同期には{cust.values[1]}%でした。'
+                      + ('この中には最終顧客の代わりに買う製造委託先も含まれますが、' if partners else '') + '少数の買い手への依存は高い状態です。') if cust else
+            '決算発表には、製品別・顧客別の売上の内訳がありません。少数の大口AI顧客にどこまで頼っているかは、10-Qで確かめる必要があります。',
+            (f'Per the 10-Q, the largest direct customer was {cust.values[0]}% of revenue this quarter ({cust.values[1]}% a year earlier) and the next {cust.values[2]}%. '
+             + ('Some of these are manufacturing partners buying for end customers, but reliance' if partners else 'Reliance') + ' on a few buyers is high.') if cust else
             'The release gives no revenue split by product or customer. How much the company relies on a few large AI customers needs to be checked in the 10-Q.'),
         sec('view', ('新製品では、' + '、'.join(ja.format(f[k].values[0]) for k, ja, _ in new) + '。' if new else '') + '今の伸びは主に既存製品の量産によるものとみられます。',
             ('Among the new products, ' + ' and '.join(en.format(f[k].values[0]) for k, _, en in new) + '. ' if new else '') + 'Current growth appears to come largely from the existing products ramping.')])
@@ -692,7 +701,7 @@ def lite(f, url, before_previous, report=None, events=None, previous=None):
             f'Non-GAAP EPS was {ps(eps.values[0])["en"]}, {"up" if eps.values[0] > eps.values[1] else "down"} from {ps(eps.values[1])["en"]} last quarter.' + (' Because margins rose with sales, profit grew faster than revenue.' if om.values[0] > om.values[1] and d > 0 else '')),
         sec('watch', f'GAAPの営業利益率は{pc(omg.values[0])}で、調整後の{pc(om.values[0])}より約{q(om.values[0] - omg.values[0], 0)}ポイント低くなっています。差には株式報酬や買収関連の費用が含まれます。',
             f'The GAAP operating margin was {pc(omg.values[0])}, about {q(om.values[0] - omg.values[0], 0)} points below the adjusted {pc(om.values[0])}. The gap includes stock-based compensation and acquisition-related costs.'),
-        sec('means', (f'前期のGAAPの純損失{usd(-ni.values[1])["ja"]}は、社債の転換に伴う一時的な損失{usd(dl.values[1])["ja"]}(現金の支出はなし)によるものです。今期のGAAPの純利益は{usd(ni.values[0])["ja"]}でした。' if loss_note else
+        sec('means', (f'前期のGAAPの純損失{usd(-ni.values[1])["ja"]}は、一時的な債務消滅損{usd(dl.values[1])["ja"]}(会社は調整後の数字から除いています)によるものです。今期のGAAPの純利益は{usd(ni.values[0])["ja"]}でした。' if loss_note else
                       f'GAAPの純利益は前期の{usd(ni.values[1])["ja"]}から{usd(ni.values[0])["ja"]}になりました。'),
             (f"Last quarter's {usd(-ni.values[1])['en']} GAAP net loss came from a one-time {usd(dl.values[1])['en']} loss on debt extinguishment. This quarter GAAP net income was {usd(ni.values[0])['en']}." if loss_note else
              f'GAAP net income went from {usd(ni.values[1])["en"]} to {usd(ni.values[0])["en"]}.'))])
@@ -729,14 +738,41 @@ def lite(f, url, before_previous, report=None, events=None, previous=None):
         sec('view', '見通しは会社の計画で、実績ではありません。実際の結果がこの幅のどこに入るか、現金がどう動くかを確かめます。',
             "The outlook is the company's plan, not a result. Watch where actual results land in this range, and how cash moves.")])
     times = q(r0 / r2, 1)
+    deal = next((e for e in events or [] if 'exchangeRatio' in e['figures']), None)
     conclusion = [
         c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq)}、前年同期の約{times}倍でした。コンポーネントとシステムの両方が' + ('伸びました。' if comp[0] > comp[2] and syst[0] > syst[2] else '動きました。'),
           f'Revenue was {usd(r0)["en"]}, {sign(qoq)} from the previous quarter and about {times} times a year ago.' + (' Both Components and Systems grew.' if comp[0] > comp[2] and syst[0] > syst[2] else '')),
         c(f'調整後粗利益率は{pc(g0)}、調整後営業利益率は{pc(om.values[0])}になりました。前期はそれぞれ{pc(g1)}と{pc(om.values[1])}でした。', f'Non-GAAP gross margin was {pc(g0)} and non-GAAP operating margin {pc(om.values[0])} (last quarter {pc(g1)} and {pc(om.values[1])}).'),
-        c(f'一方、現金と短期投資は前期末から{usd(Decimal(delta))["ja"]}{"減って" if down else "増えて"}{usd(Decimal(cash_bn) * 1000)["ja"]}になりました。会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}と見込んでいます。',
-          f'Cash and short-term investments, however, {"fell" if down else "rose"} {usd(Decimal(delta))["en"]} from last quarter to ${cash_bn}B. The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}B.')]
+        acquired(deal, previous, f'会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}と見込んでいます。', f'The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}B.', ev)
+        or c(f'一方、現金と短期投資は前期末から{usd(Decimal(delta))["ja"]}{"減って" if down else "増えて"}{usd(Decimal(cash_bn) * 1000)["ja"]}になりました。会社は次期の売上を{usd(low)["ja"]}〜{usd(high)["ja"]}と見込んでいます。',
+             f'Cash and short-term investments, however, {"fell" if down else "rose"} {usd(Decimal(delta))["en"]} from last quarter to ${cash_bn}B. The company expects next-quarter revenue of ${g.raws[0]}–{g.raws[1]}B.')]
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
+
+
+def acquired(deal, previous, tail_ja, tail_en, ev):
+    """The conclusion line of a quarter in which another company agreed to buy this one (its merger 8-K, Item 1.01): the buyer, the
+    exchange ratio, the holders' share after closing and the expected close, each from that 8-K; None when the 8-K is not about buying
+    this company (its name, as the dive file gives it, is the target)."""
+    if not deal:
+        return None
+    d = deal['figures']
+    ratio, buyer, target = d['exchangeRatio'].values
+    if target.lower() != str((previous or {}).get('name', '')).split()[0].lower():
+        return None
+    ja, en = [f'{deal["date"]}、{buyer}が{"株式交換で" if "allStock" in d else ""}{target}を買収することで合意しました。{target}株1株に{buyer}株{ratio}株が渡ります。'], \
+        [f'On {deal["dateEn"]}, {buyer} agreed to acquire {target}' + (' in an all-stock deal' if 'allStock' in d else '') + f': {ratio} {buyer} shares for each {target} share.']
+    for k in ('exchangeRatio', 'allStock', 'ownership', 'close'):
+        if k in d:
+            ev.add('summary.conclusion[2]', d[k])
+    if 'ownership' in d and d['ownership'].values[2] == target:
+        ja.append(f'{target}株主は統合後の会社の約{d["ownership"].values[3]}%を持ちます。')
+        en.append(f'{target} holders would own about {d["ownership"].values[3]}% of the combined company.')
+    if 'close' in d:
+        half, year = d['close'].values
+        ja.append(f'完了は{year}年{"前" if half == "first" else "後"}半の見込みです。')
+        en.append(f'Closing is expected in the {half} half of {year}.')
+    return c(''.join(ja) + tail_ja, ' '.join(en) + ' ' + tail_en)
 
 
 # ---- Sandisk (SNDK) -----------------------------------------------------------------------------------------------------------------
@@ -806,8 +842,8 @@ def sndk(f, url, before_previous, report=None, events=None, previous=None):
             f'About ${q(g0, 0)} of every $100 of sales stays as gross profit. Non-GAAP operating income was {usd(oi.values[2])["en"]}, about {q(oi.values[2] / r0 * 100, 0)}% of revenue.'),
         sec('watch', f'GAAPの純利益{usd(ni.values[0])["ja"]}には、' + (f'保有株式の評価益など{usd(gain.values[0])["ja"]}が含まれます。営業による利益とは分けて見る必要があります。' if gain and gain.values[0] > 0 else '本業以外の損益も含まれます。'),
             f'GAAP net income of {usd(ni.values[0])["en"]} includes ' + (f'a {usd(gain.values[0])["en"]} net gain on equity securities. Keep that separate from operating profit.' if gain and gain.values[0] > 0 else 'items outside operations.')),
-        sec('view', f'前年同期は売上{usd(r2)["ja"]}、粗利益率{pc(g2)}でした。メモリー価格の変化で、利益の水準が大きく変わっています。',
-            f'A year ago revenue was {usd(r2)["en"]} with a gross margin of {pc(g2)}. Memory prices have changed the profit level a lot.')])
+        sec('view', f'前年同期は売上{usd(r2)["ja"]}、粗利益率{pc(g2)}でした。1年で利益の水準が大きく変わっています。',
+            f'A year ago revenue was {usd(r2)["en"]} with a gross margin of {pc(g2)}. The profit level has changed a lot in one year.')])
     cfo, cm, ar, cash, bb = f['cfo'], f['cfoMargin'], f['receivables'], f['cash'], f['buyback']
     ev.add('summary.cards.caution.chips[0]', ggm)
     for k in ('cfo', 'cfoMargin', 'receivables'):
@@ -818,8 +854,8 @@ def sndk(f, url, before_previous, report=None, events=None, previous=None):
         chip('gold', f'粗利益率の見通し {ggm.raws[0]}〜{ggm.raws[1]}%', f'Gross margin outlook {ggm.raws[0]}–{ggm.raws[1]}%'),
         chip(tone(cm.values[0] - cm.values[1]), f'営業CFの売上比 {pc(cm.values[1])} → {pc(cm.values[0])}', f'Operating cash flow margin {pc(cm.values[1])} → {pc(cm.values[0])}'),
         chip('gold', f'自社株買い {usd(Decimal(bb.values[0]) * 1000)["ja"]}', f'Buybacks ${bb.values[0]}B')], [
-        sec('watch', f'前年同期の粗利益率は{pc(g2)}でした。メモリーの価格は需給で大きく動き、今の約{q(g0, 0)}%は価格が非常に高いことを反映しています。価格が下がれば、利益率も大きく下がる可能性があります。',
-            f"A year ago gross margin was {pc(g2)}. Memory prices swing with supply and demand, and today's ~{q(g0, 0)}% reflects very high prices. If prices fall, margins could drop sharply."),
+        sec('watch', f'前年同期の粗利益率は{pc(g2)}でした。会社は平均販売価格の変動をリスクに挙げています。メモリーの価格は需給で大きく動くため、価格が下がれば、今の約{q(g0, 0)}%の利益率も大きく下がる可能性があります。',
+            f"A year ago gross margin was {pc(g2)}. The company lists fluctuations in average selling prices among its risks. Memory prices swing with supply and demand, so if prices fall, today's ~{q(g0, 0)}% margin could drop sharply."),
         sec('happened', f'営業キャッシュフローは{usd(cfo.values[0])["ja"]}で、売上に対する比率は{pc(cm.values[1])}から{pc(cm.values[0])}になりました。売掛金は{usd(ar.values[1])["ja"]}から{usd(ar.values[0])["ja"]}になっています。',
             f'Operating cash flow was {usd(cfo.values[0])["en"]}, going from {pc(cm.values[1])} to {pc(cm.values[0])} of revenue, as accounts receivable went from {usd(ar.values[1])["en"]} to {usd(ar.values[0])["en"]}.'),
         sec('means', f'この四半期に約{usd(Decimal(bb.values[0]) * 1000)["ja"]}の自社株買いもしました。稼いだ現金の多くを株主に返したため、現金は{usd(cash.values[1])["ja"]}から{usd(cash.values[0])["ja"]}になりました。',
@@ -852,8 +888,8 @@ def sndk(f, url, before_previous, report=None, events=None, previous=None):
     conclusion = [
         c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期の約{times}倍でした。データセンター向けが前期比{sign(change(dc[0], dc[1]), 0)}と伸びをけん引しました。',
           f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and about {times} times a year earlier. Datacenter led, {sign(change(dc[0], dc[1]), 0)} from the previous quarter.'),
-        c(f'調整後粗利益率は{pc(g0)}で、前年同期の{pc(g2)}から大きく変わりました。メモリー価格が高い時期の数字で、次期の見通しも{ggm.raws[0]}〜{ggm.raws[1]}%です。',
-          f'Non-GAAP gross margin was {pc(g0)}, versus {pc(g2)} a year earlier. These are numbers from a period of high memory prices, and next quarter is guided at {ggm.raws[0]}–{ggm.raws[1]}%.'),
+        c(f'調整後粗利益率は{pc(g0)}で、前年同期の{pc(g2)}から大きく変わりました。次期の見通しも{ggm.raws[0]}〜{ggm.raws[1]}%です。',
+          f'Non-GAAP gross margin was {pc(g0)}, versus {pc(g2)} a year earlier, and next quarter is guided at {ggm.raws[0]}–{ggm.raws[1]}%.'),
         last]
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
@@ -1269,13 +1305,13 @@ def be(f, url, before_previous, report=None, events=None, previous=None):
     neg = cfo.values[0] < 0
     caution = card('利益は出ているが、営業キャッシュフローはマイナス' if neg else '利益に比べて現金の入りが少ない', 'Profitable, but operating cash flow was negative' if neg else 'Cash lags profit', [
         chip(tone(cfo.values[0]), f'営業キャッシュフロー {usd(cfo.values[0])["ja"]}', f'Operating cash flow {usd(cfo.values[0])["en"]}'),
-        chip(tone(ca.values[1] - ca.values[0]), f'契約資産 {usd(ca.values[1])["ja"]} → {usd(ca.values[0])["ja"]}', f'Contract assets {usd(ca.values[1])["en"]} → {usd(ca.values[0])["en"]}'),
+        chip(tone(ca.values[1] - ca.values[0]), f'流動の契約資産 {usd(ca.values[1])["ja"]} → {usd(ca.values[0])["ja"]}', f'Current contract assets {usd(ca.values[1])["en"]} → {usd(ca.values[0])["en"]}'),
         chip('gold', f'設備投資 {usd(-capex.values[0])["ja"]}', f'Capex {usd(-capex.values[0])["en"]}')], [
         sec('happened', f'営業キャッシュフローは{usd(cfo.values[0])["ja"]}で、前期の{usd(cfo.values[1])["ja"]}から{"悪化" if cfo.values[0] < cfo.values[1] else "改善"}しました。設備投資は前期の{usd(-capex.values[1])["ja"]}から{usd(-capex.values[0])["ja"]}になりました。',
             f'Operating cash flow was {usd(cfo.values[0])["en"]}, versus {usd(cfo.values[1])["en"]} last quarter. Capital spending went from {usd(-capex.values[1])["en"]} to {usd(-capex.values[0])["en"]}.'),
-        sec('watch', f'契約資産(売上には計上したがまだ請求できないもの)は前年度末の{usd(ca.values[1])["ja"]}から{usd(ca.values[0])["ja"]}に、売掛金は{usd(rc1)["ja"]}から{usd(rc0)["ja"]}に増えました。'
+        sec('watch', f'流動資産の契約資産(売上には計上したがまだ請求できないもの)は前年度末の{usd(ca.values[1])["ja"]}から{usd(ca.values[0])["ja"]}に、売掛金は{usd(rc1)["ja"]}から{usd(rc0)["ja"]}に増えました。'
             + (f'新しい「顧客への対価の資産」も合計{usd(cons_total)["ja"]}あります。' if cons_total else ''),
-            f'Contract assets (revenue booked but not yet billable) went from {usd(ca.values[1])["en"]} at the prior year-end to {usd(ca.values[0])["en"]}. Receivables went from {usd(rc1)["en"]} to {usd(rc0)["en"]}'
+            f'Current contract assets (revenue booked but not yet billable) went from {usd(ca.values[1])["en"]} at the prior year-end to {usd(ca.values[0])["en"]}. Receivables went from {usd(rc1)["en"]} to {usd(rc0)["en"]}'
             + (f', and a new "customer consideration asset" totals {usd(cons_total)["en"]}.' if cons_total else '.')),
         sec('means', '利益が計上されてから現金になるまでに時間がかかっています。これが続くと、成長に必要な資金を借入や株式で賄う割合が増えるかもしれません。',
             'Profit is reaching the bank later than it is reported. If that persists, more of the growth may need to be funded with debt or stock.'),
@@ -1371,8 +1407,8 @@ def skhy(f, url, before_previous, report=None, events=None, previous=None):
             ('AI memory demand is strong and prices of key products have risen.' + ' ' if prices else '')
             + (f'The company expects {hbm.values[0]} to overtake {hbm.values[1]} in both volume and revenue in the {hbm.values[2]} quarter.' if hbm else '')
             or f'Operating profit went from {krw(op.values[2])["en"]} to {krw(op.values[0])["en"]}.'),
-        sec('watch', '伸びの多くは価格の上昇によるものです。メモリーの価格は需給で大きく動き、価格が下がれば売上と利益は大きく減るおそれがあります。',
-            'Much of the growth comes from higher prices. Memory prices swing with supply and demand, so falling prices could cut revenue and profit sharply.')])
+        sec('watch', '主要製品の価格が上がっており、伸びの一部は価格によるものです。メモリーの価格は需給で大きく動き、価格が下がれば売上と利益は大きく減るおそれがあります。',
+            'Prices of key products have risen, so part of the growth reflects pricing. Memory prices swing with supply and demand, so falling prices could cut revenue and profit sharply.')])
     ev.add('summary.cards.change.sections[0]', op)
     ev.add('summary.cards.change.sections[1]', ni)
     ev.add('summary.cards.change.sections[1]', pt)
@@ -1530,9 +1566,9 @@ def arm(f, url, before_previous, report=None, events=None, previous=None, prior=
         chip(tone(rd), f'ロイヤルティ {usd(proy.values[0])["ja"]} → {usd(roy.values[0])["ja"]}', f'Royalty {usd(proy.values[0])["en"]} → {usd(roy.values[0])["en"]}'),
         chip(tone(roy.values[2] - proy.values[2]), f'前年同期比 {sign(proy.values[2], 0)} → {sign(roy.values[2], 0)}', f'YoY growth {sign(proy.values[2], 0)} → {sign(roy.values[2], 0)}')], [
         sec('happened', f'ロイヤルティ売上は{usd(proy.values[0])["ja"]}から{usd(roy.values[0])["ja"]}になりました。前年同期比の伸びは前期の{sign(proy.values[2], 0)}から{sign(roy.values[2], 0)}に{"鈍りました" if roy.values[2] < proy.values[2] else "変わりました"}。'
-            + ('会社はスマートフォン市場でのメモリー価格の影響を挙げています。' if mem else ''),
+            + ('会社は、スマートフォン市場でのメモリー価格の影響が前年同期比の伸びを一部打ち消したと説明しています。' if mem else ''),
             f'Royalty revenue went from {usd(proy.values[0])["en"]} to {usd(roy.values[0])["en"]}. Year-over-year growth went from {sign(proy.values[2], 0)} last quarter to {sign(roy.values[2], 0)}.'
-            + (' The company cited the impact of memory pricing on the smartphone market.' if mem else '')),
+            + (' The company said the impact of memory pricing on the smartphone market partly offset year-over-year royalty growth.' if mem else '')),
         sec('watch', 'ロイヤルティはArmの売上の土台です。新しい設計の採用が進んでも、スマートフォンの出荷が弱いと伸びが抑えられます。' + (f'また、売上{usd(r0)["ja"]}のうち{usd(rel.values[0])["ja"]}は関連当事者からのものです。' if rel else ''),
             "Royalties are the base of Arm's revenue. Weak smartphone shipments can hold back growth even as newer designs are adopted." + (f' Also, {usd(rel.values[0])["en"]} of the {usd(r0)["en"]} in revenue came from related parties.' if rel else '')),
         sec('means', '今期は大型のライセンス契約が補いましたが、ライセンス収入は四半期ごとに振れやすいものです。', 'Large license deals made up for it this quarter, but license revenue is volatile from quarter to quarter.'),
@@ -1557,8 +1593,8 @@ def arm(f, url, before_previous, report=None, events=None, previous=None, prior=
     conclusion = [
         c(f'売上は{usd(r0)["ja"]}で、前期比{sign(qoq, 0)}、前年同期比+{rev.raws[2]}%でした。ライセンスその他の売上({sign(lic.values[2], 0)})が伸びを主導しました。',
           f'Revenue was {usd(r0)["en"]}, {sign(qoq, 0)} from the previous quarter and {rev.raws[2]}% from a year ago, led by license and other revenue ({sign(lic.values[2], 0)}).'),
-        c(f'一方、半導体の出荷に連動するロイヤルティ売上は、前期の{usd(proy.values[0])["ja"]}から{usd(roy.values[0])["ja"]}になりました。' + ('会社はスマートフォン市場でのメモリー価格の影響を挙げています。' if mem else ''),
-          f'Meanwhile, royalty revenue, which follows chip shipments, went from {usd(proy.values[0])["en"]} last quarter to {usd(roy.values[0])["en"]}.' + (' The company cited the impact of memory pricing on the smartphone market.' if mem else '')),
+        c(f'一方、半導体の出荷に連動するロイヤルティ売上は、前期の{usd(proy.values[0])["ja"]}から{usd(roy.values[0])["ja"]}になりました。' + ('会社は、スマートフォン市場でのメモリー価格の影響が前年同期比の伸びを一部打ち消したと説明しています。' if mem else ''),
+          f'Meanwhile, royalty revenue, which follows chip shipments, went from {usd(proy.values[0])["en"]} last quarter to {usd(roy.values[0])["en"]}.' + (' The company said the impact of memory pricing on the smartphone market partly offset year-over-year royalty growth.' if mem else '')),
         c(f'会社は次期の売上を{usd(mid)["ja"]}±{usd(band)["ja"]}と見込んでいます。', f'The company expects next-quarter revenue of {usd(mid)["en"]} plus or minus {usd(band)["en"]}.')]
     return {'tiles': tiles, 'numbers': numbers, 'evidence': ev.items, 'summary': summary(conclusion, growth, changes, caution, nxt)}
 
@@ -1731,8 +1767,8 @@ def nbis(f, url, before_previous, report=None, events=None, previous=None):
         + ([chip('up', f'AIクラウドが売上の約{cs.values[0]}%', f'AI cloud ~{cs.values[0]}% of revenue')] if cs else []), [
         sec('happened', f'売上は前年同期の{usd(r2)["ja"]}から{usd(r0)["ja"]}になり、前期の{usd(r1)["ja"]}から{sign(qoq, 0)}でした。' + (f'ほぼすべて(約{cs.values[0]}%)がAIクラウド事業です。' if cs else ''),
             f'Revenue went from {usd(r2)["en"]} a year earlier to {usd(r0)["en"]}, {sign(qoq, 0)} from {usd(r1)["en"]} last quarter.' + (f' Almost all of it (about {cs.values[0]}%) came from the AI cloud business.' if cs else '')),
-        sec('good', '新しいデータセンターの設備が稼働し始めています。' + (f'会社は、{pr.values[0]}の契約の価格がGPU1時間あたり平均で{pr.values[2]}より{pr.values[1]}%超高かったとしています。' if pr else ''),
-            'New data-center capacity is coming online.' + (f' The company says {pr.values[0]} deals were priced on average more than {pr.values[1]}% higher per GPU-hour than {pr.values[2]} deals.' if pr else '')),
+        sec('good', '新しいデータセンターの設備が稼働し始めています。' + (f'会社によると、{pr.values[0]}の価格はGPU1時間あたりで{pr.values[2]}より平均{pr.values[1]}%超上がりました。' if pr else ''),
+            'New data-center capacity is coming online.' + (f' The company says prices in {pr.values[0]} rose on average more than {pr.values[1]}% per GPU-hour versus {pr.values[2]}.' if pr else '')),
         sec('watch', f'約{usd(nrm)["ja"]}は、パートナーの設備を使えるようにしたことによる一時的な売上です。これを除くと売上は約{usd(rest)["ja"]}で、前期比は{sign(change(rest, r1), 0)}にとどまります。',
             f'About {usd(nrm)["en"]} was one-time revenue from enabling partners\' capacity. Excluding it, revenue was about {usd(rest)["en"]}, {sign(change(rest, r1), 0)} from the previous quarter.'),
         sec('means', '一時的な売上は四半期ごとに大きく変わりえます。次の四半期は、繰り返し入る売上がどれだけ伸びたかを分けて読みます。',

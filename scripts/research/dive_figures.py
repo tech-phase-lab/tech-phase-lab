@@ -952,7 +952,16 @@ def coreweave_report(t):
     }
 
 
-REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report, 'ANET': arista_report, 'CRWV': coreweave_report}
+def astera_report(t):
+    # the largest customer this quarter and a year earlier, and the second this quarter (a share under 10% prints "*": not read)
+    return {
+        'customers': sentence(t, r'customers that individually comprised 10% or more of its revenue: Three Months Ended [^.]{0,120}?'
+                                 r'Customer A (\d+) % (\d+) % \S+(?: %)? \S+(?: %)? Customer B (\d+) %', (1, 2, 3), unit='text'),
+        'partners': sentence(t, r"Certain of the customers listed above are (manufacturing partners) that purchase the Company's products on behalf of", (1,), unit='text'),
+    }
+
+
+REPORT_SPECS = {'CRDO': credo_report, 'AVGO': broadcom_report, 'ANET': arista_report, 'CRWV': coreweave_report, 'ALAB': astera_report}
 
 
 def read_report(ticker, text):
