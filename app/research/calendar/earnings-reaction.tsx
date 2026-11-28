@@ -1,14 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { percentText, reactionLines, type ReactionQuote } from "@/lib/research/earnings-reaction";
+import { percentText, reactionDay, reactionLines, type ReactionQuote } from "@/lib/research/earnings-reaction";
 import calendarStyles from "./event-calendar.module.css";
 
-const clock = (zone: string, at: string, ja: boolean) => new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(at));
-
-/** Share price after the release (pre/post-market included), one short line per session: 「プレマーケット −9.26%（11/23 20:19 JST時点）」.
- * It states what moved and when; it never says why. Nothing is shown until a move stamped after the release exists (owner, Nov 23:
- * no provider or disclaimer lines inside the card; the price provider is credited once under the results list). */
+/** The share price after the release in one line under the table (owner, Nov 28, mock 01): on the left 「翌日の株価 +6.70%」 (larger,
+ * coloured), on the right, small, the pre-market / after-hours move. It states what moved, never why. Nothing is shown until a move
+ * stamped after the release exists; a later day's move is named by its date, never as the next day's. */
 export default function EarningsReaction({ ticker, releasedAt, lang }: { ticker: string; releasedAt: string; lang: "ja" | "en" }) {
   const ja = lang === "ja";
   const [quote, setQuote] = useState<ReactionQuote | null>(null);
@@ -21,7 +19,13 @@ export default function EarningsReaction({ ticker, releasedAt, lang }: { ticker:
   const lines = reactionLines(quote, releasedAt);
   if (!lines.length) return null;
   const minus = (p: number) => percentText(p).replace("-", "−");
-  return <p className={calendarStyles.reaction}>{lines.map(line => <span key={line.label}>{ja
-    ? <>{line.label} <b data-tone={line.percent < 0 ? "down" : "up"}>{minus(line.percent)}</b>（{clock("Asia/Tokyo", line.at, ja)} JST時点）</>
-    : <>{line.labelEn} <b data-tone={line.percent < 0 ? "down" : "up"}>{minus(line.percent)}</b> (as of {clock("America/New_York", line.at, ja)} ET)</>}</span>)}</p>;
+  const regular = lines.find(line => line.label === "通常取引");
+  const extended = lines.find(line => line !== regular);
+  const day = regular ? reactionDay(regular.at, releasedAt) : null;
+  const name = !regular ? null : day === "next" ? (ja ? "翌日の株価" : "Next day") : day === "same" ? (ja ? "当日の株価" : "Same day")
+    : (() => { const d = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", month: "numeric", day: "numeric" }).format(new Date(regular.at)); return ja ? `株価（${d}）` : `Share price (${d})`; })();
+  return <p className={calendarStyles.reaction}>
+    {regular && <span>{name} <b data-tone={regular.percent < 0 ? "down" : "up"}>{minus(regular.percent)}</b></span>}
+    {extended && <small>{ja ? extended.label : extended.labelEn} {minus(extended.percent)}</small>}
+  </p>;
 }

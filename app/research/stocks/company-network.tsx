@@ -125,7 +125,7 @@ export function CompanyNetworkMap({ graph, lang }: Props) {
       <details className={styles.evidence}><summary>{t("関係の出典", "Relationship sources")}</summary>
         {relationships.map(edge => <div key={edge.id}>{edge.evidence.map((evidence, index) => <div key={index}>
           <span>{byId.get(edge.from)?.name} / {byId.get(edge.to)?.name} · {evidence.reviewedOn}</span>
-          {evidence.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}
+          {evidence.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label}</a>)}
         </div>)}</div>)}
       </details>
     </div>
