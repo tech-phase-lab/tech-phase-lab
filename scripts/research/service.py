@@ -66,6 +66,7 @@ import dart_watch
 import earnings_announce
 import earnings_history
 import earnings_prior_backfill
+import earnings_refill
 import value_check
 import compare_values
 import twelve_allocator
@@ -1249,6 +1250,10 @@ class AutomaticMonitor:
                 earnings_prior_backfill.run_once(self.db_path, lock=self.db_lock, log=lambda line: print(line, flush=True))
             except Exception as exc:
                 print("earnings-prior-backfill-failed " + type(exc).__name__, flush=True)
+            try:  # then the blanks of older stored results (earnings_refill.py): payloads only, once per parser version
+                earnings_refill.run_once(self.db_path, lock=self.db_lock, log=lambda line: print(line, flush=True))
+            except Exception as exc:
+                print("earnings-refill-failed " + type(exc).__name__, flush=True)
             self.stop_event.wait(earnings_prior_backfill.INTERVAL.total_seconds())
 
     def run_event_results(self):

@@ -66,11 +66,14 @@ test('MU Q4 FY26: the outlook in Micron\'s own form (midpoint ± dollars), 会�
   const { latest, outlook, table } = card('MU');
   assert.equal(rows(table)[0], '売上高 542.29億ドル +379% （会社予想 500億ドル±10億ドル）');
   assert.deepEqual(rows(table).slice(-2), ['次四半期売上 615億ドル±15億ドル', '次四半期調整後EPS 38.15ドル±1.00ドル']);
+  // the table's YoY with a thousands separator, as the X copy writes it
+  assert.equal(rows(table)[1], '営業利益 437.51億ドル +1,097%');
+  assert.equal(rows(table)[5], 'EPS（調整後） 33.42ドル +1,003%');
   assert.equal(buildXPost({ ...latest, facts: outlook.facts }, null, 'short'), `【MU 決算速報】
 
 ✅売上高 542.29億ドル（前年比+379%）
 ✅EPS 32.87ドル（前年比+1,061%）
-✅EPS（調整後） 33.42ドル
+✅EPS（調整後） 33.42ドル（前年比+1,003%）
 ✅純利益 377.01億ドル（前年比+1,078%）
 ✅営業利益 437.51億ドル（前年比+1,097%）
 ✅次四半期売上見通し 615億ドル±15億ドル

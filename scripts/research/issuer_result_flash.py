@@ -294,7 +294,8 @@ def parse_nvidia(text, url=None):
 
 
 AMT = r'(?:\(?[\d,]+(?:\.\d+)?\)?|\u2014)'
-HEADLINE_PERIOD = re.compile(r'\b(First|Second|Third|Fourth) Quarter (?:of )?Fiscal (?:Year )?(20\d\d)(?!\d)', re.I)
+# 'Fourth Quarter and Fiscal Year 2026' (Credo, Jun 1) as well as 'Second Quarter of Fiscal Year 2027'
+HEADLINE_PERIOD = re.compile(r'\b(First|Second|Third|Fourth) Quarter (?:of |and (?:Full )?)?Fiscal (?:Year )?(20\d\d)(?!\d)', re.I)
 
 
 def headline_period(text):
@@ -379,7 +380,9 @@ def parse_statement(text, cfg):
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
     if cfg.get('growth'):
-        growth = re.findall(cfg['growth'], t[:cfg.get('window', 2500)])
+        growth = [g if isinstance(g, str) else next(x for x in g if x)  # a pattern with alternative wordings: the group that matched
+                  for g in re.findall(cfg['growth'], t[:cfg.get('window', 2500)])]
+        growth = list(dict.fromkeys(growth))  # the same rate stated twice (Arista's headline and its highlights) counts once
         if len(growth) != 1:
             raise ValueError('revenue-growth-missing')
         stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
@@ -407,8 +410,20 @@ def parse_statement(text, cfg):
     else:
         op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
     if cfg.get('net-chain') == 'continuing':  # income before tax - tax + equity income = continuing income; + discontinued = net income
-        net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('cont', i), col('disc', i), col('net', i))
-                     and abs(col('pretax', i) - col('tax', i) + col('equity', i) - col('cont', i)) <= cfg['tol']
+        # An equity-income row with a blank cell (AMD Q2 2026: "Equity income in investee 6 8 12 15" over five columns) cannot be
+        # placed: then the gap pretax - tax -> continuing income must lie between 0 and the largest equity income the row prints.
+        equity_cells = None
+        if rows.get('equity') is None and cfg['rows'].get('equity'):
+            found = re.findall(r'(?<![A-Za-z])' + cfg['rows']['equity'] + r'((?: ' + AMT + r'){1,%d})(?= [A-Z(]|$)' % n, block)
+            equity_cells = [abs(signed(v)) for v in found[0].split()] if len(found) == 1 else None
+
+        def equity_ok(i):
+            gap = col('cont', i) - (col('pretax', i) - col('tax', i))
+            if col('equity', i) is not None:
+                return abs(gap - col('equity', i)) <= cfg['tol']
+            return equity_cells is not None and -cfg['tol'] <= gap <= max(equity_cells) + cfg['tol']
+        net_ok = all(None not in (col('pretax', i), col('tax', i), col('cont', i), col('disc', i), col('net', i))
+                     and equity_ok(i)
                      and abs(col('cont', i) + col('disc', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     elif cfg.get('net-chain') == 'additive':  # tax and equity-method activity are printed with their sign: pretax + tax + equity = net income
         optional_equity = 'equity' not in cfg['rows']   # Arm has no equity-method line in this chain
@@ -440,6 +455,18 @@ def parse_statement(text, cfg):
     return {'period': cfg['period'](quarter, year), 'facts': facts}
 
 
+def first_layout(text, *layouts):
+    """The first of a company's statement layouts that reads the release (KLA's fourth quarter adds fiscal-year columns and drops the
+    previous quarter's). The first layout's error is raised when none reads it."""
+    errors = []
+    for cfg in layouts:
+        try:
+            return parse_statement(text, cfg)
+        except ValueError as exc:
+            errors.append(exc)
+    raise errors[0]
+
+
 STATEMENT = {
     'SOFI': {'identity': 'sofi', 'heading': 'Condensed Consolidated Statements of Operations and Comprehensive Income(Unaudited)(In Thousands', 'end': 'Non-GAAP Financial Measures', 'units': 'in thousands',
              'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'headline': r'Record Net Revenue of \$([\d.]+) Billion',
@@ -448,32 +475,41 @@ STATEMENT = {
                       'eps': r'Earnings per share – diluted', 'shares': r'Weighted average common stock outstanding – diluted'}},
     'IONQ': {'identity': 'ionq', 'heading': 'Condensed Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in thousands', 'scale': Decimal('0.001'),
              'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'op-direct': True, 'net-chain': 'additive', 'shares-divisor': Decimal(1000),
-             'growth': r'Revenue of \$[\d.]+ Million, Up (\d+)% Year-over-Year',
-             'period-re': r'IonQ Announces [A-Za-z ]*?([1-4])Q(\d\d) Revenues', 'period': lambda q, y: f'Q{q} 20{y}',
-             'rows': {'revenue': 'Revenue', 'cost': 'Total operating costs and expenses', 'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before income tax benefit \(expense\)',
+             'growth': r'Revenues? of \$[\d.]+ Million, (?:Up (\d+)% Year-over-Year|Representing an? (\d+)% Year-on-Year (?:Increase|Growth))',  # Q2 2026: 'Representing a 287% Year-on-Year Increase'
+             'period-re': r'IonQ Announces [A-Za-z ]*?(First|Second|Third|Fourth|[1-4])(?:Q| Quarter )(\d\d(?:\d\d)?) Revenues',  # '3Q26', 'Second Quarter 2026'
+             'period': lambda q, y: f'Q{q} {y if y > 2000 else 2000 + y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Total operating costs and expenses', 'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before income tax (?:benefit \(expense\)|expense)',
                       'tax': r'Income tax benefit \(expense\)', 'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to noncontrolling interests',
                       'attrib': r'Net income \(loss\) attributable to IonQ, Inc\.',
-                      'eps': r'common stockholders Basic (?:\$ ' + AMT + r' ){4}Diluted', 'shares': r'common stockholders Basic ' + (AMT + ' ') * 4 + 'Diluted'}},
+                      # Q2 2026 (Aug 5) prints one row for both: "... IonQ, Inc. Common stockholders\u2014basic and diluted $ (5.08) ..."
+                      'eps': r'(?:common stockholders Basic (?:\$ ' + AMT + r' ){4}Diluted|attributable to IonQ, Inc\. Common stockholders\u2014basic and diluted)',
+                      'shares': r'(?:common stockholders Basic ' + (AMT + ' ') * 4 + r'Diluted|IonQ, Inc\. common stockholders\u2014basic and diluted)'}},
     'ALAB': {'identity': 'astera labs', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)(In thousands', 'end': 'CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS', 'units': 'in thousands',
              'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'net-chain': 'additive',
              'growth': r'Record quarterly revenue of \$[\d.]+ million, up \d+% QoQ and up (\d+)% year-over-year',
              'period-re': r'Astera Labs Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
              'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Operating income',
-                      'pretax': 'Income before income taxes', 'tax': r'Income tax \(provision\) benefit', 'net': 'Net income',
-                      'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted', 'shares': r'Weighted-average shares used in calculating net income per share: Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
+                      # Q2 2026 (Aug 4): "Income tax benefit", "... per share attributable to common stockholders:"
+                      'pretax': 'Income before income taxes', 'tax': r'Income tax (?:\(provision\) )?benefit', 'net': 'Net income',
+                      'eps': r'Net income per share(?: attributable to common stockholders)?: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted',
+                      'shares': r'Weighted-average shares used in calculating net income per share(?: attributable to common stockholders)?: Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
     'LITE': {'identity': 'lumentum', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in millions', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in millions',
              'scale': Decimal(1), 'tol': Decimal('0.15'), 'columns': 2, 'year-ago': 1, 'headline': r'Net revenue of \$([\d.]+) billion',
-             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER OF FISCAL YEAR (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:OF|AND FULL) FISCAL YEAR (20\d\d) (?:FINANCIAL )?RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Net revenue', 'cost': ['Cost of sales', 'Amortization of acquired developed intangibles'], 'gross': 'Gross profit',
-                      'opex': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Income tax provision',
-                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted',
-                      'shares': r'Shares used to compute net income per share - common stock and preferred stock assuming conversion: Basic [\d.]+ [\d.]+ Diluted'}},
+                      # Q4 FY26 (Aug 11), a net loss and four columns: "Income (loss) from operations", "Loss before income taxes",
+                      # "Income tax (benefit) provision", "Net (loss) income (1)", "Net (loss) income per share: Basic $ (84.65) ..."
+                      'opex': 'Total operating expenses', 'operating': r'Income(?: \(loss\))? from operations', 'pretax': r'(?:Income|Loss) before income taxes',
+                      'tax': r'Income tax (?:\(benefit\) )?provision(?: \(benefit\))?',
+                      'net': r'Net (?:\(loss\) income|income(?: \(loss\))?)(?: \(1\))?', 'eps': r'Net (?:\(loss\) )?income per share: Basic (?:\$ ' + AMT + r' ){2,4}Diluted',
+                      'shares': r'Shares used to compute net (?:\(loss\) )?income per share - common stock and preferred stock assuming conversion: Basic [\d.]+ (?:[\d.]+ ){1,3}Diluted'}},
     'AAOI': {'identity': 'applied optoelectronics', 'heading': 'Condensed Consolidated Statements of Operations (In thousands', 'end': 'Reconciliation', 'units': 'in thousands', 'scale': Decimal('0.001'),
              'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'net-chain': 'additive', 'headline': r'revenue was \$([\d.]+) million, compared with',
              'headline-multiplier': 1, 'headline-tol': Decimal('0.1'),
              'period-re': r'Applied Optoelectronics Reports (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
              'rows': {'revenue': 'Total Revenue', 'cost': 'Total Cost of Goods Sold', 'gross': 'Total Gross Profit', 'opex': 'Total Operating Expenses', 'operating': 'Operating Loss',
-                      'pretax': r'Net income \(loss\) before Income Taxes', 'tax': 'Income Tax Expense', 'net': r'Net income \(loss\)',
+                      # Q2 2026 (Aug 6), a loss quarter: "Net loss before Income Taxes", "Net loss"
+                      'pretax': r'Net (?:income \(loss\)|loss) before Income Taxes', 'tax': 'Income Tax Expense', 'net': r'Net (?:income \(loss\)|loss)',
                       'eps': r'common stockholders basic (?:\$ ' + AMT + r' ){4}diluted', 'shares': r'common stockholders basic ' + (AMT + ' ') * 4 + 'diluted'}},
     'BE': {'identity': 'bloom energy', 'heading': 'Condensed Consolidated Statements of Operations* (in thousands', 'end': 'Condensed Consolidated Statement of Cash Flows', 'units': 'in thousands',
            'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2,
@@ -486,9 +522,16 @@ STATEMENT = {
                     'shares': r'Weighted average shares used to compute net earnings \(loss\) per share available to common stockholders: Basic ' + (AMT + ' ') * 3 + 'Diluted'}},
     'KLAC': {'identity': 'kla corporation', 'heading': 'Unaudited Statements of Operations Three Months Ended (In thousands', 'end': 'Statements of Cash Flows', 'units': 'in thousands',
              'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'year-first': True, 'headline': r'Total revenues were \$([\d.]+) billion',
-             'period-re': r'Reports Fiscal (20\d\d) (First|Second|Third|Fourth) Quarter Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'period-re': r'Reports Fiscal (20\d\d) (First|Second|Third|Fourth) Quarter (?:and Full Year )?Results', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Total revenues', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
                       'eps': r'Net income per share\(1\) Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Weighted-average number of shares\(1\): Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
+    # KLA's fourth-quarter release (Jul 28, 2026): this quarter and a year earlier, then the twelve months (no previous-quarter column)
+    'KLAC-FY': {'identity': 'kla corporation', 'heading': 'Unaudited Statements of Operations Three Months Ended June 30, Twelve Months Ended', 'end': 'Statements of Cash Flows',
+                'units': 'in thousands', 'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'year-first': True,
+                'headline': r'total revenues were \$([\d.]+) billion', 'period-re': r'Reports Fiscal (20\d\d) (First|Second|Third|Fourth) Quarter (?:and Full Year )?Results',
+                'period': lambda q, y: f'Q{q} FY{y}',
+                'rows': {'revenue': 'Total revenues', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                         'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted', 'shares': r'Weighted-average number of shares: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'LRCX': {'identity': 'lam research', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in thousands', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in thousands',
              'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'net-chain': 'additive', 'headline': r'Revenue of \$([\d.]+) billion',
              'period-re': r'today announced financial results for the quarter ended (March|June|September|December) \d{1,2}, (20\d\d)', 'period-text': True, 'period': lambda m, y: f'{m[:3]} {y} quarter',
@@ -496,11 +539,12 @@ STATEMENT = {
                       'pretax': 'Income before income taxes', 'tax': 'Income tax expense', 'net': 'Net income',
                       'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
     'STX': {'identity': 'seagate', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(In millions', 'end': 'STATEMENTS OF CASH FLOWS', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
-            'columns': 2, 'year-ago': 1, 'op-direct': True, 'headline': r'Highlights▪Revenue of \$([\d.]+) billion',
-            'period-re': r'REPORTS FISCAL (FIRST|SECOND|THIRD|FOURTH) QUARTER (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+            'columns': 2, 'year-ago': 1, 'op-direct': True, 'headline': r'Q[1-4] 20\d\d Highlights▪Revenue of \$([\d.]+) billion',  # the quarter's, not the fiscal year's (Q4 release, Jul 28)
+            'period-re': r'REPORTS FISCAL (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FISCAL YEAR )?(20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
             'rows': {'revenue': 'Revenue', 'cost': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes',
                      'tax': 'Provision for income taxes', 'net': 'Net income',
-                     'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ [\d,]+ Diluted'}},
+                     # a fourth-quarter release adds the fiscal-year columns (four values per row)
+                     'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){1,3}Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ (?:[\d,]+ ){1,3}Diluted'}},
     'APH': {'identity': 'amphenol', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF INCOME (Unaudited) (dollars and shares in millions', 'units': 'dollars and shares in millions', 'scale': Decimal(1),
             'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'nci-signed': True,
             'growth': r'Sales of \$[\d.]+ billion, up (\d+)% in U\.S\. dollars',
@@ -514,7 +558,8 @@ STATEMENT = {
              'growth': r'Revenue was \$[\d.]+ billion, an increase of (\d+)% year-over-year',
              'period-re': r'Meta Reports (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
              'rows': {'revenue': 'Revenue', 'cost': 'Total costs and expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes',
-                      'tax': 'Provision for income taxes', 'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
+                      # Q2 2026 (Jul 29): "Provision (benefit) for income taxes"
+                      'tax': r'Provision(?: \(benefit\))? for income taxes', 'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
                       'shares': r'Weighted-average shares used to compute earnings per share: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'NFLX': {'identity': 'netflix', 'heading': 'Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Consolidated Balance Sheets', 'units': 'in thousands',
              'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'op-direct': True, 'net-chain': 'additive',
@@ -594,18 +639,19 @@ STATEMENT = {
             'period-re': r'Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
             'rows': {'revenue': 'Net sales', 'cost': ['Cost of sales', 'Selling, general and administrative expenses', 'Amortization of intangibles', 'Restructuring costs',
                                                           r'Foreign currency \(gain\) loss, net', r'Other operating expense \(income\)'],
-                     'operating': r'Operating profit \(loss\)', 'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax expense \(benefit\)',
+                     # Q2 2026 (Jul 29): "Income tax expense" without "(benefit)"
+                     'operating': r'Operating profit \(loss\)', 'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax expense(?: \(benefit\))?',
                      'net': r'Net income \(loss\)', 'eps': r'Earnings \(loss\) per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
                      'shares': r'Weighted-average shares outstanding: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'AMAT': {'identity': 'applied materials', 'heading': 'CONSOLIDATED CONDENSED STATEMENTS OF OPERATIONS', 'end': 'CONSOLIDATED CONDENSED BALANCE SHEETS',
-             'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Record quarterly revenue \$[\d.]+ billion, up (\d+) percent',
+             'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Record (?:quarterly )?revenue \$[\d.]+ billion, up (\d+) percent',
              'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FISCAL YEAR )?(20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Revenue', 'cost': 'Cost of products sold', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
                       'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
                       'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
                       'shares': (r'Weighted average number of shares: Basic \d+ \d+ \d+ \d+ Diluted', 3)}},
     'GOOGL': {'identity': 'alphabet', 'heading': 'CONSOLIDATED STATEMENTS OF INCOME(In millions', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
-              'columns': 4, 'swap': True, 'year-ago': 1, 'op-direct': True, 'growth': r'Consolidated Alphabet revenues increased (\d+)% to',
+              'columns': 4, 'swap': True, 'year-ago': 1, 'op-direct': True, 'growth': r'Consolidated Alphabet revenues increased (\d+)%(?:, or \d+% in constant currency,)? to',
               'period-re': r'Announces (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
               'rows': {'revenue': 'Revenues', 'cost': 'Total costs and expenses', 'operating': 'Income from operations',
                        'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
@@ -621,25 +667,28 @@ STATEMENT = {
                       'shares': r'Weighted-average shares used in computation of earnings per share: Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
     'MSFT': {'identity': 'microsoft', 'heading': 'INCOME STATEMENTS (In millions', 'end': 'COMPREHENSIVE INCOME STATEMENTS', 'glue': True,
              'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'growth': r'Revenue was \$[\d.]+ billion and increased (\d+)%',
-             'period-re': r'Announces (First|Second|Third|Fourth) Quarter Results.{0,300}?quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)',
+             'period-re': r'\b(First|Second|Third|Fourth) Quarter Results.{0,300}?quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)',  # Jul 29: '... Fuels Fourth Quarter Results'
              'period': lambda q, y: f'Q{q} FY{y + 1 if q <= 2 else y}',
              'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross margin',
                       'opex': ['Research and development', 'Sales and marketing', 'General and administrative'],
                       'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
-                      'net': 'Net income', 'eps': r'Earnings per share: Basic (?:\$ [\d.]+ ){2}Diluted',
-                      'shares': r'Weighted average shares outstanding: Basic ' + AMT + ' ' + AMT + ' Diluted'}},
+                      # a fourth-quarter release adds the twelve-month columns (four values per row)
+                      'net': 'Net income', 'eps': r'Earnings per share: Basic (?:\$ [\d.]+ ){2,4}Diluted',
+                      'shares': r'Weighted average shares outstanding: Basic ' + AMT + ' (?:' + AMT + ' ){1,3}Diluted'}},
     'MRVL': {'identity': 'marvell', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in millions', 'scale': Decimal(1),
              'tol': Decimal('0.15'), 'columns': 5, 'year-ago': 2, 'growth': r'grew by (\d+)% year-on-year', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Net revenue', 'cost': 'Cost of goods sold', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
-                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      # Q1 FY27 (May 27): "Provision (benefit) for income taxes"; a first quarter prints three columns
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision(?: \(benefit\))? for income taxes',
                       'net': 'Net income', 'eps': 'Net income per share — diluted',
-                      'shares': r'preferred stock assuming conversion: Basic ' + AMT + ' (?:' + AMT + ' ){4}Diluted'}},
+                      'shares': r'preferred stock assuming conversion: Basic ' + AMT + ' (?:' + AMT + ' ){2,4}Diluted'}},
     'CRDO': {'identity': 'credo', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in thousands', 'scale': Decimal('0.001'),
              'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'growth': r'quarter over quarter and (\d+(?:\.\d+)?)% year over year', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
-                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision \(benefit\) for income taxes',
-                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted',
-                      'shares': r'computing net income per share: Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
+                      # Q4 FY26 (Jun 1): "Provision (benefits) for income taxes" and the fiscal-year columns (five values per row)
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision \(benefits?\) for income taxes',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2,4}Diluted',
+                      'shares': r'computing net income per share: Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' (?:' + AMT + ' ){0,2}Diluted'}},
     'AVGO': {'identity': 'broadcom', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'units': 'in millions', 'scale': Decimal(1),
              'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'growth': r'up (\d+) percent from the prior year period', 'period': lambda q, y: f'Q{q} FY{y}',
              'guidance': r'revenue guidance of approximately \$(\d+(?:\.\d+)?) billion',
@@ -648,7 +697,7 @@ STATEMENT = {
                       'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted',
                       'shares': r'per share calculations: Basic ' + AMT + ' (?:' + AMT + ' ){4}Diluted'}},
     'ANET': {'identity': 'arista', 'heading': 'Condensed Consolidated Income Statements', 'units': 'in millions', 'scale': Decimal(1),
-             'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'growth': r'growing (\d+(?:\.\d+)?)%',
+             'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'growth': r'(?:growing|and an increase of) (\d+(?:\.\d+)?)%(?! compared)',  # Q2 2026: '..., and an increase of 37.7% from the second quarter of 2025'
              'period-re': r'Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
              'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
                       'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
@@ -673,10 +722,11 @@ STATEMENT = {
     'AMD': {'identity': 'advanced micro devices', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'units': 'millions', 'scale': Decimal(1),
             'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'headline': r'quarter revenue was \$(\d+(?:\.\d+)?) billion', 'net-chain': 'continuing',
             'period-re': r'AMD Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+            # Q2 2026 (Aug 4) prints "Operating income (loss)", "Income (loss) from continuing operations before ..." and "(Loss) income from ..."
             'rows': {'revenue': 'Net revenue', 'cost': 'Total cost of sales', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
-                     'operating': 'Operating income', 'pretax': 'Income from continuing operations before income taxes and equity income',
+                     'operating': r'Operating income(?: \(loss\))?', 'pretax': r'Income(?: \(loss\))? from continuing operations before income taxes and equity income',
                      'tax': r'Income tax provision \(benefit\)', 'equity': 'Equity income in investee',
-                     'cont': 'Income from continuing operations, net of tax', 'disc': r'Income \(loss\) from discontinued operations, net of tax',
+                     'cont': 'Income from continuing operations, net of tax', 'disc': r'(?:Income \(loss\)|\(Loss\) income) from discontinued operations, net of tax',
                      'net': 'Net income', 'eps': 'Diluted earnings per share', 'shares': r'Shares used in per share calculation Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
 }
 
@@ -715,7 +765,8 @@ def parse_oracle(text, url=None):
     revenue = pair('Total revenues')
     if not revenue or revenue[1] <= 0:
         raise ValueError('revenue-row-unrecognized')
-    growth = re.findall(r'Total Revenues up (\d+)% in USD', t[:2500])
+    # 'Total Revenues up 30% in USD'; the Q4 release (Jun 10, 2026): 'Record Q4 Total Revenues $19.2 billion, up 21% USD' (not the FY line)
+    growth = [a or b for a, b in re.findall(r'(?:Total Revenues up (\d+)% in USD|Q[1-4] Total Revenues \$[\d.]+ billion, up (\d+)% USD)', t[:2500])]
     if len(growth) != 1 or abs((revenue[0] / revenue[1] - 1) * 100 - Decimal(growth[0])) > Decimal('0.55'):
         raise ValueError('change-mismatch')
     expenses, operating = pair('Total operating expenses'), pair('OPERATING INCOME')
@@ -747,7 +798,7 @@ def parse_gev(text, url=None):
     t = clean(text)
     if 'ge vernova' not in t.lower():
         raise ValueError('issuer-identity-missing')
-    period = re.findall(r'reports [a-z ]*?(first|second|third|fourth) quarter (20\d\d) financial performance', t[:1500], re.I)
+    period = re.findall(r'reports [a-z ]*?(first|second|third|fourth) quarter (20\d\d) financial (?:performance|results)', t[:1500], re.I)  # Q2 2026 (Jul 22): '... financial results'
     if len(period) != 1:
         raise ValueError('period-unrecognized')
     quarter, year = QUARTERS[period[0][0].lower()], int(period[0][1])
@@ -1023,7 +1074,15 @@ def parse_micron(text, url=None):
     quarter_head = re.split(f'Fiscal {year} [Hh]ighlights', t[:3000])[0]
     adjusted = re.findall(r'Non-GAAP net income of \$(\d+(?:\.\d+)?) billion, or \$(\d+\.\d\d) per diluted share', quarter_head)
     if len(adjusted) == 1:
-        facts.append(('adjusted-eps', per_share(Decimal(adjusted[0][1])), None))
+        # its year-earlier figure from the 'Quarterly Financial Results' table (GAAP then non-GAAP: this quarter, previous, a year
+        # earlier), kept only when the table's non-GAAP and GAAP EPS agree with the highlights and the statement
+        table = re.findall(r'Quarterly Financial Results \(in millions, except per share amounts\) GAAP\(1\) Non-GAAP\(2\) FQ' + str(quarter)
+                           + r'-\d\d FQ\d-\d\d FQ\d-\d\d FQ\d-\d\d FQ\d-\d\d FQ\d-\d\d .{0,700}? Diluted earnings per share(?: \(EPS\))?'
+                           + r' ([\d.]+) [\d.]+ ([\d.]+) ([\d.]+) [\d.]+ ([\d.]+)', t)
+        prior = None
+        if len(table) == 1 and Decimal(table[0][2]) == Decimal(adjusted[0][1]) and eps and Decimal(table[0][0]) == eps[0] and Decimal(table[0][1]) == eps[2]:
+            prior = per_share(Decimal(table[0][3]))
+        facts.append(('adjusted-eps', per_share(Decimal(adjusted[0][1])), prior))
     order = {k: i for i, k in enumerate(ORDER)}
     facts.sort(key=lambda f: order[f[0]])
     return {'period': f'Q{quarter} FY{year}', 'facts': facts + micron_guidance(t, quarter, year)}
@@ -1861,7 +1920,7 @@ PROFILES = {
     'SNOW': {'publisher': 'Snowflake IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNOW']), 'marker': STATEMENT['SNOW']['heading']},
     'CRM': {'publisher': 'Salesforce IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRM']), 'marker': STATEMENT['CRM']['heading']},
     'ADBE': {'publisher': 'Adobe IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ADBE']), 'marker': STATEMENT['ADBE']['heading']},
-    'KLAC': {'publisher': 'KLA IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['KLAC']), 'marker': STATEMENT['KLAC']['heading']},
+    'KLAC': {'publisher': 'KLA IR (SEC 8-K)', 'parse': lambda t, u=None: first_layout(t, STATEMENT['KLAC'], STATEMENT['KLAC-FY']), 'marker': 'Unaudited Statements of Operations Three Months Ended'},
     'LRCX': {'publisher': 'Lam Research IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LRCX']), 'marker': STATEMENT['LRCX']['heading']},
     'STX': {'publisher': 'Seagate IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['STX']), 'marker': STATEMENT['STX']['heading']},
     'APH': {'publisher': 'Amphenol IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['APH']), 'marker': STATEMENT['APH']['heading']},

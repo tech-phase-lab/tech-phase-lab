@@ -38,7 +38,8 @@ export function moneyEn(usd: number, currency = "$"): string {
   return `${currency}${fixed(n, n < 10 ? 2 : n < 1000 ? 1 : 0)}${u}`;
 }
 const perShare = (v: number, currency = "$") => ({ ja: `${v < 0 ? "−" : ""}${Math.abs(v).toFixed(2)}${currency === "$" ? "ドル" : currency}`, en: `${v < 0 ? "−" : ""}${currency}${Math.abs(v).toFixed(2)}` });
-const pct = (n: number, digits = 0) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(digits)}%`;
+/** "+1,097%" with a thousands separator, as the X copy writes it (Nov 28: MU's table read "+1097%"). */
+const pct = (n: number, digits = 0) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits })}%`;
 
 /** Keys whose value is per share; the rest of the money keys are totals. */
 const PER_SHARE = new Set(["eps", "adjusted-eps"]);

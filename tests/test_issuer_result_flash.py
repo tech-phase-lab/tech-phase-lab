@@ -113,7 +113,7 @@ class Parsers(unittest.TestCase):
         parsed=flash.parse_micron(text)
         self.assertEqual(parsed['period'],'Q4 FY2026')
         # Nov 28: the highlights' non-GAAP EPS and the Business Outlook for FQ1-27, written as the release writes it
-        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$54.229B','$11.315B'),('eps','$32.87','$2.83'),('adjusted-eps','$33.42',None),
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$54.229B','$11.315B'),('eps','$32.87','$2.83'),('adjusted-eps','$33.42','$3.03'),
             ('net-income','$37.701B','$3.201B'),('operating-income','$43.751B','$3.654B'),('guidance-revenue','$61.5B \u00b1 $1.5B',None),
             ('guidance-adjusted-eps','$38.15 \u00b1 $1.00',None)])
         with self.assertRaises(ValueError): flash.parse_micron(text.replace('Revenue $ 54,229','Revenue $ 55,229'))
