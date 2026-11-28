@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "TRMK",
+    "name": "トラストマーク",
+    "cik": 36146,
+    "name_en": "Trustmark"
+  },
+  "rows": [
+    {
+      "ja": "合併・買収",
+      "en": "Mergers"
+    },
+    {
+      "ja": "証券の引受",
+      "en": "Underwriters"
+    },
+    {
+      "ja": "店舗の売却先",
+      "en": "Branch property buyer"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HWC",
+      "ticker": "HWC",
+      "name": "ハンコック・ホイットニー",
+      "name_en": "Hancock Whitney",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年11月に合併契約を締結",
+          "text_en": "Signed a merger agreement in November 2026",
+          "source": {
+            "label": "ハンコック・ホイットニーとの合併契約 8-K付属の契約(2026年11月)",
+            "label_en": "merger agreement with Hancock Whitney agreement filed with its 8-K (November 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/750577/000119312526463409/d38169dex21.htm",
+            "level": "official",
+            "date": "2026-11-16",
+            "quote": "AGREEMENT AND PLAN OF MERGER by and between HANCOCK WHITNEY CORPORATION and TRUSTMARK CORPORATION Dated as of November 11, 2026"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBBANCORPORATION",
+      "ticker": "RBBANCORPORATION",
+      "name": "RBバンコーポレーション",
+      "name_en": "RB Bancorporation",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2017年に合併したリライアンス銀行の持株会社",
+          "text_en": "Holding company of Reliance Bank, merged in 2017",
+          "source": {
+            "label": "トラストマーク 10-K(2019年度)",
+            "label_en": "Trustmark 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36146/000156459020005569/trmk-10k_20191231.htm",
+            "level": "official",
+            "date": "2020-02-20",
+            "quote": "On April 7, 2017, Trustmark completed its merger with RB Bancorporation (Reliance), the holding company for Reliance Bank, which had seven offices serving the Huntsville, Alabama metropolitan service area (MSA)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BANCTRUST",
+      "ticker": "BANCTRUST",
+      "name": "バンクトラスト・ファイナンシャル",
+      "name_en": "BancTrust Financial Group",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2013年に合併",
+          "text_en": "Merged in 2013",
+          "source": {
+            "label": "トラストマーク 10-K(2019年度)",
+            "label_en": "Trustmark 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36146/000156459020005569/trmk-10k_20191231.htm",
+            "level": "official",
+            "date": "2020-02-20",
+            "quote": "During 2013, a deferred tax valuation allowance was created as a result of Trustmark’s merger with BancTrust Financial Group, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KBW",
+      "ticker": "KBW",
+      "name": "キーフ・ブリュイエット&ウッズ",
+      "name_en": "Keefe, Bruyette & Woods",
+      "sub": "証券",
+      "sub_en": "Broker",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年劣後債の共同主幹事",
+          "text_en": "Joint book-running manager of its 2025 subordinated notes",
+          "source": {
+            "label": "トラストマーク 8-K付属の契約(2025年11月)",
+            "label_en": "Trustmark agreement filed with its 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36146/000119312525288633/d11256dex11.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "Joint Book-Running Managers: Keefe, Bruyette & Woods, A Stifel Company Goldman Sachs & Co. LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "name_en": "Goldman Sachs",
+      "sub": "金融",
+      "sub_en": "Finance",
+      "sub_short": "金融",
+      "sub_short_en": "Finance",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年劣後債の共同主幹事",
+          "text_en": "Joint book-running manager of its 2025 subordinated notes",
+          "source": {
+            "label": "トラストマーク 8-K付属の契約(2025年11月)",
+            "label_en": "Trustmark agreement filed with its 8-K (November 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36146/000119312525288633/d11256dex11.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "Joint Book-Running Managers: Keefe, Bruyette & Woods, A Stifel Company Goldman Sachs & Co. LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OWL",
+      "ticker": "OWL",
+      "name": "Blue Owl Capital",
+      "name_en": "Blue Owl Capital",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "34店舗の不動産を買い取りリースバック",
+          "text_en": "Bought 34 branch properties and leases them back",
+          "source": {
+            "label": "トラストマーク 8-K(2026年9月)",
+            "label_en": "Trustmark 8-K (September 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/36146/000119312526387233/trmk-20260903.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "Pursuant to the Sale Agreement, the Bank sold to Blue Owl 34 bank branch properties owned and operated by the Bank (the “Branches”) for a purchase price of $91.7 million."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

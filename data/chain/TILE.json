@@ -1,0 +1,156 @@
+{
+  "root": {
+    "ticker": "TILE",
+    "name": "インターフェース",
+    "cik": 715787,
+    "name_en": "Interface"
+  },
+  "rows": [
+    {
+      "ja": "融資団",
+      "en": "Lenders"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行・共同主幹事",
+          "text_en": "Administrative agent and joint lead arranger of its credit agreement",
+          "source": {
+            "label": "インターフェース 8-K付属の契約(2025年12月)",
+            "label_en": "Interface agreement filed with its 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578725000035/creditagreementthirdar-int.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "BANK OF AMERICA, N.A., as Administrative Agent, Domestic Swing Line Lender and L/C Issuer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "インターフェース 8-K付属の契約(2025年12月)",
+            "label_en": "Interface agreement filed with its 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578725000035/creditagreementthirdar-int.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "JPMORGAN CHASE BANK, N.A., REGIONS CAPITAL MARKETS, a division of Regions Bank and TD SECURITIES (USA) LLC, as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RF",
+      "ticker": "RF",
+      "name": "リージョンズ・ファイナンシャル",
+      "name_en": "Regions Financial",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "インターフェース 8-K付属の契約(2025年12月)",
+            "label_en": "Interface agreement filed with its 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578725000035/creditagreementthirdar-int.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "JPMORGAN CHASE BANK, N.A., REGIONS CAPITAL MARKETS, a division of Regions Bank and TD SECURITIES (USA) LLC, as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TD",
+      "ticker": "TD",
+      "name": "TD Bank",
+      "name_en": "TD Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its credit agreement",
+          "source": {
+            "label": "インターフェース 8-K付属の契約(2025年12月)",
+            "label_en": "Interface agreement filed with its 8-K (December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578725000035/creditagreementthirdar-int.htm",
+            "level": "official",
+            "date": "2025-12-03",
+            "quote": "JPMORGAN CHASE BANK, N.A., REGIONS CAPITAL MARKETS, a division of Regions Bank and TD SECURITIES (USA) LLC, as Joint Lead Arrangers and Joint Bookrunners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NORA",
+      "ticker": "NORA",
+      "name": "ノラ",
+      "name_en": "nora Holding",
+      "sub": "ゴム床材",
+      "sub_en": "Rubber flooring",
+      "sub_short": "ゴム床材",
+      "sub_short_en": "Flooring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に買収したゴム床材メーカー",
+          "text_en": "Rubber flooring maker acquired in 2018",
+          "source": {
+            "label": "インターフェース 10-K(2019年度)",
+            "label_en": "Interface 10-K (FY2019)",
+            "url": "https://www.sec.gov/Archives/edgar/data/715787/000071578720000009/interfaceinc10-k122919.htm",
+            "level": "official",
+            "date": "2020-02-26",
+            "quote": "The Company also offers resilient rubber flooring since its acquisition of nora Holding GmbH on August 7, 2018."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

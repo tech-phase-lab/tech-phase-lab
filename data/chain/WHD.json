@@ -1,0 +1,186 @@
+{
+  "root": {
+    "ticker": "WHD",
+    "name": "カクタス",
+    "cik": 1699136,
+    "name_en": "Cactus"
+  },
+  "rows": [
+    {
+      "ja": "合弁・買収・融資",
+      "en": "Ventures, deals & lenders"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SLB",
+    "FTI",
+    "NOV"
+  ],
+  "companies": [
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "name_en": "Baker Hughes",
+      "sub": "エネルギー機器",
+      "sub_en": "Energy equipment",
+      "sub_short": "エネ機器",
+      "sub_short_en": "Energy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "圧力制御事業の合弁相手(2026年に65%を取得)",
+          "text_en": "Partner in the pressure control venture (65% acquired in 2026)",
+          "source": {
+            "label": "カクタス 10-K(2025年度)",
+            "label_en": "Cactus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On January 1, 2026, the Company acquired 65% of Baker Hughes Pressure Control LLC, which holds Baker Hughes Company's former surface pressure control business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIGHRIDGE",
+      "ticker": "HIGHRIDGE",
+      "name": "ハイリッジ・リソーシズ",
+      "name_en": "HighRidge Resources",
+      "sub": "スプーラブル管(FlexSteel)",
+      "sub_en": "Spoolable pipe (FlexSteel)",
+      "sub_short": "ライン管",
+      "sub_short_en": "Pipe",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年にフレックススチール事業を合併で取得",
+          "text_en": "Merged in 2023 to acquire the FlexSteel business",
+          "source": {
+            "label": "カクタス 10-K(2025年度)",
+            "label_en": "Cactus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On February 28, 2023, we completed the acquisition of the FlexSteel business (the “Merger”) through a merger with HighRidge Resources, Inc. and its subsidiaries (“HighRidge”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "カクタス 8-K付属の契約(2023年3月)",
+            "label_en": "Cactus agreement filed with its 8-K (March 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000110465923027188/tm238037d1_ex10-1.htm",
+            "level": "official",
+            "date": "2023-03-01",
+            "quote": "JPMORGAN CHASE BANK, N.A., AS ADMINISTRATIVE AGENT, AN ISSUING BANK AND SWINGLINE LENDER"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLB",
+      "ticker": "SLB",
+      "name": "エスエルビー",
+      "name_en": "SLB",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "sub_short": "油田",
+      "sub_short_en": "Oilfield",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "坑口装置の競合",
+          "text_en": "Rival in wellheads",
+          "source": {
+            "label": "カクタス 10-K(2025年度)",
+            "label_en": "Cactus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete with Vault, divisions of SLB and TechnipFMC, and a large number of other companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTI",
+      "ticker": "FTI",
+      "name": "テクニップFMC",
+      "name_en": "TechnipFMC",
+      "sub": "海底機器",
+      "sub_en": "Subsea equipment",
+      "sub_short": "海底機器",
+      "sub_short_en": "Subsea",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "坑口装置の競合",
+          "text_en": "Rival in wellheads",
+          "source": {
+            "label": "カクタス 10-K(2025年度)",
+            "label_en": "Cactus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We compete with Vault, divisions of SLB and TechnipFMC, and a large number of other companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOV",
+      "ticker": "NOV",
+      "name": "エヌオーブイ",
+      "name_en": "NOV",
+      "sub": "油田機器",
+      "sub_en": "Oilfield equipment",
+      "sub_short": "油田機器",
+      "sub_short_en": "Oilfield",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "スプーラブル管の競合",
+          "text_en": "Rival in spoolable pipe",
+          "source": {
+            "label": "カクタス 10-K(2025年度)",
+            "label_en": "Cactus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the Spoolable Technologies segment, we compete with companies who offer spoolable products, including Baker Hughes, Mattr, NOV and select other companies"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

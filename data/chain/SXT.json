@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "SXT",
+    "name": "センシエント・テクノロジーズ",
+    "cik": 310142,
+    "name_en": "Sensient Technologies"
+  },
+  "rows": [
+    {
+      "ja": "2025年の融資団",
+      "en": "2025 credit facility"
+    },
+    {
+      "ja": "2026年の融資団",
+      "en": "2026 credit facility"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PNC",
+      "ticker": "PNC",
+      "name": "PNCフィナンシャル・サービシズ",
+      "name_en": "PNC Financial Services",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2025年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036125022985/ef20050621_ex10-1.htm",
+            "level": "official",
+            "date": "2025-06-18",
+            "quote": "PNC BANK, NATIONAL ASSOCIATION, as the Administrative Agent, the Issuing Bank, and the Swing Line Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同ドキュメンテーション・エージェント",
+          "text_en": "Co-documentation agent of its credit agreement",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2025年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036125022985/ef20050621_ex10-1.htm",
+            "level": "official",
+            "date": "2025-06-18",
+            "quote": "WELLS FARGO BANK, NATIONAL ASSOCIATION, and ING BANK N.V., DUBLIN BRANCH, as Co-Documentation Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ING",
+      "ticker": "ING",
+      "name": "INGグループ",
+      "name_en": "ING Groep",
+      "sub": "銀行(オランダ)",
+      "sub_en": "Bank (Netherlands)",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同ドキュメンテーション・エージェント",
+          "text_en": "Co-documentation agent of its credit agreement",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2025年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036125022985/ef20050621_ex10-1.htm",
+            "level": "official",
+            "date": "2025-06-18",
+            "quote": "WELLS FARGO BANK, NATIONAL ASSOCIATION, and ING BANK N.V., DUBLIN BRANCH, as Co-Documentation Agents"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の共同主幹事(BofA証券)",
+          "text_en": "Joint lead arranger of its credit agreement (BofA Securities)",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2025年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036125022985/ef20050621_ex10-1.htm",
+            "level": "official",
+            "date": "2025-06-18",
+            "quote": "PNC CAPITAL MARKETS LLC, and BOFA SECURITIES, INC., as Joint Lead Arrangers and Joint Book Runners"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COBANK",
+      "ticker": "COBANK",
+      "name": "コーバンク",
+      "name_en": "CoBank",
+      "sub": "農業金融",
+      "sub_en": "Agricultural lender",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年の融資契約の幹事行",
+          "text_en": "Administrative agent of its 2026 credit agreement",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2026年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036126026110/ef20076497_ex10-1.htm",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "COBANK, ACB, as the Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COMPEER",
+      "ticker": "COMPEER",
+      "name": "コンピア・ファイナンシャル",
+      "name_en": "Compeer Financial",
+      "sub": "農業金融",
+      "sub_en": "Agricultural lender",
+      "sub_short": "農業金融",
+      "sub_short_en": "Farm",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年の融資契約の共同主幹事",
+          "text_en": "Joint lead arranger of its 2026 credit agreement",
+          "source": {
+            "label": "センシエント 8-K付属の契約(2026年6月)",
+            "label_en": "Sensient agreement filed with its 8-K (June 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/310142/000114036126026110/ef20076497_ex10-1.htm",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "COBANK, ACB and COMPEER FINANCIAL, PCA, as Joint Lead Arrangers and Joint Book Runners"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
