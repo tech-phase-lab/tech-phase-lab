@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "TR",
+    "name": "トッツィー・ロール・インダストリーズ",
+    "cik": 98677,
+    "name_en": "Tootsie Roll Industries"
+  },
+  "rows": [
+    {
+      "ja": "主要顧客",
+      "en": "Major customers"
+    },
+    {
+      "ja": "買収",
+      "en": "Acquisition"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "総合小売",
+      "sub_en": "Retail",
+      "sub_short": "小売",
+      "sub_short_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品売上の約22%を占める最大顧客",
+          "text_en": "Largest customer, about 22% of net product sales",
+          "source": {
+            "label": "トッツィー 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our net product sales from Wal-Mart Stores, Inc. (“Wal-Mart”) aggregated approximately 22.0%, 23.2%, and 22.2% of net product sales during the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLTR",
+      "ticker": "DLTR",
+      "name": "ダラー・ツリー",
+      "name_en": "Dollar Tree",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "sub_short": "安売り店",
+      "sub_short_en": "Discount",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品売上の約13%を占める主要顧客",
+          "text_en": "Major customer, about 13% of net product sales",
+          "source": {
+            "label": "トッツィー 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our net sales from Dollar Tree, Inc. (“Dollar Tree”, which includes net sales from Family Dollar which is owned by Dollar Tree) 4 Table of Contents aggregated approximately 13.1%, 12.6%, and 14.2% of net product sales during the years ended December 31, 2025, 2024 and 2023, respectively."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCLANE",
+      "ticker": "McLane",
+      "name": "マクレーン",
+      "name_en": "McLane Company",
+      "sub": "食品卸売",
+      "sub_en": "Wholesale distributor",
+      "sub_short": "食品卸売",
+      "sub_short_en": "Supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルマートなどへ製品を届ける食品卸(主要顧客)",
+          "text_en": "Grocery wholesaler that delivers its products to Wal-Mart and others (major customer)",
+          "source": {
+            "label": "トッツィー 10-K(2025年度)",
+            "label_en": "Tootsie Roll 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000110465926021621/tr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Some of the aforementioned sales to Wal-Mart and Dollar Tree were sold to McLane Company (“McLane”), a large national grocery wholesaler, which services and delivers certain of the Company’s products to Wal-Mart, Dollar Tree and other retailers in the U.S.A."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CONCORDCONFECTIONS",
+      "ticker": "CONCORDCONFECTIONS",
+      "name": "コンコード・コンフェクションズ",
+      "name_en": "Concord Confections",
+      "sub": "ガム",
+      "sub_en": "Bubble gum",
+      "sub_short": "ガム",
+      "sub_short_en": "Gum",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2004年に買収した「ダブルバブル」のガムメーカー",
+          "text_en": "Maker of Dubble Bubble gum, acquired in 2004",
+          "source": {
+            "label": "トッツィー・ロール 2004年度年次報告書(10-K付属) 10-K付属の契約(2004年度)",
+            "label_en": "Tootsie Roll 2004 annual report (filed with its 10-K) agreement filed with its 10-K (FY2004)",
+            "url": "https://www.sec.gov/Archives/edgar/data/98677/000104746905006676/a2153639zex-13.htm",
+            "level": "official",
+            "date": "2005-03-16",
+            "quote": "in August we purchased Concord Confections, maker of Dubble Bubble, to our knowledge the largest maker of bubble gum in the world."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

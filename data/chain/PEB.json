@@ -1,0 +1,182 @@
+{
+  "root": {
+    "ticker": "PEB",
+    "name": "ペブルブルック・ホテル・トラスト",
+    "cik": 1474098,
+    "name_en": "Pebblebrook Hotel Trust"
+  },
+  "rows": [
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "合併",
+      "en": "Merger"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "name_en": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "ペブルブルック 8-K付属の契約(2026年2月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 8-K (February 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409826000011/a021126debtamendmentex101.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "BANK OF AMERICA, N.A. , as Administrative Agent (the “ Administrative Agent ”) and L/C Issuer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RJF",
+      "ticker": "RJF",
+      "name": "レイモンド・ジェームズ",
+      "name_en": "Raymond James Financial",
+      "sub": "証券・投資銀行",
+      "sub_en": "Brokerage & investment banking",
+      "sub_short": "証券",
+      "sub_short_en": "Broker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年転換社債の幹事(当初購入者の代表)",
+          "text_en": "Representative of the initial purchasers of its 2025 convertible notes",
+          "source": {
+            "label": "ペブルブルック 8-K付属の契約(2025年9月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 8-K (September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409825000129/a091625convertsex11.htm",
+            "level": "official",
+            "date": "2025-09-22",
+            "quote": "Raymond James & Associates, Inc. 880 Carillon Parkway St. Petersburg, Florida 33716 For itself and as Representative of the other Initial Purchasers named in Schedule A hereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "ウェルズ・ファーゴ",
+      "name_en": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2021年優先株の引受幹事",
+          "text_en": "Lead underwriter of its 2021 preferred shares",
+          "source": {
+            "label": "ペブルブルック 8-K付属の契約(2021年7月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 8-K (July 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409821000144/peb8-k072721pfdhex11.htm",
+            "level": "official",
+            "date": "2021-07-27",
+            "quote": "Wells Fargo Securities, LLC 550 South Tryon Street Charlotte, North Carolina 28202 Raymond James & Associates, Inc. 880 Carillon Parkway St. Petersburg, Florida 33716 BofA Securities, Inc. One Bryant Park New York, New York 10036 For themselves and as Representatives of the other Underwriters named in Schedule A hereto."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホテル物件向け融資の貸し手",
+          "text_en": "Lender of a hotel property loan",
+          "source": {
+            "label": "ペブルブルック 8-K付属の契約(2021年9月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 8-K (September 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409821000175/peb8-k092921ex101.htm",
+            "level": "official",
+            "date": "2021-09-29",
+            "quote": "MVHF, LLC , as Borrower and JPMORGAN CHASE BANK, NATIONAL ASSOCIATION and DEUTSCHE BANK AG, NEW YORK BRANCH, collectively, as Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DB",
+      "ticker": "DB",
+      "name": "ドイツ銀行",
+      "name_en": "Deutsche Bank",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ホテル物件向け融資の貸し手",
+          "text_en": "Lender of a hotel property loan",
+          "source": {
+            "label": "ペブルブルック 8-K付属の契約(2021年9月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 8-K (September 2021)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409821000175/peb8-k092921ex101.htm",
+            "level": "official",
+            "date": "2021-09-29",
+            "quote": "MVHF, LLC , as Borrower and JPMORGAN CHASE BANK, NATIONAL ASSOCIATION and DEUTSCHE BANK AG, NEW YORK BRANCH, collectively, as Lender"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LHO",
+      "ticker": "LHO",
+      "name": "ラサール・ホテル・プロパティーズ",
+      "name_en": "LaSalle Hotel Properties",
+      "sub": "ホテルREIT",
+      "sub_en": "Hotel REIT",
+      "sub_short": "REIT",
+      "sub_short_en": "REIT",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に合併契約を結び統合したホテルREIT",
+          "text_en": "Hotel REIT combined under a 2018 merger agreement",
+          "source": {
+            "label": "ペブルブルック 425付属の契約(2018年9月)",
+            "label_en": "Pebblebrook Hotel Trust agreement filed with its 425 (September 2018)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474098/000147409818000148/peb8-k4259518ex21.htm",
+            "level": "official",
+            "date": "2018-09-07",
+            "quote": "PING MERGER SUB, LLC, PING MERGER OP, LP, LASALLE HOTEL PROPERTIES and LASALLE OPERATING PARTNERSHIP, L.P. Dated as of September 6, 2018"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

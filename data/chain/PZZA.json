@@ -1,0 +1,163 @@
+{
+  "root": {
+    "ticker": "PZZA",
+    "name": "パパ・ジョンズ",
+    "cik": 901491,
+    "name_en": "Papa John's"
+  },
+  "rows": [
+    {
+      "ja": "資金調達・株主",
+      "en": "Financing & shareholder"
+    },
+    {
+      "ja": "合弁",
+      "en": "Joint venture"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "DPZ",
+    "YUMC"
+  ],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan Chase",
+      "name_en": "JPMorgan Chase",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "sub_short": "銀行",
+      "sub_short_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "融資契約の幹事行",
+          "text_en": "Administrative agent of its credit agreement",
+          "source": {
+            "label": "パパ・ジョンズ 10-Q付属の契約(2023年8月)",
+            "label_en": "Papa John's agreement filed with its 10-Q (August 2023)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901491/000162828023026991/pzza-20230625xexx101.htm",
+            "level": "official",
+            "date": "2023-08-03",
+            "quote": "the financial institutions listed on the signature pages hereof and JPMorgan Chase Bank, N.A., as Administrative Agent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "STARBOARD",
+      "ticker": "STARBOARD",
+      "name": "スターボード・バリュー",
+      "name_en": "Starboard Value",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "sub_short": "投資会社",
+      "sub_short_en": "Investor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年に保有株を買い戻した投資会社",
+          "text_en": "Activist investor whose shares it bought back in 2023",
+          "source": {
+            "label": "パパ・ジョンズ 10-K(2025年度)",
+            "label_en": "Papa John's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901491/000162828026011965/pzza-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "shares repurchased on March 1, 2023 from certain funds affiliated with, or managed by, Starboard Value LP (collectively, “Starboard”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COLONELS",
+      "ticker": "COLONELS",
+      "name": "カーネルズ・リミテッド",
+      "name_en": "Colonel's Limited",
+      "sub": "ピザ店運営",
+      "sub_en": "Restaurant operator",
+      "sub_short": "店舗運営",
+      "sub_short_en": "Stores",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁会社(2025年に85店舗を再フランチャイズ化)",
+          "text_en": "Joint venture whose 85 restaurants were refranchised in 2025",
+          "source": {
+            "label": "パパ・ジョンズ 10-K(2025年度)",
+            "label_en": "Papa John's 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/901491/000162828026011965/pzza-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the Company completed the refranchising of 85 Domestic Company-owned restaurants previously owned and operated by Colonel’s Limited, LLC, a consolidated joint venture"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DPZ",
+      "ticker": "DPZ",
+      "name": "ドミノ・ピザ",
+      "name_en": "Domino's Pizza",
+      "sub": "宅配ピザ",
+      "sub_en": "Pizza delivery",
+      "sub_short": "ピザ",
+      "sub_short_en": "Pizza",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の宅配ピザで競合として同社の10-Kに記載",
+          "text_en": "Names Papa John's a main U.S. pizza competitor",
+          "source": {
+            "label": "ドミノ・ピザ 10-K(2025年度)",
+            "label_en": "Domino's Pizza 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1286681/000119312526062321/dpz-20251228.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the U.S., we compete primarily against national chains Pizza Hut ® , Papa John’s ® and Little Caesars Pizza ® as well as regional, independent and local establishments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "YUMC",
+      "ticker": "YUMC",
+      "name": "ヤム・チャイナ・ホールディングス",
+      "name_en": "Yum China Holdings",
+      "sub": "中国の最大フランチャイジー",
+      "sub_en": "Largest master franchisee",
+      "sub_short": "中国FC",
+      "sub_short_en": "Franchise",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国のピザハットの競合として同社の10-Kに記載",
+          "text_en": "Names Papa John's a Pizza Hut competitor in China",
+          "source": {
+            "label": "ヤム・チャイナ 10-K(2025年度)",
+            "label_en": "Yum China 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1673358/000119312526082824/yumc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Pizza Hut primarily competes with western CDR brands, including Domino’s and Papa John’s, as well as other domestic CDR brands in China."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
